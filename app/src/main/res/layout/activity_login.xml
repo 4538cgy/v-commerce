@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity">
+
+    <TextView
+        android:id="@+id/activity_login_textview_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=" 로그인 입니다!"
+        android:textSize="52dp"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/activity_login_linearlayout_signin"
+        />
+
+    <LinearLayout
+        android:id="@+id/activity_login_linearlayout_signin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/activity_login_textview_title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            >
+
+            <EditText
+                android:id="@+id/activity_login_edittext_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            >
+
+            <EditText
+                android:id="@+id/activity_login_edittext_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:inputType="textPassword"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/activity_login_button_login"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:theme="@style/ButtonStyle"
+            android:layout_marginHorizontal="20dp"
+            android:text="로그인"
+            android:layout_marginTop="20dp"
+            />
+
+        <Button
+            android:id="@+id/activity_login_button_login_facebook"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/btn_signin_facebook"
+            android:layout_marginHorizontal="20dp"
+            android:textColor="@color/colorWhite"
+            android:text="페이스북 로그인"
+            android:layout_marginTop="20dp"
+            />
+
+        <Button
+            android:id="@+id/activity_login_button_login_google"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/btn_signin_google"
+            android:layout_marginHorizontal="20dp"
+            android:textColor="@color/colorWhite"
+            android:text="구글 로그인"
+            android:layout_marginTop="20dp"
+            />
+        
+        
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

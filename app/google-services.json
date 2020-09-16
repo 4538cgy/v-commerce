@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "368731289585",
+    "firebase_url": "https://project-vcommerce.firebaseio.com",
+    "project_id": "project-vcommerce",
+    "storage_bucket": "project-vcommerce.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:368731289585:android:d7125142f17030d79fb650",
+        "android_client_info": {
+          "package_name": "com.uos.vcommcerce"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "368731289585-buch6528aov0j4719iudpm66so9n0l9u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.uos.vcommcerce",
+            "certificate_hash": "9ab1ec7bb9b64e216366f1a497f7e6ca74079684"
+          }
+        },
+        {
+          "client_id": "368731289585-9qv5gbacsfod1tjjb5o58ojiql36aj1o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCe3VDWLs9fIkGLxtYnCbcmEy8BOUZXPs0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "368731289585-9qv5gbacsfod1tjjb5o58ojiql36aj1o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
