@@ -8,6 +8,8 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
+
+
     defaultConfig {
         applicationId "com.uos.vcommcerce"
         minSdkVersion 16
@@ -33,8 +35,18 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.3.1'
     implementation 'androidx.appcompat:appcompat:1.2.0'
 
+
+    //firebaseMessage
+    implementation 'com.google.firebase:firebase-messaging:20.2.4'
+
+    //firebaseStore
+    implementation 'com.google.firebase:firebase-firestore:21.4.0'
+
+    //firebaseStorage
+    implementation 'com.google.firebase:firebase-storage-ktx:19.1.1'
+
     //firebaseRemoteConfig
-    implementation 'com.google.firebase:firebase-config-ktx:19.2.0'
+    implementation 'com.google.firebase:firebase-config:19.1.4'
 
     //facebookSDK
     implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
@@ -55,6 +67,12 @@ dependencies {
 
     //glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'
+
+    //okhttp
+    implementation 'com.squareup.okhttp3:okhttp:3.4.1'
+
+    //gson
+    implementation 'com.google.code.gson:gson:2.8.6'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
     //material 1.3.0-alpha02 버전

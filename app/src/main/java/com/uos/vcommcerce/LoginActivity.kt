@@ -1,12 +1,9 @@
 package com.uos.vcommcerce
 
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Base64
-import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.facebook.AccessToken
@@ -25,7 +22,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_login.*
-import java.security.MessageDigest
 import java.util.*
 
 class LoginActivity : AppCompatActivity() {
