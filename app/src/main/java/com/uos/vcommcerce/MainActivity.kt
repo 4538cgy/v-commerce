@@ -31,10 +31,10 @@ class MainActivity : AppCompatActivity() {
         vp_viewpager.adapter = TestViewPagerAdapter(this, imageList)
 
         // 스크롤 수직 설정
-        vp_viewpager.orientation = ViewPager2.ORIENTATION_VERTICAL
+       // vp_viewpager.orientation = ViewPager2.ORIENTATION_VERTICAL
 
         // 스크롤 수평 설정
-       // vp_viewpager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        vp_viewpager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
 
         vp_viewpager.setPageTransformer(ZoomOutPageTransformer())
 
