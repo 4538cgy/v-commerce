@@ -4,8 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.viewpager2.widget.ViewPager2
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.iid.FirebaseInstanceId
 import com.uos.vcommcerce.Adapter.TestViewPagerAdapter
 import com.uos.vcommcerce.Tranformer.ZoomOutPageTransformer
+import com.uos.vcommcerce.Util.FcmPush
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -13,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
+        registerPushToken()
         // 넣을 이미지 리스트 추가
         val imageList = ArrayList<String>()
         imageList.add(
@@ -61,5 +65,25 @@ class MainActivity : AppCompatActivity() {
                 tv_num.text = (position + 1).toString()
             }
         })
+    }
+
+    fun registerPushToken(){
+
+        FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener {
+                task ->
+            val token = task.result?.token
+            val uid = FirebaseAuth.getInstance().currentUser?.uid
+            val map = mutableMapOf<String,Any>()
+            map["pushToken"] = token!!
+            FirebaseFirestore.getInstance().collection("pushtokens").document(uid!!).set(map)
+        }
+
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        //4538cgy@gmail.com UID 값
+        FcmPush.instance.sendMessage("IIBpkwk5jUSNDa0qnDZxgwEvq812","hi","bye")
     }
 }

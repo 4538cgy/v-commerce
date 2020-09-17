@@ -21,7 +21,6 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        registerPushToken()
 
       firebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
 
@@ -45,25 +44,7 @@ class SplashActivity : AppCompatActivity() {
 
     }
 
-    fun registerPushToken(){
 
-        FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener {
-                task ->
-            val token = task.result?.token
-            val uid = FirebaseAuth.getInstance().currentUser?.uid
-            val map = mutableMapOf<String,Any>()
-            map["pushToken"] = token!!
-            FirebaseFirestore.getInstance().collection("pushtokens").document(uid!!).set(map)
-        }
-
-    }
-
-    override fun onStop() {
-        super.onStop()
-
-        //4538cgy@gmail.com UID 값
-        FcmPush.instance.sendMessage("IIBpkwk5jUSNDa0qnDZxgwEvq812","hi","bye")
-    }
 
 
     fun Permission(){
