@@ -45,8 +45,6 @@ class SplashActivity : AppCompatActivity() {
     }
 
 
-
-
     fun Permission(){
 
     }
@@ -65,7 +63,7 @@ class SplashActivity : AppCompatActivity() {
 
             //check가 false면 그냥 넘어감
             
-            startActivity(Intent(this, LoginActivity::class.java))
+            startActivity(Intent(this,MainActivity::class.java))
             finish()
 
         }
