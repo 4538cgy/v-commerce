@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
+import android.view.MotionEvent
 import android.view.View
 import android.widget.LinearLayout
 import androidx.viewpager2.widget.ViewPager2
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_main)
 
         // 최석우 일시적으로 앱터져서 막음
-        registerPushToken()
+//        registerPushToken()
         // 넣을 이미지 리스트 추가
         val imageList = ArrayList<String>()
         imageList.add(
@@ -95,6 +96,53 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
         mainBottomView.setOnClickListener(mainBottomViewOnclickListener)
 
+        //터치 리스너 추가
+        val mainBottomViewOnTouchListener = object : View.OnTouchListener {
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                //반환값
+                var ismove = false;
+                //창이 작을때만 작동
+                if(isBottomViewOpen == false) {
+                    when (event?.action) {
+                        //창클릭시 y위치 확인
+                        MotionEvent.ACTION_DOWN -> {
+
+                        }
+                        //이동시 위치변경
+                        MotionEvent.ACTION_MOVE -> {
+                            var y = v!!.getY();
+                            Log.d("v!!.getY()", "" + v!!.getY());
+                            var path2 = -event.getY() - y
+                            Log.d("path2", "" + path2);
+                            var nowY = y + path2
+                            Log.d("nowY", "" + nowY);
+
+                            //이동값이 양수일때 창 변화
+
+                            //이동값을 dp로 변환 + 기본크기 80 추가
+                            var h = nowY.toInt().intTodP() + v.height.intTodP();
+                            Log.d("onTouch", "h =" + h);
+                            //뷰 크기 변화
+                            if (h > 80 && h < 300) {
+                                v?.setHeight(h);
+                                ismove = true;
+                            }
+                        }
+                        //손땟을때
+                        MotionEvent.ACTION_UP -> {
+                            if(ismove == true){
+                                //열린거 처리
+                                isBottomViewOpen == true;
+                            }
+                        }
+                    }
+                }
+                Log.d("ismove",""+ismove.toString());
+                return ismove;
+            }
+        }
+        mainBottomView.setOnTouchListener(mainBottomViewOnTouchListener);
+
 
     }
 
@@ -114,20 +162,28 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             .toInt()
     }
 
+    fun Int.intTodP() : Int{
+        val density = resources.displayMetrics.density;
+        return this.div(density).toInt();
+    }
+
+
+
+
 
 //최석우 앱터져서 일시적으로 막음
-    fun registerPushToken(){
-
-        FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener {
-                task ->
-            val token = task.result?.token
-            val uid = FirebaseAuth.getInstance().currentUser?.uid
-            val map = mutableMapOf<String,Any>()
-            map["pushToken"] = token!!
-            FirebaseFirestore.getInstance().collection("pushtokens").document(uid!!).set(map)
-        }
-
-    }
+//    fun registerPushToken(){
+//
+//        FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener {
+//                task ->
+//            val token = task.result?.token
+//            val uid = FirebaseAuth.getInstance().currentUser?.uid
+//            val map = mutableMapOf<String,Any>()
+//            map["pushToken"] = token!!
+//            FirebaseFirestore.getInstance().collection("pushtokens").document(uid!!).set(map)
+//        }
+//
+//    }
 
     override fun onStop() {
         super.onStop()
