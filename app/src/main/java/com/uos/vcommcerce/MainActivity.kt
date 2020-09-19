@@ -14,6 +14,7 @@ import com.google.firebase.iid.FirebaseInstanceId
 import com.uos.vcommcerce.Adapter.TestViewPagerAdapter
 import com.uos.vcommcerce.Tranformer.ZoomOutPageTransformer
 import com.uos.vcommcerce.Util.FcmPush
+import com.uos.vcommcerce.Util.MainBottomSlideUp
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -79,94 +80,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
         })
 
-        //2020/9/17 최석우 메인액티비티 하단바 온클릭 리스터 추가
-        val mainBottomViewOnclickListener = object : View.OnClickListener {
-            override fun onClick(p0: View?) {
-                when (isBottomViewOpen) {
-                    false -> {
-                        mainBottomView.setHeight(300);
-                        isBottomViewOpen = true;
-                    }
-                    true -> {
-                        mainBottomView.setHeight(80);
-                        isBottomViewOpen = false;
-                    }
-                }
-            }
-        }
-        mainBottomView.setOnClickListener(mainBottomViewOnclickListener)
-
-        //터치 리스너 추가
-        val mainBottomViewOnTouchListener = object : View.OnTouchListener {
-            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                //반환값
-                var ismove = false;
-                //창이 작을때만 작동
-                if(isBottomViewOpen == false) {
-                    when (event?.action) {
-                        //창클릭시 y위치 확인
-                        MotionEvent.ACTION_DOWN -> {
-
-                        }
-                        //이동시 위치변경
-                        MotionEvent.ACTION_MOVE -> {
-                            var y = v!!.getY();
-                            Log.d("v!!.getY()", "" + v!!.getY());
-                            var path2 = -event.getY() - y
-                            Log.d("path2", "" + path2);
-                            var nowY = y + path2
-                            Log.d("nowY", "" + nowY);
-
-                            //이동값이 양수일때 창 변화
-
-                            //이동값을 dp로 변환 + 기본크기 80 추가
-                            var h = nowY.toInt().intTodP() + v.height.intTodP();
-                            Log.d("onTouch", "h =" + h);
-                            //뷰 크기 변화
-                            if (h > 80 && h < 300) {
-                                v?.setHeight(h);
-                                ismove = true;
-                            }
-                        }
-                        //손땟을때
-                        MotionEvent.ACTION_UP -> {
-                            if(ismove == true){
-                                //열린거 처리
-                                isBottomViewOpen == true;
-                            }
-                        }
-                    }
-                }
-                Log.d("ismove",""+ismove.toString());
-                return ismove;
-            }
-        }
-        mainBottomView.setOnTouchListener(mainBottomViewOnTouchListener);
-
-
+        //2020/9/17 최석우 메인액티비티 하단바 터치 리스너 추가
+        mainBottomView.setOnClickListener(MainBottomSlideUp.instance.mainBottomViewOnclickListener);
+        mainBottomView.setOnTouchListener(MainBottomSlideUp.instance.mainBottomViewOnTouchListener);
     }
-
-    //2020/9/17 최석우 뷰 크기 변환함수
-    fun View.setHeight(value: Int) {
-        val lp = layoutParams
-        lp?.let {
-            lp.height = value.dp();
-            layoutParams = lp
-        }
-    }
-
-    //2020/9/17 최석우 int값 dp로 변환하는 함수
-    fun Int.dp(): Int { //함수 이름도 직관적으로 보이기 위해 dp()로 바꿨습니다.
-        val metrics = resources.displayMetrics
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), metrics)
-            .toInt()
-    }
-
-    fun Int.intTodP() : Int{
-        val density = resources.displayMetrics.density;
-        return this.div(density).toInt();
-    }
-
 
 
 

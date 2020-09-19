@@ -52,10 +52,9 @@
     <!--2020/09/17 최석우 하단 바 -->
     <LinearLayout
         android:id="@+id/mainBottomView"
-
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@color/mainBottonView"
+        android:background="@drawable/mainbottomviewbackground"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
