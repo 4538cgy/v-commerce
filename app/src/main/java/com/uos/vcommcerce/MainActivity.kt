@@ -1,11 +1,13 @@
 package com.uos.vcommcerce
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
+import android.widget.Button
 import android.widget.LinearLayout
 import androidx.viewpager2.widget.ViewPager2
 import com.google.firebase.auth.FirebaseAuth
@@ -15,6 +17,7 @@ import com.uos.vcommcerce.Adapter.TestViewPagerAdapter
 import com.uos.vcommcerce.Tranformer.ZoomOutPageTransformer
 import com.uos.vcommcerce.Util.FcmPush
 import com.uos.vcommcerce.Util.MainBottomSlideUp
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -83,6 +86,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         //2020/9/17 최석우 메인액티비티 하단바 터치 리스너 추가
         mainBottomView.setOnClickListener(MainBottomSlideUp.instance.mainBottomViewOnclickListener);
         mainBottomView.setOnTouchListener(MainBottomSlideUp.instance.mainBottomViewOnTouchListener);
+
+
+        val intent = Intent(this, GridActivity::class.java)
+        startActivity(intent)
     }
 
 
