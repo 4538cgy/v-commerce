@@ -1,34 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:layout_margin="20dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/content_Img"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@mipmap/ic_launcher"
+        />
+
+    <TextView
+        android:id="@+id/content_Text"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-
-        <ImageView
-            android:id="@+id/content_Img"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@mipmap/ic_launcher"
-            />
-
-        <TextView
-            android:id="@+id/content_Text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="테스트확인"
-            android:textSize="30sp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="50dp"
-            />
-
-    </LinearLayout>
+        android:text="테스트"
+        android:textSize="30sp"
+        android:layout_gravity="center|bottom"
+        />
 
 
 </androidx.cardview.widget.CardView>
