@@ -49,14 +49,104 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!--2020/09/17 최석우 상단 바 -->
+    <LinearLayout
+        android:id="@+id/mainTopView"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/main_top_view_background"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="@+id/vp_viewpager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/mainSearchView"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:background="@drawable/main_top_search_view_background"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"/>
+        <LinearLayout
+            android:id="@+id/mainSearchListView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/mainViewChange"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:gravity="center"
+            >
+            <TextView
+                android:layout_width="20dp"
+                android:layout_height="50dp"/>
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/ic_launcher_background"
+                android:paddingRight="10dp"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="0.1"/>
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/ic_launcher_background"
+                android:paddingRight="10dp"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="0.1"/>
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/ic_launcher_background"
+                android:paddingRight="10dp"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="0.1"/>
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/ic_launcher_background"
+                android:paddingRight="10dp"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="0.1"/>
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/ic_launcher_background"
+                android:paddingRight="10dp"/>
+            <TextView
+                android:layout_width="20dp"
+                android:layout_height="50dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/mainTopDragView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+    </LinearLayout>
+
     <!--2020/09/17 최석우 하단 바 -->
     <LinearLayout
         android:id="@+id/mainBottomView"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@drawable/mainbottomviewbackground"
+        android:background="@drawable/main_bottom_view_background"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/vp_viewpager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 

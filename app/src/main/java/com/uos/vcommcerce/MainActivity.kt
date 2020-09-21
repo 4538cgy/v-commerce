@@ -15,6 +15,7 @@ import com.uos.vcommcerce.Adapter.TestViewPagerAdapter
 import com.uos.vcommcerce.Tranformer.ZoomOutPageTransformer
 import com.uos.vcommcerce.Util.FcmPush
 import com.uos.vcommcerce.Util.MainBottomSlideUp
+import com.uos.vcommcerce.Util.MainTopSlideDown
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -83,6 +84,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         //2020/9/17 최석우 메인액티비티 하단바 터치 리스너 추가
         mainBottomView.setOnClickListener(MainBottomSlideUp.instance.mainBottomViewOnclickListener);
         mainBottomView.setOnTouchListener(MainBottomSlideUp.instance.mainBottomViewOnTouchListener);
+
+
+        //2020/9/22 최석우 메인액티비티 상단 검색바 터치 리스너 추가
+        mainSearchView.setOnClickListener(MainTopSlideDown.instance.mainTopViewSearchOnclickListener)
+
+        //2020/9/22 최석우 메인액티비티 상단바 리스너 추가
+        mainTopView.setOnClickListener(MainTopSlideDown.instance.mainTopViewOnclickListener);
+        mainTopView.setOnTouchListener(MainTopSlideDown.instance.mainTopViewOnTouchListener);
     }
 
 

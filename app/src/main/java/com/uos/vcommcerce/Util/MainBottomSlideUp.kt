@@ -67,7 +67,6 @@ class MainBottomSlideUp : View.OnClickListener,View.OnTouchListener {
                     }
                 }
             }
-
             return false;
         }
     }
