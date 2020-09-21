@@ -15,6 +15,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
 import com.uos.vcommcerce.Model.SettingDTO
+import com.uos.vcommcerce.TestPackageDeleteSoon.TestExoplayerActivity
 import kotlinx.android.synthetic.main.activity_setting.*
 import kotlinx.android.synthetic.main.item_setting.view.*
 
@@ -49,6 +50,7 @@ class SettingActivity : AppCompatActivity() {
         init {
             settingDTO.add(SettingDTO("메인 화면 보기"))
             settingDTO.add(SettingDTO("로그아웃"))
+            settingDTO.add(SettingDTO("비디오 화면 보기"))
             notifyDataSetChanged()
         }
 
@@ -85,6 +87,10 @@ class SettingActivity : AppCompatActivity() {
                         signOut()
                     }
 
+                    "비디오 화면 보기"->{
+                        pageChange("Video")
+                    }
+
                 }
 
             }
@@ -108,6 +114,12 @@ class SettingActivity : AppCompatActivity() {
             "Main" ->{
 
                 startActivity(Intent(this,MainActivity::class.java))
+
+            }
+
+            "Video" ->{
+
+                startActivity(Intent(this,TestExoplayerActivity::class.java))
 
             }
 

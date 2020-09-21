@@ -27,7 +27,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
+
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
@@ -35,6 +40,16 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.3.1'
     implementation 'androidx.appcompat:appcompat:1.2.0'
 
+    /*
+    ExoPlayer 2020-09-11 Version
+    https://github.com/google/ExoPlayer/blob/release-v2/RELEASENOTES.md
+     */
+    //ExoPlayer
+    implementation 'com.google.android.exoplayer:exoplayer:2.12.0'
+    //ExoPlayer Core & Ui * Ima
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.12.0'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:2.12.0'
+    implementation 'com.google.android.exoplayer:extension-ima:2.12.0'
 
     //firebaseMessage
     implementation 'com.google.firebase:firebase-messaging:20.2.4'
