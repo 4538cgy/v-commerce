@@ -72,6 +72,7 @@ class TestExoplayerActivity : AppCompatActivity(){
     override fun onDestroy() {
         super.onDestroy()
         finish()
+        //
     }
 
 
