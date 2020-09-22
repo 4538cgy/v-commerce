@@ -1,5 +1,6 @@
 package com.uos.vcommcerce
 
+import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +8,8 @@ import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.SearchView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -17,9 +20,12 @@ import com.uos.vcommcerce.Util.FcmPush
 import com.uos.vcommcerce.Util.MainBottomSlideUp
 import com.uos.vcommcerce.Util.MainTopSlideDown
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_setting.*
 
 
 var  isBottomViewOpen = false;
+var  isTopViewOpen = false;
+
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
@@ -81,21 +87,47 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
         })
 
+
+
+
         //2020/9/17 최석우 메인액티비티 하단바 터치 리스너 추가
         mainBottomView.setOnClickListener(MainBottomSlideUp.instance.mainBottomViewOnclickListener);
         mainBottomView.setOnTouchListener(MainBottomSlideUp.instance.mainBottomViewOnTouchListener);
 
+        mainSearchListView?.adapter = MainTopSlideDown.instance.mainActivitySearchRecyclerViewAdapter();
+        mainSearchListView?.layoutManager = LinearLayoutManager(this)
 
-        //2020/9/22 최석우 메인액티비티 상단 검색바 터치 리스너 추가
-        mainSearchView.setOnClickListener(MainTopSlideDown.instance.mainTopViewSearchOnclickListener)
+
+        MainTopSlideDown.instance.setTopView(mainTopView,mainSearchListView,mainViewChange,mainTopDragView);
+
+
+//        2020/9/22 최석우 메인액티비티 상단 검색바 터치 리스너 추가
+        mainSearchView.setOnClickListener(MainTopSlideDown.instance.mainTopViewSearchOnclickListener);
+
 
         //2020/9/22 최석우 메인액티비티 상단바 리스너 추가
         mainTopView.setOnClickListener(MainTopSlideDown.instance.mainTopViewOnclickListener);
         mainTopView.setOnTouchListener(MainTopSlideDown.instance.mainTopViewOnTouchListener);
+
+
+
+
     }
 
 
+    fun View.setHeight(value: Int) {
+        val lp = layoutParams
+        lp?.let {
+            lp.height = value.dp();
+            layoutParams = lp
+        }
+    }
 
+    public fun Int.dp(): Int { //함수 이름도 직관적으로 보이기 위해 dp()로 바꿨습니다.
+        val metrics = Resources.getSystem().displayMetrics
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), metrics)
+            .toInt()
+    }
 
 //최석우 앱터져서 일시적으로 막음
 //    fun registerPushToken(){
@@ -122,4 +154,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         TODO("Not yet implemented")
     }
 }
+
+
+
 

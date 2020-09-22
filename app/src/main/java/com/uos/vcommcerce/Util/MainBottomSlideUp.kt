@@ -5,10 +5,12 @@ import android.util.Log
 import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
+import com.uos.vcommcerce.R
 import com.uos.vcommcerce.isBottomViewOpen
 
 class MainBottomSlideUp : View.OnClickListener,View.OnTouchListener {
-
+    val BottomMin : Int = 80;
+    val BottomMax : Int = 300;
 
     companion object{
         var instance = MainBottomSlideUp()
@@ -38,11 +40,11 @@ class MainBottomSlideUp : View.OnClickListener,View.OnTouchListener {
                         var h = -event.getY().toInt().intTodP() + v?.height!!.intTodP();
                         //뷰 크기 변화
                         //기본 뷰 크기 밖으로 이동한"적"이 잇을시 moveCheck true로 바꾸기
-                        if (h >= 80 && h <= 300) {
+                        if (h >= BottomMin  && h <= BottomMax) {
                             moveCheck = true;
                             v?.setHeight(h);
-                        }else if(h<80){
-                            v?.setHeight(80);
+                        }else if(h<BottomMin){
+                            v?.setHeight(BottomMin);
                         }
                     }
                 }
@@ -50,20 +52,20 @@ class MainBottomSlideUp : View.OnClickListener,View.OnTouchListener {
                 MotionEvent.ACTION_UP -> {
                     //창이 닫겨있을때
                     if (isBottomViewOpen == false) {
-                        if ((v?.height?.intTodP()==80).and(moveCheck == false)) {
+                        if ((v?.height?.intTodP()==BottomMin).and(moveCheck == false)) {
                             //단순 터치한 경우      - 화면확대 열림처리
-                            v?.setHeight(300);
+                            v?.setHeight(BottomMax);
                             isBottomViewOpen = true;
-                        }else if ((v?.height?.intTodP()!=80).and(moveCheck == true)){
+                        }else if ((v?.height?.intTodP()!=BottomMin).and(moveCheck == true)){
                             //드래그로 이동한 경우   - 열림처리       이동할떄마다 크기가 변햇음으로 크기변화처리x
                             isBottomViewOpen = true;
-                        }else if((v?.height?.intTodP() == 80).and(moveCheck == true)){
+                        }else if((v?.height?.intTodP() == BottomMin).and(moveCheck == true)){
                             //드래그로 이동햇다 닫은경우  - 닫은처리   해당부분은 없어도 되나 해당 이벤트가 있다는것을 명시적으로 표기하기위해 작성
                             isBottomViewOpen = false;
                         }
                     }else{//창이 열려있을때
                         isBottomViewOpen = false;
-                        v?.setHeight(80);
+                        v?.setHeight(BottomMin);
                     }
                 }
             }

@@ -55,14 +55,12 @@ class SettingActivity : AppCompatActivity() {
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-                var view = LayoutInflater.from(parent.context).inflate(R.layout.item_setting,parent,false)
+            var view = LayoutInflater.from(parent.context).inflate(R.layout.item_setting, parent, false)
 
             return CustomViewHolder(view)
         }
 
         inner class CustomViewHolder(var view: View) : RecyclerView.ViewHolder(view){
-
-
 
         }
 

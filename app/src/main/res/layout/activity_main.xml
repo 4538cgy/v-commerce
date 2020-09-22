@@ -67,13 +67,15 @@
             android:layout_marginTop="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginLeft="5dp"/>
-        <LinearLayout
+
+
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/mainSearchListView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"/>
 
-        </LinearLayout>
+
         <LinearLayout
             android:id="@+id/mainViewChange"
             android:layout_width="match_parent"
@@ -130,6 +132,8 @@
                 android:layout_width="20dp"
                 android:layout_height="50dp"/>
         </LinearLayout>
+
+
         <LinearLayout
             android:id="@+id/mainTopDragView"
             android:layout_width="match_parent"
@@ -137,6 +141,8 @@
             android:orientation="horizontal">
 
         </LinearLayout>
+
+
     </LinearLayout>
 
     <!--2020/09/17 최석우 하단 바 -->
