@@ -1,7 +1,10 @@
 package com.uos.vcommcerce.TestPackageDeleteSoon
 
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
@@ -12,6 +15,8 @@ import kotlinx.android.synthetic.main.test_exoplayer_view.*
 
 class TestExoplayerActivity : AppCompatActivity(){
 
+
+    var backKeyPressedTime = 0
     private var player:SimpleExoPlayer ? = null
     private var playWhenReady = true
     private var currentWindow = 0
@@ -57,6 +62,51 @@ class TestExoplayerActivity : AppCompatActivity(){
 
 
      */
+
+    override fun onStop() {
+        super.onStop()
+
+        player?.stop()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        finish()
+    }
+
+
+    override fun onBackPressed() {
+
+        var curTime = System.currentTimeMillis()
+        var gapTime = curTime - backKeyPressedTime
+
+        //터치 체크
+        if (0<=gapTime && 2000 >= gapTime){
+            super.onBackPressed()
+        }else{
+            backKeyPressedTime = curTime.toInt()
+            showSettingPopup()
+        }
+    }
+
+    //뒤로가기 눌렀을 때 종료할건지 판단
+    fun showSettingPopup(){
+        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view = inflater.inflate(R.layout.pop_up_quit_check,null)
+        val alertDialog = AlertDialog.Builder(this)
+            .setTitle("앱을 종료하시겠습니까?")
+            .setPositiveButton("네") {
+                    dialog , which ->
+                finishAffinity()
+            }
+            .setNeutralButton("아니오",null)
+
+            .create()
+
+
+        alertDialog.setView(view)
+        alertDialog.show()
+    }
 
 
 

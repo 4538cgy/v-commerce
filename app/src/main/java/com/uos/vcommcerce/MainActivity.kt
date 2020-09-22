@@ -1,12 +1,15 @@
 package com.uos.vcommcerce
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
+import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.widget.LinearLayout
+import androidx.appcompat.app.AlertDialog
 import androidx.viewpager2.widget.ViewPager2
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -23,6 +26,10 @@ var  isBottomViewOpen = false;
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
+
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -110,6 +117,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 //        }
 //
 //    }
+
+
+    
+
+
 
     override fun onStop() {
         super.onStop()
