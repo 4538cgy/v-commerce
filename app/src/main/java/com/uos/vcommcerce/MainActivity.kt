@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         mainBottomView.setOnClickListener(MainBottomSlideUp.instance.mainBottomViewOnclickListener);
         mainBottomView.setOnTouchListener(MainBottomSlideUp.instance.mainBottomViewOnTouchListener);
 
-
+        //2020/09/21 조민석 메인에서 그리드레이아웃으로 화면 바로 넘기기(테스트위해서...)
         val intent = Intent(this, GridActivity::class.java)
         startActivity(intent)
     }
