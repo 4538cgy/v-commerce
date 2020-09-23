@@ -1,15 +1,24 @@
 package com.uos.vcommcerce
 
+//<<<<<<< HEAD
 import android.content.res.Resources
+//=======
+import android.content.Context
+//>>>>>>> c9bfb0209e32d267039777f158fc047a3a5382ac
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
+import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.widget.LinearLayout
+//<<<<<<< HEAD
 import android.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
+//=======
+import androidx.appcompat.app.AlertDialog
+//>>>>>>> c9bfb0209e32d267039777f158fc047a3a5382ac
 import androidx.viewpager2.widget.ViewPager2
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -29,6 +38,10 @@ var  isTopViewOpen = false;
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
+
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -142,6 +155,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 //        }
 //
 //    }
+
+
+    
+
+
 
     override fun onStop() {
         super.onStop()
