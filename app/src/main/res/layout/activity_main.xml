@@ -53,7 +53,7 @@
     <LinearLayout
         android:id="@+id/mainTopView"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="100dp"
         android:background="@drawable/main_top_view_background"
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="@+id/vp_viewpager"
@@ -68,15 +68,18 @@
             android:background="@drawable/main_top_search_view_background"
             android:layout_marginTop="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginLeft="5dp"/>
+            android:layout_marginLeft="5dp"
+            android:maxLines="1"
+            android:inputType="text"/>
 
 
 
         <ListView
             android:id="@+id/mainSearchListView"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:orientation="horizontal"/>
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:dividerHeight="1dp"/>
 
 
         <LinearLayout

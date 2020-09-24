@@ -7,23 +7,20 @@ import android.text.TextWatcher
 import android.util.Log
 import android.util.TypedValue
 import android.view.*
-import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
-import com.uos.vcommcerce.MainActivity
-import com.uos.vcommcerce.Model.MainSearchItem
+import android.widget.BaseAdapter
+import android.widget.EditText
+import android.widget.TextView
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.isTopViewOpen
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.main_search_item.view.*
 
-class MainTopSlideDown : View.OnClickListener, View.OnTouchListener {
+class MainTopSlideDown : View.OnClickListener, View.OnTouchListener,View.OnFocusChangeListener{
 
     val BottomMin: Int = 100;
     val BottomMax: Int = 300;
     val mainViewChangeSize = 60;
     val recyclerItemSize: Int = 30;
     val SearchViewSize: Int = 40;
+    var state : Int;
 
     companion object {
         var instance = MainTopSlideDown()
@@ -40,6 +37,8 @@ class MainTopSlideDown : View.OnClickListener, View.OnTouchListener {
         //외부에서 받아오기
         var SearchViewAdapter : SearchAdapter? = null
         var SearchView : EditText? = null
+
+        //상태 변수
     }
 
     //해당클래스에 필요한 뷰를 main에서 받아옴
@@ -59,6 +58,7 @@ class MainTopSlideDown : View.OnClickListener, View.OnTouchListener {
     }
 
     init {
+        state = 0;
         originalList = ArrayList<String>()
         filterList = mutableListOf<String>()
         selectedList = listOf<String>()
@@ -90,72 +90,39 @@ class MainTopSlideDown : View.OnClickListener, View.OnTouchListener {
         originalList!!.add("도희")
         originalList!!.add("창모")
         originalList!!.add("허영지")
+
     }
 
 
+    //검색창 온클릭 이벤트 리스너
+    val mainTopSearchViewOnclickListener = object : View.OnClickListener {
+        override fun onClick(v: View?) {
 
+        }
+    }
 
+    //검색창 터치 이벤트 리스너
+    val mainTopSearchViewOnTouchListener = object : View.OnTouchListener {
+        override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+            val text = writedWord?:""
+            search(text)
+            searchingViewChange()
+            return false;
+        }
+    }
 
-    //검색뷰 온클릭 리스터
-//    val mainTopViewSearchOnclickListener = object : View.OnClickListener {
-//        override fun onClick(v: View?) {
-//            searchItemCount = filterList?.size?:0;
-//            Log.d("searchItemCount 수 : ",""+searchItemCount)
-//            TopView?.setHeight(SearchViewSize + searchItemCount * recyclerItemSize)
-//            MainSearchListView?.setHeight(searchItemCount * recyclerItemSize)
-//            MainViewChange?.setHeight(0)
-//            MainTopDragView?.setHeight(0)
-//        }
-//    }
+    val mainTopSearchViewOnFocusChangeListener = object : View.OnFocusChangeListener {
+        override fun onFocusChange(v: View?, hasFocus: Boolean) {
+            Log.d("hasFocus?","" + hasFocus )
+            if(hasFocus == true){
+                state = 1;
+            }
+            Log.d("state?","" + state )
+        }
+    }
 
-//    val mainTopViewSearchOnClose = object : SearchView.OnCloseListener {
-//        override fun onClose(): Boolean {
-//            Log.d("onClose", " 닫김 ");
-//            TopView?.setHeight(BottomMin)
-//            MainSearchListView?.setHeight(0)
-//            MainViewChange?.setHeight(mainViewChangeSize)
-//            MainTopDragView?.setHeight(0)
-//            return false
-//        }
-//    }
-
-
-    //검색리스트 리사이클뷰 어댑터터
-//    inner class mainActivitySearchRecyclerViewAdapter() :
-//        RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-//        var mainSearchItem: ArrayList<MainSearchItem> = arrayListOf()
-//
-//        init {
-//            mainSearchItem.add(MainSearchItem("검색1"))
-//            mainSearchItem.add(MainSearchItem("검색2"))
-//            mainSearchItem.add(MainSearchItem("검색3"))
-//            notifyDataSetChanged()
-//        }
-//
-//        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-//            var view = LayoutInflater.from(parent.context)
-//                .inflate(R.layout.main_search_item, parent, false)
-//            return CustomViewHolder(view)
-//        }
-//
-//        inner class CustomViewHolder(var view: View) : RecyclerView.ViewHolder(view) {}
-//
-//        override fun getItemCount(): Int {
-//            return mainSearchItem.size
-//        }
-//
-//        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-//            var view = holder.itemView
-//            view.main_search_item_title.text = mainSearchItem[position].title
-//            //아이템 크기 조정
-//            view.setHeight(recyclerItemSize);
-//        }
-//    }
-
-
-
-    inner class SearchAdapter(private val context: Context) :
-        BaseAdapter() {
+    //서치 어댑터 클래스
+    inner class SearchAdapter(private val context: Context) : BaseAdapter() {
 
         override fun getView(position: Int, convertView: View?, viewGroup: ViewGroup?): View? {
             val view: View = LayoutInflater.from(context).inflate(R.layout.main_search_item, null)
@@ -189,10 +156,8 @@ class MainTopSlideDown : View.OnClickListener, View.OnTouchListener {
             writedWord =  SearchView!!.text.toString()
             //추출한뒤 writedWord에 집어 넣어줘야함
             val text = writedWord?:""
-            Log.d("Text",""+text)
-            Log.d("originalList",""+originalList?.size)
-            Log.d("filterList",""+ filterList?.size)
             search(text)
+            searchingViewChange()
         }
 
         override fun beforeTextChanged(charSequence: CharSequence?, start: Int, count: Int, after: Int) {
@@ -250,6 +215,10 @@ class MainTopSlideDown : View.OnClickListener, View.OnTouchListener {
     }
 
 
+
+
+
+
     //View
     override fun onClick(v: View?) {
         TODO("Not yet implemented")
@@ -283,25 +252,61 @@ class MainTopSlideDown : View.OnClickListener, View.OnTouchListener {
     }
 
 
+    //검색함수
     fun search(charText: String) {
         // 문자 입력시마다 리스트를 지우고 새로 뿌려준다.
         filterList!!.clear()
         // 문자 입력이 없을때는 모든 데이터를 보여준다.
         if (charText.length == 0) {
-            filterList!!.addAll(originalList!!)
+            for(i in 1..10) {
+                filterList!!.add(originalList!![i])
+            }
+            //filterList!!.addAll(originalList!!)
         } else {
+            var check = 0;
             // 리스트의 모든 데이터를 검색한다.
             for (i in originalList!!.indices) {
                 // arraylist의 모든 데이터에 입력받은 단어(charText)가 포함되어 있으면 true를 반환한다.
-                if (originalList!![i].toLowerCase().contains(charText)) {
+                if (originalList!![i].toLowerCase().contains(charText)&&check<10) {
                     // 검색된 데이터를 리스트에 추가한다.
                     filterList!!.add(originalList!![i])
+                    check++
                 }
             }
         }
         // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
         SearchViewAdapter!!.notifyDataSetChanged()
     }
+
+    //검색 리스트 변경 함수
+    fun searchingViewChange() {
+        var searchItemCount = filterList?.size ?: 0
+        if (searchItemCount < 3) {
+            TopView?.setHeight(SearchViewSize + 3 * recyclerItemSize)
+            MainSearchListView?.setHeight(3 * recyclerItemSize)
+            MainViewChange?.setHeight(0)
+            MainTopDragView?.setHeight(0)
+        } else {
+            TopView?.setHeight(SearchViewSize + searchItemCount * recyclerItemSize)
+            MainSearchListView?.setHeight(searchItemCount * recyclerItemSize)
+            MainViewChange?.setHeight(0)
+            MainTopDragView?.setHeight(0)
+        }
+    }
+    //검색 리스트 되돌리기 함수
+    fun searchingViewBack() {
+            TopView?.setHeight(SearchViewSize + mainViewChangeSize)
+            MainSearchListView?.setHeight(0)
+            MainViewChange?.setHeight(mainViewChangeSize)
+            MainTopDragView?.setHeight(0)
+    }
+
+
+
+
+
+
+
 
 
 }
