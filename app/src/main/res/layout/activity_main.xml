@@ -53,13 +53,15 @@
     <LinearLayout
         android:id="@+id/mainTopView"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="200dp"
         android:background="@drawable/main_top_view_background"
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="@+id/vp_viewpager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
-        <androidx.appcompat.widget.SearchView
+
+
+        <EditText
             android:id="@+id/mainSearchView"
             android:layout_width="match_parent"
             android:layout_height="35dp"
@@ -69,10 +71,11 @@
             android:layout_marginLeft="5dp"/>
 
 
-        <androidx.recyclerview.widget.RecyclerView
+
+        <ListView
             android:id="@+id/mainSearchListView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="100dp"
             android:orientation="horizontal"/>
 
 

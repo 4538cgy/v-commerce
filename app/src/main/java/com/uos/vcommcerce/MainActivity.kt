@@ -7,12 +7,16 @@ import android.content.Context
 //>>>>>>> c9bfb0209e32d267039777f158fc047a3a5382ac
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
+import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.ListView
 //<<<<<<< HEAD
 import android.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -107,22 +111,25 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         mainBottomView.setOnClickListener(MainBottomSlideUp.instance.mainBottomViewOnclickListener);
         mainBottomView.setOnTouchListener(MainBottomSlideUp.instance.mainBottomViewOnTouchListener);
 
-        mainSearchListView?.adapter = MainTopSlideDown.instance.mainActivitySearchRecyclerViewAdapter();
-        mainSearchListView?.layoutManager = LinearLayoutManager(this)
 
+        //메인 서치뷰에 텍스트 변경인식 리스너 추가
+        mainSearchView!!.addTextChangedListener(MainTopSlideDown.instance.TextChangeListener)
 
-        MainTopSlideDown.instance.setTopView(mainTopView,mainSearchListView,mainViewChange,mainTopDragView);
+        //메인 서치뷰 리스트에 어댑처 장착
+        var adapter : MainTopSlideDown.SearchAdapter = MainTopSlideDown.instance.SearchAdapter(this)
+        mainSearchListView.adapter = adapter
+
 
 
 //        2020/9/22 최석우 메인액티비티 상단 검색바 터치 리스너 추가
-        mainSearchView.setOnClickListener(MainTopSlideDown.instance.mainTopViewSearchOnclickListener);
-
+//        mainSearchView.setOnClickListener(MainTopSlideDown.instance.mainTopViewSearchOnclickListener);
 
         //2020/9/22 최석우 메인액티비티 상단바 리스너 추가
         mainTopView.setOnClickListener(MainTopSlideDown.instance.mainTopViewOnclickListener);
         mainTopView.setOnTouchListener(MainTopSlideDown.instance.mainTopViewOnTouchListener);
 
-
+        //메인 탑뷰에 필요한 인자들 전송
+        MainTopSlideDown.instance.setTopView(mainTopView,mainSearchView,mainSearchListView,mainViewChange,mainTopDragView,adapter);
 
 
     }
