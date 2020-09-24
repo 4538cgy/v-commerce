@@ -1,30 +1,29 @@
-package com.uos.vcommcerce
-
+package com.uos.vcommcerc
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.util.TypedValue
-import android.view.MotionEvent
 import android.view.View
-import android.widget.Button
-import android.widget.LinearLayout
+
 import androidx.viewpager2.widget.ViewPager2
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.iid.FirebaseInstanceId
 import com.uos.vcommcerce.Adapter.TestViewPagerAdapter
 import com.uos.vcommcerce.Tranformer.ZoomOutPageTransformer
-import com.uos.vcommcerce.Util.FcmPush
 import com.uos.vcommcerce.Util.MainBottomSlideUp
-import kotlinx.android.synthetic.main.activity_login.*
+
+import com.uos.vcommcerce.Util.MainTopSlideDown
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 var  isBottomViewOpen = false;
+var  isTopViewOpen = false;
 
 
-class MainActivity : AppCompatActivity(), View.OnClickListener {
+
+class MainActivity : AppCompatActivity(), View.OnClickListener /*, TextView.OnEditorActionListener*/ {
+
+    private var isImeHide = false
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -83,16 +82,66 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
         })
 
+
         //2020/9/17 최석우 메인액티비티 하단바 터치 리스너 추가
+
         mainBottomView.setOnClickListener(MainBottomSlideUp.instance.mainBottomViewOnclickListener);
         mainBottomView.setOnTouchListener(MainBottomSlideUp.instance.mainBottomViewOnTouchListener);
 
         //2020/09/21 조민석 메인에서 그리드레이아웃으로 화면 바로 넘기기(테스트위해서...)
         val intent = Intent(this, GridActivity::class.java)
         startActivity(intent)
+
+
+        mainBottomView.setOnClickListener(MainBottomSlideUp.instance.mainBottomViewOnclickListener);
+        mainBottomView.setOnTouchListener(MainBottomSlideUp.instance.mainBottomViewOnTouchListener);
+
+        //메인 서치뷰에 텍스트 변경인식 리스너 추가
+        mainSearchView!!.addTextChangedListener(MainTopSlideDown.instance.TextChangeListener)
+
+        //메인 서치뷰 리스트에 어댑처 장착
+        var adapter: MainTopSlideDown.SearchAdapter = MainTopSlideDown.instance.SearchAdapter(
+            this
+        )
+        mainSearchListView.adapter = adapter
+
+
+        //2020/9/22 최석우 메인액티비티 상단 검색바 터치 리스너 추가
+        mainSearchView.setOnClickListener(MainTopSlideDown.instance.mainTopSearchViewOnclickListener);
+        mainSearchView.setOnTouchListener(MainTopSlideDown.instance.mainTopSearchViewOnTouchListener);
+        mainSearchView.setOnFocusChangeListener(MainTopSlideDown.instance.mainTopSearchViewOnFocusChangeListener)
+        mainSearchView.setCallback
+        {
+
+            mainSearchView.clearFocus()
+            MainTopSlideDown.instance.searchingViewBack()
+        }
+
+
+//            mainSearchView.setOnKeyListener { v, keyCode, event ->
+//                if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_BACK) {
+//                    Log.d("찌발","씨이이이잉바ㅣㄹ");
+//                }
+//
+//                 true
+//            }
+//            mainSearchView.setOnEditorActionListener(MainTopSlideDown.instance.mainTopSearchViewEditorAction)
+
+        //2020/9/22 최석우 메인액티비티 상단바 리스너 추가
+        mainTopView.setOnClickListener(MainTopSlideDown.instance.mainTopViewOnclickListener);
+        mainTopView.setOnTouchListener(MainTopSlideDown.instance.mainTopViewOnTouchListener);
+
+        //메인 탑뷰에 필요한 인자들 전송
+        MainTopSlideDown.instance.setTopView(
+            mainTopView,
+            mainSearchView,
+            mainSearchListView,
+            mainViewChange,
+            mainTopDragView,
+            adapter
+        )
     }
-
-
+//            var imm : InputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
 
 
 //최석우 앱터져서 일시적으로 막음
@@ -109,15 +158,39 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 //
 //    }
 
-    override fun onStop() {
-        super.onStop()
 
-        //4538cgy@gmail.com UID 값
-        FcmPush.instance.sendMessage("IIBpkwk5jUSNDa0qnDZxgwEvq812", "hi", "bye")
-    }
+        override fun onBackPressed() {
 
-    override fun onClick(v: View?) {
-        TODO("Not yet implemented")
-    }
+            if (MainTopSlideDown.instance.state == 1) {
+                MainTopSlideDown.instance.state = 0
+                mainSearchView.clearFocus()
+                MainTopSlideDown.instance.searchingViewBack()
+                Log.d("창닫기", "창닫기 이벤트")
+            } else {
+                super.onBackPressed()
+            }
+        }
+
+
+        override fun onStop() {
+            super.onStop()
+
+            //4538cgy@gmail.com UID 값 [ 너무 푸쉬를 많이 보내서 일시적으로 사용 중지 주석 풀지마세요! ]
+            //FcmPush.instance.sendMessage("IIBpkwk5jUSNDa0qnDZxgwEvq812", "hi", "bye")
+        }
+
+        override fun onClick(v: View?) {
+            TODO("Not yet implemented")
+        }
+
+//    override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+//        if(event?.getAction() == KeyEvent.ACTION_DOWN)
+//        {
+//            Log.i("AutoCallService", ""+event.getKeyCode() +"");
+//        }
+//        return false;
+//    }
 }
+
+
 

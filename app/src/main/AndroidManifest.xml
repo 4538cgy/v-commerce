@@ -22,6 +22,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.Light.NoActionBar">
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.myapp.fileprovider"
@@ -33,19 +34,23 @@
         </provider>
         <activity android:name=".GridActivity"></activity>
 
-        <activity android:name=".SplashActivity">
 
+        <activity android:name=".TestPackageDeleteSoon.TestExoplayerActivity">
+
+        </activity>
+
+        <activity android:name=".SettingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".SplashActivity">
 
         </activity>
-        <activity android:name=".LoginActivity">
-
-        </activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".MainActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -68,12 +73,12 @@
             </intent-filter>
         </activity>
 
-
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/ic_push_alert_24"/>
+            android:resource="@drawable/ic_push_alert_24" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
+
             android:resource="@color/colorAccent"/>
     </application>
 
