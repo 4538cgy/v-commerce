@@ -61,7 +61,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
 
-        <EditText
+        <com.uos.vcommcerce.Util.CustomEditText
             android:id="@+id/mainSearchView"
             android:layout_width="match_parent"
             android:layout_height="35dp"

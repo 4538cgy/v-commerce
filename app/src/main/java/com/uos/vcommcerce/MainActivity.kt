@@ -1,38 +1,26 @@
 package com.uos.vcommcerce
 
 //<<<<<<< HEAD
-import android.content.res.Resources
 //=======
-import android.content.Context
 //>>>>>>> c9bfb0209e32d267039777f158fc047a3a5382ac
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
-import android.util.TypedValue
-import android.view.KeyEvent
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.inputmethod.InputMethodManager
-import android.widget.*
 //<<<<<<< HEAD
-import androidx.recyclerview.widget.LinearLayoutManager
 //=======
-import androidx.appcompat.app.AlertDialog
 //>>>>>>> c9bfb0209e32d267039777f158fc047a3a5382ac
+import android.annotation.SuppressLint
+import android.content.Context
+import android.os.Bundle
+import android.util.AttributeSet
+import android.util.Log
+import android.view.KeyEvent
+import android.view.View
+import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.iid.FirebaseInstanceId
 import com.uos.vcommcerce.Adapter.TestViewPagerAdapter
 import com.uos.vcommcerce.Tranformer.ZoomOutPageTransformer
-import com.uos.vcommcerce.Util.FcmPush
 import com.uos.vcommcerce.Util.MainBottomSlideUp
 import com.uos.vcommcerce.Util.MainTopSlideDown
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_setting.*
 
 
 var  isBottomViewOpen = false;
@@ -42,7 +30,7 @@ var  isTopViewOpen = false;
 
 class MainActivity : AppCompatActivity(), View.OnClickListener /*, TextView.OnEditorActionListener*/ {
 
-
+        private var isImeHide = false
 
 
         override fun onCreate(savedInstanceState: Bundle?) {
@@ -114,15 +102,22 @@ class MainActivity : AppCompatActivity(), View.OnClickListener /*, TextView.OnEd
             mainSearchView!!.addTextChangedListener(MainTopSlideDown.instance.TextChangeListener)
 
         //메인 서치뷰 리스트에 어댑처 장착
-            var adapter : MainTopSlideDown.SearchAdapter = MainTopSlideDown.instance.SearchAdapter(this)
+            var adapter : MainTopSlideDown.SearchAdapter = MainTopSlideDown.instance.SearchAdapter(
+                this
+            )
             mainSearchListView.adapter = adapter
 
 
 
         //2020/9/22 최석우 메인액티비티 상단 검색바 터치 리스너 추가
-            mainSearchView.setOnClickListener(  MainTopSlideDown.instance.mainTopSearchViewOnclickListener);
+            mainSearchView.setOnClickListener(MainTopSlideDown.instance.mainTopSearchViewOnclickListener);
             mainSearchView.setOnTouchListener(MainTopSlideDown.instance.mainTopSearchViewOnTouchListener);
             mainSearchView.setOnFocusChangeListener(MainTopSlideDown.instance.mainTopSearchViewOnFocusChangeListener)
+            mainSearchView.setCallback {
+
+                mainSearchView.clearFocus()
+                MainTopSlideDown.instance.searchingViewBack()
+            }
 
 
 //            mainSearchView.setOnKeyListener { v, keyCode, event ->
@@ -139,7 +134,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener /*, TextView.OnEd
             mainTopView.setOnTouchListener(MainTopSlideDown.instance.mainTopViewOnTouchListener);
 
             //메인 탑뷰에 필요한 인자들 전송
-            MainTopSlideDown.instance.setTopView(mainTopView,mainSearchView,mainSearchListView,mainViewChange,mainTopDragView,adapter)
+            MainTopSlideDown.instance.setTopView(
+                mainTopView,
+                mainSearchView,
+                mainSearchListView,
+                mainViewChange,
+                mainTopDragView,
+                adapter
+            )
 //            var imm : InputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         }
 
@@ -192,7 +194,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener /*, TextView.OnEd
 //        return false;
 //    }
 }
-
 
 
 
