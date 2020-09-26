@@ -67,25 +67,25 @@ class GridActivity : AppCompatActivity(){
 
         profile_Img.setOnClickListener{ v->
             val popup = PopupMenu(applicationContext, v)
-            menuInflater.inflate(R.menu.menu, popup.menu)
+            menuInflater.inflate(R.menu.profilepopup, popup.menu)
 
             popup.setOnMenuItemClickListener { menuItem ->
                 when (menuItem.itemId) {
-                    R.id.one -> {
+                    R.id.profile_Camera -> {
                         if(isPermitted(CAMERA_PERMISSION)) {// 권한 체크하는 함수
                             openCamera()
                         }else{
                             ActivityCompat.requestPermissions(this, CAMERA_PERMISSION,FLAG_PERM_CAMERA )
                         }
                     }
-                    R.id.two -> {
+                    R.id.profile_Gallery -> {
                         if(isPermitted(STORAGE_PERMISSION)){
                             openGallery()
                         }else{
                             ActivityCompat.requestPermissions(this,STORAGE_PERMISSION, FLAG_PERM_STORAGE)
                         }
                     }
-                    R.id.three -> profile_Img.setImageResource(R.mipmap.ic_launcher_round)  //기본이미지 세팅(현재는 안드로이드..)
+                    R.id.profile_Basic -> profile_Img.setImageResource(R.mipmap.ic_launcher_round)  //기본이미지 세팅(현재는 안드로이드..)
                 }
                 false
             }
