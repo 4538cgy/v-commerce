@@ -1,4 +1,4 @@
-package com.uos.vcommcerc
+package com.uos.vcommcerce
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -89,8 +89,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener /*, TextView.OnEd
         mainBottomView.setOnTouchListener(MainBottomSlideUp.instance.mainBottomViewOnTouchListener);
 
         //2020/09/21 조민석 메인에서 그리드레이아웃으로 화면 바로 넘기기(테스트위해서...)
-        val intent = Intent(this, GridActivity::class.java)
-        startActivity(intent)
+        //val intent = Intent(this, GridActivity::class.java)
+        //startActivity(intent)
 
 
         mainBottomView.setOnClickListener(MainBottomSlideUp.instance.mainBottomViewOnclickListener);
@@ -110,8 +110,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener /*, TextView.OnEd
         mainSearchView.setOnClickListener(MainTopSlideDown.instance.mainTopSearchViewOnclickListener);
         mainSearchView.setOnTouchListener(MainTopSlideDown.instance.mainTopSearchViewOnTouchListener);
         mainSearchView.setOnFocusChangeListener(MainTopSlideDown.instance.mainTopSearchViewOnFocusChangeListener)
-        mainSearchView.setCallback
-        {
+        mainSearchView.setCallback{
 
             mainSearchView.clearFocus()
             MainTopSlideDown.instance.searchingViewBack()

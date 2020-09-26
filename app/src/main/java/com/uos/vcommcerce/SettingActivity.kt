@@ -51,6 +51,7 @@ class SettingActivity : AppCompatActivity() {
             settingDTO.add(SettingDTO("메인 화면 보기"))
             settingDTO.add(SettingDTO("로그아웃"))
             settingDTO.add(SettingDTO("비디오 화면 보기"))
+            settingDTO.add(SettingDTO("그리드 화면 보기"))
             notifyDataSetChanged()
         }
 
@@ -89,6 +90,10 @@ class SettingActivity : AppCompatActivity() {
                         pageChange("Video")
                     }
 
+                    "그리드 화면 보기" -> {
+                        pageChange("Grid")
+                    }
+
                 }
 
             }
@@ -119,6 +124,10 @@ class SettingActivity : AppCompatActivity() {
 
                 startActivity(Intent(this,TestExoplayerActivity::class.java))
 
+            }
+
+            "Grid" -> {
+                startActivity(Intent(this,GridActivity::class.java))
             }
 
 
