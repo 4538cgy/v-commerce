@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInApi
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.GoogleApi
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
 import com.uos.vcommcerce.Model.SettingDTO
@@ -40,6 +41,8 @@ class SettingActivity : AppCompatActivity() {
         gac = GoogleApiClient.Builder(this)
             .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
             .build()
+
+
 
     }
 
