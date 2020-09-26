@@ -301,9 +301,12 @@ class MainTopSlideDown : View.OnClickListener, View.OnTouchListener,View.OnFocus
             MainTopDragView?.setHeight(0)
     }
 
-    override fun onFocusChange(v: View?, hasFocus: Boolean) {
-        TODO("Not yet implemented")
-    }
+
+
+
+
+
+
 
 
 }
