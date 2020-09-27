@@ -26,6 +26,9 @@ class TestExoplayerActivity : AppCompatActivity(){
     private var mediaPath2 = "https://firebasestorage.googleapis.com/v0/b/sns-kotlin.appspot.com/o/images%2FIMAGE_20200908_182705_.png?alt=media&token=9347344e-6ba8-4231-93a2-8f61593f5c3f"
     private var mediaPath3 = "https://www.youtube.com/embed/oYnfsg-l0KM"
     private var mediaPath4 = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+    private var mediaPath5 = "http://demo.unified-streaming.com/video/tears-of-steel/tears-of-steel.ism/.m3u8"
+    private var mediaPath6 = "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.test_exoplayer_view)
@@ -34,7 +37,7 @@ class TestExoplayerActivity : AppCompatActivity(){
 
         initializePlayer()
         attachPlayerView()
-        initialVideoUrl(mediaPath4)
+        initialVideoUrl(mediaPath6)
         preparePlayer()
         playPlayer()
 
