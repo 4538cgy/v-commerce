@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener /*, TextView.OnEd
 
             // 최석우 일시적으로 앱터져서 막음
 //        registerPushToken()
+
             // 넣을 이미지 리스트 추가
             val imageList = ArrayList<String>()
             imageList.add(
