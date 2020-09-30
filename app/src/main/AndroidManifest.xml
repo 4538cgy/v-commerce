@@ -32,7 +32,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
-        <activity android:name=".GridActivity"></activity>
+        <activity android:name=".UserActivity"></activity>
 
 
         <activity android:name=".TestPackageDeleteSoon.TestExoplayerActivity">

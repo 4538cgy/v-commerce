@@ -22,7 +22,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.activity_recycler_grid_view.*
+import kotlinx.android.synthetic.main.activity_user_view.*
 import kotlinx.android.synthetic.main.recycler_grid_item.view.*
 import java.io.FileOutputStream
 import java.lang.Exception
@@ -33,7 +33,7 @@ private const val FLAG_PERM_STORAGE = 99
 private const val FLAG_REQ_CAMERA = 101
 private  const val FLAG_REQ_GALLERY = 102
 
-class GridActivity : AppCompatActivity(){
+class UserActivity : AppCompatActivity(){
     val CAMERA_PERMISSION = arrayOf(Manifest.permission.CAMERA) //카메라 퍼미션
     val STORAGE_PERMISSION = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE) //외부저장소 권한요청
 
@@ -66,11 +66,10 @@ class GridActivity : AppCompatActivity(){
     )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_recycler_grid_view)
+        setContentView(R.layout.activity_user_view)
 
         recyclerGridView.layoutManager = GridLayoutManager(this, 3)
         recyclerGridView.adapter = RecyclerGridViewAdapter(DataList, this)
-
 
         profile_Img.setOnClickListener{ v->
             val popup = PopupMenu(applicationContext, v)

@@ -130,7 +130,7 @@ class SettingActivity : AppCompatActivity() {
             }
 
             "Grid" -> {
-                startActivity(Intent(this,GridActivity::class.java))
+                startActivity(Intent(this,UserActivity::class.java))
             }
 
 
