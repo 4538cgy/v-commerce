@@ -1,105 +1,167 @@
 package com.uos.vcommcerce.Util
 
-import android.content.res.Resources
-import android.util.Log
-import android.util.TypedValue
+
 import android.view.MotionEvent
 import android.view.View
-import com.uos.vcommcerce.R
+import android.view.animation.Animation
+import android.view.animation.TranslateAnimation
 import com.uos.vcommcerce.isBottomViewOpen
+import com.uos.vcommcerce.topBottomState
+import javax.annotation.meta.When
 
-class MainBottomSlideUp : View.OnClickListener,View.OnTouchListener {
+class MainBottomSlideUp  {
     val BottomMin : Int = 80;
-    val BottomMax : Int = 300;
+    val BottomMid : Int = 300;
+    val BottomMax : Int = 700;
 
     companion object{
         var instance = MainBottomSlideUp()
         //기본크기 밖으로 창을 키운적 있는지 체크 변수
         var moveCheck = false;
+        var mainBottomView : View? = null
+        var topView: View? = null;
     }
 
+    //해당클래스에 필요한 뷰를 main에서 받아옴
+    fun setBottomView(MainBottomView: View){
+        mainBottomView = MainBottomView;
+    }
+
+    //하단바 온클릭 이벤트 리스너 - 하단바 닫기
      val mainBottomViewOnclickListener = object : View.OnClickListener {
         override fun onClick(v: View?) {
+            SlideDown()
         }
     }
 
-     val mainBottomViewOnTouchListener = object : View.OnTouchListener {
-        override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-            when (event?.action) {
-                //창을 눌럿을떄
-                MotionEvent.ACTION_DOWN -> {
-                    //창을 눌럿을시 값 초기화
-                    moveCheck = false
-                }
-                //움직임이 감지 됫을때
-                MotionEvent.ACTION_MOVE -> {
-                    //창이 작을때 드래그 기능 사용
-                    if(isBottomViewOpen == false) {
+    //하단바 슬라이드 업 함수
+    fun SlideUp(){
+        //기본상태 or 상단바열려있을시 상닫바 닫기 + 슬라이드 업 하기
+        if((topBottomState == TopBottomState().none).or(topBottomState == TopBottomState().slideDown).or(topBottomState == TopBottomState().search)) {
 
-                        //이동값 + 현재뷰 크기로 바뀌어야할 뷰 크기 계산
-                        var h = -event.getY().toInt().intTodP() + v?.height!!.intTodP();
-                        //뷰 크기 변화
-                        //기본 뷰 크기 밖으로 이동한"적"이 잇을시 moveCheck true로 바꾸기
-                        if (h >= BottomMin  && h <= BottomMax) {
-                            moveCheck = true;
-                            v?.setHeight(h);
-                        }else if(h<BottomMin){
-                            v?.setHeight(BottomMin);
-                        }
-                    }
-                }
-                //손땟을때
-                MotionEvent.ACTION_UP -> {
-                    //창이 닫겨있을때
-                    if (isBottomViewOpen == false) {
-                        if ((v?.height?.intTodP()==BottomMin).and(moveCheck == false)) {
-                            //단순 터치한 경우      - 화면확대 열림처리
-                            v?.setHeight(BottomMax);
-                            isBottomViewOpen = true;
-                        }else if ((v?.height?.intTodP()!=BottomMin).and(moveCheck == true)){
-                            //드래그로 이동한 경우   - 열림처리       이동할떄마다 크기가 변햇음으로 크기변화처리x
-                            isBottomViewOpen = true;
-                        }else if((v?.height?.intTodP() == BottomMin).and(moveCheck == true)){
-                            //드래그로 이동햇다 닫은경우  - 닫은처리   해당부분은 없어도 되나 해당 이벤트가 있다는것을 명시적으로 표기하기위해 작성
-                            isBottomViewOpen = false;
-                        }
-                    }else{//창이 열려있을때
-                        isBottomViewOpen = false;
-                        v?.setHeight(BottomMin);
-                    }
-                }
+            //다른 상태일때 해당상태 종료시키기
+            if (topBottomState == TopBottomState().slideDown){
+                 //상단바 닫기
+                MainTopSlideDown.instance.SlideUp();
+            }else if(topBottomState == TopBottomState().search){
+                //검색창 닫기
             }
-            return false;
+
+            //애니메이션 생성
+            val animate: TranslateAnimation = TranslateAnimation(0f, 0f, BottomMid.dp().toFloat() - BottomMin.dp().toFloat(), 0f)
+            animate.duration = 500; //애니메이션 동작시간
+            animate.fillAfter = true;   //애니메이션후 상태 유지
+
+            //애니메이션 리스너 장착
+            animate.setAnimationListener(object : Animation.AnimationListener {
+                override fun onAnimationRepeat(animation: Animation?) {}
+                override fun onAnimationStart(animation: Animation?) {}
+                override fun onAnimationEnd(animation: Animation?) {
+                    //애니메종료후 상태변경
+                    topBottomState = TopBottomState().slideUp1
+                }
+            })
+
+            //상태를 무빙으로 변경 -> 종료후 slideUp2
+            topBottomState = TopBottomState().moving;
+
+            //뷰크기를 변경후 애니메이션 실행
+            mainBottomView?.setHeight(BottomMid)
+            mainBottomView?.startAnimation(animate)
+
+        }else if(topBottomState == TopBottomState().slideUp1){
+
+            //상단뷰 숨기기기
+            MainTopSlideDown.instance.TopViewClose()
+            //애니메이션 생성
+            val animate: TranslateAnimation =
+                TranslateAnimation(0f, 0f, BottomMax.dp().toFloat() - BottomMid.dp().toFloat(), 0f)
+            animate.duration = 500; //애니메이션 동작시간
+            animate.fillAfter = true;   //애니메이션후 상태 유지
+
+            animate.setAnimationListener(object : Animation.AnimationListener{
+                override fun onAnimationRepeat(animation: Animation?) {}
+                override fun onAnimationStart(animation: Animation?) {}
+                override fun onAnimationEnd(animation: Animation?) {
+                    //애니메종료후 상태변경
+                    topBottomState = TopBottomState().slideUp2
+                }
+            })
+
+            //상태를 무빙으로 변경 -> 종료후 slideUp2
+            topBottomState = TopBottomState().moving;
+
+            //뷰크기를 변경후 애니메이션 실행
+            mainBottomView?.setHeight(BottomMax)
+            mainBottomView?.startAnimation(animate)
         }
     }
 
+    //하단바 슬라이드 다운 함수
+    fun SlideDown(){
+        when(topBottomState){
+            TopBottomState().slideUp1->{
 
-    //2020/9/17 최석우 int값 dp로 변환하는 함수
-    public fun Int.dp(): Int { //함수 이름도 직관적으로 보이기 위해 dp()로 바꿨습니다.
-        val metrics = Resources.getSystem().displayMetrics
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), metrics)
-            .toInt()
-    }
-    public fun Int.intTodP() : Int{
-        val density = Resources.getSystem().displayMetrics.density
-        return this.div(density).toInt();
-    }
+                //애니메이션 생성
+                val animate: TranslateAnimation = TranslateAnimation(0f, 0f, 0f, BottomMid.dp().toFloat() - BottomMin.dp().toFloat())
+                animate.duration = 500; //애니메이션 동작시간
+                animate.fillAfter = true;   //애니메이션후 상태 유지
 
+                animate.setAnimationListener(object : Animation.AnimationListener{
+                    override fun onAnimationRepeat(animation: Animation?) {}
+                    override fun onAnimationStart(animation: Animation?) { }
+                    override fun onAnimationEnd(animation: Animation?) {
+                        //slideUp1 상태일매나 상태 none 설정
+                        if(topBottomState == TopBottomState().moving) {
+                            topBottomState = TopBottomState().none
+                        }
+                        //태초 상태로 돌아가는 애니메이션
+                        val animate: TranslateAnimation = TranslateAnimation(0f, 0f, 0f, 0f)
+                        animate.duration = 0;
+                        animate.fillAfter = true;
+                        mainBottomView?.setHeight(BottomMin)
+                        mainBottomView?.startAnimation(animate)
+                    }
+                })
 
-    //2020/9/17 최석우 뷰 크기 변환함수
-    fun View.setHeight(value: Int) {
-        val lp = layoutParams
-        lp?.let {
-            lp.height = value.dp();
-            layoutParams = lp
+                //상태를 무빙으로 변경 -> 종료후 다른상태가 아닐시 none
+                topBottomState = TopBottomState().moving
+                //애니메이션 실행 -> 종료후 뷰 크기 변경
+                mainBottomView?.startAnimation(animate)
+            }
+            TopBottomState().slideUp2->{
+
+                //상단바 다시 열기
+                MainTopSlideDown.instance.TopViewOpen()
+                //애니메이션 생성
+                val animate: TranslateAnimation = TranslateAnimation(0f, 0f, 0f, BottomMax.dp().toFloat() - BottomMin.dp().toFloat())
+                animate.duration = 500;
+                animate.fillAfter = true;
+
+                animate.setAnimationListener(object : Animation.AnimationListener{
+                    override fun onAnimationRepeat(animation: Animation?) {}
+                    override fun onAnimationStart(animation: Animation?) {}
+                    override fun onAnimationEnd(animation: Animation?) {
+                        //종료후 상태 변경
+                        topBottomState = TopBottomState().none
+                        //태초 상태로 돌아가는 애니메이션
+                        val animate: TranslateAnimation = TranslateAnimation(0f, 0f, 0f, 0f)
+                        animate.duration = 0;
+                        animate.fillAfter = true;
+                        mainBottomView?.setHeight(BottomMin)
+                        mainBottomView?.startAnimation(animate)
+                    }
+
+                })
+
+                //상태를 무빙으로 변경 -> 종료후 none
+                topBottomState = TopBottomState().moving
+                //애니메이션 실행 -> 종료후 뷰 크기 변경
+                mainBottomView?.startAnimation(animate)
+            }
         }
+
     }
 
-    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-        TODO("Not yet implemented")
-    }
 
-    override fun onClick(v: View?) {
-        TODO("Not yet implemented")
-    }
 }
