@@ -5,8 +5,9 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
 
+    >
 
 
     <androidx.viewpager2.widget.ViewPager2
@@ -15,7 +16,9 @@
         android:layout_height="match_parent"
         android:background="#FFFFFF"
         android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp"
+        />
 
     <TextView
         android:id="@+id/tv_num"
@@ -42,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
-        android:layout_marginEnd="28dp"
+        android:layout_marginRight="28dp"
         android:text="10"
         android:textColor="@android:color/white"
         android:textSize="30dp"
@@ -53,8 +56,8 @@
     <LinearLayout
         android:id="@+id/mainTopView"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@drawable/main_top_view_background"
+        android:layout_height="00dp"
+
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="@+id/vp_viewpager"
         app:layout_constraintEnd_toEndOf="parent"
@@ -66,9 +69,6 @@
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:background="@drawable/main_top_search_view_background"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="5dp"
             android:maxLines="1"
             android:inputType="text"/>
 
@@ -79,7 +79,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="horizontal"
-            android:dividerHeight="1dp"/>
+            android:dividerHeight="1dp"
+            android:background="@drawable/main_top_view_background"/>
 
 
         <LinearLayout
@@ -89,6 +90,7 @@
             android:orientation="horizontal"
             android:padding="5dp"
             android:gravity="center"
+            android:background="@color/mainBottonView"
             >
             <TextView
                 android:layout_width="20dp"
@@ -138,17 +140,16 @@
                 android:layout_width="20dp"
                 android:layout_height="50dp"/>
         </LinearLayout>
-
-
         <LinearLayout
-            android:id="@+id/mainTopDragView"
+            android:id="@+id/mainViewListCover"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="horizontal">
-
+            android:layout_height="20dp">
+            <GridLayout
+                android:id="@+id/mainViewList"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@drawable/main_top_view_background" />
         </LinearLayout>
-
-
     </LinearLayout>
 
     <!--2020/09/17 최석우 하단 바 -->
