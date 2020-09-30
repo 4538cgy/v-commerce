@@ -69,12 +69,10 @@ class TestViewPagerAdapter(private val context: Context, private val items: Arra
                             MainBottomSlideUp.instance.SlideUp();
                         }else{
                             Log.d("드레그 DOWN : ","드레그 DOWN")
-                            returnDefaultView()
                             MainTopSlideDown.instance.SlideDown();
                         }
                     }else{//터치일시 각 창을 닫음
-
-
+                        returnDefaultView()
                     }
                 }
             }
