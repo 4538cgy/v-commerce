@@ -10,6 +10,7 @@ import android.content.Intent
 
 import androidx.viewpager2.widget.ViewPager2
 import com.uos.vcommcerce.Adapter.TestViewPagerAdapter
+import com.uos.vcommcerce.Adapter.returnDefaultView
 import com.uos.vcommcerce.Tranformer.ZoomOutPageTransformer
 import com.uos.vcommcerce.Util.MainBottomSlideUp
 
@@ -83,6 +84,8 @@ class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
                 // 다른 페이지로 스크롤 됬을때 ViewPager 의 현재 페이지 텍스트뷰를 갱신해준다.
                 Log.d("TEST onPageSelected", position.toString())
                 tv_num.text = (position + 1).toString()
+                //페이지 이동후 디폴트 타입으로 변경
+                returnDefaultView()
             }
         })
 

@@ -69,18 +69,11 @@ class TestViewPagerAdapter(private val context: Context, private val items: Arra
                             MainBottomSlideUp.instance.SlideUp();
                         }else{
                             Log.d("드레그 DOWN : ","드레그 DOWN")
+                            returnDefaultView()
                             MainTopSlideDown.instance.SlideDown();
                         }
                     }else{//터치일시 각 창을 닫음
-                        when(topBottomState){
-                            TopBottomState().slideUp1-> MainBottomSlideUp.instance.SlideDown()
-                            TopBottomState().slideUp2-> MainBottomSlideUp.instance.SlideDown()
-                            TopBottomState().slideDown-> MainTopSlideDown.instance.SlideUp()
-                            TopBottomState().search-> {
-                                MainTopSlideDown.instance.SearchUp()
-                                Imm?.hideSoftInputFromWindow(MainTopSlideDown.MainSearchView?.windowToken,0);
-                            }
-                        }
+
 
                     }
                 }
@@ -89,6 +82,16 @@ class TestViewPagerAdapter(private val context: Context, private val items: Arra
             return false
         }
     }
+}
 
-
+fun returnDefaultView(){
+    when (topBottomState) {
+        TopBottomState().slideUp1 -> MainBottomSlideUp.instance.SlideDown()
+        TopBottomState().slideUp2 -> MainBottomSlideUp.instance.SlideDown()
+        TopBottomState().slideDown -> MainTopSlideDown.instance.SlideUp()
+        TopBottomState().search -> {
+            MainTopSlideDown.instance.SearchUp()
+            Imm?.hideSoftInputFromWindow(MainTopSlideDown.MainSearchView?.windowToken, 0);
+        }
+    }
 }
