@@ -1,64 +1,77 @@
 package com.uos.vcommcerce.Util
 
 import android.content.Context
-import android.content.res.Resources
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import android.util.TypedValue
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.TranslateAnimation
+import android.view.inputmethod.InputMethodManager
 import android.widget.BaseAdapter
 import android.widget.EditText
 import android.widget.TextView
+import androidx.core.content.ContextCompat.getSystemService
+import com.google.firebase.crashlytics.internal.common.CommonUtils.hideKeyboard
+import com.uos.vcommcerce.Imm
+import com.uos.vcommcerce.MainActivity
 import com.uos.vcommcerce.R
-import com.uos.vcommcerce.isTopViewOpen
+import com.uos.vcommcerce.topBottomState
 
-class MainTopSlideDown : View.OnClickListener, View.OnTouchListener,View.OnFocusChangeListener{
 
-    val BottomMin: Int = 100;
-    val BottomMax: Int = 300;
+class MainTopSlideDown {
+
+    val TopMin: Int = 120;
+    val TopMax: Int = 300;
+
+    val mainSearchViewSize: Int = 40;
+    val mainRecyclerItemSize: Int = 30;
     val mainViewChangeSize = 60;
-    val recyclerItemSize: Int = 30;
-    val SearchViewSize: Int = 40;
-    var state : Int;
+    val mainViewListSize = 20;
 
     companion object {
         var instance = MainTopSlideDown()
         var TopView: View? = null;
+        var MainSearchView: EditText? = null
         var MainSearchListView: View? = null;
         var MainViewChange: View? = null;
-        var MainTopDragView: View? = null;
+        var MainViewListCover : View? = null;
+        var MainViewList: View? = null;
 
         //검색창용 변수및 리스트
         var originalList: ArrayList<String>? = null
         var filterList: MutableList<String>? = null
         var selectedList: List<String>? = null
         var writedWord: String? = null
+
         //외부에서 받아오기
-        var SearchViewAdapter : SearchAdapter? = null
-        var SearchView : EditText? = null
+        var SearchViewAdapter: SearchAdapter? = null
+
 
         //상태 변수
     }
 
     //해당클래스에 필요한 뷰를 main에서 받아옴
-    fun setTopView(topView: View,searchView : EditText,mainSearchListView: View, mainViewChange: View,mainTopDragView: View,searchViewAdapter : SearchAdapter) {
+    fun setTopView(topView: View, searchView: EditText, mainSearchListView: View, mainViewChange: View,mainViewListCover:View,mainViewList:View, searchViewAdapter: SearchAdapter) {
         //메인의 탑뷰
         TopView = topView;
         //탑뷰의 서치뷰
-        SearchView = searchView
+        MainSearchView = searchView
         //탑뷰의 서치뷰 리스트
         MainSearchListView = mainSearchListView;
         //탑뷰의 이동뷰
         MainViewChange = mainViewChange;
-        //탑뷰의 드래그뷰
-        MainTopDragView = mainTopDragView;
-        //
-        SearchViewAdapter =searchViewAdapter
+        //탑뷰의 그리드뷰 커버
+        MainViewListCover = mainViewListCover;
+        //탑뷰의 그리드뷰
+        MainViewList = mainViewList;
+        //탑뷰의 어댑터
+        SearchViewAdapter = searchViewAdapter
     }
 
     init {
-        state = 0;
         originalList = ArrayList<String>()
         filterList = mutableListOf<String>()
         selectedList = listOf<String>()
@@ -104,22 +117,19 @@ class MainTopSlideDown : View.OnClickListener, View.OnTouchListener,View.OnFocus
     //검색창 터치 이벤트 리스너
     val mainTopSearchViewOnTouchListener = object : View.OnTouchListener {
         override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-            val text = writedWord?:""
+
+            when(topBottomState){
+                TopBottomState().slideUp1->MainBottomSlideUp.instance.SlideDown();
+            }
+            topBottomState = TopBottomState().search
+
+            val text = writedWord ?: ""
             search(text)
             searchingViewChange()
             return false;
         }
     }
 
-    val mainTopSearchViewOnFocusChangeListener = object : View.OnFocusChangeListener {
-        override fun onFocusChange(v: View?, hasFocus: Boolean) {
-            Log.d("hasFocus?","" + hasFocus )
-            if(hasFocus == true){
-                state = 1;
-            }
-            Log.d("state?","" + state )
-        }
-    }
 
     //서치 어댑터 클래스
     inner class SearchAdapter(private val context: Context) : BaseAdapter() {
@@ -128,7 +138,7 @@ class MainTopSlideDown : View.OnClickListener, View.OnTouchListener,View.OnFocus
             val view: View = LayoutInflater.from(context).inflate(R.layout.main_search_item, null)
             val text = view.findViewById<TextView>(R.id.main_search_item_title)
             val list = filterList?.get(position)
-            view.setHeight(recyclerItemSize);
+            view.setHeight(mainRecyclerItemSize);
             text.text = list;
             return view
         }
@@ -142,7 +152,7 @@ class MainTopSlideDown : View.OnClickListener, View.OnTouchListener,View.OnFocus
         }
 
         override fun getCount(): Int {
-            return filterList?.size?:0
+            return filterList?.size ?: 0
         }
 
         init {
@@ -153,101 +163,101 @@ class MainTopSlideDown : View.OnClickListener, View.OnTouchListener,View.OnFocus
     val TextChangeListener = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
             //검색창에서 검색 글자 추출하기
-            writedWord =  SearchView!!.text.toString()
+            writedWord = MainSearchView!!.text.toString()
             //추출한뒤 writedWord에 집어 넣어줘야함
-            val text = writedWord?:""
+            val text = writedWord ?: ""
             search(text)
             searchingViewChange()
         }
 
-        override fun beforeTextChanged(charSequence: CharSequence?, start: Int, count: Int, after: Int) {
-        }
-
-        override fun onTextChanged(charSequence: CharSequence?, start: Int, before: Int, count: Int) {
-
-        }
+        override fun beforeTextChanged(charSequence: CharSequence?, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(charSequence: CharSequence?, start: Int, before: Int, count: Int) {}
     }
 
 
     //드래그용 터치 이벤트 리스너
     val mainTopViewOnclickListener = object : View.OnClickListener {
         override fun onClick(v: View?) {
+            SlideUp()
         }
     }
 
 
-    //드래그용 터치 이벤트 리스너
-    val mainTopViewOnTouchListener = object : View.OnTouchListener {
-        override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-            when (event?.action) {
-                //창을 눌럿을떄
-                MotionEvent.ACTION_DOWN -> {
-                }
-                //움직임이 감지 됫을때
-                MotionEvent.ACTION_MOVE -> {
-                    if (isTopViewOpen == false) {
-                        //드래그 기능만 사용
-                        //이동값 + 현재뷰 크기로 바뀌어야할 뷰 크기 계산
-                        var h = event.getY().toInt().intTodP();
-                        //뷰 크기 변화
-                        if (h >= BottomMin && h <= BottomMax) {
-                            v?.setHeight(h);
-                        }
-                    }
-                }
-                //손땟을때
-                MotionEvent.ACTION_UP -> {
-                    //창이 닫겨있을때
-                    if ((v?.height?.intTodP() != BottomMin).and(isTopViewOpen == false)) {
-                        //드래그로 이동한 경우   - 열림처리       이동할떄마다 크기가 변햇음으로 크기변화처리x
-                        isTopViewOpen = true;
-                    } else if ((v?.height?.intTodP() == BottomMin).and(isTopViewOpen == false)) {
-                        //드래그로 이동햇다 닫은경우  - 닫은처리   해당부분은 없어도 되나 해당 이벤트가 있다는것을 명시적으로 표기하기위해 작성
-                        isTopViewOpen = false;
-                    } else if (isTopViewOpen == true) {//창이 열려있을때
-                        v?.setHeight(BottomMin);
-                        isTopViewOpen = false;
-                    }
-                }
+
+    fun SearchUp(){
+        topBottomState = TopBottomState().none;
+        TopView?.setHeight(mainSearchViewSize + mainViewChangeSize + mainViewListSize)
+        MainSearchListView?.setHeight(0)
+        MainViewChange?.setHeight(mainViewChangeSize)
+        MainViewList?.setHeight(mainViewListSize)
+        MainSearchView?.clearFocus()
+    }
+
+
+
+
+
+    fun SlideDown() {
+        //기본상태 or 상단바열려있을시 상닫바 닫기 + 슬라이드 업 하기
+        if ((topBottomState == TopBottomState().none).or(topBottomState == TopBottomState().slideUp1)) {
+            if (topBottomState == TopBottomState().slideUp1) {
+                //상단바 닫기
+                MainBottomSlideUp.instance.SlideDown();
             }
-            return false;
+            //애니메이션 생성
+            val animate: TranslateAnimation =TranslateAnimation(0f,0f,-TopMax.dp()+mainViewListSize.dp().toFloat(),0f)
+            animate.duration = 500;
+            animate.fillAfter = true;
+
+            //애니메이션 리스너 장착
+            animate.setAnimationListener(object : Animation.AnimationListener {
+                override fun onAnimationRepeat(animation: Animation?) {}
+                override fun onAnimationStart(animation: Animation?) {}
+                override fun onAnimationEnd(animation: Animation?) {
+                    topBottomState = TopBottomState().slideDown
+                }
+            })
+
+            //상태를 무빙으로 변경 -> 종료후 slideDown
+            topBottomState = TopBottomState().moving;
+            //뷰크기를 변경후 애니메이션 실행
+            TopView?.setHeight(mainSearchViewSize+mainViewChangeSize+TopMax);
+            MainViewListCover?.setHeight(TopMax);
+            MainViewList?.setHeight(TopMax)
+            MainViewList?.startAnimation(animate)
         }
     }
 
 
+    fun SlideUp() {
+        if (topBottomState == TopBottomState().slideDown) {
+            //애니메이션 생성
+            val animate: TranslateAnimation =TranslateAnimation(0f,0f,0f,-TopMax.dp().toFloat()+mainViewListSize.dp().toFloat())
+            animate.duration = 500;
+            animate.fillAfter = true;
 
-
-
-
-    //View
-    override fun onClick(v: View?) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-        TODO("Not yet implemented")
-    }
-
-
-    //2020/9/17 최석우 int값 dp로 변환하는 함수
-    public fun Int.dp(): Int { //함수 이름도 직관적으로 보이기 위해 dp()로 바꿨습니다.
-        val metrics = Resources.getSystem().displayMetrics
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), metrics)
-            .toInt()
-    }
-
-    public fun Int.intTodP(): Int {
-        val density = Resources.getSystem().displayMetrics.density
-        return this.div(density).toInt();
-    }
-
-
-    //2020/9/17 최석우 뷰 크기 변환함수
-    fun View.setHeight(value: Int) {
-        val lp = layoutParams
-        lp?.let {
-            lp.height = value.dp();
-            layoutParams = lp
+            animate.setAnimationListener(object : Animation.AnimationListener {
+                override fun onAnimationRepeat(animation: Animation?) {}
+                override fun onAnimationStart(animation: Animation?) {}
+                override fun onAnimationEnd(animation: Animation?) {
+                    //slideDown 상태일매나 상태 none 설정
+                    if(topBottomState == TopBottomState().moving) {
+                        topBottomState = TopBottomState().none
+                    }
+                    //태초 상태로 돌아가는 애니메이션
+                    val animate: TranslateAnimation = TranslateAnimation(0f, 0f, 0f, 0f)
+                    animate.duration = 0;
+                    animate.fillAfter = true;
+                    TopView?.setHeight(TopMin)
+                    MainViewListCover?.setHeight(mainViewListSize);
+                    MainViewList?.setHeight(mainViewListSize)
+                    MainViewList?.startAnimation(animate)
+                }
+            })
+            //상태를 무빙으로 변경 -> 종료후 다른상태가 아닐시 none
+            topBottomState = TopBottomState().moving
+            //애니메이션 실행 -> 종료후 뷰 크기 변경
+            MainViewList?.startAnimation(animate)
         }
     }
 
@@ -258,7 +268,7 @@ class MainTopSlideDown : View.OnClickListener, View.OnTouchListener,View.OnFocus
         filterList!!.clear()
         // 문자 입력이 없을때는 모든 데이터를 보여준다.
         if (charText.length == 0) {
-            for(i in 1..10) {
+            for (i in 1..10) {
                 filterList!!.add(originalList!![i])
             }
             //filterList!!.addAll(originalList!!)
@@ -267,7 +277,7 @@ class MainTopSlideDown : View.OnClickListener, View.OnTouchListener,View.OnFocus
             // 리스트의 모든 데이터를 검색한다.
             for (i in originalList!!.indices) {
                 // arraylist의 모든 데이터에 입력받은 단어(charText)가 포함되어 있으면 true를 반환한다.
-                if (originalList!![i].toLowerCase().contains(charText)&&check<10) {
+                if (originalList!![i].toLowerCase().contains(charText) && check < 10) {
                     // 검색된 데이터를 리스트에 추가한다.
                     filterList!!.add(originalList!![i])
                     check++
@@ -280,31 +290,43 @@ class MainTopSlideDown : View.OnClickListener, View.OnTouchListener,View.OnFocus
 
     //검색 리스트 변경 함수
     fun searchingViewChange() {
+
         var searchItemCount = filterList?.size ?: 0
         if (searchItemCount < 3) {
-            TopView?.setHeight(SearchViewSize + 3 * recyclerItemSize)
-            MainSearchListView?.setHeight(3 * recyclerItemSize)
+            TopView?.setHeight(mainSearchViewSize + 3 * mainRecyclerItemSize)
             MainViewChange?.setHeight(0)
-            MainTopDragView?.setHeight(0)
+            MainSearchListView?.setHeight(3 * mainRecyclerItemSize)
+            MainViewList?.setHeight(0)
+
         } else {
-            TopView?.setHeight(SearchViewSize + searchItemCount * recyclerItemSize)
-            MainSearchListView?.setHeight(searchItemCount * recyclerItemSize)
+            TopView?.setHeight(mainSearchViewSize + searchItemCount * mainRecyclerItemSize)
             MainViewChange?.setHeight(0)
-            MainTopDragView?.setHeight(0)
+            MainSearchListView?.setHeight(searchItemCount * mainRecyclerItemSize)
+            MainViewList?.setHeight(0)
         }
     }
-    //검색 리스트 되돌리기 함수
-    fun searchingViewBack() {
-            TopView?.setHeight(SearchViewSize + mainViewChangeSize)
-            MainSearchListView?.setHeight(0)
-            MainViewChange?.setHeight(mainViewChangeSize)
-            MainTopDragView?.setHeight(0)
+
+
+    fun TopViewClose(){
+        //애니메이션 생성
+        val animate: TranslateAnimation =TranslateAnimation(0f, 0f, 0f, -TopMin.dp().toFloat())
+        animate.duration = 200; //애니메이션 동작시간
+        animate.fillAfter = true;   //애니메이션후 상태 유지
+        //상태를 무빙으로 변경 -> 종료후 slideUp2
+        topBottomState = TopBottomState().moving;
+
+        TopView?.startAnimation(animate)
     }
 
-    override fun onFocusChange(v: View?, hasFocus: Boolean) {
-        TODO("Not yet implemented")
+    fun TopViewOpen(){
+        //애니메이션 생성
+        val animate: TranslateAnimation =TranslateAnimation(0f, 0f, -TopMin.dp().toFloat(), 0f)
+        animate.duration = 200; //애니메이션 동작시간
+        animate.fillAfter = true;   //애니메이션후 상태 유지
+        //상태를 무빙으로 변경 -> 종료후 slideUp2
+        topBottomState = TopBottomState().moving;
+
+        TopView?.startAnimation(animate)
     }
-
-
 }
 
