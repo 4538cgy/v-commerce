@@ -22,17 +22,19 @@ class MainBottomSlideUp  {
         var topView: View? = null;
     }
 
+    //해당클래스에 필요한 뷰를 main에서 받아옴
     fun setBottomView(MainBottomView: View){
         mainBottomView = MainBottomView;
     }
 
+    //하단바 온클릭 이벤트 리스너 - 하단바 닫기
      val mainBottomViewOnclickListener = object : View.OnClickListener {
         override fun onClick(v: View?) {
             SlideDown()
         }
     }
 
-
+    //하단바 슬라이드 업 함수
     fun SlideUp(){
         //기본상태 or 상단바열려있을시 상닫바 닫기 + 슬라이드 업 하기
         if((topBottomState == TopBottomState().none).or(topBottomState == TopBottomState().slideDown).or(topBottomState == TopBottomState().search)) {
@@ -95,7 +97,7 @@ class MainBottomSlideUp  {
         }
     }
 
-
+    //하단바 슬라이드 다운 함수
     fun SlideDown(){
         when(topBottomState){
             TopBottomState().slideUp1->{

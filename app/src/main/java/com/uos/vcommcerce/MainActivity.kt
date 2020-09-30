@@ -89,30 +89,28 @@ class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
         })
 
 
-        //2020/9/17 최석우 메인액티비티 하단바 터치 리스너 추가
-        mainBottomView.setOnClickListener(MainBottomSlideUp.instance.mainBottomViewOnclickListener);
-        //mainBottomView.setOnTouchListener(MainBottomSlideUp.instance.mainBottomViewOnTouchListener);
+
 
         //메인 서치뷰에 텍스트 변경인식 리스너 추가
         mainSearchView!!.addTextChangedListener(MainTopSlideDown.instance.TextChangeListener)
 
         //메인 서치뷰 리스트에 어댑처 장착
-        var adapter: MainTopSlideDown.SearchAdapter = MainTopSlideDown.instance.SearchAdapter(
-            this
-        )
-        mainSearchListView.adapter = adapter
-
+        var adapter: MainTopSlideDown.SearchAdapter = MainTopSlideDown.instance.SearchAdapter(this )
+        mainSearchListView.adapter = MainTopSlideDown.instance.SearchAdapter(this )
 
         //2020/9/22 최석우 메인액티비티 상단 검색바 터치 리스너 추가
         mainSearchView.setOnClickListener(MainTopSlideDown.instance.mainTopSearchViewOnclickListener);
         mainSearchView.setOnTouchListener(MainTopSlideDown.instance.mainTopSearchViewOnTouchListener);
-        //백키 누를시 바뀔함수
-        mainSearchView.setCallback { MainTopSlideDown.instance.SearchUp() }
-
 
 
         //2020/9/22 최석우 메인액티비티 상단바 리스너 추가
         mainTopView.setOnClickListener(MainTopSlideDown.instance.mainTopViewOnclickListener);
+        //2020/9/17 최석우 메인액티비티 하단바 터치 리스너 추가
+        mainBottomView.setOnClickListener(MainBottomSlideUp.instance.mainBottomViewOnclickListener);
+
+
+        //백키 누를시 적용될 함수 - 서치리스트뷰 숨기기
+        mainSearchView.setCallback { MainTopSlideDown.instance.SearchUp() }
 
         //메인 탑뷰에 필요한 인자들 전송
         MainTopSlideDown.instance.setTopView(mainTopView, mainSearchView, mainSearchListView, mainViewChange,mainViewListCover ,mainViewList, adapter);

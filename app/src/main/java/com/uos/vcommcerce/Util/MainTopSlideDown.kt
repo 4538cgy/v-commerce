@@ -23,9 +23,11 @@ import com.uos.vcommcerce.topBottomState
 
 class MainTopSlideDown {
 
+    //TOP뷰 전체크기 최대 최소
     val TopMin: Int = 120;
     val TopMax: Int = 300;
 
+    //각 뷰 기본사이즈
     val mainSearchViewSize: Int = 40;
     val mainRecyclerItemSize: Int = 30;
     val mainViewChangeSize = 60;
@@ -33,6 +35,9 @@ class MainTopSlideDown {
 
     companion object {
         var instance = MainTopSlideDown()
+        //외부에서 받아온 리사이클러 어댑터
+        var SearchViewAdapter: SearchAdapter? = null
+        //외부에서 받아온 뷰들
         var TopView: View? = null;
         var MainSearchView: EditText? = null
         var MainSearchListView: View? = null;
@@ -45,13 +50,9 @@ class MainTopSlideDown {
         var filterList: MutableList<String>? = null
         var selectedList: List<String>? = null
         var writedWord: String? = null
-
-        //외부에서 받아오기
-        var SearchViewAdapter: SearchAdapter? = null
-
-
-        //상태 변수
     }
+
+
 
     //해당클래스에 필요한 뷰를 main에서 받아옴
     fun setTopView(topView: View, searchView: EditText, mainSearchListView: View, mainViewChange: View,mainViewListCover:View,mainViewList:View, searchViewAdapter: SearchAdapter) {
@@ -71,6 +72,156 @@ class MainTopSlideDown {
         SearchViewAdapter = searchViewAdapter
     }
 
+    //검색창 온클릭 이벤트 리스너
+    val mainTopSearchViewOnclickListener = object : View.OnClickListener {
+        override fun onClick(v: View?) {
+
+        }
+    }
+    //검색창 터치 이벤트 리스너 - 창닫기
+    val mainTopSearchViewOnTouchListener = object : View.OnTouchListener {
+        override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+
+            when(topBottomState){
+                TopBottomState().slideUp1->MainBottomSlideUp.instance.SlideDown();
+            }
+            topBottomState = TopBottomState().search
+            val text = writedWord ?: ""
+            search(text)
+            searchingViewChange()
+            return false;
+        }
+    }
+
+    //뷰이동 터치 이벤트 리스너 - 창닫기
+    val mainTopViewOnclickListener = object : View.OnClickListener {
+        override fun onClick(v: View?) {
+            SlideUp()
+        }
+    }
+
+
+    //검색 리스트 변경 함수 - 검색창 열기
+    fun searchingViewChange() {
+        var searchItemCount = filterList?.size ?: 0
+        if (searchItemCount < 3) {
+            TopView?.setHeight(mainSearchViewSize + 3 * mainRecyclerItemSize)
+            MainViewChange?.setHeight(0)
+            MainSearchListView?.setHeight(3 * mainRecyclerItemSize)
+            MainViewList?.setHeight(0)
+
+        } else {
+            TopView?.setHeight(mainSearchViewSize + searchItemCount * mainRecyclerItemSize)
+            MainViewChange?.setHeight(0)
+            MainSearchListView?.setHeight(searchItemCount * mainRecyclerItemSize)
+            MainViewList?.setHeight(0)
+        }
+    }
+
+
+
+    //검색창 종료함수
+    fun SearchUp(){
+        topBottomState = TopBottomState().none;
+        TopView?.setHeight(mainSearchViewSize + mainViewChangeSize + mainViewListSize)
+        MainSearchListView?.setHeight(0)
+        MainViewChange?.setHeight(mainViewChangeSize)
+        MainViewList?.setHeight(mainViewListSize)
+        MainSearchView?.clearFocus()
+    }
+
+
+    //뷰이동 슬라이드 다운 함수
+    fun SlideDown() {
+        //기본상태 or 상단바열려있을시 상닫바 닫기 + 슬라이드 업 하기
+        if ((topBottomState == TopBottomState().none).or(topBottomState == TopBottomState().slideUp1)) {
+            if (topBottomState == TopBottomState().slideUp1) {
+                //상단바 닫기
+                MainBottomSlideUp.instance.SlideDown();
+            }
+            //애니메이션 생성
+            val animate: TranslateAnimation =TranslateAnimation(0f,0f,-TopMax.dp()+mainViewListSize.dp().toFloat(),0f)
+            animate.duration = 500;
+            animate.fillAfter = true;
+
+            //애니메이션 리스너 장착
+            animate.setAnimationListener(object : Animation.AnimationListener {
+                override fun onAnimationRepeat(animation: Animation?) {}
+                override fun onAnimationStart(animation: Animation?) {}
+                override fun onAnimationEnd(animation: Animation?) {
+                    topBottomState = TopBottomState().slideDown
+                }
+            })
+
+            //상태를 무빙으로 변경 -> 종료후 slideDown
+            topBottomState = TopBottomState().moving;
+            //뷰크기를 변경후 애니메이션 실행
+            TopView?.setHeight(mainSearchViewSize+mainViewChangeSize+TopMax);
+            MainViewListCover?.setHeight(TopMax);
+            MainViewList?.setHeight(TopMax)
+            MainViewList?.startAnimation(animate)
+        }
+    }
+
+    //뷰이동 슬라이드 업 함수
+    fun SlideUp() {
+        if (topBottomState == TopBottomState().slideDown) {
+            //애니메이션 생성
+            val animate: TranslateAnimation =TranslateAnimation(0f,0f,0f,-TopMax.dp().toFloat()+mainViewListSize.dp().toFloat())
+            animate.duration = 500;
+            animate.fillAfter = true;
+
+            animate.setAnimationListener(object : Animation.AnimationListener {
+                override fun onAnimationRepeat(animation: Animation?) {}
+                override fun onAnimationStart(animation: Animation?) {}
+                override fun onAnimationEnd(animation: Animation?) {
+                    //slideDown 상태일매나 상태 none 설정
+                    if(topBottomState == TopBottomState().moving) {
+                        topBottomState = TopBottomState().none
+                    }
+                    //태초 상태로 돌아가는 애니메이션
+                    val animate: TranslateAnimation = TranslateAnimation(0f, 0f, 0f, 0f)
+                    animate.duration = 0;
+                    animate.fillAfter = true;
+                    TopView?.setHeight(TopMin)
+                    MainViewListCover?.setHeight(mainViewListSize);
+                    MainViewList?.setHeight(mainViewListSize)
+                    MainViewList?.startAnimation(animate)
+                }
+            })
+            //상태를 무빙으로 변경 -> 종료후 다른상태가 아닐시 none
+            topBottomState = TopBottomState().moving
+            //애니메이션 실행 -> 종료후 뷰 크기 변경
+            MainViewList?.startAnimation(animate)
+        }
+    }
+
+    // 탑뷰 전체 닫기 함수
+    fun TopViewClose(){
+        //애니메이션 생성
+        val animate: TranslateAnimation =TranslateAnimation(0f, 0f, 0f, -TopMin.dp().toFloat())
+        animate.duration = 200; //애니메이션 동작시간
+        animate.fillAfter = true;   //애니메이션후 상태 유지
+        //상태를 무빙으로 변경 -> 종료후 slideUp2
+        topBottomState = TopBottomState().moving;
+
+        TopView?.startAnimation(animate)
+    }
+
+    // 탑뷰 전체 열기 함수
+    fun TopViewOpen(){
+        //애니메이션 생성
+        val animate: TranslateAnimation =TranslateAnimation(0f, 0f, -TopMin.dp().toFloat(), 0f)
+        animate.duration = 200; //애니메이션 동작시간
+        animate.fillAfter = true;   //애니메이션후 상태 유지
+        //상태를 무빙으로 변경 -> 종료후 slideUp2
+        topBottomState = TopBottomState().moving;
+
+        TopView?.startAnimation(animate)
+    }
+
+
+    //초기화
     init {
         originalList = ArrayList<String>()
         filterList = mutableListOf<String>()
@@ -105,31 +256,6 @@ class MainTopSlideDown {
         originalList!!.add("허영지")
 
     }
-
-
-    //검색창 온클릭 이벤트 리스너
-    val mainTopSearchViewOnclickListener = object : View.OnClickListener {
-        override fun onClick(v: View?) {
-
-        }
-    }
-
-    //검색창 터치 이벤트 리스너
-    val mainTopSearchViewOnTouchListener = object : View.OnTouchListener {
-        override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-
-            when(topBottomState){
-                TopBottomState().slideUp1->MainBottomSlideUp.instance.SlideDown();
-            }
-            topBottomState = TopBottomState().search
-
-            val text = writedWord ?: ""
-            search(text)
-            searchingViewChange()
-            return false;
-        }
-    }
-
 
     //서치 어댑터 클래스
     inner class SearchAdapter(private val context: Context) : BaseAdapter() {
@@ -169,98 +295,9 @@ class MainTopSlideDown {
             search(text)
             searchingViewChange()
         }
-
         override fun beforeTextChanged(charSequence: CharSequence?, start: Int, count: Int, after: Int) {}
         override fun onTextChanged(charSequence: CharSequence?, start: Int, before: Int, count: Int) {}
     }
-
-
-    //드래그용 터치 이벤트 리스너
-    val mainTopViewOnclickListener = object : View.OnClickListener {
-        override fun onClick(v: View?) {
-            SlideUp()
-        }
-    }
-
-
-
-    fun SearchUp(){
-        topBottomState = TopBottomState().none;
-        TopView?.setHeight(mainSearchViewSize + mainViewChangeSize + mainViewListSize)
-        MainSearchListView?.setHeight(0)
-        MainViewChange?.setHeight(mainViewChangeSize)
-        MainViewList?.setHeight(mainViewListSize)
-        MainSearchView?.clearFocus()
-    }
-
-
-
-
-
-    fun SlideDown() {
-        //기본상태 or 상단바열려있을시 상닫바 닫기 + 슬라이드 업 하기
-        if ((topBottomState == TopBottomState().none).or(topBottomState == TopBottomState().slideUp1)) {
-            if (topBottomState == TopBottomState().slideUp1) {
-                //상단바 닫기
-                MainBottomSlideUp.instance.SlideDown();
-            }
-            //애니메이션 생성
-            val animate: TranslateAnimation =TranslateAnimation(0f,0f,-TopMax.dp()+mainViewListSize.dp().toFloat(),0f)
-            animate.duration = 500;
-            animate.fillAfter = true;
-
-            //애니메이션 리스너 장착
-            animate.setAnimationListener(object : Animation.AnimationListener {
-                override fun onAnimationRepeat(animation: Animation?) {}
-                override fun onAnimationStart(animation: Animation?) {}
-                override fun onAnimationEnd(animation: Animation?) {
-                    topBottomState = TopBottomState().slideDown
-                }
-            })
-
-            //상태를 무빙으로 변경 -> 종료후 slideDown
-            topBottomState = TopBottomState().moving;
-            //뷰크기를 변경후 애니메이션 실행
-            TopView?.setHeight(mainSearchViewSize+mainViewChangeSize+TopMax);
-            MainViewListCover?.setHeight(TopMax);
-            MainViewList?.setHeight(TopMax)
-            MainViewList?.startAnimation(animate)
-        }
-    }
-
-
-    fun SlideUp() {
-        if (topBottomState == TopBottomState().slideDown) {
-            //애니메이션 생성
-            val animate: TranslateAnimation =TranslateAnimation(0f,0f,0f,-TopMax.dp().toFloat()+mainViewListSize.dp().toFloat())
-            animate.duration = 500;
-            animate.fillAfter = true;
-
-            animate.setAnimationListener(object : Animation.AnimationListener {
-                override fun onAnimationRepeat(animation: Animation?) {}
-                override fun onAnimationStart(animation: Animation?) {}
-                override fun onAnimationEnd(animation: Animation?) {
-                    //slideDown 상태일매나 상태 none 설정
-                    if(topBottomState == TopBottomState().moving) {
-                        topBottomState = TopBottomState().none
-                    }
-                    //태초 상태로 돌아가는 애니메이션
-                    val animate: TranslateAnimation = TranslateAnimation(0f, 0f, 0f, 0f)
-                    animate.duration = 0;
-                    animate.fillAfter = true;
-                    TopView?.setHeight(TopMin)
-                    MainViewListCover?.setHeight(mainViewListSize);
-                    MainViewList?.setHeight(mainViewListSize)
-                    MainViewList?.startAnimation(animate)
-                }
-            })
-            //상태를 무빙으로 변경 -> 종료후 다른상태가 아닐시 none
-            topBottomState = TopBottomState().moving
-            //애니메이션 실행 -> 종료후 뷰 크기 변경
-            MainViewList?.startAnimation(animate)
-        }
-    }
-
 
     //검색함수
     fun search(charText: String) {
@@ -288,45 +325,5 @@ class MainTopSlideDown {
         SearchViewAdapter!!.notifyDataSetChanged()
     }
 
-    //검색 리스트 변경 함수
-    fun searchingViewChange() {
-
-        var searchItemCount = filterList?.size ?: 0
-        if (searchItemCount < 3) {
-            TopView?.setHeight(mainSearchViewSize + 3 * mainRecyclerItemSize)
-            MainViewChange?.setHeight(0)
-            MainSearchListView?.setHeight(3 * mainRecyclerItemSize)
-            MainViewList?.setHeight(0)
-
-        } else {
-            TopView?.setHeight(mainSearchViewSize + searchItemCount * mainRecyclerItemSize)
-            MainViewChange?.setHeight(0)
-            MainSearchListView?.setHeight(searchItemCount * mainRecyclerItemSize)
-            MainViewList?.setHeight(0)
-        }
-    }
-
-
-    fun TopViewClose(){
-        //애니메이션 생성
-        val animate: TranslateAnimation =TranslateAnimation(0f, 0f, 0f, -TopMin.dp().toFloat())
-        animate.duration = 200; //애니메이션 동작시간
-        animate.fillAfter = true;   //애니메이션후 상태 유지
-        //상태를 무빙으로 변경 -> 종료후 slideUp2
-        topBottomState = TopBottomState().moving;
-
-        TopView?.startAnimation(animate)
-    }
-
-    fun TopViewOpen(){
-        //애니메이션 생성
-        val animate: TranslateAnimation =TranslateAnimation(0f, 0f, -TopMin.dp().toFloat(), 0f)
-        animate.duration = 200; //애니메이션 동작시간
-        animate.fillAfter = true;   //애니메이션후 상태 유지
-        //상태를 무빙으로 변경 -> 종료후 slideUp2
-        topBottomState = TopBottomState().moving;
-
-        TopView?.startAnimation(animate)
-    }
 }
 

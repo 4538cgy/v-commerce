@@ -49,12 +49,7 @@ class TestViewPagerAdapter(private val context: Context, private val items: Arra
 
 
     //최석우 뷰 컨트롤을위한 클릭과 터치리스너
-    val ViewPageClickListner =object : View.OnClickListener{
-        override fun onClick(v: View?) {
-            Log.d("클릭 : ","click")
-        }
-    }
-
+    val ViewPageClickListner =object : View.OnClickListener{ override fun onClick(v: View?) {} }
     val ViewPageTouchListner =object : View.OnTouchListener {
         override fun onTouch(v: View?, event: MotionEvent?): Boolean {
             when (event?.action) {
@@ -68,7 +63,7 @@ class TestViewPagerAdapter(private val context: Context, private val items: Arra
                 //손땟을때
                 MotionEvent.ACTION_UP -> {
                     var distance : Int = TouchPoint!!.minus( event.getY().toInt());
-                    if (abs(distance)>50){
+                    if (abs(distance)>50){//드래기일시 해당하는 창을 열기
                         if (distance>0){
                             Log.d("드레그 UP : ","드레그 UP")
                             MainBottomSlideUp.instance.SlideUp();
@@ -76,7 +71,7 @@ class TestViewPagerAdapter(private val context: Context, private val items: Arra
                             Log.d("드레그 DOWN : ","드레그 DOWN")
                             MainTopSlideDown.instance.SlideDown();
                         }
-                    }else{
+                    }else{//터치일시 각 창을 닫음
                         when(topBottomState){
                             TopBottomState().slideUp1-> MainBottomSlideUp.instance.SlideDown()
                             TopBottomState().slideUp2-> MainBottomSlideUp.instance.SlideDown()
