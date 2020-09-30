@@ -1,21 +1,18 @@
 package com.uos.vcommcerce
 
-//<<<<<<< HEAD
-//=======
-//>>>>>>> c9bfb0209e32d267039777f158fc047a3a5382ac
-//<<<<<<< HEAD
-//=======
-//>>>>>>> c9bfb0209e32d267039777f158fc047a3a5382ac
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
+
 import androidx.viewpager2.widget.ViewPager2
 import com.uos.vcommcerce.Adapter.TestViewPagerAdapter
 import com.uos.vcommcerce.Tranformer.ZoomOutPageTransformer
 import com.uos.vcommcerce.Util.MainBottomSlideUp
+
 import com.uos.vcommcerce.Util.MainTopSlideDown
 import com.uos.vcommcerce.Util.TopBottomState
 import kotlinx.android.synthetic.main.activity_main.*
@@ -28,6 +25,7 @@ var Imm : InputMethodManager ?= null;
 
 
 class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,12 +87,9 @@ class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
         })
 
 
-
-
         //메인 서치뷰에 텍스트 변경인식 리스너 추가
         mainSearchView!!.addTextChangedListener(MainTopSlideDown.instance.TextChangeListener)
 
-        //메인 서치뷰 리스트에 어댑처 장착
         var adapter: MainTopSlideDown.SearchAdapter = MainTopSlideDown.instance.SearchAdapter(this )
         mainSearchListView.adapter = MainTopSlideDown.instance.SearchAdapter(this )
 
@@ -109,6 +104,7 @@ class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
         mainBottomView.setOnClickListener(MainBottomSlideUp.instance.mainBottomViewOnclickListener);
 
 
+
         //백키 누를시 적용될 함수 - 서치리스트뷰 숨기기
         mainSearchView.setCallback { MainTopSlideDown.instance.SearchUp() }
 
@@ -120,7 +116,6 @@ class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
         //키보드 숨기기위한 시스템 변수
         Imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager;
     }
-
     
 
 //최석우 앱터져서 일시적으로 막음
@@ -139,13 +134,11 @@ class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
 
 
 
-    override fun onStop() {
-        super.onStop()
-
-        //4538cgy@gmail.com UID 값 [ 너무 푸쉬를 많이 보내서 일시적으로 사용 중지 주석 풀지마세요! ]
-        //FcmPush.instance.sendMessage("IIBpkwk5jUSNDa0qnDZxgwEvq812", "hi", "bye")
-    }
-    
+        override fun onStop() {
+            super.onStop()
+            //4538cgy@gmail.com UID 값 [ 너무 푸쉬를 많이 보내서 일시적으로 사용 중지 주석 풀지마세요! ]
+            //FcmPush.instance.sendMessage("IIBpkwk5jUSNDa0qnDZxgwEvq812", "hi", "bye")
+        }
 
 
 }

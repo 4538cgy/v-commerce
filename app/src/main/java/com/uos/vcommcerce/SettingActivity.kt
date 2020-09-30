@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInApi
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.GoogleApi
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
 import com.uos.vcommcerce.Model.SettingDTO
@@ -41,6 +42,8 @@ class SettingActivity : AppCompatActivity() {
             .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
             .build()
 
+
+
     }
 
     inner class SettingActivityRecyclerViewAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
@@ -51,6 +54,7 @@ class SettingActivity : AppCompatActivity() {
             settingDTO.add(SettingDTO("메인 화면 보기"))
             settingDTO.add(SettingDTO("로그아웃"))
             settingDTO.add(SettingDTO("비디오 화면 보기"))
+            settingDTO.add(SettingDTO("그리드 화면 보기"))
             notifyDataSetChanged()
         }
 
@@ -89,6 +93,10 @@ class SettingActivity : AppCompatActivity() {
                         pageChange("Video")
                     }
 
+                    "그리드 화면 보기" -> {
+                        pageChange("Grid")
+                    }
+
                 }
 
             }
@@ -119,6 +127,10 @@ class SettingActivity : AppCompatActivity() {
 
                 startActivity(Intent(this,TestExoplayerActivity::class.java))
 
+            }
+
+            "Grid" -> {
+                startActivity(Intent(this,UserActivity::class.java))
             }
 
 
