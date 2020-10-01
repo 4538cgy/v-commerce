@@ -42,6 +42,7 @@ class UserActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_view)
+        supportFragmentManager.beginTransaction().replace(R.id.recyclerViewBox, VideoGridFragment()).commit()
 
         videoGridBtn.setOnClickListener{v->
             supportFragmentManager.beginTransaction().replace(R.id.recyclerViewBox, VideoGridFragment()).commit()
