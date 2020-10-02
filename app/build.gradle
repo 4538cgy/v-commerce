@@ -19,6 +19,9 @@ android {
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        //벡터 드로어 블 활성화??(ExoPlayer)
+        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {

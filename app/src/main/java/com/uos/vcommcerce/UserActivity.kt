@@ -37,22 +37,24 @@ class UserActivity : AppCompatActivity(){
     val CAMERA_PERMISSION = arrayOf(Manifest.permission.CAMERA) //카메라 퍼미션
     val STORAGE_PERMISSION = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE) //외부저장소 권한요청
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_view)
+        //기본 그리드 뷰 실행
         supportFragmentManager.beginTransaction().replace(R.id.recyclerViewBox, VideoGridFragment()).commit()
 
-        videoGridBtn.setOnClickListener{v->
+        //비디오 버튼 눌럿을 때
+        videoGridBtn.setOnClickListener{
             supportFragmentManager.beginTransaction().replace(R.id.recyclerViewBox, VideoGridFragment()).commit()
 
         }
-        historyBtn.setOnClickListener { v->
+        //히스토리 버튼 눌렀을 때
+        historyBtn.setOnClickListener { 
             supportFragmentManager.beginTransaction().replace(R.id.recyclerViewBox, HistoryFragment()).commit()
 
         }
 
+        //프로필 사진 이미지 눌렀을 때
         profile_Img.setOnClickListener{ v->
             val popup = PopupMenu(applicationContext, v)
             menuInflater.inflate(R.menu.profilepopup, popup.menu)
@@ -60,14 +62,14 @@ class UserActivity : AppCompatActivity(){
             popup.setOnMenuItemClickListener { menuItem ->
                 when (menuItem.itemId) {
                     R.id.profile_Camera -> {
-                        if(isPermitted(CAMERA_PERMISSION)) {// 권한 체크하는 함수
-                            openCamera()
+                        if(isPermitted(CAMERA_PERMISSION)) { // 권한 체크하는 함수
+                            openCamera() 
                         }else{
                             ActivityCompat.requestPermissions(this, CAMERA_PERMISSION,FLAG_PERM_CAMERA )
                         }
                     }
                     R.id.profile_Gallery -> {
-                        if(isPermitted(STORAGE_PERMISSION)){
+                        if(isPermitted(STORAGE_PERMISSION)){ // 권한 체크하는 함수
                             openGallery()
                         }else{
                             ActivityCompat.requestPermissions(this,STORAGE_PERMISSION, FLAG_PERM_STORAGE)

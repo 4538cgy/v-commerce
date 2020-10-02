@@ -1,9 +1,12 @@
 package com.uos.vcommcerce.TestPackageDeleteSoon
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.exoplayer2.MediaItem
@@ -11,6 +14,7 @@ import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
 import com.uos.vcommcerce.R
+import com.uos.vcommcerce.UserActivity
 import kotlinx.android.synthetic.main.test_exoplayer_view.*
 
 class TestExoplayerActivity : AppCompatActivity(){
@@ -33,11 +37,21 @@ class TestExoplayerActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.test_exoplayer_view)
 
+
+
+
         //initializePlayerDefault()
 
         initializePlayer()
         attachPlayerView()
-        initialVideoUrl(mediaPath6)
+        Log.d("intent URL",intent.getStringExtra("url"))
+        if(intent.getStringExtra("url") != null){
+            var url:String = intent.getStringExtra("url")
+            Log.d("URL",url)
+            initialVideoUrl(url)
+        }
+        else Toast.makeText(this,"Not URL",Toast.LENGTH_SHORT).show()
+
         preparePlayer()
         playPlayer()
 
@@ -89,7 +103,8 @@ class TestExoplayerActivity : AppCompatActivity(){
             super.onBackPressed()
         }else{
             backKeyPressedTime = curTime.toInt()
-            showSettingPopup()
+            super.onBackPressed()
+            //showSettingPopup()
         }
     }
 
