@@ -23,21 +23,22 @@ private var mediaPath6 = "https://bitdash-a.akamaihd.net/content/MI201109210084_
 class VideoGridFragment : Fragment() {
 
     val DataList = arrayListOf(
-//        GridData(R.drawable.ic_launcher_background, "0번", mediaPath),
-//        GridData(R.drawable.ic_launcher_background, "1번",mediaPath2),
-//        GridData(R.drawable.btn_signin_facebook, "2번",mediaPath3),
-//        GridData(R.drawable.ic_launcher_background, "3번", mediaPath4),
-//        GridData(R.drawable.ic_launcher_background, "4번",mediaPath5),
         GridData(R.drawable.ic_launcher_background, "5번",mediaPath6),
-     //  GridData(R.drawable.com_facebook_auth_dialog_cancel_background, "강철의 눈물","http://demo.unified-streaming.com/video/tears-of-steel/tears-of-steel.ism/.m3u8"),
         GridData(R.drawable.ic_launcher_background, "빅벅 버니",
             "https://multiplatform-f.akamaihd.net/i/multi/will/bunny/big_buck_bunny_,640x360_400,640x360_700,640x360_1000,950x540_1500,.f4v.csmil/master.m3u8"),
         GridData(R.drawable.ic_launcher_background, "신텔",
             "https://multiplatform-f.akamaihd.net/i/multi/april11/sintel/sintel-hd_,512x288_450_b,640x360_700_b,768x432_1000_b,1024x576_1400_m,.mp4.csmil/master.m3u8"),
         GridData(R.drawable.com_facebook_button_icon_white, "Apple 샘플","http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8"),
-        GridData(R.drawable.ic_launcher_background, "fMP4","https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8")
-     //   GridData(R.drawable.com_facebook_tooltip_black_xout, "라이브 Akamai","https://cph-p2p-msl.akamaized.net/hls/live/2000341/test/master.m3u8"),
-     //   GridData(R.drawable.common_google_signin_btn_text_disabled, "Dolby Multichgannel","http://d3rlna7iyyu8wu.cloudfront.net/skip_armstrong/skip_armstrong_multichannel_subs.m3u8 ")
+        GridData(R.drawable.ic_launcher_background, "fMP4","https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8"),
+
+        //GridData(R.drawable.ic_launcher_background, "0번", mediaPath),
+        //GridData(R.drawable.ic_launcher_background, "1번",mediaPath2),
+        //GridData(R.drawable.btn_signin_facebook, "2번",mediaPath3),
+        GridData(R.drawable.ic_launcher_background, "3번", mediaPath4),
+        //GridData(R.drawable.ic_launcher_background, "4번",mediaPath5),
+        //GridData(R.drawable.com_facebook_auth_dialog_cancel_background, "강철의 눈물","http://demo.unified-streaming.com/video/tears-of-steel/tears-of-steel.ism/.m3u8"),
+        GridData(R.drawable.com_facebook_tooltip_black_xout, "라이브 Akamai","https://cph-p2p-msl.akamaized.net/hls/live/2000341/test/master.m3u8")
+        //GridData(R.drawable.common_google_signin_btn_text_disabled, "Dolby Multichgannel","http://d3rlna7iyyu8wu.cloudfront.net/skip_armstrong/skip_armstrong_multichannel_subs.m3u8 ")
 //        GridData(R.drawable.ic_launcher_background, "13번"),
 //        GridData(R.drawable.ic_launcher_background, "14번"),
 //        GridData(R.drawable.messenger_bubble_large_white, "15번"),
