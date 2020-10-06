@@ -1,19 +1,15 @@
 package com.uos.vcommcerce
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
-import android.content.Intent
-
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.uos.vcommcerce.Adapter.TestViewPagerAdapter
 import com.uos.vcommcerce.Adapter.returnDefaultView
 import com.uos.vcommcerce.Tranformer.ZoomOutPageTransformer
 import com.uos.vcommcerce.Util.MainBottomSlideUp
-
 import com.uos.vcommcerce.Util.MainTopSlideDown
 import com.uos.vcommcerce.Util.TopBottomState
 import kotlinx.android.synthetic.main.activity_main.*
@@ -64,6 +60,23 @@ class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
         vp_viewpager.setPageTransformer(ZoomOutPageTransformer())
 
 
+        //뷰페이저 민감도 조절 코드
+        // 시작
+        var recyclerViewField = ViewPager2::class.java.getDeclaredField("mRecyclerView")
+        recyclerViewField.isAccessible = true
+
+        var recyclerview = recyclerViewField.get(vp_viewpager)
+        var touchSlopField = RecyclerView::class.java.getDeclaredField("mTouchSlop")
+        touchSlopField.isAccessible = true
+
+         var touchSlop :Int = touchSlopField.get(recyclerview) as Int
+        //민감도를 6으로 줬습니다.
+        touchSlopField.set(recyclerview, touchSlop * 6)
+        // 끝
+
+
+
+
         // 아이템 전체 개수 view set
         tv_total.text = imageList.size.toString()
 
@@ -93,8 +106,8 @@ class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
         //메인 서치뷰에 텍스트 변경인식 리스너 추가
         mainSearchView!!.addTextChangedListener(MainTopSlideDown.instance.TextChangeListener)
 
-        var adapter: MainTopSlideDown.SearchAdapter = MainTopSlideDown.instance.SearchAdapter(this )
-        mainSearchListView.adapter = MainTopSlideDown.instance.SearchAdapter(this )
+        var adapter: MainTopSlideDown.SearchAdapter = MainTopSlideDown.instance.SearchAdapter(this)
+        mainSearchListView.adapter = MainTopSlideDown.instance.SearchAdapter(this)
 
         //2020/9/22 최석우 메인액티비티 상단 검색바 터치 리스너 추가
         mainSearchView.setOnClickListener(MainTopSlideDown.instance.mainTopSearchViewOnclickListener);
@@ -112,7 +125,15 @@ class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
         mainSearchView.setCallback { MainTopSlideDown.instance.SearchUp() }
 
         //메인 탑뷰에 필요한 인자들 전송
-        MainTopSlideDown.instance.setTopView(mainTopView, mainSearchView, mainSearchListView, mainViewChange,mainViewListCover ,mainViewList, adapter);
+        MainTopSlideDown.instance.setTopView(
+            mainTopView,
+            mainSearchView,
+            mainSearchListView,
+            mainViewChange,
+            mainViewListCover,
+            mainViewList,
+            adapter
+        );
         //메인 바텀뷰에 필요한 인자들 전송
         MainBottomSlideUp.instance.setBottomView(mainBottomView)
 
