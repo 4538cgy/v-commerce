@@ -13,15 +13,11 @@ data class HttpResponseDTO(
         var category : ArrayList<String> ? = null
     )
 
-    data class SearchAllListDTO(
-
-        var pid : String ? = null,
-        var status : Int ? = null, //null = 없음 , 0  = 변환중 , 1 = 변환완료
-        var thumbnail : String ? = null,
-        var media : String ? = null
-
-    )
-
+    data class SearchAllListDTO(var uid : String , var items : List<SearchItem>)
+    data class SearchItem(  var pid : String ? = null,
+                            var status : Int ? = null, //null = 없음 , 0  = 변환중 , 1 = 변환완료
+                            var thumbnail : String ? = null,
+                            var media : String ? = null)
     data class DetailDTO(
 
         var pid :String ? = null,

@@ -15,10 +15,15 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.GoogleApi
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
+import com.uos.vcommcerce.Http.RestApi
+import com.uos.vcommcerce.Model.HttpResponseDTO
 import com.uos.vcommcerce.Model.SettingDTO
 import com.uos.vcommcerce.TestPackageDeleteSoon.TestExoplayerActivity
 import kotlinx.android.synthetic.main.activity_setting.*
 import kotlinx.android.synthetic.main.item_setting.view.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SettingActivity : AppCompatActivity() {
 
@@ -55,6 +60,7 @@ class SettingActivity : AppCompatActivity() {
             settingDTO.add(SettingDTO("로그아웃"))
             settingDTO.add(SettingDTO("비디오 화면 보기"))
             settingDTO.add(SettingDTO("그리드 화면 보기"))
+            settingDTO.add(SettingDTO("RESTFULL TEST"))
             notifyDataSetChanged()
         }
 
@@ -96,7 +102,23 @@ class SettingActivity : AppCompatActivity() {
                     "그리드 화면 보기" -> {
                         pageChange("Grid")
                     }
+                    "RESTFULL TEST" -> {
+                        RestApi().getSearchListApi("22bbccdd").enqueue(object :
+                            Callback<HttpResponseDTO.SearchAllListDTO> {
+                            override fun onResponse(
+                                call: Call<HttpResponseDTO.SearchAllListDTO>,
+                                response: Response<HttpResponseDTO.SearchAllListDTO>
+                            ) {
+                                Log.d("Retrofit", "response: ${response.body()}")
+                            }
 
+                            override fun onFailure(call: Call<HttpResponseDTO.SearchAllListDTO>, t: Throwable) {
+
+                                Log.e("Retrofit", "response: ${t.toString()}")
+                            }
+
+                        })
+                    }
                 }
 
             }

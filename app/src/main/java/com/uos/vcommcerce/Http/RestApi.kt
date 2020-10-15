@@ -2,17 +2,21 @@ package com.uos.vcommcerce.Http
 
 import com.google.gson.Gson
 import com.uos.vcommcerce.Model.HttpResponseDTO
+import okhttp3.OkHttpClient
 import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class RestApi {
 
     private val restApiServiceInterface : RestApiServiceInterface
-    private val baseUrl : String = "http://hello.com"
+    private val baseUrl : String = "http://52.79.209.221:8880"
 
     init{
         val retrofit = Retrofit.Builder()
+            .client(OkHttpClient())
             .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -23,8 +27,8 @@ class RestApi {
     
     
     //리스트 호출
-    fun getSearchListApi(pid : String, status : Int, thumbnail : String, media : String): Call<HttpResponseDTO.SearchAllListDTO>{
-        return restApiServiceInterface.getList(pid, status, thumbnail, media)
+    fun getSearchListApi(userId : String): Call<HttpResponseDTO.SearchAllListDTO>{
+        return restApiServiceInterface.getList(userId)
     }
 
 
