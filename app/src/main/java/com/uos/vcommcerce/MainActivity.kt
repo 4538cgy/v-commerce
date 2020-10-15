@@ -1,5 +1,6 @@
 package com.uos.vcommcerce
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
@@ -142,22 +143,14 @@ class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
         mainTopView.setOnClickListener(MainTopSlideDown.instance.mainTopViewOnclickListener);
         //2020/9/17 최석우 메인액티비티 하단바 터치 리스너 추가
         mainBottomView.setOnClickListener(MainBottomSlideUp.instance.mainBottomViewOnclickListener);
-
-
+        
 
         //백키 누를시 적용될 함수 - 서치리스트뷰 숨기기
         mainSearchView.setCallback { MainTopSlideDown.instance.SearchUp() }
 
         //메인 탑뷰에 필요한 인자들 전송
-        MainTopSlideDown.instance.setTopView(
-            mainTopView,
-            mainSearchView,
-            mainSearchListView,
-            mainViewChange,
-            mainViewListCover,
-            mainViewList,
-            adapter
-        );
+        MainTopSlideDown.instance.setTopView( mainTopView, mainSearchView, mainSearchListView, mainViewChange, mainViewListCover, mainViewList, adapter);
+        MainTopSlideDown.instance.setMoveItem( this,moveItem1,moveItem2,moveItem3,moveItem4,moveItem5);
         //메인 바텀뷰에 필요한 인자들 전송
         MainBottomSlideUp.instance.setBottomView(mainBottomView)
 

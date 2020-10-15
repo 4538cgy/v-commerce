@@ -1,6 +1,9 @@
 package com.uos.vcommcerce.Util
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -14,11 +17,12 @@ import android.widget.BaseAdapter
 import android.widget.EditText
 import android.widget.TextView
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.content.ContextCompat.startActivity
+import com.google.android.material.internal.ContextUtils.getActivity
 import com.google.firebase.crashlytics.internal.common.CommonUtils.hideKeyboard
-import com.uos.vcommcerce.Imm
-import com.uos.vcommcerce.MainActivity
-import com.uos.vcommcerce.R
-import com.uos.vcommcerce.topBottomState
+import com.uos.vcommcerce.*
+import com.uos.vcommcerce.Model.SettingDTO
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainTopSlideDown {
@@ -32,6 +36,8 @@ class MainTopSlideDown {
     val mainRecyclerItemSize: Int = 30;
     val mainViewChangeSize = 60;
     val mainViewListSize = 20;
+    //이동뷰 리스트
+    var moveItemList : ArrayList<View> = arrayListOf()
 
     companion object {
         var instance = MainTopSlideDown()
@@ -70,6 +76,30 @@ class MainTopSlideDown {
         MainViewList = mainViewList;
         //탑뷰의 어댑터
         SearchViewAdapter = searchViewAdapter
+    }
+
+    fun setMoveItem(mainActivity : Activity,moveItem1 : View,moveItem2 : View,moveItem3 : View,moveItem4 : View,moveItem5 : View){
+        val moveitemListner : View.OnClickListener = object :View.OnClickListener{
+            override fun onClick(v: View?) {
+                var i =0;
+                for(i in 0..moveItemList.count()){ moveItemList[i].equals(v);break }
+                //이동 아이콘 클릭시 이동할 위치 할당하면됨
+                when (i){
+                    0->  mainActivity.startActivity(Intent(mainActivity,UserActivity::class.java))
+
+                }
+            }
+        }
+        moveItemList.add(moveItem1)
+        moveItem1.setOnClickListener(moveitemListner)
+        moveItemList.add(moveItem2)
+        moveItem2.setOnClickListener(moveitemListner)
+        moveItemList.add(moveItem3)
+        moveItem3.setOnClickListener(moveitemListner)
+        moveItemList.add(moveItem4)
+        moveItem4.setOnClickListener(moveitemListner)
+        moveItemList.add(moveItem5)
+        moveItem5.setOnClickListener(moveitemListner)
     }
 
     //검색창 온클릭 이벤트 리스너
@@ -324,6 +354,7 @@ class MainTopSlideDown {
         // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
         SearchViewAdapter!!.notifyDataSetChanged()
     }
+
 
 }
 
