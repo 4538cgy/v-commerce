@@ -12,8 +12,9 @@ interface RestApiServiceInterface {
     fun getList(@Query("uid") userId: String): Call<HttpResponseDTO.SearchAllListDTO>
     
     //세부 사항 조회
-    
-    //회원 검색
+    @Headers("Accept: application/json")
+    @GET( "/api/v1/search/detail?")
+    fun getDetail(@Query("pid") productId: String): Call<HttpResponseDTO.DetailDTO>
     
     //업로드
 

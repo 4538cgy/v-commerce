@@ -103,6 +103,32 @@ class SettingActivity : AppCompatActivity() {
                         pageChange("Grid")
                     }
                     "RESTFULL TEST" -> {
+
+                        //상세 정보 조회
+                        RestApi().getDetailApi("thisIsSamplePid").enqueue(object : Callback<HttpResponseDTO.DetailDTO>{
+                            override fun onResponse(
+                                call: Call<HttpResponseDTO.DetailDTO>,
+                                response: Response<HttpResponseDTO.DetailDTO>
+                            ) {
+                                
+                                Log.d("Retrofit 세부 검색" , "response: ${response.body()}")
+                            }
+
+                            override fun onFailure(
+                                call: Call<HttpResponseDTO.DetailDTO>,
+                                t: Throwable
+                            ) {
+                                Log.e("Retrofit 세부검색 실패","response: ${t.toString()}")
+                            }
+
+
+                        })
+
+
+
+                        /*
+
+                        //전체 리스트 조회
                         RestApi().getSearchListApi("22bbccdd").enqueue(object :
                             Callback<HttpResponseDTO.SearchAllListDTO> {
                             override fun onResponse(
@@ -118,6 +144,10 @@ class SettingActivity : AppCompatActivity() {
                             }
 
                         })
+
+                         */
+                        
+
                     }
                 }
 

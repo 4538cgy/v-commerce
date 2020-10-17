@@ -31,5 +31,10 @@ class RestApi {
         return restApiServiceInterface.getList(userId)
     }
 
+    //상세 정보 호출
+    fun getDetailApi(productId : String): Call<HttpResponseDTO.DetailDTO>{
+        return restApiServiceInterface.getDetail(productId)
+    }
+
 
 }
