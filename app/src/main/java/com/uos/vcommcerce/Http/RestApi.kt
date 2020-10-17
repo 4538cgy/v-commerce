@@ -37,6 +37,11 @@ class RestApi {
         return restApiServiceInterface.getList(userId)
     }
 
+    //상세 정보 호출
+    fun getDetailApi(productId : String): Call<HttpResponseDTO.DetailDTO>{
+        return restApiServiceInterface.getDetail(productId)
+    }
+
     fun uploadApi(uploadContentDTO: HttpResponseDTO.UploadContentDTO, file: File) : Call<Void>{
 
         val requestFile = RequestBody.create(MediaType.parse( "multipart/form-data"), file)

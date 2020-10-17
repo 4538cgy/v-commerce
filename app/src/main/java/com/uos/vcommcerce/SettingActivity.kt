@@ -62,7 +62,7 @@ class SettingActivity : AppCompatActivity() {
             settingDTO.add(SettingDTO("로그아웃"))
             settingDTO.add(SettingDTO("비디오 화면 보기"))
             settingDTO.add(SettingDTO("그리드 화면 보기"))
-            settingDTO.add(SettingDTO("RESTFULL TEST GET"))
+            settingDTO.add(SettingDTO("RESTFULL TEST"))
             settingDTO.add(SettingDTO("RESTFULL TEST POST"))
             notifyDataSetChanged()
         }
@@ -105,7 +105,26 @@ class SettingActivity : AppCompatActivity() {
                     "그리드 화면 보기" -> {
                         pageChange("Grid")
                     }
-                    "RESTFULL TEST GET" -> {
+                    "RESTFULL TEST" -> {
+                        //상세 정보 조회
+                        RestApi().getDetailApi("thisIsSamplePid").enqueue(object : Callback<HttpResponseDTO.DetailDTO>{
+                            override fun onResponse(
+                                call: Call<HttpResponseDTO.DetailDTO>,
+                                response: Response<HttpResponseDTO.DetailDTO>
+                            ) {
+
+                                Log.d("Retrofit 세부 검색" , "response: ${response.body()}")
+                            }
+
+                            override fun onFailure(
+                                call: Call<HttpResponseDTO.DetailDTO>,
+                                t: Throwable
+                            ) {
+                                Log.e("Retrofit 세부검색 실패","response: ${t.toString()}")
+                            }
+                            /*
+
+                        //전체 리스트 조회
                         RestApi().getSearchListApi("22bbccdd").enqueue(object :
                             Callback<HttpResponseDTO.SearchAllListDTO> {
                             override fun onResponse(
@@ -119,6 +138,11 @@ class SettingActivity : AppCompatActivity() {
 
                                 Log.e("Retrofit", "response: ${t.toString()}")
                             }
+
+                        })
+
+                         */
+
 
                         })
                     }
