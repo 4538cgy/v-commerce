@@ -1,5 +1,6 @@
 package com.uos.vcommcerce
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -10,20 +11,21 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.auth.api.Auth
-import com.google.android.gms.auth.api.signin.GoogleSignInApi
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.GoogleApi
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
 import com.uos.vcommcerce.Http.RestApi
 import com.uos.vcommcerce.Model.HttpResponseDTO
 import com.uos.vcommcerce.Model.SettingDTO
 import com.uos.vcommcerce.TestPackageDeleteSoon.TestExoplayerActivity
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_setting.*
 import kotlinx.android.synthetic.main.item_setting.view.*
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
 
 class SettingActivity : AppCompatActivity() {
 
@@ -60,7 +62,8 @@ class SettingActivity : AppCompatActivity() {
             settingDTO.add(SettingDTO("로그아웃"))
             settingDTO.add(SettingDTO("비디오 화면 보기"))
             settingDTO.add(SettingDTO("그리드 화면 보기"))
-            settingDTO.add(SettingDTO("RESTFULL TEST"))
+            settingDTO.add(SettingDTO("RESTFULL TEST GET"))
+            settingDTO.add(SettingDTO("RESTFULL TEST POST"))
             notifyDataSetChanged()
         }
 
@@ -102,7 +105,7 @@ class SettingActivity : AppCompatActivity() {
                     "그리드 화면 보기" -> {
                         pageChange("Grid")
                     }
-                    "RESTFULL TEST" -> {
+                    "RESTFULL TEST GET" -> {
                         RestApi().getSearchListApi("22bbccdd").enqueue(object :
                             Callback<HttpResponseDTO.SearchAllListDTO> {
                             override fun onResponse(
@@ -113,6 +116,41 @@ class SettingActivity : AppCompatActivity() {
                             }
 
                             override fun onFailure(call: Call<HttpResponseDTO.SearchAllListDTO>, t: Throwable) {
+
+                                Log.e("Retrofit", "response: ${t.toString()}")
+                            }
+
+                        })
+                    }
+                    "RESTFULL TEST POST" -> {
+                        // file 생성 부분을 고쳐줘야함. 영상을 찍고 그 영상을 선택하여 올려 줄 수 있도록
+                        val filename = "myfile.txt"
+                        val directory = applicationContext.filesDir
+                        val file = File(directory, filename)
+                        if( !file.exists()) {
+                            val fileContents = "Hello world!"
+                            applicationContext.openFileOutput(filename, Context.MODE_PRIVATE).use {
+                                it.write(fileContents.toByteArray())
+                            }
+                        }
+
+                        val category = ArrayList<String>()
+                        category.add("건강기능식품")
+                        category.add("건강식품")
+                       val uploadContentDTO = HttpResponseDTO.UploadContentDTO(
+                            token = "abmnsda23349asdm1239c72",
+                        uid = "29df898eqr738sdf91g", title = "100년 묵은 홍삼",  body = "여러분 안녕하세요~ \n오늘은 잇님들에게 100년 묵은 홍삼을 소개시켜드리려고 해요~~~\n(X같은 문 이모티콘)",
+                        category = category)
+                        RestApi().uploadApi(uploadContentDTO,file).enqueue(object :
+                            Callback<Void> {
+                            override fun onResponse(
+                                call: Call<Void>,
+                                response: Response<Void>
+                            ) {
+                                Log.d("Retrofit", "response: ${response.body()}")
+                            }
+
+                            override fun onFailure(call: Call<Void>, t: Throwable) {
 
                                 Log.e("Retrofit", "response: ${t.toString()}")
                             }
