@@ -11,15 +11,15 @@ import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.uos.vcommcerce.Imm
 import com.uos.vcommcerce.R
-import com.uos.vcommcerce.util.MainBottomSlideUp
-import com.uos.vcommcerce.util.MainTopSlideDown
+import com.uos.vcommcerce.mainupside.MainBottomSlideUp
+import com.uos.vcommcerce.mainupside.MainTopSlideDown
 import com.uos.vcommcerce.util.TopBottomState
-import com.uos.vcommcerce.model.MediaContent
+import com.uos.vcommcerce.model.MediaContentDTO
 import com.uos.vcommcerce.topBottomState
 import kotlinx.android.synthetic.main.item_exoplayer.view.*
 import kotlin.math.abs
 
-class TestViewPagerAdapter(private val context: Context, private val items: ArrayList<MediaContent>) : RecyclerView.Adapter<TestViewPagerAdapter.ViewHolder>(){
+class TestViewPagerAdapter(private val context: Context, private val items: ArrayList<MediaContentDTO>) : RecyclerView.Adapter<TestViewPagerAdapter.ViewHolder>(){
 
 
 
@@ -128,11 +128,19 @@ class TestViewPagerAdapter(private val context: Context, private val items: Arra
                     var distance: Int = TouchPoint!!.minus(event.getY().toInt());
                     if (abs(distance) > 50) {//드래기일시 해당하는 창을 열기
                         if (distance > 0) {
-                            Log.d("드레그 UP : ", "드레그 UP")
-                            MainBottomSlideUp.instance.SlideUp();
+                            Log.d("드레그 UP : ", "드레그 UP 상태 : " + topBottomState )
+                            if((topBottomState== TopBottomState().none).or((topBottomState==TopBottomState().slideUpMid))){
+                                MainBottomSlideUp.instance.SlideUp();
+                            }else if(topBottomState== TopBottomState().slideDown){
+                                MainTopSlideDown.instance.SlideUp();
+                            }
                         } else {
-                            Log.d("드레그 DOWN : ", "드레그 DOWN")
-                            MainTopSlideDown.instance.SlideDown();
+                            Log.d("드레그 DOWN : ", "드레그 DOWN 상태 : " + topBottomState)
+                            if((topBottomState== TopBottomState().slideUpMid).or((topBottomState==TopBottomState().slideUpMax))){
+                                MainBottomSlideUp.instance.SlideDown();
+                            }else if(topBottomState== TopBottomState().none){
+                                MainTopSlideDown.instance.SlideDown();
+                            }
                         }
                     } else {//터치일시 각 창을 닫음
                         returnDefaultView()
@@ -148,8 +156,8 @@ class TestViewPagerAdapter(private val context: Context, private val items: Arra
 
 fun returnDefaultView(){
     when (topBottomState) {
-        TopBottomState().slideUp1 -> MainBottomSlideUp.instance.SlideDown()
-        TopBottomState().slideUp2 -> MainBottomSlideUp.instance.SlideDown()
+        TopBottomState().slideUpMid -> MainBottomSlideUp.instance.SlideDown()
+        TopBottomState().slideUpMax -> MainBottomSlideUp.instance.SlideDown()
         TopBottomState().slideDown -> MainTopSlideDown.instance.SlideUp()
         TopBottomState().search -> {
             MainTopSlideDown.instance.SearchUp()

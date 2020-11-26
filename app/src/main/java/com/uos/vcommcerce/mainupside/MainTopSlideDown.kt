@@ -1,10 +1,11 @@
-package com.uos.vcommcerce.util
+package com.uos.vcommcerce.mainupside
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -17,19 +18,25 @@ import android.widget.TextView
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.UserActivity
 import com.uos.vcommcerce.topBottomState
+import com.uos.vcommcerce.util.TopBottomState
+import com.uos.vcommcerce.util.dp
+import com.uos.vcommcerce.util.setHeight
 
 
 class MainTopSlideDown {
 
-    //TOP뷰 전체크기 최대 최소
-    val TopMin: Int = 120;
-    val TopMax: Int = 300;
+
 
     //각 뷰 기본사이즈
-    val mainSearchViewSize: Int = 40;
-    val mainRecyclerItemSize: Int = 30;
-    val mainViewChangeSize = 60;
-    val mainViewListSize = 20;
+    val mainSearchViewSize: Int = 35;//검색창
+    val mainRecyclerItemSize: Int = 30;//검색 아이템 크기
+    val mainViewChangeSize = 60;//이동아이콘
+    val mainViewListSize = 20;//하단바 손잡이
+
+    //TOP뷰 전체크기 최대 최소
+    val TopMin: Int = 0;
+    val TopMax: Int = mainSearchViewSize + mainViewChangeSize + mainViewListSize;
+
     //이동뷰 리스트
     var moveItemList : ArrayList<View> = arrayListOf()
 
@@ -97,17 +104,13 @@ class MainTopSlideDown {
     }
 
     //검색창 온클릭 이벤트 리스너
-    val mainTopSearchViewOnclickListener = object : View.OnClickListener {
-        override fun onClick(v: View?) {
-
-        }
-    }
+    val mainTopSearchViewOnclickListener = object : View.OnClickListener { override fun onClick(v: View?) {} }
     //검색창 터치 이벤트 리스너 - 창닫기
     val mainTopSearchViewOnTouchListener = object : View.OnTouchListener {
         override fun onTouch(v: View?, event: MotionEvent?): Boolean {
 
             when(topBottomState){
-                TopBottomState().slideUp1-> MainBottomSlideUp.instance.SlideDown();
+                TopBottomState().slideUpMid-> MainBottomSlideUp.instance.SlideDown();
             }
             topBottomState = TopBottomState().search
             val text = writedWord ?: ""
@@ -146,25 +149,23 @@ class MainTopSlideDown {
 
     //검색창 종료함수
     fun SearchUp(){
-        topBottomState = TopBottomState().none;
+        topBottomState = TopBottomState().slideDown;
         TopView?.setHeight(mainSearchViewSize + mainViewChangeSize + mainViewListSize)
         MainSearchListView?.setHeight(0)
         MainViewChange?.setHeight(mainViewChangeSize)
         MainViewList?.setHeight(mainViewListSize)
         MainSearchView?.clearFocus()
+
     }
 
 
     //뷰이동 슬라이드 다운 함수
     fun SlideDown() {
         //기본상태 or 상단바열려있을시 상닫바 닫기 + 슬라이드 업 하기
-        if ((topBottomState == TopBottomState().none).or(topBottomState == TopBottomState().slideUp1)) {
-            if (topBottomState == TopBottomState().slideUp1) {
-                //상단바 닫기
-                MainBottomSlideUp.instance.SlideDown();
-            }
+        if (topBottomState == TopBottomState().none) {
+
             //애니메이션 생성
-            val animate: TranslateAnimation =TranslateAnimation(0f,0f,-TopMax.dp()+mainViewListSize.dp().toFloat(),0f)
+            val animate: TranslateAnimation =TranslateAnimation(0f,0f,-TopMax.dp().toFloat(),0f)
             animate.duration = 500;
             animate.fillAfter = true;
 
@@ -179,19 +180,20 @@ class MainTopSlideDown {
 
             //상태를 무빙으로 변경 -> 종료후 slideDown
             topBottomState = TopBottomState().moving;
-            //뷰크기를 변경후 애니메이션 실행
-            TopView?.setHeight(mainSearchViewSize+mainViewChangeSize+TopMax);
-            MainViewListCover?.setHeight(TopMax);
-            MainViewList?.setHeight(TopMax)
-            MainViewList?.startAnimation(animate)
+
+            TopView?.startAnimation(animate)
         }
     }
+
+
+
+
 
     //뷰이동 슬라이드 업 함수
     fun SlideUp() {
         if (topBottomState == TopBottomState().slideDown) {
             //애니메이션 생성
-            val animate: TranslateAnimation =TranslateAnimation(0f,0f,0f,-TopMax.dp().toFloat()+mainViewListSize.dp().toFloat())
+            var animate: TranslateAnimation =TranslateAnimation(0f,0f,0f,-TopMax.dp().toFloat())
             animate.duration = 500;
             animate.fillAfter = true;
 
@@ -200,50 +202,36 @@ class MainTopSlideDown {
                 override fun onAnimationStart(animation: Animation?) {}
                 override fun onAnimationEnd(animation: Animation?) {
                     //slideDown 상태일매나 상태 none 설정
-                    if(topBottomState == TopBottomState().moving) {
-                        topBottomState = TopBottomState().none
-                    }
-                    //태초 상태로 돌아가는 애니메이션
-                    val animate: TranslateAnimation = TranslateAnimation(0f, 0f, 0f, 0f)
-                    animate.duration = 0;
-                    animate.fillAfter = true;
-                    TopView?.setHeight(TopMin)
-                    MainViewListCover?.setHeight(mainViewListSize);
-                    MainViewList?.setHeight(mainViewListSize)
-                    MainViewList?.startAnimation(animate)
+                    topBottomState = TopBottomState().none
                 }
             })
             //상태를 무빙으로 변경 -> 종료후 다른상태가 아닐시 none
             topBottomState = TopBottomState().moving
             //애니메이션 실행 -> 종료후 뷰 크기 변경
-            MainViewList?.startAnimation(animate)
+            TopView?.startAnimation(animate)
         }
     }
 
-    // 탑뷰 전체 닫기 함수
-    fun TopViewClose(){
+    //뷰이동 슬라이드 업 함수
+    fun init() {
         //애니메이션 생성
-        val animate: TranslateAnimation =TranslateAnimation(0f, 0f, 0f, -TopMin.dp().toFloat())
-        animate.duration = 200; //애니메이션 동작시간
-        animate.fillAfter = true;   //애니메이션후 상태 유지
-        //상태를 무빙으로 변경 -> 종료후 slideUp2
-        topBottomState = TopBottomState().moving;
-
+        var animate: TranslateAnimation = TranslateAnimation(0f, 0f, 0f, -TopMax.dp().toFloat())
+        animate.duration = 0;
+        animate.fillAfter = true;
+        animate.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationRepeat(animation: Animation?) {}
+            override fun onAnimationStart(animation: Animation?) {}
+            override fun onAnimationEnd(animation: Animation?) {
+                //slideDown 상태일매나 상태 none 설정
+                topBottomState = TopBottomState().none
+            }
+        })
+        //상태를 무빙으로 변경 -> 종료후 다른상태가 아닐시 none
+        topBottomState = TopBottomState().moving
+        MainSearchListView?.setHeight(0)
+        //애니메이션 실행 -> 종료후 뷰 크기 변경
         TopView?.startAnimation(animate)
     }
-
-    // 탑뷰 전체 열기 함수
-    fun TopViewOpen(){
-        //애니메이션 생성
-        val animate: TranslateAnimation =TranslateAnimation(0f, 0f, -TopMin.dp().toFloat(), 0f)
-        animate.duration = 200; //애니메이션 동작시간
-        animate.fillAfter = true;   //애니메이션후 상태 유지
-        //상태를 무빙으로 변경 -> 종료후 slideUp2
-        topBottomState = TopBottomState().moving;
-
-        TopView?.startAnimation(animate)
-    }
-
 
     //초기화
     init {

@@ -11,9 +11,9 @@ import com.uos.vcommcerce.adapter.TestViewPagerAdapter
 import com.uos.vcommcerce.adapter.returnDefaultView
 import com.uos.vcommcerce.tranformer.ZoomOutPageTransformer
 import com.uos.vcommcerce.databinding.ActivityMainBinding
-import com.uos.vcommcerce.model.MediaContent
-import com.uos.vcommcerce.util.MainBottomSlideUp
-import com.uos.vcommcerce.util.MainTopSlideDown
+import com.uos.vcommcerce.model.MediaContentDTO
+import com.uos.vcommcerce.mainupside.MainBottomSlideUp
+import com.uos.vcommcerce.mainupside.MainTopSlideDown
 import com.uos.vcommcerce.util.TopBottomState
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -25,7 +25,7 @@ var Imm: InputMethodManager? = null;
 
 
 class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
-    var mediaContent: MediaContent = MediaContent(
+    var mediaContent: MediaContentDTO = MediaContentDTO(
         "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8",
         "1 번동영상",
         "1번 동영상의 내용"
@@ -60,44 +60,44 @@ class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
         )
 
         // 넣을 비디오 리스트 추가
-        val videoList = ArrayList<MediaContent>()
+        val videoList = ArrayList<MediaContentDTO>()
         videoList.add(
-            MediaContent(
+            MediaContentDTO(
                 "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8",
                 "1 번동영상",
                 "1번 동영상의 내용"
             )
         )
         videoList.add(
-            MediaContent(
+            MediaContentDTO(
                 "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8",
                 "2 번동영상",
                 "2번 동영상의 내용"
             )
         )
         videoList.add(
-            MediaContent(
+            MediaContentDTO(
                 "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8",
                 "3 번동영상",
                 "3번 동영상의 내용"
             )
         )
         videoList.add(
-            MediaContent(
+            MediaContentDTO(
                 "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8",
                 "4 번동영상",
                 "4번 동영상의 내용"
             )
         )
         videoList.add(
-            MediaContent(
+            MediaContentDTO(
                 "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8",
                 "5 번동영상",
                 "5번 동영상의 내용"
             )
         )
         videoList.add(
-            MediaContent(
+            MediaContentDTO(
                 "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8",
                 "6 번동영상",
                 "6번 동영상의 내용"
@@ -200,8 +200,12 @@ class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
         //메인 바텀뷰에 필요한 인자들 전송
         MainBottomSlideUp.instance.setBottomView(mainBottomView)
 
+        MainTopSlideDown.instance.init()
+
         //키보드 숨기기위한 시스템 변수
         Imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager;
+
+
     }
 
 
