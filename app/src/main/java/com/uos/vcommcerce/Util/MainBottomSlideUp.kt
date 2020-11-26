@@ -1,13 +1,10 @@
-package com.uos.vcommcerce.Util
+package com.uos.vcommcerce.util
 
 
-import android.view.MotionEvent
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
-import com.uos.vcommcerce.isBottomViewOpen
 import com.uos.vcommcerce.topBottomState
-import javax.annotation.meta.When
 
 class MainBottomSlideUp  {
     val BottomMin : Int = 80;
@@ -37,7 +34,8 @@ class MainBottomSlideUp  {
     //하단바 슬라이드 업 함수
     fun SlideUp(){
         //기본상태 or 상단바열려있을시 상닫바 닫기 + 슬라이드 업 하기
-        if((topBottomState == TopBottomState().none).or(topBottomState == TopBottomState().slideDown).or(topBottomState == TopBottomState().search)) {
+        if((topBottomState == TopBottomState().none).or(topBottomState == TopBottomState().slideDown).or(
+                topBottomState == TopBottomState().search)) {
 
             //다른 상태일때 해당상태 종료시키기
             if (topBottomState == TopBottomState().slideDown){

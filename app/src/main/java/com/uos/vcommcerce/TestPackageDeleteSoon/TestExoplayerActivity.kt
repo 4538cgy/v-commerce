@@ -1,7 +1,6 @@
-package com.uos.vcommcerce.TestPackageDeleteSoon
+package com.uos.vcommcerce.testpackagedeletesoon
 
 import android.content.Context
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -11,10 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
 import com.uos.vcommcerce.R
-import com.uos.vcommcerce.UserActivity
 import kotlinx.android.synthetic.main.test_exoplayer_view.*
 
 class TestExoplayerActivity : AppCompatActivity(){

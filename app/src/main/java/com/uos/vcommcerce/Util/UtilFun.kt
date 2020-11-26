@@ -1,4 +1,4 @@
-package com.uos.vcommcerce.Util
+package com.uos.vcommcerce.util
 
 import android.content.res.Resources
 import android.util.TypedValue

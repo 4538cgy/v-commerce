@@ -1,34 +1,42 @@
 package com.uos.vcommcerce
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import com.uos.vcommcerce.Adapter.TestViewPagerAdapter
-import com.uos.vcommcerce.Adapter.returnDefaultView
-import com.uos.vcommcerce.Tranformer.ZoomOutPageTransformer
-import com.uos.vcommcerce.Util.MainBottomSlideUp
-import com.uos.vcommcerce.Util.MainTopSlideDown
-import com.uos.vcommcerce.Util.TopBottomState
+import com.uos.vcommcerce.adapter.TestViewPagerAdapter
+import com.uos.vcommcerce.adapter.returnDefaultView
+import com.uos.vcommcerce.tranformer.ZoomOutPageTransformer
+import com.uos.vcommcerce.databinding.ActivityMainBinding
+import com.uos.vcommcerce.model.MediaContent
+import com.uos.vcommcerce.util.MainBottomSlideUp
+import com.uos.vcommcerce.util.MainTopSlideDown
+import com.uos.vcommcerce.util.TopBottomState
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-var  isBottomViewOpen = false;
-var  isTopViewOpen = false;
-var topBottomState  = TopBottomState().none;
-var Imm : InputMethodManager ?= null;
+var isBottomViewOpen = false;
+var isTopViewOpen = false;
+var topBottomState = TopBottomState().none;
+var Imm: InputMethodManager? = null;
 
 
 class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
-
+    var mediaContent: MediaContent = MediaContent(
+        "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8",
+        "1 번동영상",
+        "1번 동영상의 내용"
+    )
+    private lateinit var binding: ActivityMainBinding
+    var intValue: Int = 0;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding.mediaContent = mediaContent
         // 최석우 일시적으로 앱터져서 막음
 //        registerPushToken()
 
@@ -52,26 +60,50 @@ class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
         )
 
         // 넣을 비디오 리스트 추가
-        val videoList = ArrayList<String>()
+        val videoList = ArrayList<MediaContent>()
+        videoList.add(
+            MediaContent(
+                "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8",
+                "1 번동영상",
+                "1번 동영상의 내용"
+            )
+        )
+        videoList.add(
+            MediaContent(
+                "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8",
+                "2 번동영상",
+                "2번 동영상의 내용"
+            )
+        )
+        videoList.add(
+            MediaContent(
+                "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8",
+                "3 번동영상",
+                "3번 동영상의 내용"
+            )
+        )
+        videoList.add(
+            MediaContent(
+                "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8",
+                "4 번동영상",
+                "4번 동영상의 내용"
+            )
+        )
+        videoList.add(
+            MediaContent(
+                "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8",
+                "5 번동영상",
+                "5번 동영상의 내용"
+            )
+        )
+        videoList.add(
+            MediaContent(
+                "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8",
+                "6 번동영상",
+                "6번 동영상의 내용"
+            )
+        )
 
-        videoList.add(
-            "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
-        )
-        videoList.add(
-            "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
-        )
-        videoList.add(
-            "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
-        )
-        videoList.add(
-            "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
-        )
-        videoList.add(
-            "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
-        )
-        videoList.add(
-            "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
-        )
 
         // 뷰페이저 어댑터 연결
         vp_viewpager.adapter = TestViewPagerAdapter(this, videoList)
@@ -94,12 +126,10 @@ class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
         var touchSlopField = RecyclerView::class.java.getDeclaredField("mTouchSlop")
         touchSlopField.isAccessible = true
 
-         var touchSlop :Int = touchSlopField.get(recyclerview) as Int
+        var touchSlop: Int = touchSlopField.get(recyclerview) as Int
         //민감도를 6으로 줬습니다.
         touchSlopField.set(recyclerview, touchSlop * 6)
         // 끝
-
-
 
 
         // 아이템 전체 개수 view set
@@ -122,6 +152,7 @@ class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
                 // 다른 페이지로 스크롤 됬을때 ViewPager 의 현재 페이지 텍스트뷰를 갱신해준다.
                 Log.d("TEST onPageSelected", position.toString())
                 tv_num.text = (position + 1).toString()
+                mediaContent.set(videoList[position])
                 //페이지 이동후 디폴트 타입으로 변경
                 returnDefaultView()
             }
@@ -143,21 +174,36 @@ class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
         mainTopView.setOnClickListener(MainTopSlideDown.instance.mainTopViewOnclickListener);
         //2020/9/17 최석우 메인액티비티 하단바 터치 리스너 추가
         mainBottomView.setOnClickListener(MainBottomSlideUp.instance.mainBottomViewOnclickListener);
-        
+
 
         //백키 누를시 적용될 함수 - 서치리스트뷰 숨기기
         mainSearchView.setCallback { MainTopSlideDown.instance.SearchUp() }
 
         //메인 탑뷰에 필요한 인자들 전송
-        MainTopSlideDown.instance.setTopView( mainTopView, mainSearchView, mainSearchListView, mainViewChange, mainViewListCover, mainViewList, adapter);
-        MainTopSlideDown.instance.setMoveItem( this,moveItem1,moveItem2,moveItem3,moveItem4,moveItem5);
+        MainTopSlideDown.instance.setTopView(
+            mainTopView,
+            mainSearchView,
+            mainSearchListView,
+            mainViewChange,
+            mainViewListCover,
+            mainViewList,
+            adapter
+        );
+        MainTopSlideDown.instance.setMoveItem(
+            this,
+            moveItem1,
+            moveItem2,
+            moveItem3,
+            moveItem4,
+            moveItem5
+        );
         //메인 바텀뷰에 필요한 인자들 전송
         MainBottomSlideUp.instance.setBottomView(mainBottomView)
 
         //키보드 숨기기위한 시스템 변수
         Imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager;
     }
-    
+
 
 //최석우 앱터져서 일시적으로 막음
 //    fun registerPushToken(){
@@ -174,12 +220,11 @@ class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
 //    }
 
 
-
-        override fun onStop() {
-            super.onStop()
-            //4538cgy@gmail.com UID 값 [ 너무 푸쉬를 많이 보내서 일시적으로 사용 중지 주석 풀지마세요! ]
-            //FcmPush.instance.sendMessage("IIBpkwk5jUSNDa0qnDZxgwEvq812", "hi", "bye")
-        }
+    override fun onStop() {
+        super.onStop()
+        //4538cgy@gmail.com UID 값 [ 너무 푸쉬를 많이 보내서 일시적으로 사용 중지 주석 풀지마세요! ]
+        //FcmPush.instance.sendMessage("IIBpkwk5jUSNDa0qnDZxgwEvq812", "hi", "bye")
+    }
 
 
 }

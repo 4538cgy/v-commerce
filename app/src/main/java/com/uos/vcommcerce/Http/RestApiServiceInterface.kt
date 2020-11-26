@@ -1,10 +1,8 @@
-package com.uos.vcommcerce.Http
+package com.uos.vcommcerce.http
 
-import com.google.gson.JsonObject
-import com.uos.vcommcerce.Model.HttpResponseDTO
+import com.uos.vcommcerce.model.HttpResponseDTO
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.http.*
 

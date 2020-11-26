@@ -10,10 +10,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.uos.vcommcerce.TestPackageDeleteSoon.TestExoplayerActivity
-import kotlinx.android.synthetic.main.fragment_video_grid.*
+import com.uos.vcommcerce.testpackagedeletesoon.TestExoplayerActivity
 import kotlinx.android.synthetic.main.recycler_grid_item.view.*
-import kotlinx.android.synthetic.main.test_exoplayer_view.*
+
 private var mediaPath = "gs://sns-kotlin.appspot.com/1분 동안 세계에서 일어나는 일들!!.mp4"
 private var mediaPath2 = "https://firebasestorage.googleapis.com/v0/b/sns-kotlin.appspot.com/o/images%2FIMAGE_20200908_182705_.png?alt=media&token=9347344e-6ba8-4231-93a2-8f61593f5c3f"
 private var mediaPath3 = "https://www.youtube.com/embed/oYnfsg-l0KM"

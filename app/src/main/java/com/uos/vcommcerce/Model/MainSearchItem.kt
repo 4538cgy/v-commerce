@@ -1,3 +1,3 @@
-package com.uos.vcommcerce.Model
+package com.uos.vcommcerce.model
 
 data class MainSearchItem (var title : String ? = null);

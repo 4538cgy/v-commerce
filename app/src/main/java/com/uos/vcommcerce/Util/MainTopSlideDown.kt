@@ -1,9 +1,8 @@
-package com.uos.vcommcerce.Util
+package com.uos.vcommcerce.util
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -12,17 +11,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
-import android.view.inputmethod.InputMethodManager
 import android.widget.BaseAdapter
 import android.widget.EditText
 import android.widget.TextView
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.core.content.ContextCompat.startActivity
-import com.google.android.material.internal.ContextUtils.getActivity
-import com.google.firebase.crashlytics.internal.common.CommonUtils.hideKeyboard
-import com.uos.vcommcerce.*
-import com.uos.vcommcerce.Model.SettingDTO
-import kotlinx.android.synthetic.main.activity_main.*
+import com.uos.vcommcerce.R
+import com.uos.vcommcerce.UserActivity
+import com.uos.vcommcerce.topBottomState
 
 
 class MainTopSlideDown {
@@ -85,7 +79,7 @@ class MainTopSlideDown {
                 for(i in 0..moveItemList.count()){ moveItemList[i].equals(v);break }
                 //이동 아이콘 클릭시 이동할 위치 할당하면됨
                 when (i){
-                    0->  mainActivity.startActivity(Intent(mainActivity,UserActivity::class.java))
+                    0->  mainActivity.startActivity(Intent(mainActivity, UserActivity::class.java))
 
                 }
             }
@@ -113,7 +107,7 @@ class MainTopSlideDown {
         override fun onTouch(v: View?, event: MotionEvent?): Boolean {
 
             when(topBottomState){
-                TopBottomState().slideUp1->MainBottomSlideUp.instance.SlideDown();
+                TopBottomState().slideUp1-> MainBottomSlideUp.instance.SlideDown();
             }
             topBottomState = TopBottomState().search
             val text = writedWord ?: ""

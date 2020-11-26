@@ -1,4 +1,4 @@
-package com.uos.vcommcerce.Tranformer
+package com.uos.vcommcerce.tranformer
 
 import android.view.View
 import androidx.viewpager2.widget.ViewPager2

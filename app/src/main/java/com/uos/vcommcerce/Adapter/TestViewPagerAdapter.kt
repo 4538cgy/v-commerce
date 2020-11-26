@@ -1,4 +1,4 @@
-package com.uos.vcommcerce.Adapter
+package com.uos.vcommcerce.adapter
 
 import android.content.Context
 import android.util.Log
@@ -9,17 +9,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.ui.PlayerControlView
 import com.uos.vcommcerce.Imm
 import com.uos.vcommcerce.R
-import com.uos.vcommcerce.Util.MainBottomSlideUp
-import com.uos.vcommcerce.Util.MainTopSlideDown
-import com.uos.vcommcerce.Util.TopBottomState
+import com.uos.vcommcerce.util.MainBottomSlideUp
+import com.uos.vcommcerce.util.MainTopSlideDown
+import com.uos.vcommcerce.util.TopBottomState
+import com.uos.vcommcerce.model.MediaContent
 import com.uos.vcommcerce.topBottomState
 import kotlinx.android.synthetic.main.item_exoplayer.view.*
 import kotlin.math.abs
 
-class TestViewPagerAdapter(private val context: Context, private val items: ArrayList<String>) : RecyclerView.Adapter<TestViewPagerAdapter.ViewHolder>(){
+class TestViewPagerAdapter(private val context: Context, private val items: ArrayList<MediaContent>) : RecyclerView.Adapter<TestViewPagerAdapter.ViewHolder>(){
 
 
 
@@ -88,7 +88,7 @@ class TestViewPagerAdapter(private val context: Context, private val items: Arra
         }
 
 
-        player?.setMediaItem(MediaItem.fromUri(mediaItem))
+        player?.setMediaItem(MediaItem.fromUri(mediaItem.url.get().toString()))
         player?.prepare()
         player?.play()
 

@@ -1,4 +1,4 @@
-package com.uos.vcommcerce.Util
+package com.uos.vcommcerce.util
 
 class TopBottomState {
     val none : Int = 0;
