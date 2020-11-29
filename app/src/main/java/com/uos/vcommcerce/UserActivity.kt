@@ -3,7 +3,6 @@ package com.uos.vcommcerce
 import android.Manifest
 import android.app.Activity
 import android.content.ContentValues
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -12,18 +11,15 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.uos.vcommcerce.databinding.ActivityUserViewBinding
 import kotlinx.android.synthetic.main.activity_user_view.*
-import kotlinx.android.synthetic.main.recycler_grid_item.view.*
 import java.io.FileOutputStream
 import java.lang.Exception
 import java.text.SimpleDateFormat
@@ -31,57 +27,74 @@ import java.text.SimpleDateFormat
 private const val FLAG_PERM_CAMERA = 98
 private const val FLAG_PERM_STORAGE = 99
 private const val FLAG_REQ_CAMERA = 101
-private  const val FLAG_REQ_GALLERY = 102
+private const val FLAG_REQ_GALLERY = 102
 
 class UserActivity : AppCompatActivity(){
+    private lateinit var binding:ActivityUserViewBinding
+
     val CAMERA_PERMISSION = arrayOf(Manifest.permission.CAMERA) //카메라 퍼미션
     val STORAGE_PERMISSION = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE) //외부저장소 권한요청
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_user_view)
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_user_view)
+        binding.useractivity = this@UserActivity
+        //setContentView(R.layout.activity_user_view)
         //기본 그리드 뷰 실행
         supportFragmentManager.beginTransaction().replace(R.id.recyclerViewBox, VideoGridFragment()).commit()
 
-        //비디오 버튼 눌럿을 때
-        videoGridBtn.setOnClickListener{
-            supportFragmentManager.beginTransaction().replace(R.id.recyclerViewBox, VideoGridFragment()).commit()
+//        //비디오 버튼 눌럿을 때
+//        videoGridBtn.setOnClickListener{
+//            supportFragmentManager.beginTransaction().replace(R.id.recyclerViewBox, VideoGridFragment()).commit()
+//
+//        }
+//        //히스토리 버튼 눌렀을 때
+//        historyBtn.setOnClickListener {
+//            supportFragmentManager.beginTransaction().replace(R.id.recyclerViewBox, HistoryFragment()).commit()
+//
+//        }
 
-        }
-        //히스토리 버튼 눌렀을 때
-        historyBtn.setOnClickListener { 
-            supportFragmentManager.beginTransaction().replace(R.id.recyclerViewBox, HistoryFragment()).commit()
+//        //프로필 사진 이미지 눌렀을 때
+//        profile_Img.setOnClickListener{ v->
+//              profileTabClickEvent()
+//        }
+    }
+    //프로필 사진 탭 클릭 이벤트
+    fun profileTabClickEvent(view:View){
+        val popup = PopupMenu(applicationContext, view)
+        menuInflater.inflate(R.menu.profilepopup, popup.menu)
 
-        }
-
-        //프로필 사진 이미지 눌렀을 때
-        profile_Img.setOnClickListener{ v->
-            val popup = PopupMenu(applicationContext, v)
-            menuInflater.inflate(R.menu.profilepopup, popup.menu)
-
-            popup.setOnMenuItemClickListener { menuItem ->
-                when (menuItem.itemId) {
-                    R.id.profile_Camera -> {
-                        if(isPermitted(CAMERA_PERMISSION)) { // 권한 체크하는 함수
-                            openCamera() 
-                        }else{
-                            ActivityCompat.requestPermissions(this, CAMERA_PERMISSION,FLAG_PERM_CAMERA )
-                        }
+        popup.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.profile_Camera -> {
+                    if(isPermitted(CAMERA_PERMISSION)) { // 권한 체크하는 함수
+                        openCamera()
+                    }else{
+                        ActivityCompat.requestPermissions(this, CAMERA_PERMISSION,FLAG_PERM_CAMERA )
                     }
-                    R.id.profile_Gallery -> {
-                        if(isPermitted(STORAGE_PERMISSION)){ // 권한 체크하는 함수
-                            openGallery()
-                        }else{
-                            ActivityCompat.requestPermissions(this,STORAGE_PERMISSION, FLAG_PERM_STORAGE)
-                        }
-                    }
-                    R.id.profile_Basic -> profile_Img.setImageResource(R.mipmap.ic_launcher_round)  //기본이미지 세팅(현재는 안드로이드..)
                 }
-                false
+                R.id.profile_Gallery -> {
+                    if(isPermitted(STORAGE_PERMISSION)){ // 권한 체크하는 함수
+                        openGallery()
+                    }else{
+                        ActivityCompat.requestPermissions(this,STORAGE_PERMISSION, FLAG_PERM_STORAGE)
+                    }
+                }
+                R.id.profile_Basic -> profile_Img.setImageResource(R.mipmap.ic_launcher_round)  //기본이미지 세팅(현재는 안드로이드..)
             }
-            popup.show()
             false
         }
+        popup.show()
+        false
+    }
+    //비디오 탭 클릭 이벤트
+    fun videoTabClickEvent(view: View){
+        supportFragmentManager.beginTransaction().replace(R.id.recyclerViewBox, VideoGridFragment()).commit()
+    }
+
+    //히스토리 탭 클릭 이벤트
+    fun historyTabClickEvent(view: View){
+        supportFragmentManager.beginTransaction().replace(R.id.recyclerViewBox, HistoryFragment()).commit()
     }
 
     //갤러리 호출 함수

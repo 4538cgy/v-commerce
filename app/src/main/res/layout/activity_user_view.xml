@@ -1,61 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="20dp"
-    android:orientation="vertical"
-    tools:context=".UserActivity">
-
-<de.hdodenhof.circleimageview.CircleImageView
-    android:id="@+id/profile_Img"
-    android:layout_width="100dp"
-    android:layout_height="100dp"
-    android:layout_gravity="center"
-    android:src="@mipmap/ic_launcher"
-    ></de.hdodenhof.circleimageview.CircleImageView>
+    xmlns:tools="http://schemas.android.com/tools">
+<data>
+    <variable
+        name="useractivity"
+        type="com.uos.vcommcerce.UserActivity" />
+</data>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="40dp"
-        android:paddingTop="40dp"
-        android:weightSum="1">
-        <TextView
-            android:id="@+id/videoGridBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="올린 비디오"
-            android:textSize="25sp"
-            android:textAlignment="center"
-            android:layout_weight="0.5"
-            android:gravity="center_horizontal"
-            android:background="#00FFFF">
-        </TextView>
-        <TextView
-            android:id="@+id/historyBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="history"
-            android:textSize="25sp"
-            android:textAlignment="center"
-            android:layout_weight="0.5"
-            android:gravity="center_horizontal"
-            android:background="#00FF22">
-        </TextView>
-    </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/recyclerViewBox"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp">
+        android:padding="20dp"
+        android:orientation="vertical"
+        tools:context=".UserActivity">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_Img"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:src="@mipmap/ic_launcher"
+        android:onClick="@{useractivity::profileTabClickEvent}"
+        ></de.hdodenhof.circleimageview.CircleImageView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="40dp"
+            android:paddingTop="40dp"
+            android:weightSum="1">
+            <TextView
+                android:id="@+id/videoGridBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="올린 비디오"
+                android:textSize="25sp"
+                android:textAlignment="center"
+                android:layout_weight="0.5"
+                android:gravity="center_horizontal"
+                android:background="#00FFFF"
+                android:onClick="@{useractivity::videoTabClickEvent}">
+            </TextView>
+            <TextView
+                android:id="@+id/historyBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="history"
+                android:textSize="25sp"
+                android:textAlignment="center"
+                android:layout_weight="0.5"
+                android:gravity="center_horizontal"
+                android:background="#00FF22"
+                android:onClick="@{useractivity::historyTabClickEvent}">
+            </TextView>
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/recyclerViewBox"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout_editor_absoluteX="1dp"
+            tools:layout_editor_absoluteY="1dp">
 
 
-    </FrameLayout>
+        </FrameLayout>
 
 
-</LinearLayout>
+    </LinearLayout>
+</layout>

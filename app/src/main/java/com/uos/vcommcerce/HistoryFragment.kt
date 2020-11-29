@@ -5,16 +5,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.fragment_history.*
-import kotlinx.android.synthetic.main.recycler_history_item.view.*
+import com.uos.vcommcerce.databinding.FragmentHistoryBinding
+import com.uos.vcommcerce.databinding.RecyclerHistoryItemBinding
 
 
+data class HistoryData(
+    var historyTitle : String,
+    var historyContent : String
+)
 class HistoryFragment : Fragment() {
-    val DataList = arrayListOf(
+
+    val DataList = listOf(
         HistoryData("history1", "1번"),
         HistoryData("history2-1", "2.1번"),
         HistoryData("history2-2", "2.2번"),
@@ -42,51 +47,52 @@ class HistoryFragment : Fragment() {
         HistoryData("history19", "19번"),
         HistoryData("history20-여까지", "끄읏-")
     )
-
-    lateinit var historyView: RecyclerView
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    lateinit var binding:FragmentHistoryBinding
+    //lateinit var historyView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val fragmentView = inflater.inflate(R.layout.fragment_history, null)
-        historyView = fragmentView.findViewById(R.id.recyclerHistoryView)
-        historyView.layoutManager = LinearLayoutManager(requireContext())
-        historyView.adapter = RecyclerHistoryViewAdapter(DataList, requireContext())
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_history,container, false)
 
+        binding.recyclerHistoryView.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerHistoryView.adapter = RecyclerHistoryViewAdapter(DataList,requireContext())
+
+
+        val fragmentView = binding.root
+        //val fragmentView = inflater.inflate(R.layout.fragment_history, null)
+        //historyView = fragmentView.findViewById(R.id.recyclerHistoryView)
+        //historyView.layoutManager = LinearLayoutManager(requireContext())
+        //historyView.adapter = RecyclerHistoryViewAdapter(DataList, requireContext())
         return fragmentView
     }
 
-
     //그리드 데이터
-    inner class HistoryData(val text1:String, val text2:String)
+   // inner class HistoryData(val text1:String, val text2:String)
 
 
-    inner class RecyclerHistoryViewHolder(v : View) : RecyclerView.ViewHolder(v){
-        val text1 = v.history_text1
-        val text2 = v.history_text2
+    inner class RecyclerHistoryViewHolder(val binding: RecyclerHistoryItemBinding) : RecyclerView.ViewHolder(binding.root){
+        fun onBind(data : HistoryData){
+            binding.historyitem = data
+        }
     }
 
-    inner class RecyclerHistoryViewAdapter(val DataList:ArrayList<HistoryData>, val context: Context) : RecyclerView.Adapter<RecyclerHistoryViewHolder>() {
+    inner class RecyclerHistoryViewAdapter(var data:List<HistoryData> ,val context: Context) : RecyclerView.Adapter<RecyclerHistoryViewHolder>() {
         //생성하는부분
+//        var data = listOf<HistoryData>()
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerHistoryViewHolder {
-            val cellForRow = LayoutInflater.from(context).inflate(R.layout.recycler_history_item, parent, false)
-            return RecyclerHistoryViewHolder(cellForRow);
+            val binding = RecyclerHistoryItemBinding.inflate(LayoutInflater.from(context),parent,false)
+            //val cellForRow = LayoutInflater.from(context).inflate(R.layout.recycler_history_item, parent, false)
+            return RecyclerHistoryViewHolder(binding);
         }
         //보여줄 개수
-        override fun getItemCount() = DataList.size
+        override fun getItemCount():Int = data.size
 
         //수정하는부분
         override fun onBindViewHolder(holder: RecyclerHistoryViewHolder, position: Int) {
-            val data = DataList[position]
-            holder.text1.text = DataList[position].text1
-            holder.text2.text = DataList[position].text2
-
+            holder.onBind(data[position])
         }
     }
 }

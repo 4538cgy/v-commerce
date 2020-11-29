@@ -1,25 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:weightSum="10">
+<layout  xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="historyitem"
+            type="com.uos.vcommcerce.HistoryData" />
+    </data>
 
-    <TextView
-        android:id="@+id/history_text1"
+    <LinearLayout
+       
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="히스토리1"
-        android:textSize="40sp"
-        android:layout_weight="5"
+        android:layout_height="50dp"
+        android:weightSum="10">
+    
+        <TextView
+            android:id="@+id/history_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{historyitem.historyTitle}"
+            android:textSize="40sp"
+            android:layout_weight="5"
+            />
+        <TextView
+            android:id="@+id/history_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+           android:text="@{historyitem.historyContent}"
+            android:textSize="40sp"
+            android:layout_weight="5"
         />
-    <TextView
-        android:id="@+id/history_text2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="내용"
-        android:textSize="40sp"
-        android:layout_weight="5"
-    />
-
-</LinearLayout>
+    
+    </LinearLayout>
+</layout>
