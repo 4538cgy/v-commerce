@@ -6,6 +6,7 @@ import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
 import com.uos.vcommcerce.topBottomState
 import com.uos.vcommcerce.util.TopBottomState
+import com.uos.vcommcerce.util.ViewAnimation
 import com.uos.vcommcerce.util.dp
 import com.uos.vcommcerce.util.setHeight
 
@@ -37,136 +38,36 @@ class MainBottomSlideUp  {
     //하단바 슬라이드 업 함수
     fun SlideUp(){
         //기본상태 or 상단바열려있을시 상닫바 닫기 + 슬라이드 업 하기
-        if(topBottomState == TopBottomState().none) {
+        if(topBottomState == TopBottomState.none) {
 
-            //다른 상태일때 해당상태 종료시키기
-            if (topBottomState == TopBottomState().slideDown){
-                 //상단바 닫기
-                MainTopSlideDown.instance.SlideUp();
-            }else if(topBottomState == TopBottomState().search){
-                //검색창 닫기
-            }
-
-            //애니메이션 생성
-            val animate: TranslateAnimation = TranslateAnimation(0f, 0f, BottomMid.dp().toFloat() - BottomMin.dp().toFloat(), 0f)
-            animate.duration = 500; //애니메이션 동작시간
-            animate.fillAfter = true;   //애니메이션후 상태 유지
-
-            //애니메이션 리스너 장착
-            animate.setAnimationListener(object : Animation.AnimationListener {
-                override fun onAnimationRepeat(animation: Animation?) {}
-                override fun onAnimationStart(animation: Animation?) {}
-                override fun onAnimationEnd(animation: Animation?) {
-                    //애니메종료후 상태변경
-                    topBottomState = TopBottomState().slideUpMid
-                }
-            })
-
-            //상태를 무빙으로 변경 -> 종료후 slideUp2
-            topBottomState = TopBottomState().moving;
-
-            //뷰크기를 변경후 애니메이션 실행
             mainBottomView?.setHeight(BottomMid)
-            mainBottomView?.startAnimation(animate)
+            ViewAnimation(mainBottomView, BottomMid.dp().toFloat() - BottomMin.dp().toFloat(), 0f, 500, TopBottomState.slideUpMid)
 
-        }else if(topBottomState == TopBottomState().slideUpMid){
+        }else if(topBottomState == TopBottomState.slideUpMid){
 
-            //상단뷰 숨기기기
-//            MainTopSlideDown.instance.TopViewClose()
-            //애니메이션 생성
-            val animate: TranslateAnimation =
-                TranslateAnimation(0f, 0f, BottomMax.dp().toFloat() - BottomMid.dp().toFloat(), 0f)
-            animate.duration = 500; //애니메이션 동작시간
-            animate.fillAfter = true;   //애니메이션후 상태 유지
-
-            animate.setAnimationListener(object : Animation.AnimationListener{
-                override fun onAnimationRepeat(animation: Animation?) {}
-                override fun onAnimationStart(animation: Animation?) {}
-                override fun onAnimationEnd(animation: Animation?) {
-                    //애니메종료후 상태변경
-                    topBottomState = TopBottomState().slideUpMax
-                }
-            })
-
-            //상태를 무빙으로 변경 -> 종료후 slideUp2
-            topBottomState = TopBottomState().moving;
-
-            //뷰크기를 변경후 애니메이션 실행
             mainBottomView?.setHeight(BottomMax)
-            mainBottomView?.startAnimation(animate)
+            ViewAnimation(mainBottomView, BottomMax.dp().toFloat() - BottomMid.dp().toFloat(),0f,500,TopBottomState.slideUpMax)
         }
     }
 
     //하단바 슬라이드 다운 함수
     fun SlideDown(){
         when(topBottomState){
-            TopBottomState().slideUpMid->{
-
-                //애니메이션 생성
-                var animate: TranslateAnimation = TranslateAnimation(0f, 0f, 0f, BottomMid.dp().toFloat() - BottomMin.dp().toFloat())
-                animate.duration = 500; //애니메이션 동작시간
-                animate.fillAfter = true;   //애니메이션후 상태 유지
-
-                animate.setAnimationListener(object : Animation.AnimationListener{
-                    override fun onAnimationRepeat(animation: Animation?) {}
-                    override fun onAnimationStart(animation: Animation?) { }
-                    override fun onAnimationEnd(animation: Animation?) {
-                        //slideUp1 상태일매나 상태 none 설정
-                            topBottomState = TopBottomState().none
-                        //태초 상태로 돌아가는 애니메이션
-                        animate = TranslateAnimation(0f, 0f, 0f, 0f)
-                        animate.setAnimationListener(object : Animation.AnimationListener{
-                            override fun onAnimationRepeat(animation: Animation?) {}
-                            override fun onAnimationStart(animation: Animation?) { }
-                            override fun onAnimationEnd(animation: Animation?) {
-                                topBottomState = TopBottomState().none
-                            }
-                        })
-                        animate.duration = 0;
-                        animate.fillAfter = true;
-                        mainBottomView?.setHeight(BottomMin)
-                        mainBottomView?.startAnimation(animate)
-                    }
-                })
-
-                //상태를 무빙으로 변경 -> 종료후 다른상태가 아닐시 none
-                topBottomState = TopBottomState().moving
-                //애니메이션 실행 -> 종료후 뷰 크기 변경
-                mainBottomView?.startAnimation(animate)
+            TopBottomState.slideUpMid->{
+                ViewAnimation(mainBottomView, 0f, BottomMid.dp().toFloat() - BottomMin.dp().toFloat(),500,TopBottomState.none,BottomMin)
             }
-            TopBottomState().slideUpMax->{
-
-                //상단바 다시 열기
-//                MainTopSlideDown.instance.TopViewOpen()
-                //애니메이션 생성
-                var animate: TranslateAnimation = TranslateAnimation(0f, 0f, 0f, BottomMax.dp().toFloat() - BottomMin.dp().toFloat())
-                animate.duration = 500;
-                animate.fillAfter = true;
-
-                animate.setAnimationListener(object : Animation.AnimationListener{
-                    override fun onAnimationRepeat(animation: Animation?) {}
-                    override fun onAnimationStart(animation: Animation?) {}
-                    override fun onAnimationEnd(animation: Animation?) {
-                        //종료후 상태 변경
-                        topBottomState = TopBottomState().none
-                        //태초 상태로 돌아가는 애니메이션
-                        animate = TranslateAnimation(0f, 0f, 0f, 0f)
-                        animate.duration = 0;
-                        animate.fillAfter = true;
-                        mainBottomView?.setHeight(BottomMin)
-                        mainBottomView?.startAnimation(animate)
-                    }
-
-                })
-
-                //상태를 무빙으로 변경 -> 종료후 none
-                topBottomState = TopBottomState().moving
-                //애니메이션 실행 -> 종료후 뷰 크기 변경
-                mainBottomView?.startAnimation(animate)
+            TopBottomState.slideUpMax->{
+                ViewAnimation(mainBottomView, 0f, BottomMax.dp().toFloat() - BottomMin.dp().toFloat(),500,TopBottomState.none,BottomMin)
             }
         }
 
     }
 
+    fun hideView(){
+        ViewAnimation(mainBottomView, 0f, BottomMin.dp().toFloat(),500,TopBottomState.notChange)
+    }
+    fun showView(){
+        ViewAnimation(mainBottomView, BottomMin.dp().toFloat(), 0f,500,TopBottomState.notChange)
+    }
 
 }
