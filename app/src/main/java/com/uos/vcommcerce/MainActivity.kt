@@ -12,8 +12,8 @@ import com.uos.vcommcerce.adapter.returnDefaultView
 import com.uos.vcommcerce.tranformer.ZoomOutPageTransformer
 import com.uos.vcommcerce.databinding.ActivityMainBinding
 import com.uos.vcommcerce.model.MediaContentDTO
-import com.uos.vcommcerce.mainupside.MainBottomSlideUp
-import com.uos.vcommcerce.mainupside.MainTopSlideDown
+import com.uos.vcommcerce.mainslide.mainbottomslide.MainBottomSlideUp
+import com.uos.vcommcerce.mainslide.maintopslide.MainTopSlideDown
 import com.uos.vcommcerce.util.TopBottomState
 import kotlinx.android.synthetic.main.activity_main.*
 

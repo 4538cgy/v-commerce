@@ -1,13 +1,13 @@
-package com.uos.vcommcerce.util
+package com.uos.vcommcerce.mainslide
 
-import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
-import com.uos.vcommcerce.mainupside.MainBottomSlideUp
 import com.uos.vcommcerce.topBottomState
+import com.uos.vcommcerce.util.TopBottomState
+import com.uos.vcommcerce.util.setHeight
 
-fun ViewAnimation(TargetView:View?,StartPos: Float,EndPos : Float,duration : Long,ChangedState :TopBottomState = TopBottomState.notChange, ChangedViewSize:Int=-1) {
+fun ViewAnimation(TargetView:View?, StartPos: Float, EndPos : Float, duration : Long, ChangedState : TopBottomState = TopBottomState.notChange, ChangedViewSize:Int=-1) {
 //애니메이션 생성
     var animate: TranslateAnimation = TranslateAnimation(0f, 0f, StartPos, EndPos)
     animate.duration = duration; //애니메이션 동작시간
@@ -34,7 +34,7 @@ fun ViewAnimation(TargetView:View?,StartPos: Float,EndPos : Float,duration : Lon
                 })
                 TargetView?.setHeight(ChangedViewSize)
                 TargetView?.startAnimation(animate)
-            } else if ((ChangedState!=TopBottomState.notChange).and(topBottomState == TopBottomState.moving)) {
+            } else if ((ChangedState!= TopBottomState.notChange).and(topBottomState == TopBottomState.moving)) {
                 topBottomState = ChangedState
             }
         }

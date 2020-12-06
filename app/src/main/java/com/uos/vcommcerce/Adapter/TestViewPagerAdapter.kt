@@ -11,8 +11,8 @@ import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.uos.vcommcerce.Imm
 import com.uos.vcommcerce.R
-import com.uos.vcommcerce.mainupside.MainBottomSlideUp
-import com.uos.vcommcerce.mainupside.MainTopSlideDown
+import com.uos.vcommcerce.mainslide.mainbottomslide.MainBottomSlideUp
+import com.uos.vcommcerce.mainslide.maintopslide.MainTopSlideDown
 import com.uos.vcommcerce.util.TopBottomState
 import com.uos.vcommcerce.model.MediaContentDTO
 import com.uos.vcommcerce.topBottomState

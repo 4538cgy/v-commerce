@@ -1,12 +1,10 @@
-package com.uos.vcommcerce.mainupside
+package com.uos.vcommcerce.mainslide.mainbottomslide
 
 
 import android.view.View
-import android.view.animation.Animation
-import android.view.animation.TranslateAnimation
 import com.uos.vcommcerce.topBottomState
 import com.uos.vcommcerce.util.TopBottomState
-import com.uos.vcommcerce.util.ViewAnimation
+import com.uos.vcommcerce.mainslide.ViewAnimation
 import com.uos.vcommcerce.util.dp
 import com.uos.vcommcerce.util.setHeight
 

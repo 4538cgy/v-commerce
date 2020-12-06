@@ -66,10 +66,9 @@
     <LinearLayout
         android:id="@+id/mainTopView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-
+        android:layout_height="115dp"
         android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="@+id/vp_viewpager"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 

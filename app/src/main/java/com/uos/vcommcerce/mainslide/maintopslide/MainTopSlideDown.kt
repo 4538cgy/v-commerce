@@ -1,25 +1,23 @@
-package com.uos.vcommcerce.mainupside
+package com.uos.vcommcerce.mainslide.maintopslide
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.TranslateAnimation
 import android.widget.BaseAdapter
 import android.widget.EditText
 import android.widget.TextView
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.UserActivity
+import com.uos.vcommcerce.mainslide.mainbottomslide.MainBottomSlideUp
 import com.uos.vcommcerce.topBottomState
 import com.uos.vcommcerce.util.TopBottomState
-import com.uos.vcommcerce.util.ViewAnimation
+import com.uos.vcommcerce.mainslide.ViewAnimation
 import com.uos.vcommcerce.util.dp
 import com.uos.vcommcerce.util.setHeight
 
