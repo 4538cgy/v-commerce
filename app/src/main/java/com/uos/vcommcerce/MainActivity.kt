@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 var isBottomViewOpen = false;
 var isTopViewOpen = false;
-var topBottomState = TopBottomState().none;
+var topBottomState = TopBottomState.none;
 var Imm: InputMethodManager? = null;
 
 

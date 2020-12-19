@@ -129,16 +129,16 @@ class TestViewPagerAdapter(private val context: Context, private val items: Arra
                     if (abs(distance) > 50) {//드래기일시 해당하는 창을 열기
                         if (distance > 0) {
                             Log.d("드레그 UP : ", "드레그 UP 상태 : " + topBottomState )
-                            if((topBottomState== TopBottomState().none).or((topBottomState==TopBottomState().slideUpMid))){
+                            if((topBottomState== TopBottomState.none).or((topBottomState==TopBottomState.slideUpMid))){
                                 MainBottomSlideUp.instance.SlideUp();
-                            }else if(topBottomState== TopBottomState().slideDown){
+                            }else if(topBottomState== TopBottomState.slideDown){
                                 MainTopSlideDown.instance.SlideUp();
                             }
                         } else {
                             Log.d("드레그 DOWN : ", "드레그 DOWN 상태 : " + topBottomState)
-                            if((topBottomState== TopBottomState().slideUpMid).or((topBottomState==TopBottomState().slideUpMax))){
+                            if((topBottomState== TopBottomState.slideUpMid).or((topBottomState==TopBottomState.slideUpMax))){
                                 MainBottomSlideUp.instance.SlideDown();
-                            }else if(topBottomState== TopBottomState().none){
+                            }else if(topBottomState== TopBottomState.none){
                                 MainTopSlideDown.instance.SlideDown();
                             }
                         }
@@ -156,10 +156,10 @@ class TestViewPagerAdapter(private val context: Context, private val items: Arra
 
 fun returnDefaultView(){
     when (topBottomState) {
-        TopBottomState().slideUpMid -> MainBottomSlideUp.instance.SlideDown()
-        TopBottomState().slideUpMax -> MainBottomSlideUp.instance.SlideDown()
-        TopBottomState().slideDown -> MainTopSlideDown.instance.SlideUp()
-        TopBottomState().search -> {
+        TopBottomState.slideUpMid -> MainBottomSlideUp.instance.SlideDown()
+        TopBottomState.slideUpMax -> MainBottomSlideUp.instance.SlideDown()
+        TopBottomState.slideDown -> MainTopSlideDown.instance.SlideUp()
+        TopBottomState.search -> {
             MainTopSlideDown.instance.SearchUp()
             Imm?.hideSoftInputFromWindow(MainTopSlideDown.MainSearchView?.windowToken, 0);
         }
