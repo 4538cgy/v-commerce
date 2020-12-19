@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.BaseObservable
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.ObservableField
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,8 +19,8 @@ data class HistoryData(
     var historyTitle : String,
     var historyContent : String
 )
-class HistoryFragment : Fragment() {
 
+class HistoryFragment : Fragment() {
     val DataList = listOf(
         HistoryData("history1", "1번"),
         HistoryData("history2-1", "2.1번"),

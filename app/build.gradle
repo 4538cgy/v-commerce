@@ -49,6 +49,12 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     //프로필사진 원형뷰
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    def lifecycle_version = "2.2.0"
+    //뷰 모델 - 라이프사이클 관련
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    //라이브 데이터 - 옵저버 패턴 관련(실시간 데이터의 변경 사항을 알 수 있다)
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     /*
     ExoPlayer 2020-09-11 Version
     https://github.com/google/ExoPlayer/blob/release-v2/RELEASENOTES.md
