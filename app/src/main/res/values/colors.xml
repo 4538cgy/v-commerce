@@ -9,4 +9,6 @@
     <color name="colorNavIcon">#1d1d1d</color>
     <color name="mainBottonView">#80000000</color>
     <color name="colorBlack">#000000</color>
+    <color name="colorGray">#cccccc</color>
+
 </resources>

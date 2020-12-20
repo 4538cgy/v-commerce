@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="itemcart"
+            type="com.uos.vcommcerce.model.CartDTO" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:id="@+id/item_cart_const_top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorGray"
+            >
+            <TextView
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_margin="18dp"
+                android:textSize="14dp"
+                android:textColor="@color/colorBlack"
+                android:id="@+id/item_cart_textview_seller_name"
+                android:text="판매자 명"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                />
+
+            <CheckBox
+                android:id="@+id/item_cart_check_box"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:visibility="visible"
+                android:layout_marginRight="16dp"
+                />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/item_cart_const_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/item_cart_const_top_bar"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            >
+            <ImageView
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@color/colorGray"
+                />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            app:layout_constraintTop_toBottomOf="@+id/item_cart_const_top_bar"
+            app:layout_constraintLeft_toRightOf="@+id/item_cart_const_image"
+            android:id="@+id/item_cart_const_product_option"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="16dp"
+            >
+
+            <TextView
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:id="@+id/item_cart_textview_product_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="상품명"
+                android:textColor="@color/colorBlack"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                app:layout_constraintTop_toBottomOf="@+id/item_cart_textview_product_name"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="3dp"
+                android:id="@+id/item_cart_recycler_product_option"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/item_cart_const_total_explain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
+            <TextView
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/item_cart_textview_product_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_background_round_gray_16dp"
+                android:text="3개"
+                android:paddingHorizontal="12dp"
+                android:textColor="@color/colorBlack"
+                android:textSize="12dp"
+                android:lineHeight="18dp"
+                android:layout_marginRight="24dp"
+
+                />
+
+            <TextView
+                app:layout_constraintRight_toLeftOf="@+id/item_cart_textview_trans_cost"
+                app:layout_constraintTop_toTopOf="@+id/item_cart_textview_trans_cost"
+                android:layout_marginRight="4dp"
+                android:id="@+id/item_cart_textview_trans"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="배송비"
+                android:textColor="@color/colorBlack"
+                android:textSize="12dp"
+                />
+
+            <TextView
+                app:layout_constraintRight_toLeftOf="@+id/item_cart_textview_trans_coust_unit"
+                app:layout_constraintTop_toTopOf="@+id/item_cart_textview_trans_coust_unit"
+                android:id="@+id/item_cart_textview_trans_cost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3000"
+                android:textSize="12dp"
+                android:textColor="@color/colorBlack"
+                />
+
+            <TextView
+                app:layout_constraintRight_toRightOf="@+id/item_cart_textview_product_count"
+                app:layout_constraintTop_toBottomOf="@+id/item_cart_textview_product_count"
+                android:id="@+id/item_cart_textview_trans_coust_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="원"
+                android:textSize="12dp"
+                android:textColor="@color/colorBlack"
+                />
+
+            <TextView
+                android:id="@+id/item_cart_textview_total_cost"
+                app:layout_constraintRight_toLeftOf="@+id/item_cart_textview_total_cost_unit"
+                app:layout_constraintTop_toTopOf="@+id/item_cart_textview_total_cost_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="299,000"
+                android:textSize="14dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorBlack"
+                android:layout_marginRight="4dp"
+                />
+
+            <TextView
+                android:id="@+id/item_cart_textview_total_cost_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Won"
+                android:textSize="14dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorBlack"
+                app:layout_constraintRight_toRightOf="@+id/item_cart_textview_trans_coust_unit"
+                app:layout_constraintTop_toBottomOf="@+id/item_cart_textview_trans_coust_unit"
+                />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
