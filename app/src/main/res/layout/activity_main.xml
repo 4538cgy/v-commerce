@@ -6,6 +6,9 @@
     >
 
     <data>
+        
+        <import type="com.uos.vcommcerce.util.CustomEditText"/>
+        
         <variable
             name="MediaContent"
             type="com.uos.vcommcerce.model.MediaContentDTO" />

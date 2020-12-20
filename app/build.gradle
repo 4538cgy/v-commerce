@@ -9,7 +9,12 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
+    /*
+    buildFeatures{
+        dataBinding = true
+    }
 
+     */
 
     defaultConfig {
         applicationId "com.uos.vcommcerce"
@@ -36,9 +41,13 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+
+    
     dataBinding{
         enabled = true;
     }
+
+
 }
 
 
@@ -122,6 +131,7 @@ dependencies {
     // For loading and tinting drawables on older versions of the platform
     implementation "androidx.appcompat:appcompat-resources:$appcompat_version"
 
+    kapt 'com.android.databinding:compiler:3.5.0'
 
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
 
