@@ -5,9 +5,7 @@
         <variable
             name="griditem"
             type="com.uos.vcommcerce.GridData" />
-        <variable
-            name="userDataVM"
-            type="com.uos.vcommcerce.Model.UserDataVM" />
+
     </data>
 
     <androidx.cardview.widget.CardView

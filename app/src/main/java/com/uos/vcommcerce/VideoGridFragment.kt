@@ -19,7 +19,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.uos.vcommcerce.Model.UserDataVM
 import com.uos.vcommcerce.databinding.FragmentVideoGridBinding
 import com.uos.vcommcerce.databinding.RecyclerGridItemBinding
 import com.uos.vcommcerce.testpackagedeletesoon.TestExoplayerActivity
@@ -52,7 +51,7 @@ class VideoGridFragment : Fragment() {
 
     lateinit var binding:FragmentVideoGridBinding
     //나중에 값이 설정될거라고 lateinit으로 설정
-    lateinit var userDataViewModel: UserDataVM
+    //lateinit var userDataViewModel: UserDataVM
     //lateinit var recyclerGridView :RecyclerView
 
     override fun onCreateView(
@@ -64,19 +63,19 @@ class VideoGridFragment : Fragment() {
         //val fragmentView = inflater.inflate(R.layout.fragment_video_grid, container, false)
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_video_grid, container,false)
         binding.recyclerGridView.layoutManager = GridLayoutManager(requireContext(),3)
-        userDataViewModel = ViewModelProvider(this).get(UserDataVM::class.java)
-        userDataViewModel.gridData.observe(this, Observer {
-            userDataViewModel = ViewModelProvider(this).get(UserDataVM::class.java)
-            userDataViewModel.gridData.observe(this, Observer {
-                for(i in it.indices){
-                    Log.d(i.toString(), it[i].gridImg)
-                    Log.d(i.toString(), it[i].gridTitle)
-                    Log.d(i.toString(), it[i].gridUrl)
-
-                }
-
-            })
-        })
+//        userDataViewModel = ViewModelProvider(this).get(UserDataVM::class.java)
+//        userDataViewModel.gridData.observe(this, Observer {
+//            userDataViewModel = ViewModelProvider(this).get(UserDataVM::class.java)
+//            userDataViewModel.gridData.observe(this, Observer {
+//                for(i in it.indices){
+//                    Log.d(i.toString(), it[i].gridImg)
+//                    Log.d(i.toString(), it[i].gridTitle)
+//                    Log.d(i.toString(), it[i].gridUrl)
+//
+//                }
+//
+//            })
+//        })
 
         binding.recyclerGridView.adapter = RecyclerGridViewAdapter(dataList, requireContext())
 
