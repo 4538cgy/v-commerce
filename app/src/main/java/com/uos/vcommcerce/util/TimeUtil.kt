@@ -1,4 +1,4 @@
-package com.uos.vcommcerce.Util
+package com.uos.vcommcerce.util
 
 import java.text.SimpleDateFormat
 import java.util.*
