@@ -4,6 +4,7 @@
         <variable
             name="gridfragment"
             type="com.uos.vcommcerce.VideoGridFragment" />
+
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout
