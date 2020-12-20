@@ -16,6 +16,7 @@ class CustomEditText : EditText {
 
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
     private lateinit var callback : () -> Unit
+
     fun setCallback(callback: () -> Unit){
         this.callback = callback
     }

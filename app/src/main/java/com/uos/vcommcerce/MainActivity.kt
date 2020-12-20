@@ -1,7 +1,11 @@
 package com.uos.vcommcerce
 
+import android.content.Context
+import android.content.res.Resources
+import android.graphics.Point
 import android.os.Bundle
 import android.util.Log
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -9,11 +13,11 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.uos.vcommcerce.adapter.TestViewPagerAdapter
 import com.uos.vcommcerce.adapter.returnDefaultView
-import com.uos.vcommcerce.tranformer.ZoomOutPageTransformer
 import com.uos.vcommcerce.databinding.ActivityMainBinding
-import com.uos.vcommcerce.model.MediaContentDTO
 import com.uos.vcommcerce.mainslide.mainbottomslide.MainBottomSlideUp
 import com.uos.vcommcerce.mainslide.maintopslide.MainTopSlideDown
+import com.uos.vcommcerce.model.MediaContentDTO
+import com.uos.vcommcerce.tranformer.ZoomOutPageTransformer
 import com.uos.vcommcerce.util.TopBottomState
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -159,6 +163,7 @@ class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
         })
 
 
+
         //메인 서치뷰에 텍스트 변경인식 리스너 추가
         mainSearchView!!.addTextChangedListener(MainTopSlideDown.instance.TextChangeListener)
 
@@ -198,7 +203,11 @@ class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
             moveItem5
         );
         //메인 바텀뷰에 필요한 인자들 전송
-        MainBottomSlideUp.instance.setBottomView(mainBottomView)
+        MainBottomSlideUp.instance.setBottomView(mainBottomView,this)
+
+
+
+
 
         MainTopSlideDown.instance.init()
 

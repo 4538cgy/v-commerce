@@ -171,26 +171,48 @@
     <LinearLayout
         android:id="@+id/mainBottomView"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="130dp"
         android:background="@drawable/main_bottom_view_background"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@+id/vp_viewpager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:padding="5dp">
+        android:paddingTop="16dp"
+        android:paddingLeft="24dp">
+        <TextView
+            android:id="@+id/nickname"
+            android:layout_width="match_parent"
+            android:layout_height="18dp"
+            android:text="@{MediaContent.nickname}"
+            android:textSize="12sp"
+            android:layout_marginBottom="4dp"/>
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="22dp"
             android:text="@{MediaContent.title}"
-            android:textSize="20sp"/>
-        <TextView
-            android:id="@+id/context"
+            android:textSize="16sp"
+            android:layout_marginBottom="13dp"/>
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@{MediaContent.content}"
-            android:textSize="20sp"/>
-
+            android:layout_height="18dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+            <TextView
+                android:id="@+id/address"
+                android:layout_width="0dp"
+                android:layout_height="18dp"
+                android:layout_weight="1"
+                android:text="@{MediaContent.address}"
+                android:textSize="12sp"/>
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="0dp"
+                android:layout_height="18dp"
+                android:layout_weight="1"
+                android:text="@{MediaContent.price}"
+                android:textSize="12sp"/>
+        </LinearLayout>
     </LinearLayout>
 
 

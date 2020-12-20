@@ -44,7 +44,7 @@ class MainTopSlideDown {
         //외부에서 받아온 리사이클러 어댑터
         var SearchViewAdapter: SearchAdapter? = null
         //외부에서 받아온 뷰들
-        var TopView: View? = null;
+        lateinit var TopView: View
         var MainSearchView: EditText? = null
         var MainSearchListView: View? = null;
         var MainViewChange: View? = null;
@@ -149,7 +149,7 @@ class MainTopSlideDown {
     //검색창 종료함수
     fun SearchUp(){
         topBottomState = TopBottomState.slideDown;
-        TopView?.setHeight(TopMax)
+        TopView.setHeight(TopMax)
         MainSearchListView?.setHeight(0)
         MainViewChange?.setHeight(mainViewChangeSize)
         MainViewList?.setHeight(mainViewListSize)
