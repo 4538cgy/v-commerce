@@ -46,9 +46,9 @@ class MainBottomSlideUp  {
     fun SlideUp(){
         //기본상태 or 상단바열려있을시 상닫바 닫기 + 슬라이드 업 하기
         if(topBottomState == TopBottomState.none) {//기본 -> 1단
-            ViewAnimation(mainBottomView, BottomMid.dp().toFloat() - BottomMin.dp().toFloat(), 0f, 500,TopBottomState.slideUpMid)
+            ViewAnimation(mainBottomView, (standardSize_Y+BottomMax-BottomMin).dp(), (standardSize_Y+BottomMax-BottomMid).dp(), 500,TopBottomState.slideUpMid)
         }else if(topBottomState == TopBottomState.slideUpMid){//1단 -> 2단
-            ViewAnimation(mainBottomView, BottomMax.dp().toFloat() - BottomMid.dp().toFloat(), 0f, 500, TopBottomState.slideUpMax)
+            ViewAnimation(mainBottomView, (standardSize_Y+BottomMax-BottomMid).dp(),  (standardSize_Y).dp(), 500, TopBottomState.slideUpMax)
         }
     }
 
@@ -57,25 +57,25 @@ class MainBottomSlideUp  {
 
 
         if(topBottomState == TopBottomState.slideUpMid) {//기본 -> 1단
-            ViewAnimation(mainBottomView, 0f, BottomMid.dp().toFloat() - BottomMin.dp().toFloat(), 500, TopBottomState.none)
+            ViewAnimation(mainBottomView, 0, BottomMid.dp() - BottomMin.dp(), 500, TopBottomState.none)
         }else if(topBottomState == TopBottomState.slideUpMax){//1단 -> 2단
-            ViewAnimation(mainBottomView, 0f, BottomMax.dp().toFloat() - BottomMin.dp().toFloat(), 500, TopBottomState.none)
+            ViewAnimation(mainBottomView, 0, BottomMax.dp() - BottomMin.dp(), 500, TopBottomState.none)
         }
 
     }
 
     //하단뷰 숨기기
     fun hideView(){
-        ViewAnimation(mainBottomView, 0f, BottomMin.dp().toFloat(), 500, TopBottomState.notChange)
+        ViewAnimation(mainBottomView, 0, BottomMin.dp(), 500, TopBottomState.notChange)
     }
     //하단뷰 보이기
     fun showView(){
-        ViewAnimation(mainBottomView, BottomMin.dp().toFloat(), 0f, 500, TopBottomState.notChange)
+        ViewAnimation(mainBottomView, BottomMin.dp(), 0, 500, TopBottomState.notChange)
     }
 
     //해상도에 맞는 크기 측정
     fun SetSize(MainActivity: Activity){
-        val display = (MainActivity.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
+        val display = MainActivity.windowManager.defaultDisplay
         val size = Point()
         display.getSize(size)
         var ScreenSize: Point = size
@@ -96,10 +96,10 @@ class MainBottomSlideUp  {
                 var top = (standardSize_Y-BottomMin).dp()
                 var right = mainBottomView.getRight();
                 var bottom = (standardSize_Y+BottomMax-BottomMin).dp()
-                mainBottomView.layout(left, top, right, bottom);
-//                Log.d("크기 Int", " standardSize_Y : " + standardSize_Y + " BottomMax : " + BottomMax +" BottomMid" + BottomMid + " BottomMin"+BottomMin)
-//                Log.d("크기 Dp", " standardSize_Y : " + standardSize_Y.dp() + " BottomMax : " + BottomMax.dp() +" BottomMid" + BottomMid.dp() + " BottomMin"+BottomMin.dp())
-//                Log.d("레이아웃", " top : " + top + " bottom : " + bottom +" height" + mainBottomView.height)
+                mainBottomView.layout(left, top, right, bottom);//떨어진 정도를 Dp를 기준으로 설정
+                Log.d("크기 Int", " standardSize_Y : " + standardSize_Y + " BottomMax : " + BottomMax +" BottomMid" + BottomMid + " BottomMin"+BottomMin)
+                Log.d("크기 Dp", " standardSize_Y : " + standardSize_Y.dp() + " BottomMax : " + BottomMax.dp() +" BottomMid" + BottomMid.dp() + " BottomMin"+BottomMin.dp())
+                Log.d("레이아웃", " top : " + top + " bottom : " + bottom +" height" + mainBottomView.height)
             }
         })
     }

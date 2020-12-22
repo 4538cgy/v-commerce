@@ -162,7 +162,7 @@ class MainTopSlideDown {
     fun SlideDown() {
         //기본상태 or 상단바열려있을시 상닫바 닫기 + 슬라이드 업 하기
         if (topBottomState == TopBottomState.none) {
-            ViewAnimation(TopView, -TopMax.dp().toFloat(),0f,500,TopBottomState.slideDown)
+            ViewAnimation(TopView, -TopMax.dp(),0,500,TopBottomState.slideDown)
             MainBottomSlideUp.instance.hideView()
         }
     }
@@ -172,7 +172,7 @@ class MainTopSlideDown {
     //뷰이동 슬라이드 업 함수
     fun SlideUp() {
         if (topBottomState == TopBottomState.slideDown) {
-            ViewAnimation(TopView, 0f,-TopMax.dp().toFloat(),500,TopBottomState.none)
+            ViewAnimation(TopView, 0,-TopMax.dp(),500,TopBottomState.none)
             MainBottomSlideUp.instance.showView()
         }
     }
@@ -181,7 +181,7 @@ class MainTopSlideDown {
     fun init() {
         //애니메이션 생성
         MainSearchListView?.setHeight(0)
-        ViewAnimation(TopView, 0f,-TopMax.dp().toFloat(),0,TopBottomState.none)
+        ViewAnimation(TopView, 0,-TopMax.dp(),0,TopBottomState.none)
     }
 
     //초기화
