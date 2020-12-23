@@ -5,24 +5,22 @@ import android.content.Context
 import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
 import android.widget.BaseAdapter
 import android.widget.EditText
 import android.widget.TextView
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.UserActivity
-import com.uos.vcommcerce.mainslide.mainbottomslide.MainBottomSlideUp
-import com.uos.vcommcerce.topBottomState
-import com.uos.vcommcerce.util.TopBottomState
+import com.uos.vcommcerce.adapter.mainActivityState
+import com.uos.vcommcerce.mainslide.mainbottomslide.MainBottomView
 import com.uos.vcommcerce.mainslide.ViewAnimation
+import com.uos.vcommcerce.util.MainActivityState
 import com.uos.vcommcerce.util.dp
 import com.uos.vcommcerce.util.setHeight
 
 
-class MainTopSlideDown {
+class MainTopView {
 
 
 
@@ -31,16 +29,17 @@ class MainTopSlideDown {
     val mainRecyclerItemSize: Int = 30;//검색 아이템 크기
     val mainViewChangeSize = 60;//이동아이콘
     val mainViewListSize = 20;//하단바 손잡이
+    var beforeState: MainActivityState = MainActivityState.slideDown1;
 
-    //TOP뷰 전체크기 최대 최소
-    val TopMin: Int = 0;
-    val TopMax: Int = mainSearchViewSize + mainViewChangeSize + mainViewListSize;
+    //TOP뷰 기본 사이즈
+    val TopViewSize: Int = mainSearchViewSize + mainViewChangeSize + mainViewListSize;
 
     //이동뷰 리스트
     var moveItemList : ArrayList<View> = arrayListOf()
 
     companion object {
-        var instance = MainTopSlideDown()
+        //싱글톤 생성
+        var instance = MainTopView()
         //외부에서 받아온 리사이클러 어댑터
         var SearchViewAdapter: SearchAdapter? = null
         //외부에서 받아온 뷰들
@@ -61,7 +60,7 @@ class MainTopSlideDown {
 
 
     //해당클래스에 필요한 뷰를 main에서 받아옴
-    fun setTopView(topView: View, searchView: EditText, mainSearchListView: View, mainViewChange: View,mainViewListCover:View,mainViewList:View, searchViewAdapter: SearchAdapter) {
+    fun setTopView(topView: View, searchView: EditText, mainSearchListView: View, mainViewChange: View,mainViewListCover:View,mainViewList:View, searchViewAdapter: SearchAdapter,MainActivity:Activity) {
         //메인의 탑뷰
         TopView = topView;
         //탑뷰의 서치뷰
@@ -76,9 +75,13 @@ class MainTopSlideDown {
         MainViewList = mainViewList;
         //탑뷰의 어댑터
         SearchViewAdapter = searchViewAdapter
+        //메인액티비티받아와서 넘겨주기
+        SetSize(MainActivity)
     }
 
+    //페이지 전환용 뷰 리스너장착 개량의 여지가 보임
     fun setMoveItem(mainActivity : Activity,moveItem1 : View,moveItem2 : View,moveItem3 : View,moveItem4 : View,moveItem5 : View){
+        //이동 라스너
         val moveitemListner : View.OnClickListener = object :View.OnClickListener{
             override fun onClick(v: View?) {
                 var i =0;
@@ -90,6 +93,7 @@ class MainTopSlideDown {
                 }
             }
         }
+        //각뷰에 이동용 리스너 장착
         moveItemList.add(moveItem1)
         moveItem1.setOnClickListener(moveitemListner)
         moveItemList.add(moveItem2)
@@ -102,16 +106,12 @@ class MainTopSlideDown {
         moveItem5.setOnClickListener(moveitemListner)
     }
 
-    //검색창 온클릭 이벤트 리스너
+    //검색창 온클릭 이벤트 리스너 터치이벤트를위한 장착
     val mainTopSearchViewOnclickListener = object : View.OnClickListener { override fun onClick(v: View?) {} }
-    //검색창 터치 이벤트 리스너 - 창닫기
+    //검색창 터치 이벤트 리스너 - 검색하기
     val mainTopSearchViewOnTouchListener = object : View.OnTouchListener {
         override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-
-            when(topBottomState){
-                TopBottomState.slideUpMid-> MainBottomSlideUp.instance.SlideDown();
-            }
-            topBottomState = TopBottomState.search
+            //메인 상태를 검색으로 변경
             val text = writedWord ?: ""
             search(text)
             searchingViewChange()
@@ -119,17 +119,19 @@ class MainTopSlideDown {
         }
     }
 
-    //뷰이동 터치 이벤트 리스너 - 창닫기
+    //뷰이동 터치 이벤트 리스너 - 창닫기(필요함?)
     val mainTopViewOnclickListener = object : View.OnClickListener {
-        override fun onClick(v: View?) {
-            SlideUp()
-        }
+        override fun onClick(v: View?) {}
     }
 
 
     //검색 리스트 변경 함수 - 검색창 열기
     fun searchingViewChange() {
         var searchItemCount = filterList?.size ?: 0
+        if(mainActivityState!=MainActivityState.search) {
+            beforeState = mainActivityState;
+        }
+        mainActivityState = MainActivityState.search
         if (searchItemCount < 3) {
             TopView?.setHeight(mainSearchViewSize + 3 * mainRecyclerItemSize)
             MainViewChange?.setHeight(0)
@@ -147,41 +149,27 @@ class MainTopSlideDown {
 
 
     //검색창 종료함수
-    fun SearchUp(){
-        topBottomState = TopBottomState.slideDown;
-        TopView.setHeight(TopMax)
+    fun SearchEnd(){
+        Log.d("beforeState 값3 : ",""+beforeState )
+        mainActivityState = beforeState
+        TopView.setHeight(TopViewSize)
         MainSearchListView?.setHeight(0)
         MainViewChange?.setHeight(mainViewChangeSize)
         MainViewList?.setHeight(mainViewListSize)
         MainSearchView?.clearFocus()
-
     }
 
 
     //뷰이동 슬라이드 다운 함수
-    fun SlideDown() {
-        //기본상태 or 상단바열려있을시 상닫바 닫기 + 슬라이드 업 하기
-        if (topBottomState == TopBottomState.none) {
-            ViewAnimation(TopView, -TopMax.dp(),0,500,TopBottomState.slideDown)
-            MainBottomSlideUp.instance.hideView()
-        }
+    fun TopViewShow(state: MainActivityState = MainActivityState.notChange ) {
+        ViewAnimation(TopView, 0, 0, 500,state)
     }
 
 
 
     //뷰이동 슬라이드 업 함수
-    fun SlideUp() {
-        if (topBottomState == TopBottomState.slideDown) {
-            ViewAnimation(TopView, 0,-TopMax.dp(),500,TopBottomState.none)
-            MainBottomSlideUp.instance.showView()
-        }
-    }
-
-    //뷰이동 슬라이드 업 함수
-    fun init() {
-        //애니메이션 생성
-        MainSearchListView?.setHeight(0)
-        ViewAnimation(TopView, 0,-TopMax.dp(),0,TopBottomState.none)
+    fun TopViewHide(state: MainActivityState = MainActivityState.notChange ) {
+        ViewAnimation(TopView, 0,  -TopViewSize.dp(), 500, state)
     }
 
     //초기화
@@ -288,6 +276,10 @@ class MainTopSlideDown {
         SearchViewAdapter!!.notifyDataSetChanged()
     }
 
+    fun SetSize(MainActivity: Activity){
+        TopView.setHeight(TopViewSize)     //하단뷰 크기 설정
+        TopViewHide(MainActivityState.default)
+    }
 
 }
 

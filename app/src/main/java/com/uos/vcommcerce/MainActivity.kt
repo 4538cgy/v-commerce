@@ -1,11 +1,7 @@
 package com.uos.vcommcerce
 
-import android.content.Context
-import android.content.res.Resources
-import android.graphics.Point
 import android.os.Bundle
 import android.util.Log
-import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -14,17 +10,15 @@ import androidx.viewpager2.widget.ViewPager2
 import com.uos.vcommcerce.adapter.TestViewPagerAdapter
 import com.uos.vcommcerce.adapter.returnDefaultView
 import com.uos.vcommcerce.databinding.ActivityMainBinding
-import com.uos.vcommcerce.mainslide.mainbottomslide.MainBottomSlideUp
-import com.uos.vcommcerce.mainslide.maintopslide.MainTopSlideDown
+import com.uos.vcommcerce.mainslide.mainbottomslide.MainBottomView
+import com.uos.vcommcerce.mainslide.maintopslide.MainTopView
 import com.uos.vcommcerce.model.MediaContentDTO
 import com.uos.vcommcerce.tranformer.ZoomOutPageTransformer
-import com.uos.vcommcerce.util.TopBottomState
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 var isBottomViewOpen = false;
 var isTopViewOpen = false;
-var topBottomState = TopBottomState.none;
 var Imm: InputMethodManager? = null;
 
 
@@ -165,36 +159,37 @@ class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
 
 
         //메인 서치뷰에 텍스트 변경인식 리스너 추가
-        mainSearchView!!.addTextChangedListener(MainTopSlideDown.instance.TextChangeListener)
+        mainSearchView!!.addTextChangedListener(MainTopView.instance.TextChangeListener)
 
-        var adapter: MainTopSlideDown.SearchAdapter = MainTopSlideDown.instance.SearchAdapter(this)
-        mainSearchListView.adapter = MainTopSlideDown.instance.SearchAdapter(this)
+        var adapter: MainTopView.SearchAdapter = MainTopView.instance.SearchAdapter(this)
+        mainSearchListView.adapter = MainTopView.instance.SearchAdapter(this)
 
         //2020/9/22 최석우 메인액티비티 상단 검색바 터치 리스너 추가
-        mainSearchView.setOnClickListener(MainTopSlideDown.instance.mainTopSearchViewOnclickListener);
-        mainSearchView.setOnTouchListener(MainTopSlideDown.instance.mainTopSearchViewOnTouchListener);
+        mainSearchView.setOnClickListener(MainTopView.instance.mainTopSearchViewOnclickListener);
+        mainSearchView.setOnTouchListener(MainTopView.instance.mainTopSearchViewOnTouchListener);
 
 
-        //2020/9/22 최석우 메인액티비티 상단바 리스너 추가
-        mainTopView.setOnClickListener(MainTopSlideDown.instance.mainTopViewOnclickListener);
+        //2020/9/22 최석우 메인액티비티 상단바 리스너 추가 (필요함)?
+        mainTopView.setOnClickListener(MainTopView.instance.mainTopViewOnclickListener);
         //2020/9/17 최석우 메인액티비티 하단바 터치 리스너 추가
-        mainBottomView.setOnClickListener(MainBottomSlideUp.instance.mainBottomViewOnclickListener);
+        mainBottomView.setOnClickListener(MainBottomView.instance.mainBottomViewOnclickListener);
 
 
         //백키 누를시 적용될 함수 - 서치리스트뷰 숨기기
-        mainSearchView.setCallback { MainTopSlideDown.instance.SearchUp() }
+        mainSearchView.setCallback { MainTopView.instance.SearchEnd() }
 
         //메인 탑뷰에 필요한 인자들 전송
-        MainTopSlideDown.instance.setTopView(
+        MainTopView.instance.setTopView(
             mainTopView,
             mainSearchView,
             mainSearchListView,
             mainViewChange,
             mainViewListCover,
             mainViewList,
-            adapter
+            adapter,
+            this
         );
-        MainTopSlideDown.instance.setMoveItem(
+        MainTopView.instance.setMoveItem(
             this,
             moveItem1,
             moveItem2,
@@ -203,13 +198,13 @@ class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
             moveItem5
         );
         //메인 바텀뷰에 필요한 인자들 전송
-        MainBottomSlideUp.instance.setBottomView(mainBottomView,this)
+        MainBottomView.instance.setBottomView(mainBottomView,this)
 
 
 
 
 
-        MainTopSlideDown.instance.init()
+//        MainTopView.instance.init()
 
         //키보드 숨기기위한 시스템 변수
         Imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager;
