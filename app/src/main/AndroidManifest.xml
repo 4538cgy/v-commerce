@@ -17,7 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.videoupload.VideoUploadActivity"></activity>
+        <activity android:name=".activity.signup.WelcomeActivity"></activity>
+        <activity android:name=".activity.signup.SignUpActivity" />
+        <activity android:name=".activity.videoupload.VideoUploadActivity" />
         <activity android:name=".activity.videoupload.VideoSelectActivity" />
         <activity android:name=".activity.oder.OrderCompleteActivitiy" />
         <activity android:name=".activity.oder.OrderActivity" />
