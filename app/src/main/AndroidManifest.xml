@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+
     <uses-feature android:name="android.hardware.camera2" />
 
     <application
@@ -17,7 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.oder.OrderCompleteActivitiy"></activity>
+        <activity android:name=".activity.videoupload.VideoSelectActivity"></activity>
+        <activity android:name=".activity.oder.OrderCompleteActivitiy" />
         <activity android:name=".activity.oder.OrderActivity" />
         <activity android:name=".activity.cart.CartActivity" />
         <activity android:name=".activity.review.ReviewDetailActivity" />

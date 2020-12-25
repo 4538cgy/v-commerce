@@ -14,6 +14,7 @@ import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
+import com.uos.vcommcerce.activity.videoupload.VideoSelectActivity
 import com.uos.vcommcerce.http.RestApi
 import com.uos.vcommcerce.model.HttpResponseDTO
 import com.uos.vcommcerce.model.SettingDTO
@@ -62,6 +63,7 @@ class SettingActivity : AppCompatActivity() {
             settingDTO.add(SettingDTO("그리드 화면 보기"))
             settingDTO.add(SettingDTO("RESTFULL TEST"))
             settingDTO.add(SettingDTO("RESTFULL TEST POST"))
+            settingDTO.add(SettingDTO("비디오 리스트 보기"))
             notifyDataSetChanged()
         }
 
@@ -102,6 +104,10 @@ class SettingActivity : AppCompatActivity() {
 
                     "그리드 화면 보기" -> {
                         pageChange("Grid")
+                    }
+
+                    "비디오 리스트 보기" -> {
+                        pageChange("VideoList")
                     }
                     "RESTFULL TEST" -> {
                         //상세 정보 조회
@@ -213,6 +219,10 @@ class SettingActivity : AppCompatActivity() {
 
             "Grid" -> {
                 startActivity(Intent(this,UserActivity::class.java))
+            }
+
+            "VideoList" -> {
+                startActivity(Intent(this,VideoSelectActivity::class.java))
             }
 
 
