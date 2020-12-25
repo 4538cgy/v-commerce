@@ -169,6 +169,7 @@ class MainTopView {
 
     //뷰이동 슬라이드 업 함수
     fun TopViewHide(state: MainActivityState = MainActivityState.notChange ) {
+        SearchEnd()
         ViewAnimation(TopView, 0,  -TopViewSize.dp(), 500, state)
     }
 
@@ -278,7 +279,7 @@ class MainTopView {
 
     fun SetSize(MainActivity: Activity){
         TopView.setHeight(TopViewSize)     //하단뷰 크기 설정
-        TopViewHide(MainActivityState.default)
+        ViewAnimation(TopView, 0,  -TopViewSize.dp(), 0, MainActivityState.default)
     }
 
 }

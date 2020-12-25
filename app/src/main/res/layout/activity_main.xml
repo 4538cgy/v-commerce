@@ -27,8 +27,7 @@
         android:background="#FFFFFF"
         android:orientation="horizontal"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp"
-        />
+        tools:layout_editor_absoluteX="-36dp" />
 
     <TextView
         android:id="@+id/tv_num"
@@ -171,48 +170,98 @@
     <LinearLayout
         android:id="@+id/mainBottomView"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="110dp"
         android:background="@drawable/main_bottom_view_background"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@+id/vp_viewpager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:paddingTop="16dp"
-        android:paddingLeft="24dp">
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp">
         <TextView
             android:id="@+id/nickname"
             android:layout_width="match_parent"
-            android:layout_height="18dp"
+            android:layout_height="20dp"
             android:text="@{MediaContent.nickname}"
-            android:textSize="12sp"
+            android:textSize="14sp"
+            android:textColor="@color/mainBottonFontlightColor"
             android:layout_marginBottom="4dp"/>
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
-            android:layout_height="22dp"
+            android:layout_height="20dp"
             android:text="@{MediaContent.title}"
-            android:textSize="16sp"
-            android:layout_marginBottom="13dp"/>
+            android:textSize="14sp"
+            android:textColor="@color/mainBottonFontColor"
+            android:layout_marginBottom="8dp"/>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="18dp"
+            android:layout_height="22dp"
             android:orientation="horizontal"
-            android:weightSum="2">
+            android:weightSum="2"
+            android:layout_marginBottom="19dp">
             <TextView
                 android:id="@+id/address"
                 android:layout_width="0dp"
                 android:layout_height="18dp"
                 android:layout_weight="1"
                 android:text="@{MediaContent.address}"
-                android:textSize="12sp"/>
+                android:textSize="12sp"
+                android:textColor="@color/mainBottonFontlightColor" />
             <TextView
                 android:id="@+id/price"
                 android:layout_width="0dp"
-                android:layout_height="18dp"
+                android:layout_height="22dp"
                 android:layout_weight="1"
                 android:text="@{MediaContent.price}"
-                android:textSize="12sp"/>
+                android:textSize="16sp"
+                android:textColor="@color/mainBottonFontColor" />
         </LinearLayout>
+        <TextView
+            android:id="@+id/mainContent"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:text="@{MediaContent.content}" 
+            android:layout_marginBottom="37dp"
+            android:textColor="@color/mainBottonFontColor"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="22dp"
+            android:layout_marginBottom="31dp"
+            android:background="@drawable/main_bottom_review_button"
+            style="?android:attr/borderlessButtonStyle"
+            android:gravity="center_vertical|right"
+            android:text="리뷰 보기 > "
+            android:autoSizeTextType="uniform"
+            android:autoSizeMinTextSize="15sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@drawable/main_bottom_button"
+                android:textColor="@color/mainBottonButtonText"
+                style="?android:attr/borderlessButtonStyle"
+                android:text="Cart"/>
+            <View
+                android:layout_width="8dp"
+                android:layout_height="40dp"/>
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="3"
+                android:background="@drawable/main_bottom_button"
+                android:textColor="@color/mainBottonButtonText"
+                style="?android:attr/borderlessButtonStyle"
+                android:text="Select Option"/>
+
+        </LinearLayout>
+        
+
     </LinearLayout>
 
 

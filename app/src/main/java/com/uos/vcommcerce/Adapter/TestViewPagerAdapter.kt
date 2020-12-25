@@ -92,7 +92,8 @@ class TestViewPagerAdapter(private val context: Context, private val items: Arra
                             Log.d("드레그 UP : ", "드레그 UP")
                             when(mainActivityState){
                                 MainActivityState.default->{ MainBottomView.instance.BottonViewSlideUp1(MainActivityState.slideUp1) }
-                                MainActivityState.slideUp1->{MainBottomView.instance.BottonViewSlideUp2(MainActivityState.slideUp2)  }
+                                //2단계 확장 막음
+//                                MainActivityState.slideUp1->{MainBottomView.instance.BottonViewSlideUp2(MainActivityState.slideUp2)  }
                                 MainActivityState.slideDown1->{MainTopView.instance.TopViewHide(MainActivityState.default)}
                                 MainActivityState.slideDown2->{MainBottomView.instance.BottonViewShow(MainActivityState.slideDown1)}
                             }
@@ -101,6 +102,9 @@ class TestViewPagerAdapter(private val context: Context, private val items: Arra
                             when(mainActivityState){
                                 MainActivityState.default->{MainTopView.instance.TopViewShow(MainActivityState.slideDown1) }
                                 MainActivityState.slideDown1->{MainBottomView.instance.BottonViewHide(MainActivityState.slideDown2)  }
+                                MainActivityState.slideUp1->{MainBottomView.instance.BottonViewShow(MainActivityState.default)  }
+                                //2단계확장-> defualt 막음
+//                              MainActivityState.slideUp2->{MainBottomView.instance.BottonViewShow(MainActivityState.default)  }
                             }
                         }
                     } else {//단순터치시 기본상태로 돌아감
