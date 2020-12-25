@@ -82,14 +82,12 @@ class VideoUploadActivity : AppCompatActivity() {
             address = binding.activityVideoUploadEidttextAddress.text.toString()
             //sellerNickName = userModel에서 가져오기
         }
-
         firestore.collection("product").document("productInfo").collection("normalProduct").document().set(product)
             .addOnSuccessListener {
                 progressDialog?.dismiss()
                 startActivity(Intent(binding.root.context,SettingActivity::class.java))
                 Toast.makeText(binding.root.context,"제품이 데이터베이스에 등록되었습니다 \n 파이어베이스 DB를 확인하세요.",Toast.LENGTH_LONG).show()
             }
-
     }
 
     fun uploadVideo(){

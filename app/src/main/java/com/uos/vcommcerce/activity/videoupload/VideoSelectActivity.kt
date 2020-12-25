@@ -45,6 +45,8 @@ class VideoSelectActivity : AppCompatActivity() {
 
 
 
+
+
     }
 
     fun test(view: View){
@@ -64,6 +66,8 @@ class VideoSelectActivity : AppCompatActivity() {
             makeRequest()
 
 
+        }else{
+            getVideoList()
         }
     }
 
@@ -88,7 +92,7 @@ class VideoSelectActivity : AppCompatActivity() {
                     Toast.makeText(binding.root.context,"권한 거부됨",Toast.LENGTH_LONG).show()
 
                 }else{
-                    getVideoList()
+
                 }
                 return
             }
@@ -125,6 +129,7 @@ class VideoSelectActivity : AppCompatActivity() {
             selectionArgs,
             sortOrder)
 
+        println("으아아아아아아앜 쿼리의 길이에요!" + query.toString())
 
         query.use { cursor ->
             // Cache column indices.
