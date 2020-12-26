@@ -1,6 +1,5 @@
 package com.uos.vcommcerce
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -20,6 +19,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.uos.vcommcerce.Model.UserDataVM
+
 import com.uos.vcommcerce.databinding.FragmentVideoGridBinding
 import com.uos.vcommcerce.databinding.RecyclerGridItemBinding
 import com.uos.vcommcerce.testpackagedeletesoon.TestExoplayerActivity
@@ -76,6 +76,19 @@ class VideoGridFragment : Fragment() {
 
         //binding.recyclerGridView.adapter = RecyclerGridViewAdapter(dataList, requireContext())
 
+        userDataViewModel = ViewModelProvider(this).get(UserDataVM::class.java)
+        userDataViewModel.setAdapterData(dataList)
+
+        userDataViewModel.getRectclerListDataObserver().observe(this,Observer{
+            if(it != null){
+                userDataViewModel.setAdapterData(it)
+            }else{
+                Log.d("ERROR", "Error in fetching data")
+            }
+        })
+        //binding.recyclerGridView.adapter = RecyclerGridViewAdapter(dataList, requireContext())
+        binding.recyclerGridView.adapter = RecyclerGridViewAdapter()
+
         val fragmentView = binding.root
         //리사이클러뷰
         //recyclerGridView = fragmentView.findViewById(R.id.recyclerGridView)
@@ -91,17 +104,26 @@ class VideoGridFragment : Fragment() {
     inner class RecyclerGridViewHolder(val binding: RecyclerGridItemBinding) : RecyclerView.ViewHolder(binding.root){
         fun onBind(data : GridData){
             binding.griditem = data
+            binding.executePendingBindings()
         }
+
     }
 
-    inner class RecyclerGridViewAdapter(var data:List<GridData>, val context: Context) : RecyclerView.Adapter<RecyclerGridViewHolder>() {
+    inner class RecyclerGridViewAdapter : RecyclerView.Adapter<RecyclerGridViewHolder>() {
         //생성하는부분
+
         //var data = listOf<GridData>()
+
+        var data = listOf<GridData>()
+
+        fun setDataList(gridData: List<GridData>) {
+            this.data = gridData
+        }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerGridViewHolder {
             val binding = RecyclerGridItemBinding.inflate(LayoutInflater.from(context),parent,false)
             //val cellForRow = LayoutInflater.from(context).inflate(R.layout.recycler_grid_item, parent, false)
-            return RecyclerGridViewHolder(binding);
+            return RecyclerGridViewHolder(binding)
         }
         //보여줄 개수
         override fun getItemCount() = data.size
@@ -123,6 +145,35 @@ class VideoGridFragment : Fragment() {
             }
         }
     }
+
+//    inner class RecyclerGridViewAdapter(var data:List<GridData>, val context: Context) : RecyclerView.Adapter<RecyclerGridViewHolder>() {
+//        //생성하는부분
+//        //var data = listOf<GridData>()
+//        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerGridViewHolder {
+//            val binding = RecyclerGridItemBinding.inflate(LayoutInflater.from(context),parent,false)
+//            //val cellForRow = LayoutInflater.from(context).inflate(R.layout.recycler_grid_item, parent, false)
+//            return RecyclerGridViewHolder(binding);
+//        }
+//        //보여줄 개수
+//        override fun getItemCount() = data.size
+//
+//        //수정하는부분
+//        override fun onBindViewHolder(holder: RecyclerGridViewHolder, position: Int) {
+//            holder.onBind(data[position])
+//
+//            //그리드 안 이미지(item) 클릭시 나중에 영상 재생?
+//            holder.itemView.setOnClickListener{
+//                Toast.makeText(context, data[position].gridTitle, Toast.LENGTH_SHORT).show()
+//
+//                val vedioIntent = Intent(requireActivity(), TestExoplayerActivity::class.java )
+//                vedioIntent.putExtra("title", data[position].gridTitle)
+//                vedioIntent.putExtra("img", data[position].gridImg)
+//                vedioIntent.putExtra("url", data[position].gridUrl)
+//                startActivity(vedioIntent)
+//
+//            }
+//        }
+//    }
 }
 
 object BindingAdapter {
