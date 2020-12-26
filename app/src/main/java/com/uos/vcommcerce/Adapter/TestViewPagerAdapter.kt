@@ -120,7 +120,6 @@ class TestViewPagerAdapter(private val context: Context, private val items: Arra
 //페이지이동시 원래 상태로 되돌아가기
 fun returnDefaultView() {
     if (mainActivityState == MainActivityState.search) {
-        Log.d("cLEAR","포커스제거!")
         MainTopView.instance.SearchEnd()
     }
     MainBottomView.instance.BottonViewShow(MainActivityState.default)

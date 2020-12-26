@@ -98,16 +98,16 @@
             android:orientation="horizontal"
             android:padding="5dp"
             android:gravity="center"
-            android:background="@color/mainBottonView"
+            android:background="@color/mainViewColor"
             >
             <View
-                android:layout_width="20dp"
+                android:layout_width="16dp"
                 android:layout_height="50dp"/>
             <ImageView
                 android:id="@+id/moveItem1"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/ic_launcher_background"
+                android:background="#C4C4C4"
                 android:paddingRight="10dp"/>
             <View
                 android:layout_width="0dp"
@@ -117,7 +117,7 @@
                 android:id="@+id/moveItem2"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/ic_launcher_background"
+                android:background="#C4C4C4"
                 android:paddingRight="10dp"/>
             <View
                 android:layout_width="0dp"
@@ -127,7 +127,7 @@
                 android:id="@+id/moveItem3"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/ic_launcher_background"
+                android:background="#C4C4C4"
                 android:paddingRight="10dp"/>
             <View
                 android:layout_width="0dp"
@@ -137,20 +137,10 @@
                 android:id="@+id/moveItem4"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/ic_launcher_background"
+                android:background="#C4C4C4"
                 android:paddingRight="10dp"/>
             <View
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="0.1"/>
-            <ImageView
-                android:id="@+id/moveItem5"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@drawable/ic_launcher_background"
-                android:paddingRight="10dp"/>
-            <View
-                android:layout_width="20dp"
+                android:layout_width="16dp"
                 android:layout_height="50dp"/>
         </LinearLayout>
 
@@ -185,6 +175,7 @@
             android:layout_height="20dp"
             android:text="@{MediaContent.nickname}"
             android:textSize="14sp"
+            android:textStyle="bold"
             android:textColor="@color/mainBottonFontlightColor"
             android:layout_marginBottom="4dp"/>
         <TextView
@@ -193,6 +184,7 @@
             android:layout_height="20dp"
             android:text="@{MediaContent.title}"
             android:textSize="14sp"
+            android:textStyle="bold"
             android:textColor="@color/mainBottonFontColor"
             android:layout_marginBottom="8dp"/>
         <LinearLayout
@@ -208,6 +200,7 @@
                 android:layout_weight="1"
                 android:text="@{MediaContent.address}"
                 android:textSize="12sp"
+                android:textStyle="bold"
                 android:textColor="@color/mainBottonFontlightColor" />
             <TextView
                 android:id="@+id/price"
@@ -216,6 +209,7 @@
                 android:layout_weight="1"
                 android:text="@{MediaContent.price}"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 android:textColor="@color/mainBottonFontColor" />
         </LinearLayout>
         <TextView
@@ -233,6 +227,7 @@
             style="?android:attr/borderlessButtonStyle"
             android:gravity="center_vertical|right"
             android:text="리뷰 보기 > "
+            android:textStyle="bold"
             android:autoSizeTextType="uniform"
             android:autoSizeMinTextSize="15sp" />
         <LinearLayout
@@ -246,7 +241,10 @@
                 android:background="@drawable/main_bottom_button"
                 android:textColor="@color/mainBottonButtonText"
                 style="?android:attr/borderlessButtonStyle"
-                android:text="Cart"/>
+                android:autoSizeTextType="uniform"
+                android:textStyle="bold"
+                android:autoSizeMinTextSize="15sp"
+                android:text="♡"/>
             <View
                 android:layout_width="8dp"
                 android:layout_height="40dp"/>
@@ -256,6 +254,7 @@
                 android:layout_weight="3"
                 android:background="@drawable/main_bottom_button"
                 android:textColor="@color/mainBottonButtonText"
+                android:textStyle="bold"
                 style="?android:attr/borderlessButtonStyle"
                 android:text="Select Option"/>
 

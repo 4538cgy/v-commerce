@@ -152,7 +152,6 @@ class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
                 tv_num.text = (position + 1).toString()
                 mediaContent.set(videoList[position])
                 Log.d("내용확인","nickname : "+mediaContent.nickname+" title : "+mediaContent.title+" address : "+mediaContent.address+" price : "+mediaContent.price+" content : "+mediaContent.content)
-                mainSearchView.clearFocus()
                 //페이지 이동후 디폴트 타입으로 변경
                 returnDefaultView()
             }
@@ -196,17 +195,9 @@ class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
             moveItem1,
             moveItem2,
             moveItem3,
-            moveItem4,
-            moveItem5
-        );
+            moveItem4);
         //메인 바텀뷰에 필요한 인자들 전송
         MainBottomView.instance.setBottomView(mainBottomView,mainContent,this)
-
-
-
-
-
-//        MainTopView.instance.init()
 
         //키보드 숨기기위한 시스템 변수
         Imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager;

@@ -7,9 +7,13 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.BaseAdapter
 import android.widget.EditText
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.getSystemService
+import com.uos.vcommcerce.Imm
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.UserActivity
 import com.uos.vcommcerce.adapter.mainActivityState
@@ -80,7 +84,7 @@ class MainTopView {
     }
 
     //페이지 전환용 뷰 리스너장착 개량의 여지가 보임
-    fun setMoveItem(mainActivity : Activity,moveItem1 : View,moveItem2 : View,moveItem3 : View,moveItem4 : View,moveItem5 : View){
+    fun setMoveItem(mainActivity : Activity,moveItem1 : View,moveItem2 : View,moveItem3 : View,moveItem4 : View){
         //이동 라스너
         val moveitemListner : View.OnClickListener = object :View.OnClickListener{
             override fun onClick(v: View?) {
@@ -102,8 +106,6 @@ class MainTopView {
         moveItem3.setOnClickListener(moveitemListner)
         moveItemList.add(moveItem4)
         moveItem4.setOnClickListener(moveitemListner)
-        moveItemList.add(moveItem5)
-        moveItem5.setOnClickListener(moveitemListner)
     }
 
     //검색창 온클릭 이벤트 리스너 터치이벤트를위한 장착
@@ -157,6 +159,7 @@ class MainTopView {
         MainViewChange?.setHeight(mainViewChangeSize)
         MainViewList?.setHeight(mainViewListSize)
         MainSearchView?.clearFocus()
+
     }
 
 
