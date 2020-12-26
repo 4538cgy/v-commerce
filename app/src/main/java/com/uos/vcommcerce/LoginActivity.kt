@@ -21,15 +21,20 @@ import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.firestore.FirebaseFirestore
+import com.uos.vcommcerce.activity.signup.SignUpActivity
+import com.uos.vcommcerce.activity.signup.WelcomeActivity
+import com.uos.vcommcerce.util.SharedData
 import kotlinx.android.synthetic.main.activity_login.*
 import java.util.*
 
 class LoginActivity : AppCompatActivity() {
 
-    var auth : FirebaseAuth ? = null
-    var googleSignInClient : GoogleSignInClient ? = null
+    var auth: FirebaseAuth? = null
+    var googleSignInClient: GoogleSignInClient? = null
     var GOOGLE_LOGIN_CODE = 9001
-    var callbackManager : CallbackManager? = null
+    var callbackManager: CallbackManager? = null
+    var firestore = FirebaseFirestore.getInstance()
 
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +48,7 @@ class LoginActivity : AppCompatActivity() {
             .requestEmail()
             .build()
 
-        googleSignInClient = GoogleSignIn.getClient(this,gso)
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         callbackManager = CallbackManager.Factory.create()
 
@@ -65,14 +70,15 @@ class LoginActivity : AppCompatActivity() {
         super.onStart()
         moveMainPage(auth?.currentUser)
     }
-    fun googleLogin(){
+
+    fun googleLogin() {
         var signInIntent = googleSignInClient?.signInIntent
-        startActivityForResult(signInIntent,GOOGLE_LOGIN_CODE)
+        startActivityForResult(signInIntent, GOOGLE_LOGIN_CODE)
     }
 
-    fun facebookLogin(){
+    fun facebookLogin() {
         LoginManager.getInstance()
-            .logInWithReadPermissions(this, Arrays.asList("public_profile","email"))
+            .logInWithReadPermissions(this, Arrays.asList("public_profile", "email"))
 
         LoginManager.getInstance()
             .registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
@@ -93,19 +99,18 @@ class LoginActivity : AppCompatActivity() {
             })
     }
 
-    fun handleFacebookAccessToken(token : AccessToken?){
+    fun handleFacebookAccessToken(token: AccessToken?) {
 
-        var credential  = FacebookAuthProvider.getCredential(token?.token!!)
-        auth?.signInWithCredential(credential)?.addOnCompleteListener {
-                task ->
-            if(task.isSuccessful){
+        var credential = FacebookAuthProvider.getCredential(token?.token!!)
+        auth?.signInWithCredential(credential)?.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
 
                 //third step
                 //login
                 moveMainPage(task.result?.user)
-            }else{
+            } else {
                 //show the error message
-                Toast.makeText(this,task.exception?.message, Toast.LENGTH_LONG).show()
+                Toast.makeText(this, task.exception?.message, Toast.LENGTH_LONG).show()
             }
         }
 
@@ -114,12 +119,12 @@ class LoginActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        callbackManager?.onActivityResult(requestCode,resultCode,data)
+        callbackManager?.onActivityResult(requestCode, resultCode, data)
 
-        if(requestCode == GOOGLE_LOGIN_CODE){
+        if (requestCode == GOOGLE_LOGIN_CODE) {
             var result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
             if (result != null) {
-                if (result.isSuccess){
+                if (result.isSuccess) {
                     var account = result.signInAccount
                     //second step
                     firebaseAuthWithGoogle(account)
@@ -127,51 +132,81 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
-    fun firebaseAuthWithGoogle(account : GoogleSignInAccount?){
-        var credential = GoogleAuthProvider.getCredential(account?.idToken,null)
-        auth?.signInWithCredential(credential)?.addOnCompleteListener {
-                task ->
-            if(task.isSuccessful){
+
+    fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {
+        var credential = GoogleAuthProvider.getCredential(account?.idToken, null)
+        auth?.signInWithCredential(credential)?.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
                 //login
                 moveMainPage(task.result?.user)
-            }else{
+            } else {
                 //show the error message
-                Toast.makeText(this,task.exception?.message, Toast.LENGTH_LONG).show()
+                Toast.makeText(this, task.exception?.message, Toast.LENGTH_LONG).show()
             }
         }
     }
 
-    fun signinAndSignup(){
-        auth?.createUserWithEmailAndPassword(activity_login_edittext_email.text.toString(), activity_login_edittext_password.text.toString())?.addOnCompleteListener {
-                task ->
-            if(task.isSuccessful){
+    fun signinAndSignup() {
+        auth?.createUserWithEmailAndPassword(
+            activity_login_edittext_email.text.toString(),
+            activity_login_edittext_password.text.toString()
+        )?.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
                 //creating a user account
                 moveMainPage(task.result?.user)
-            }else if(task.exception?.message.isNullOrEmpty()){
+            } else if (task.exception?.message.isNullOrEmpty()) {
                 //show the error message
-                Toast.makeText(this,task.exception?.message, Toast.LENGTH_LONG).show()
-            }else{
+                Toast.makeText(this, task.exception?.message, Toast.LENGTH_LONG).show()
+            } else {
                 signinEmail()
             }
         }
     }
-    fun signinEmail(){
-        auth?.signInWithEmailAndPassword(activity_login_edittext_email.text.toString(), activity_login_edittext_password.text.toString())?.addOnCompleteListener {
-                task ->
-            if(task.isSuccessful){
+
+    fun signinEmail() {
+        auth?.signInWithEmailAndPassword(
+            activity_login_edittext_email.text.toString(),
+            activity_login_edittext_password.text.toString()
+        )?.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
                 //login
                 moveMainPage(task.result?.user)
-            }else{
+            } else {
                 //show the error message
-                Toast.makeText(this,task.exception?.message, Toast.LENGTH_LONG).show()
+                Toast.makeText(this, task.exception?.message, Toast.LENGTH_LONG).show()
             }
         }
     }
 
-    fun moveMainPage(user: FirebaseUser?){
-        if(user != null){
-            startActivity(Intent(this,MainActivity::class.java))
-            finish()
+    fun moveMainPage(user: FirebaseUser?) {
+        if (user != null) {
+
+
+            firestore.collection("userInfo").document("userData").collection("accountInfo")
+                .document(auth?.currentUser?.uid!!)
+                .addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
+
+                    if (documentSnapshot != null) {
+                        if (documentSnapshot!!.exists()) {
+                            SharedData.prefs.setString("userInfo", "yes")
+                            Toast.makeText(this,"회원정보가 존재합니다. \n 메인 페이지로 이동합니다.",Toast.LENGTH_SHORT).show()
+                            
+                        } else {
+                            SharedData.prefs.setString("userInfo", "no")
+                            Toast.makeText(this,"회원정보가 존재하지 않습니다. \n 회원 정보 추가 페이지로 이동합니다.",Toast.LENGTH_SHORT).show()
+                        }
+
+                        if (SharedData.prefs.getString("userInfo", "no").equals("yes")) {
+                            startActivity(Intent(this, SettingActivity::class.java))
+
+                        } else {
+                            startActivity(Intent(this, SignUpActivity::class.java))
+                        }
+                        finish()
+                    }
+
+
+                }
         }
     }
 }
