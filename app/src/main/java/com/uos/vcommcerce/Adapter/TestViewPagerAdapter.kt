@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
+import com.uos.vcommcerce.Imm
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.mainslide.mainbottomslide.MainBottomView
 import com.uos.vcommcerce.mainslide.maintopslide.MainTopView
@@ -121,6 +122,7 @@ class TestViewPagerAdapter(private val context: Context, private val items: Arra
 fun returnDefaultView() {
     if (mainActivityState == MainActivityState.search) {
         MainTopView.instance.SearchEnd()
+        Imm?.hideSoftInputFromWindow(MainTopView.MainSearchView?.windowToken, 0);
     }
     MainBottomView.instance.BottonViewShow(MainActivityState.default)
     MainTopView.instance.TopViewHide()
