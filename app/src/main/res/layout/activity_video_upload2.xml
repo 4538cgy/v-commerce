@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activity.videoupload.VideoUploadActivity">
+
+    <data>
+
+        <variable
+            name="activityvideoupload"
+            type="com.uos.vcommcerce.activity.videoupload.VideoUploadActivity" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/activity_video_linear_video_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            >
+            <TextView
+                android:id="@+id/activity_video_textview_video_uri"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="아아아"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:textColor="@color/colorBlack"
+                android:layout_margin="8dp"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activity_video_linear_video_name"
+            >
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <EditText
+                    android:id="@+id/activity_video_upload_eidttext_productname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="제품 명을 입력하세요. [ 필수 ]"
+
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <EditText
+                    android:id="@+id/activity_video_upload_eidttext_productcost"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="제품 가격을 입력하세요. [ 필수 ]"
+
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <EditText
+                    android:id="@+id/activity_video_upload_eidttext_productexplain"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="제품 설명을 입력하세요. [ 필수 ]"
+
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <EditText
+                    android:id="@+id/activity_video_upload_eidttext_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="주소지를 입력하세요. [ 선택 ]"
+
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/activity_video_upload_button_add_video"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="동영상 올리기"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/activity_video_upload_button_upload"
+            />
+
+        <Button
+            android:id="@+id/activity_video_upload_button_upload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="완료"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

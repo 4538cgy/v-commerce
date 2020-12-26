@@ -10,5 +10,7 @@
     <color name="mainBottonView">#80000000</color>
     <color name="colorBlack">#000000</color>
     <color name="colorGray">#cccccc</color>
+    <color name="colorLightGray_FEFEFE">#FEFEFE</color>
+    <color name="colorGlitch_00FFCB">#00FFCB</color>
 
 </resources>
