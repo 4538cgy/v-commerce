@@ -14,6 +14,7 @@ import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
+import com.uos.vcommcerce.activity.signup.SignUpActivity
 import com.uos.vcommcerce.activity.videoupload.VideoSelectActivity
 import com.uos.vcommcerce.activity.videoupload.VideoUploadActivity
 import com.uos.vcommcerce.http.RestApi
@@ -66,6 +67,7 @@ class SettingActivity : AppCompatActivity() {
             settingDTO.add(SettingDTO("RESTFULL TEST POST"))
             settingDTO.add(SettingDTO("비디오 리스트 보기"))
             settingDTO.add(SettingDTO("비디오 업로드 하기"))
+            settingDTO.add(SettingDTO("회원 가입 하기"))
             notifyDataSetChanged()
         }
 
@@ -113,6 +115,10 @@ class SettingActivity : AppCompatActivity() {
                     }
                     "비디오 업로드 하기" -> {
                         pageChange("VideoUpload")
+                    }
+
+                    "회원 가입 하기"  -> {
+                        pageChange("SignUp")
                     }
                     "RESTFULL TEST" -> {
                         //상세 정보 조회
@@ -232,6 +238,10 @@ class SettingActivity : AppCompatActivity() {
 
             "VideoUpload" ->{
                 startActivity(Intent(this,VideoUploadActivity::class.java))
+            }
+
+            "SignUp" -> {
+                startActivity(Intent(this,SignUpActivity::class.java))
             }
 
 
