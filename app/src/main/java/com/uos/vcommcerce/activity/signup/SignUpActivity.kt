@@ -10,9 +10,12 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.ads.interactivemedia.v3.internal.ft
+import com.google.firebase.auth.FirebaseAuth
 import com.uos.vcommcerce.R
+import com.uos.vcommcerce.activity.signup.fragment.AddUserInfoFragment
 import com.uos.vcommcerce.activity.signup.fragment.BlankFragment
 import com.uos.vcommcerce.activity.signup.fragment.BlankFragment2
+import com.uos.vcommcerce.activity.signup.fragment.CreateNewAccountIDFragment
 import com.uos.vcommcerce.databinding.ActivitySignUpBinding
 import com.uos.vcommcerce.databinding.ActivityWelcomeBinding
 
@@ -26,14 +29,7 @@ class SignUpActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_sign_up)
         binding.activitysignup = this@SignUpActivity
 
-        binding.activitySignButton.setOnClickListener {
-            changeFragment(1)
-        }
-
-        binding.activitySignButton2.setOnClickListener {
-            changeFragment(2)
-        }
-
+        changeFragment(2)
 
 
     }
@@ -44,10 +40,10 @@ class SignUpActivity : AppCompatActivity() {
         when(frag){
 
             1 -> {
-                fragment.replace(R.id.activity_sign_up_frame,BlankFragment()).addToBackStack(null).commit()
+                fragment.replace(R.id.activity_sign_up_frame,CreateNewAccountIDFragment()).commit()
             }
             2 -> {
-                fragment.replace(R.id.activity_sign_up_frame,BlankFragment2()).addToBackStack(null).commit()
+                fragment.replace(R.id.activity_sign_up_frame,AddUserInfoFragment()).commit()
             }
 
         }
