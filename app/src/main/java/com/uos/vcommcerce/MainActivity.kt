@@ -12,15 +12,12 @@ import com.uos.vcommcerce.adapter.returnDefaultView
 import com.uos.vcommcerce.tranformer.ZoomOutPageTransformer
 import com.uos.vcommcerce.databinding.ActivityMainBinding
 import com.uos.vcommcerce.model.MediaContentDTO
-import com.uos.vcommcerce.mainupside.MainBottomSlideUp
-import com.uos.vcommcerce.mainupside.MainTopSlideDown
-import com.uos.vcommcerce.util.TopBottomState
+import com.uos.vcommcerce.mainslide.MainBottomView
+import com.uos.vcommcerce.mainslide.MainTopView
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-var isBottomViewOpen = false;
-var isTopViewOpen = false;
-var topBottomState = TopBottomState.none;
+
 var Imm: InputMethodManager? = null;
 
 
@@ -31,7 +28,7 @@ class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
         "1번 동영상의 내용"
     )
     private lateinit var binding: ActivityMainBinding
-    var intValue: Int = 0;
+    lateinit var viewPagerAdapter : TestViewPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,7 +103,8 @@ class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
 
 
         // 뷰페이저 어댑터 연결
-        vp_viewpager.adapter = TestViewPagerAdapter(this, videoList)
+        viewPagerAdapter = TestViewPagerAdapter(this, videoList)
+        vp_viewpager.adapter = viewPagerAdapter
 
         // 스크롤 수직 설정
         // vp_viewpager.orientation = ViewPager2.ORIENTATION_VERTICAL
@@ -132,9 +130,6 @@ class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
         // 끝
 
 
-        // 아이템 전체 개수 view set
-        tv_total.text = imageList.size.toString()
-
         // 뷰페이저 리스너 (ViewPager 1과 다르게 2는 필요한 것만 오버라이딩이 가능하다.
         vp_viewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
 
@@ -151,7 +146,6 @@ class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
                 super.onPageSelected(position)
                 // 다른 페이지로 스크롤 됬을때 ViewPager 의 현재 페이지 텍스트뷰를 갱신해준다.
                 Log.d("TEST onPageSelected", position.toString())
-                tv_num.text = (position + 1).toString()
                 mediaContent.set(videoList[position])
                 //페이지 이동후 디폴트 타입으로 변경
                 returnDefaultView()
@@ -160,47 +154,19 @@ class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
 
 
         //메인 서치뷰에 텍스트 변경인식 리스너 추가
-        mainSearchView!!.addTextChangedListener(MainTopSlideDown.instance.TextChangeListener)
+        mainSearchView!!.addTextChangedListener(MainTopView.instance.TextChangeListener)
 
-        var adapter: MainTopSlideDown.SearchAdapter = MainTopSlideDown.instance.SearchAdapter(this)
-        mainSearchListView.adapter = MainTopSlideDown.instance.SearchAdapter(this)
-
-        //2020/9/22 최석우 메인액티비티 상단 검색바 터치 리스너 추가
-        mainSearchView.setOnClickListener(MainTopSlideDown.instance.mainTopSearchViewOnclickListener);
-        mainSearchView.setOnTouchListener(MainTopSlideDown.instance.mainTopSearchViewOnTouchListener);
-
-
-        //2020/9/22 최석우 메인액티비티 상단바 리스너 추가
-        mainTopView.setOnClickListener(MainTopSlideDown.instance.mainTopViewOnclickListener);
-        //2020/9/17 최석우 메인액티비티 하단바 터치 리스너 추가
-        mainBottomView.setOnClickListener(MainBottomSlideUp.instance.mainBottomViewOnclickListener);
-
+        var adapter: MainTopView.SearchAdapter = MainTopView.instance.SearchAdapter(this)
+        mainSearchListView.adapter = MainTopView.instance.SearchAdapter(this)
 
         //백키 누를시 적용될 함수 - 서치리스트뷰 숨기기
-        mainSearchView.setCallback { MainTopSlideDown.instance.SearchUp() }
+        mainSearchView.setCallback { MainTopView.instance.SearchEnd() }
 
         //메인 탑뷰에 필요한 인자들 전송
-        MainTopSlideDown.instance.setTopView(
-            mainTopView,
-            mainSearchView,
-            mainSearchListView,
-            mainViewChange,
-            mainViewListCover,
-            mainViewList,
-            adapter
-        );
-        MainTopSlideDown.instance.setMoveItem(
-            this,
-            moveItem1,
-            moveItem2,
-            moveItem3,
-            moveItem4,
-            moveItem5
-        );
-        //메인 바텀뷰에 필요한 인자들 전송
-        MainBottomSlideUp.instance.setBottomView(mainBottomView)
+        MainTopView.instance.setTopView(mainTopView, mainSearchView, mainSearchListView, mainViewChange, mainViewListCover, mainViewList, adapter, this, binding);
 
-        MainTopSlideDown.instance.init()
+        //메인 바텀뷰에 필요한 인자들 전송
+        MainBottomView.instance.setBottomView(mainBottomView,mainContent,this,binding)
 
         //키보드 숨기기위한 시스템 변수
         Imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager;

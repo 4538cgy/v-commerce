@@ -1,10 +1,11 @@
 package com.uos.vcommcerce.util
 
-enum class TopBottomState {
-    none,
-    slideUpMid,
-    slideUpMax,
-    slideDown,
+enum class MainActivityState {
+    default,
+    slideUp1,
+    slideUp2,
+    slideDown1,
+    slideDown2,
     search,
     moving,
     notChange
