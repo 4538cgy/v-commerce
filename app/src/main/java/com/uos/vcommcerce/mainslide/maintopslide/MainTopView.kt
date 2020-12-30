@@ -13,10 +13,12 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.databinding.DataBindingUtil
 import com.uos.vcommcerce.Imm
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.UserActivity
 import com.uos.vcommcerce.adapter.mainActivityState
+import com.uos.vcommcerce.databinding.ActivityMainBinding
 import com.uos.vcommcerce.mainslide.mainbottomslide.MainBottomView
 import com.uos.vcommcerce.mainslide.ViewAnimation
 import com.uos.vcommcerce.util.MainActivityState
@@ -34,6 +36,10 @@ class MainTopView {
     val mainViewChangeSize = 60;//이동아이콘
     val mainViewListSize = 20;//하단바 손잡이
     var beforeState: MainActivityState = MainActivityState.slideDown1;
+    //메인뷰 엑티비티
+    lateinit var mainActivity: Activity;
+    //메인의 바인딩
+    private lateinit var binding: ActivityMainBinding
 
     //TOP뷰 기본 사이즈
     val TopViewSize: Int = mainSearchViewSize + mainViewChangeSize + mainViewListSize;
@@ -48,8 +54,8 @@ class MainTopView {
         var SearchViewAdapter: SearchAdapter? = null
         //외부에서 받아온 뷰들
         lateinit var TopView: View
-        var MainSearchView: EditText? = null
-        var MainSearchListView: View? = null;
+        lateinit var MainSearchView: EditText
+        lateinit var MainSearchListView: View;
         var MainViewChange: View? = null;
         var MainViewListCover : View? = null;
         var MainViewList: View? = null;
@@ -64,7 +70,7 @@ class MainTopView {
 
 
     //해당클래스에 필요한 뷰를 main에서 받아옴
-    fun setTopView(topView: View, searchView: EditText, mainSearchListView: View, mainViewChange: View,mainViewListCover:View,mainViewList:View, searchViewAdapter: SearchAdapter,MainActivity:Activity) {
+    fun setTopView(topView: View, searchView: EditText, mainSearchListView: View, mainViewChange: View,mainViewListCover:View,mainViewList:View, searchViewAdapter: SearchAdapter,MainActivity:Activity,Binding : ActivityMainBinding) {
         //메인의 탑뷰
         TopView = topView;
         //탑뷰의 서치뷰
@@ -81,49 +87,21 @@ class MainTopView {
         SearchViewAdapter = searchViewAdapter
         //메인액티비티받아와서 넘겨주기
         SetSize(MainActivity)
+        mainActivity = MainActivity
+
+        binding = Binding
+        binding.topview = this
     }
 
-    //페이지 전환용 뷰 리스너장착 개량의 여지가 보임
-    fun setMoveItem(mainActivity : Activity,moveItem1 : View,moveItem2 : View,moveItem3 : View,moveItem4 : View){
-        //이동 라스너
-        val moveitemListner : View.OnClickListener = object :View.OnClickListener{
-            override fun onClick(v: View?) {
-                var i =0;
-                for(i in 0..moveItemList.count()){ moveItemList[i].equals(v);break }
-                //이동 아이콘 클릭시 이동할 위치 할당하면됨
-                when (i){
-                    0->  mainActivity.startActivity(Intent(mainActivity, UserActivity::class.java))
+    //상단뷰 1번아이콘 클릭이벤트
+    fun IconMove1(view : View) { mainActivity.startActivity(Intent(mainActivity, UserActivity::class.java)) }
 
-                }
-            }
-        }
-        //각뷰에 이동용 리스너 장착
-        moveItemList.add(moveItem1)
-        moveItem1.setOnClickListener(moveitemListner)
-        moveItemList.add(moveItem2)
-        moveItem2.setOnClickListener(moveitemListner)
-        moveItemList.add(moveItem3)
-        moveItem3.setOnClickListener(moveitemListner)
-        moveItemList.add(moveItem4)
-        moveItem4.setOnClickListener(moveitemListner)
-    }
-
-    //검색창 온클릭 이벤트 리스너 터치이벤트를위한 장착
-    val mainTopSearchViewOnclickListener = object : View.OnClickListener { override fun onClick(v: View?) {} }
-    //검색창 터치 이벤트 리스너 - 검색하기
-    val mainTopSearchViewOnTouchListener = object : View.OnTouchListener {
-        override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-            //메인 상태를 검색으로 변경
-            val text = writedWord ?: ""
-            search(text)
-            searchingViewChange()
-            return false;
-        }
-    }
-
-    //뷰이동 터치 이벤트 리스너 - 창닫기(필요함?)
-    val mainTopViewOnclickListener = object : View.OnClickListener {
-        override fun onClick(v: View?) {}
+    fun SearchEvent(view: View){
+        Log.d("검색창 오픈!","검색창오픈!!")
+        //메인 상태를 검색으로 변경
+        val text = writedWord ?: ""
+        search(text)
+        searchingViewChange()
     }
 
 
@@ -167,8 +145,6 @@ class MainTopView {
     fun TopViewShow(state: MainActivityState = MainActivityState.notChange ) {
         ViewAnimation(TopView, 0, 0, 500,state)
     }
-
-
 
     //뷰이동 슬라이드 업 함수
     fun TopViewHide(state: MainActivityState = MainActivityState.notChange ) {
