@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewTreeObserver
 import com.uos.vcommcerce.MainActivity
 import com.uos.vcommcerce.adapter.mainActivityState
-import com.uos.vcommcerce.databinding.ActivityMainBinding
 import com.uos.vcommcerce.mainslide.ViewAnimation
 import com.uos.vcommcerce.mainslide.maintopslide.MainTopView
 import com.uos.vcommcerce.util.MainActivityState
@@ -22,10 +21,6 @@ class MainBottomView  {
     var BottomMid : Int = 0
     var BottomMax : Int = 0
     var standardSize_Y : Int = 0
-
-    //메인의 바인딩
-    private lateinit var binding: ActivityMainBinding
-
     companion object{
         var instance = MainBottomView()
         lateinit var BottomView : View
@@ -33,23 +28,22 @@ class MainBottomView  {
     }
 
     //해당클래스에 필요한 뷰를 main에서 받아옴
-    fun setBottomView(bottomView: View,contentView:View, MainActivity: Activity,Binding: ActivityMainBinding){
+    fun setBottomView(bottomView: View,contentView:View, MainActivity: Activity){
         BottomView = bottomView;        //메인뷰 할당
         ContentView = contentView
         SetSize(MainActivity)                   //각 크기 설정
-        binding = Binding
-        binding.bottomview = this
+
     }
 
     //하단바 온클릭 이벤트 리스너 - 하단바 닫기
-
-    fun BottomViewClick(view: View){
-        when(mainActivityState){
-            MainActivityState.slideUp1->{ BottonViewShow(MainActivityState.default) }
-//          MainActivityState.slideUp2->{ BottonViewShow(MainActivityState.default) } //2단확장시 막아두기
+     val mainBottomViewOnclickListener = object : View.OnClickListener {
+        override fun onClick(v: View?) {
+            when(mainActivityState){
+                MainActivityState.slideUp1->{ BottonViewShow(MainActivityState.default) }
+                MainActivityState.slideUp2->{ BottonViewShow(MainActivityState.default) }
+            }
         }
     }
-    
 
     fun BottonViewShow(state: MainActivityState = MainActivityState.notChange ) {
         ViewAnimation(BottomView, 0, BottomMax.dp()-BottomMin.dp(), 500,state)

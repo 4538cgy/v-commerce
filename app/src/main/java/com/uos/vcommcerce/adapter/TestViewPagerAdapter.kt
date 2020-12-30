@@ -61,16 +61,20 @@ class TestViewPagerAdapter(private val context: Context, private val items: Arra
         player?.prepare()
         player?.play()
 
+
         //뷰에 터치리스너 추가
 
-        holder.itemView.setOnClickListener(ViewPageClickListner())
-        holder.itemView.setOnTouchListener(ViewPageTouchListner())
+        holder.itemView.setOnClickListener(ViewPageClickListner)
+        holder.itemView.setOnTouchListener(ViewPageTouchListner)
     }
 
 
     //최석우 뷰 컨트롤을위한 클릭과 터치리스너
-    inner class ViewPageClickListner : View.OnClickListener{ override fun onClick(v: View?) {} }
-    inner class ViewPageTouchListner : View.OnTouchListener{
+
+    val ViewPageClickListner = object : View.OnClickListener{ override fun onClick(v: View?) {} }
+
+
+    val ViewPageTouchListner = object : View.OnTouchListener {
         override fun onTouch(v: View?, event: MotionEvent?): Boolean {
             when (event?.action) {
                 //창을 눌럿을떄
@@ -112,7 +116,6 @@ class TestViewPagerAdapter(private val context: Context, private val items: Arra
             return false
         }
     }
-
 }
 
 //페이지이동시 원래 상태로 되돌아가기
