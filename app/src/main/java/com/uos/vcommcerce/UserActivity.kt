@@ -6,6 +6,7 @@ import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -17,7 +18,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
 import com.uos.vcommcerce.databinding.ActivityUserViewBinding
 import kotlinx.android.synthetic.main.activity_user_view.*
 import java.io.FileOutputStream
@@ -31,6 +32,7 @@ private const val FLAG_REQ_GALLERY = 102
 
 class UserActivity : AppCompatActivity(){
     private lateinit var binding:ActivityUserViewBinding
+    private var firebaseAuth : FirebaseAuth? = null;
 
     val CAMERA_PERMISSION = arrayOf(Manifest.permission.CAMERA) //카메라 퍼미션
     val STORAGE_PERMISSION = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE) //외부저장소 권한요청
@@ -39,10 +41,20 @@ class UserActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_user_view)
         binding.useractivity = this@UserActivity
+        firebaseAuth = FirebaseAuth.getInstance()
         //setContentView(R.layout.activity_user_view)
-        //기본 그리드 뷰 실행
-        supportFragmentManager.beginTransaction().replace(R.id.recyclerViewBox, VideoGridFragment()).commit()
 
+        //기본 그리드 뷰 실행
+        if(firebaseAuth?.currentUser != null){   //로그인 체크 이거 맞나?
+            binding.followBtn.visibility = View.VISIBLE
+            binding.messageBtn.visibility = View.VISIBLE
+        }else{
+            binding.followBtn.visibility = View.INVISIBLE
+            binding.messageBtn.visibility = View.INVISIBLE
+        }
+        supportFragmentManager.beginTransaction().replace(R.id.recyclerViewBox, VideoGridFragment()).commit()
+        binding.videoGridSelectBar.setBackgroundColor(Color.parseColor("#000000"))
+        binding.historySelectBar.setBackgroundColor(Color.parseColor("#525252"))
 //        //비디오 버튼 눌럿을 때
 //        videoGridBtn.setOnClickListener{
 //            supportFragmentManager.beginTransaction().replace(R.id.recyclerViewBox, VideoGridFragment()).commit()
@@ -89,11 +101,15 @@ class UserActivity : AppCompatActivity(){
     }
     //비디오 탭 클릭 이벤트
     fun videoTabClickEvent(view: View){
+        binding.videoGridSelectBar.setBackgroundColor(Color.parseColor("#000000"))
+        binding.historySelectBar.setBackgroundColor(Color.parseColor("#525252"))
         supportFragmentManager.beginTransaction().replace(R.id.recyclerViewBox, VideoGridFragment()).commit()
     }
 
     //히스토리 탭 클릭 이벤트
     fun historyTabClickEvent(view: View){
+        binding.videoGridSelectBar.setBackgroundColor(Color.parseColor("#525252"))
+        binding.historySelectBar.setBackgroundColor(Color.parseColor("#000000"))
         supportFragmentManager.beginTransaction().replace(R.id.recyclerViewBox, HistoryFragment()).commit()
     }
 

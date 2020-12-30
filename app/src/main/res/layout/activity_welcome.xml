@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activity.signup.WelcomeActivity">
+
+    <data>
+
+        <variable
+            name="activitywelcome"
+            type="com.uos.vcommcerce.activity.signup.WelcomeActivity" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/activity_welcome_imagview"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_marginTop="90dp"
+            android:src="@mipmap/ic_launcher"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/activity_welcome_textview_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="환영합니다."
+            android:textColor="@color/colorBlack"
+            android:textSize="20dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activity_welcome_imagview" />
+
+        <TextView
+            android:id="@+id/activity_welcome_textview_subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="마리화나 같은 비디오 쇼핑에 중독되어 보세요."
+            android:textSize="12dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activity_welcome_textview_title" />
+
+
+        <Button
+            android:id="@+id/activity_welcome_button_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="로그인"
+            android:textSize="12dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/activity_welcome_button_signup"
+            android:background="@drawable/button_background_round_light_gray_4dp"
+            android:layout_margin="16dp"
+            />
+
+        <Button
+            android:id="@+id/activity_welcome_button_signup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="가입"
+            android:textSize="12dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/button_background_round_glitch_4dp"
+            android:layout_margin="16dp"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

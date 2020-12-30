@@ -2,8 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <variable
-            name="gridfragment"
+            name="VideoGridFragment"
             type="com.uos.vcommcerce.VideoGridFragment" />
+
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,7 +14,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerGridView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
     </androidx.recyclerview.widget.RecyclerView>
 </androidx.constraintlayout.widget.ConstraintLayout>
