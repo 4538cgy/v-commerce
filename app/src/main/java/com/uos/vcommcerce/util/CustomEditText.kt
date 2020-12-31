@@ -2,6 +2,7 @@ package com.uos.vcommcerce.util
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Rect
 import android.util.AttributeSet
 import android.util.Log
 import android.view.KeyEvent
@@ -25,6 +26,13 @@ class CustomEditText : EditText {
         Log.d("TEST","keyCode: ${keyCode} | event: ${event?.action}")
         this.callback()
         return super.onKeyPreIme(keyCode, event)
+    }
+
+    override fun onFocusChanged(focused: Boolean, direction: Int, previouslyFocusedRect: Rect?) {
+        super.onFocusChanged(focused, direction, previouslyFocusedRect)
+        if(focused){
+            callOnClick()
+        }
     }
 
 }
