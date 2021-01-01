@@ -3,8 +3,7 @@ package com.uos.vcommcerce.model
 import androidx.databinding.BaseObservable
 import androidx.databinding.ObservableField
 
-class MediaContentDTO(url :String ,title :String ,content:String,nickname:String="이름",price:String="가격",address:String="주소") : BaseObservable() {
-
+class MediaContentDTO(url :String="url" ,title :String="제목" ,content:String="내용",nickname:String="이름",price:String="가격",address:String="주소"){
     var url : ObservableField<String> = ObservableField(url)
     var nickname: ObservableField<String> = ObservableField(nickname)
     var title: ObservableField<String> = ObservableField(title)
@@ -13,7 +12,7 @@ class MediaContentDTO(url :String ,title :String ,content:String,nickname:String
     var content: ObservableField<String> = ObservableField(content)
 
 
-    fun set(url :String ,title :String ,content:String,nickname:String="이름",price:String="가격",address:String="주소"){
+    fun set(url :String="url" ,title :String="제목" ,content:String="내용",nickname:String="이름",price:String="가격",address:String="주소"){
         this.url.set(url)
         this.title.set(title)
         this.content.set(content)

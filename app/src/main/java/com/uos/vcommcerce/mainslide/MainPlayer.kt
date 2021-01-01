@@ -6,31 +6,30 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.databinding.ActivityMainBinding
 import com.uos.vcommcerce.model.MediaContentDTO
+import com.uos.vcommcerce.model.UserDTO
 import com.uos.vcommcerce.tranformer.ZoomOutPageTransformer
 import com.uos.vcommcerce.util.MainActivityState
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item_exoplayer.view.*
 import kotlin.math.abs
+
 
 class MainPlayer  {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var vp_viewpager:ViewPager2
-    lateinit var items: ArrayList<MediaContentDTO>
+    var items: ArrayList<MediaContentDTO> = ArrayList<MediaContentDTO>()
 
-
-    var mediaContent: MediaContentDTO = MediaContentDTO(
-        "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8",
-        "1 번동영상",
-        "1번 동영상의 내용"
-    )
+    var mediaContent: MediaContentDTO = MediaContentDTO()
 
     companion object {
         //싱글톤 생성
@@ -88,10 +87,10 @@ class MainPlayer  {
             }
         })
 
+
     }
 
     init {
-        // 넣을 비디오 리스트 추가
         items.add(
             MediaContentDTO(
                 "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8",
@@ -127,19 +126,10 @@ class MainPlayer  {
                 "5번 동영상의 내용"
             )
         )
-        items.add(
-            MediaContentDTO(
-                "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8",
-                "6 번동영상",
-                "6번 동영상의 내용"
-            )
-        )
-
-
     }
 
-
     inner class VideoAdapter(private val context: Context): RecyclerView.Adapter<VideoAdapter.ViewHolder>() {
+
 
         //이미지뷰 터치 시작위치 측정
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -147,7 +137,8 @@ class MainPlayer  {
             val exoPlayer : View = view.findViewById(R.id.item_exoplayer)
         }
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoAdapter.ViewHolder = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_exoplayer,parent,false))
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoAdapter.ViewHolder =
+            ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_exoplayer,parent,false))
 
         override fun getItemCount(): Int = items.size
 
