@@ -3,6 +3,8 @@ package com.uos.vcommcerce.mainslide
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.res.Resources
+import android.graphics.Point
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -12,36 +14,42 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.UserActivity
 import com.uos.vcommcerce.databinding.ActivityMainBinding
 import com.uos.vcommcerce.mainslide.ViewAnimation
-import com.uos.vcommcerce.util.MainActivityState
 import com.uos.vcommcerce.mainslide.ViewAnimation
-import com.uos.vcommcerce.util.CustomEditText
-import com.uos.vcommcerce.util.dp
-import com.uos.vcommcerce.util.setHeight
+import com.uos.vcommcerce.util.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainTopView {
 
+    //피그마 기준 값
+    var standardSize_Y : Int = 770
+    var standardSize_X : Int = 375
+    val standardTopViewSize : Int = 130
 
+
+    //피그마크기1px 당 실제뷰 크기값
+    var size_X : Float = 0f
+    var size_Y : Float = 0f
+
+    //실제뷰 크기값
+    var TopViewSize : Int = 0
 
     //각 뷰 기본사이즈
-    val mainSearchViewSize: Int = 35;//검색창
-    val mainRecyclerItemSize: Int = 30;//검색 아이템 크기
-    val mainViewChangeSize = 60;//이동아이콘
-    val mainViewListSize = 20;//하단바 손잡이
+    val SearchViewSize: Int = 40;//검색창 크기
+    val RecyclerItemSize: Int = 30;//검색 아이템 크기
+    val MoveListViewSize = 48;//이동아이콘 크기
+    val viewHandleSize = 16;//하단바 손잡이 크기
     var beforeState: MainActivityState = MainActivityState.slideDown1;
     //메인뷰 엑티비티
     lateinit var mainActivity: Activity;
     //메인의 바인딩
     private lateinit var binding: ActivityMainBinding
-
-    //TOP뷰 기본 사이즈
-    val TopViewSize: Int = mainSearchViewSize + mainViewChangeSize + mainViewListSize;
 
     //이동뷰 리스트
     var moveItemList : ArrayList<View> = arrayListOf()
@@ -52,40 +60,33 @@ class MainTopView {
         //외부에서 받아온 리사이클러 어댑터
         var SearchViewAdapter: SearchAdapter? = null
         //외부에서 받아온 뷰들
-        lateinit var TopView: View
-        lateinit var MainSearchView: EditText
-        lateinit var MainSearchListView: View;
-        var MainViewChange: View? = null;
-        var MainViewListCover : View? = null;
-        var MainViewList: View? = null;
+        lateinit var TopView: View  //탑뷰
+        lateinit var SearchView: EditText   //검색뷰
+        lateinit var SearchListView: View;  //검색리스트 뷰
+        lateinit var MoveListView: View;     //이동뷰 그룹
 
         //검색창용 변수및 리스트
-        var originalList: ArrayList<String>? = null
-        var filterList: MutableList<String>? = null
-        var selectedList: List<String>? = null
-        var writedWord: String? = null
+        lateinit var originalList: ArrayList<String>
+        var filterList: MutableList<String> = mutableListOf<String>()
+        var writedWord: String = ""
     }
 
 
 
     //해당클래스에 필요한 뷰를 main에서 받아옴
-    fun setTopView(topView: View, searchView: CustomEditText, mainSearchListView: View, mainViewChange: View,mainViewListCover:View,mainViewList:View, searchViewAdapter: SearchAdapter,MainActivity:Activity,Binding : ActivityMainBinding) {
+    fun setTopView(topView: View, searchView: CustomEditText, searchListView: View, moveListView: View,moveViewList : ArrayList<ImageView>, searchViewAdapter: SearchAdapter, MainActivity:Activity, Binding : ActivityMainBinding) {
         //메인의 탑뷰
         TopView = topView;
         //탑뷰의 서치뷰
-        MainSearchView = searchView
+        SearchView = searchView
         //탑뷰의 서치뷰 리스트
-        MainSearchListView = mainSearchListView;
+        SearchListView = searchListView;
         //탑뷰의 이동뷰
-        MainViewChange = mainViewChange;
-        //탑뷰의 그리드뷰 커버
-        MainViewListCover = mainViewListCover;
-        //탑뷰의 그리드뷰
-        MainViewList = mainViewList;
+        MoveListView = moveListView;
         //탑뷰의 어댑터
         SearchViewAdapter = searchViewAdapter
         //메인액티비티받아와서 넘겨주기
-        SetSize(MainActivity)
+        SetSize(MainActivity,moveViewList)
         mainActivity = MainActivity
         binding = Binding
         binding.topview = this
@@ -116,16 +117,17 @@ class MainTopView {
         }
         mainActivityState = MainActivityState.search
         if (searchItemCount < 3) {
-            TopView?.setHeight(mainSearchViewSize + 3 * mainRecyclerItemSize)
-            MainViewChange?.setHeight(0)
-            MainSearchListView?.setHeight(3 * mainRecyclerItemSize)
-            MainViewList?.setHeight(0)
+            TopView.setHeight((size_Y*(SearchViewSize + 10 + viewHandleSize + 3*RecyclerItemSize)).toInt() )
+            MoveListView.setHeight(0)
+            SearchListView.setHeight(3 * RecyclerItemSize)
+            SearchListView.setMarginBottom(0)
+
 
         } else {
-            TopView?.setHeight(mainSearchViewSize + searchItemCount * mainRecyclerItemSize)
-            MainViewChange?.setHeight(0)
-            MainSearchListView?.setHeight(searchItemCount * mainRecyclerItemSize)
-            MainViewList?.setHeight(0)
+            TopView.setHeight((size_Y*(SearchViewSize + 10 + viewHandleSize + searchItemCount*RecyclerItemSize)).toInt() )
+            MoveListView.setHeight(0)
+            SearchListView.setHeight(searchItemCount * RecyclerItemSize)
+            SearchListView.setMarginBottom(0)
         }
     }
 
@@ -135,12 +137,11 @@ class MainTopView {
     fun SearchEnd(){
         Log.d("beforeState 값3 : ",""+beforeState )
         mainActivityState = beforeState
-        TopView.setHeight(TopViewSize)
-        MainSearchListView?.setHeight(0)
-        MainViewChange?.setHeight(mainViewChangeSize)
-        MainViewList?.setHeight(mainViewListSize)
-        MainSearchView?.clearFocus()
-
+        TopView.setHeight(TopViewSize)     //하단뷰 크기 설정
+        MoveListView.setHeight(MoveListViewSize)
+        SearchListView?.setHeight(0)
+        SearchListView.setMarginBottom((size_Y*16).toInt())
+        SearchView?.clearFocus()
     }
 
 
@@ -159,10 +160,7 @@ class MainTopView {
 
     //초기화
     init {
-        originalList = ArrayList<String>()
-        filterList = mutableListOf<String>()
-        selectedList = listOf<String>()
-        writedWord = ""
+        originalList  = ArrayList<String>()
         originalList!!.add("채수빈")
         originalList!!.add("박지현")
         originalList!!.add("수지")
@@ -200,7 +198,7 @@ class MainTopView {
             val view: View = LayoutInflater.from(context).inflate(R.layout.main_search_item, null)
             val text = view.findViewById<TextView>(R.id.main_search_item_title)
             val list = filterList?.get(position)
-            view.setHeight(mainRecyclerItemSize);
+            view.setHeight(RecyclerItemSize);
             text.text = list;
             return view
         }
@@ -225,7 +223,7 @@ class MainTopView {
     val TextChangeListener = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
             //검색창에서 검색 글자 추출하기
-            writedWord = MainSearchView!!.text.toString()
+            writedWord = SearchView!!.text.toString()
             //추출한뒤 writedWord에 집어 넣어줘야함
             val text = writedWord ?: ""
             search(text)
@@ -261,8 +259,41 @@ class MainTopView {
         SearchViewAdapter!!.notifyDataSetChanged()
     }
 
-    fun SetSize(MainActivity: Activity){
+    fun SetSize(MainActivity: Activity,moveViewList : ArrayList<ImageView>){
+
+        val display = MainActivity.windowManager.defaultDisplay
+        val size = Point()
+        display.getSize(size)
+        var ScreenSize: Point = size
+        var density = Resources.getSystem().displayMetrics.density
+
+        size_Y = (ScreenSize.y / density)/standardSize_Y
+        size_X = (ScreenSize.x / density)/standardSize_X
+        TopViewSize = (size_Y*standardTopViewSize).toInt()
+
         TopView.setHeight(TopViewSize)     //하단뷰 크기 설정
+        TopView.setPadding(24*size_X.toInt().dp(),0,24*size_X.toInt().dp(),0)
+
+        SearchView.setHeight((size_Y*SearchViewSize).toInt())
+        SearchView.setMarginTop((size_Y*10).toInt())
+
+        SearchListView.setHeight(0)
+        SearchListView.setMarginBottom((size_Y*16).toInt())
+
+        MoveListView.setHeight((size_Y*MoveListViewSize).toInt())
+
+        moveViewList[0].setHeight((size_Y*MoveListViewSize).toInt())
+        moveViewList[0].setWidth((size_Y*MoveListViewSize).toInt())
+
+        moveViewList[1].setHeight((size_Y*MoveListViewSize).toInt())
+        moveViewList[1].setWidth((size_Y*MoveListViewSize).toInt())
+
+        moveViewList[2].setHeight((size_Y*MoveListViewSize).toInt())
+        moveViewList[2].setWidth((size_Y*MoveListViewSize).toInt())
+
+        moveViewList[3].setHeight((size_Y*MoveListViewSize).toInt())
+        moveViewList[3].setWidth((size_Y*MoveListViewSize).toInt())
+
         ViewAnimation(TopView, 0,  -TopViewSize.dp(), 0, MainActivityState.default)
     }
 
