@@ -22,32 +22,28 @@ import com.uos.vcommcerce.databinding.ActivityWelcomeBinding
 class SignUpActivity : AppCompatActivity() {
 
     lateinit var binding : ActivitySignUpBinding
-    var anana : Int = 1;
+ 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_sign_up)
         binding.activitysignup = this@SignUpActivity
 
-        changeFragment(2)
-
-
-    }
-
-    fun changeFragment(frag : Int){
-        val fragment = supportFragmentManager.beginTransaction()
-
-        when(frag){
-
-            1 -> {
-                fragment.replace(R.id.activity_sign_up_frame,CreateNewAccountIDFragment()).commit()
-            }
-            2 -> {
-                fragment.replace(R.id.activity_sign_up_frame,AddUserInfoFragment()).commit()
-            }
-
+        
+        //취소
+        binding.activitySignUpButtonCancel.setOnClickListener { 
+            finish()
         }
+        
+        //다음
+        binding.activitySignUpButtonNext.setOnClickListener { 
+            
+        }
+
+
     }
+
+   
 
 
 

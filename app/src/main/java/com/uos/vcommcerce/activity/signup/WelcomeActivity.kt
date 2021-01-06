@@ -6,9 +6,8 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.google.firebase.auth.FirebaseAuth
-import com.uos.vcommcerce.LoginActivity
+import com.uos.vcommcerce.activity.login.LoginActivity
 import com.uos.vcommcerce.R
-import com.uos.vcommcerce.activity.signup.fragment.CreateNewAccountIDFragment
 import com.uos.vcommcerce.databinding.ActivityWelcomeBinding
 
 class WelcomeActivity : AppCompatActivity() {
