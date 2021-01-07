@@ -15,13 +15,14 @@ import android.widget.EditText
 import android.widget.TextView
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.UserActivity
-import com.uos.vcommcerce.adapter.mainActivityState
 import com.uos.vcommcerce.databinding.ActivityMainBinding
 import com.uos.vcommcerce.mainslide.ViewAnimation
 import com.uos.vcommcerce.util.MainActivityState
 import com.uos.vcommcerce.mainslide.ViewAnimation
+import com.uos.vcommcerce.util.CustomEditText
 import com.uos.vcommcerce.util.dp
 import com.uos.vcommcerce.util.setHeight
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainTopView {
@@ -68,7 +69,7 @@ class MainTopView {
 
 
     //해당클래스에 필요한 뷰를 main에서 받아옴
-    fun setTopView(topView: View, searchView: EditText, mainSearchListView: View, mainViewChange: View,mainViewListCover:View,mainViewList:View, searchViewAdapter: SearchAdapter,MainActivity:Activity,Binding : ActivityMainBinding) {
+    fun setTopView(topView: View, searchView: CustomEditText, mainSearchListView: View, mainViewChange: View,mainViewListCover:View,mainViewList:View, searchViewAdapter: SearchAdapter,MainActivity:Activity,Binding : ActivityMainBinding) {
         //메인의 탑뷰
         TopView = topView;
         //탑뷰의 서치뷰
@@ -88,6 +89,11 @@ class MainTopView {
         mainActivity = MainActivity
         binding = Binding
         binding.topview = this
+
+        //메인 서치뷰에 텍스트 변경인식 리스너 추가
+        searchView.addTextChangedListener(MainTopView.instance.TextChangeListener)
+        //백키 누를시 적용될 함수 - 서치리스트뷰 숨기기
+        searchView.setCallback { MainTopView.instance.SearchEnd() }
     }
 
     //상단뷰 1번아이콘 클릭이벤트

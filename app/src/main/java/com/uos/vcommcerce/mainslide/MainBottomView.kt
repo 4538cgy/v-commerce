@@ -6,12 +6,7 @@ import android.content.res.Resources
 import android.graphics.Point
 import android.util.Log
 import android.view.View
-import android.view.ViewTreeObserver
-import com.uos.vcommcerce.MainActivity
-import com.uos.vcommcerce.adapter.mainActivityState
 import com.uos.vcommcerce.databinding.ActivityMainBinding
-import com.uos.vcommcerce.mainslide.ViewAnimation
-import com.uos.vcommcerce.mainslide.MainTopView
 import com.uos.vcommcerce.util.MainActivityState
 import com.uos.vcommcerce.util.dp
 import com.uos.vcommcerce.util.setHeight

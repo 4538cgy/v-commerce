@@ -5,8 +5,11 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.util.Log
 import android.view.View
-import com.uos.vcommcerce.adapter.mainActivityState
+import com.uos.vcommcerce.Imm
 import com.uos.vcommcerce.util.MainActivityState
+
+
+var mainActivityState = MainActivityState.default;
 
 //위치값은 dp로 받아옴
 fun ViewAnimation(TargetView:View, StartPos: Int, EndPos : Int, during : Long, ChangedState : MainActivityState = MainActivityState.notChange) {
@@ -29,4 +32,14 @@ fun ViewAnimation(TargetView:View, StartPos: Int, EndPos : Int, during : Long, C
             }
         })
     }
+}
+
+fun returnDefaultView() {
+    if (mainActivityState == MainActivityState.search) {
+        MainTopView.instance.SearchEnd()
+        Imm?.hideSoftInputFromWindow(MainTopView.MainSearchView?.windowToken, 0);
+    }
+    MainBottomView.instance.BottonViewShow(MainActivityState.default)
+    MainTopView.instance.TopViewHide()
+
 }
