@@ -18,9 +18,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.signup.ProfileRegistActivity"></activity>
-        <activity android:name=".activity.login.FindPasswordActivity" />
-        <activity android:name=".activity.login.LoginWithEmail" />
+        <activity android:name=".activity.login.popup.PasswordErrorPopUpActivity" android:theme="@style/DialogTheme">
+
+        </activity>
+        <activity android:name=".activity.signup.ProfileRegistActivity" />
+        <activity android:name=".activity.login.FindPasswordActivity" >
+        </activity>
+        <activity android:name=".activity.login.LoginWithEmail" >
+
+        </activity>
         <activity android:name=".testpackagedeletesoon.ShowMyUserInfoActivity" />
         <activity android:name=".activity.signup.WelcomeActivity" />
         <activity android:name=".activity.signup.SignUpActivity" />

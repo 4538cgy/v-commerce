@@ -16,5 +16,7 @@
     <color name="colorGray">#cccccc</color>
     <color name="colorLightGray_FEFEFE">#FEFEFE</color>
     <color name="colorGlitch_00FFCB">#00FFCB</color>
+    <color name="colorSystemBlue">#007AFF</color>
+    <color name="colorRed">#FF0000</color>
 
 </resources>
