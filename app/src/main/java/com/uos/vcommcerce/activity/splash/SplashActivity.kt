@@ -1,13 +1,19 @@
-package com.uos.vcommcerce
+package com.uos.vcommcerce.activity.splash
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
+import com.uos.vcommcerce.MainActivity
+import com.uos.vcommcerce.R
+import com.uos.vcommcerce.databinding.ActivitySplashBinding
 
 
 class SplashActivity : AppCompatActivity() {
+
+    lateinit var binding : ActivitySplashBinding
 
     var firebaseRemoteConfig : FirebaseRemoteConfig ? = null
 
@@ -15,7 +21,8 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash)
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_splash)
+        binding.activitysplash = this@SplashActivity
 
 
       firebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
@@ -59,7 +66,7 @@ class SplashActivity : AppCompatActivity() {
 
             //check가 false면 그냥 넘어감
             
-            startActivity(Intent(this,MainActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
 
         }

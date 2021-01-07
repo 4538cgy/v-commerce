@@ -1,4 +1,4 @@
-package com.uos.vcommcerce
+package com.uos.vcommcerce.activity.login
 
 import android.content.Intent
 import android.os.Build
@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.databinding.DataBindingUtil
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -22,8 +23,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
+import com.uos.vcommcerce.R
+import com.uos.vcommcerce.SettingActivity
 import com.uos.vcommcerce.activity.signup.SignUpActivity
-import com.uos.vcommcerce.activity.signup.WelcomeActivity
+import com.uos.vcommcerce.databinding.ActivityLoginBinding
 import com.uos.vcommcerce.util.SharedData
 import kotlinx.android.synthetic.main.activity_login.*
 import java.util.*
@@ -36,10 +39,13 @@ class LoginActivity : AppCompatActivity() {
     var callbackManager: CallbackManager? = null
     var firestore = FirebaseFirestore.getInstance()
 
+    lateinit var binding : ActivityLoginBinding
+
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_login)
+        binding.activitylogin = this@LoginActivity
 
         auth = FirebaseAuth.getInstance()
 
@@ -145,7 +151,7 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
-
+    /*
     fun signinAndSignup() {
         auth?.createUserWithEmailAndPassword(
             activity_login_edittext_email.text.toString(),
@@ -163,6 +169,8 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+     */
+    /*
     fun signinEmail() {
         auth?.signInWithEmailAndPassword(
             activity_login_edittext_email.text.toString(),
@@ -177,6 +185,8 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
+    
+     */
 
     fun moveMainPage(user: FirebaseUser?) {
         if (user != null) {

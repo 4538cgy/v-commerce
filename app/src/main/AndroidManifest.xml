@@ -18,7 +18,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".testpackagedeletesoon.ShowMyUserInfoActivity"></activity>
+        <activity android:name=".activity.signup.ProfileRegistActivity"></activity>
+        <activity android:name=".activity.login.FindPasswordActivity" />
+        <activity android:name=".activity.login.LoginWithEmail" />
+        <activity android:name=".testpackagedeletesoon.ShowMyUserInfoActivity" />
         <activity android:name=".activity.signup.WelcomeActivity" />
         <activity android:name=".activity.signup.SignUpActivity" />
         <activity android:name=".activity.videoupload.VideoUploadActivity" />
@@ -48,8 +51,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SplashActivity" />
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".activity.splash.SplashActivity" />
+        <activity android:name=".activity.login.LoginActivity" />
         <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustNothing" />
