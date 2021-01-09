@@ -22,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.databinding.ActivityMainBinding
 import com.uos.vcommcerce.model.MediaContentDTO
+import com.uos.vcommcerce.model.ProductDTO
 import com.uos.vcommcerce.model.UserDTO
 import com.uos.vcommcerce.tranformer.ZoomOutPageTransformer
 import com.uos.vcommcerce.util.MainActivityState
@@ -35,6 +36,7 @@ class MainPlayer  {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var vp_viewpager:ViewPager2
+    var firestore = FirebaseFirestore.getInstance()
 
     var items: ArrayList<MediaContentDTO> = ArrayList<MediaContentDTO>()
 
@@ -97,6 +99,39 @@ class MainPlayer  {
         })
 
 
+        var products : ArrayList<ProductDTO> =  arrayListOf()
+        var productsId : ArrayList<String> = arrayListOf()
+        firestore.collection("product").document("productInfo").collection("normalProduct").addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+
+            if (querySnapshot == null) {
+                Log.d("실패!","실패하엿다..")
+                return@addSnapshotListener
+            }
+
+            Log.d("성공!","이걸해낸다고??")
+            for (snapshot in querySnapshot!!.documents){
+
+                var item = snapshot.toObject(ProductDTO::class.java)
+                products.add(item!!)
+                productsId.add(snapshot.id)
+
+                //binding.activityMainTextView.text = products.uid.toString()
+                //startChangeFunction(products)
+            }
+
+            //비동기 스코프 내부
+            products.forEach {
+                println(it.toString() + "비동기 스코프 밖의 데이터 리스트 product")
+            }
+
+            productsId.forEach {
+
+                println(it.toString() + "비동기 스코프 밖의 데이터 리스트 productId")
+            }
+
+
+
+        }
     }
 
     init {
