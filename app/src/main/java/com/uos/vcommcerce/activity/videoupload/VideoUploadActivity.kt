@@ -73,7 +73,7 @@ class VideoUploadActivity : AppCompatActivity() {
         
         product.apply {
             videoUri = uri.toString()
-            uid = auth.currentUser?.uid
+            uid = auth.currentUser?.uid.toString()
             cost = binding.activityVideoUploadEidttextProductcost.text.toString()
             productExplain = binding.activityVideoUploadEidttextProductexplain.text.toString()
             productTile = binding.activityVideoUploadEidttextProductname.text.toString()
