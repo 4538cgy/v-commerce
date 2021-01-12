@@ -1,7 +1,5 @@
 package com.uos.vcommcerce.model
 
-import android.net.Uri
-
 data class ProductDTO(
     var uid: String? = null,
     var videoUri : String ? = null,

@@ -11,14 +11,13 @@
         
         <variable
             name="MediaContent"
-            type="com.uos.vcommcerce.model.MediaContentDTO" />
+            type="com.uos.vcommcerce.model.ObservableProductDTO" />
         <variable
             name="topview"
             type="com.uos.vcommcerce.mainslide.MainTopView" />
         <variable
             name="bottomview"
             type="com.uos.vcommcerce.mainslide.MainBottomView" />
-
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,7 +27,6 @@
     android:background="#000000"
     >
 
-
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/vp_viewpager"
         android:layout_width="match_parent"
@@ -37,7 +35,9 @@
         android:orientation="horizontal"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="-36dp"
-        />
+        >
+
+    </androidx.viewpager2.widget.ViewPager2>
 
     <!--2020/09/17 최석우 상단 바 -->
     <LinearLayout
@@ -49,7 +49,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:background="@drawable/main_top_view_background">
-
 
         <com.uos.vcommcerce.util.CustomEditText
             android:id="@+id/mainSearchView"
@@ -135,7 +134,7 @@
             android:id="@+id/nickname"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:text="@{MediaContent.nickname}"
+            android:text="@{MediaContent.sellerNickName}"
             android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="@color/mainBottonFontlightColor"
@@ -144,7 +143,7 @@
             android:id="@+id/titleview"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:text="@{MediaContent.title}"
+            android:text="@{MediaContent.productTile}"
             android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="@color/mainBottonFontColor"
@@ -170,16 +169,17 @@
                 android:layout_width="0dp"
                 android:layout_height="22dp"
                 android:layout_weight="1"
-                android:text="@{MediaContent.price}"
+                android:text="@{MediaContent.cost}"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="@color/mainBottonFontColor" />
         </LinearLayout>
+
         <TextView
             android:id="@+id/contentview"
             android:layout_width="match_parent"
             android:layout_height="10dp"
-            android:text="@{MediaContent.content}"
+            android:text="@{MediaContent.productExplain}"
             android:layout_marginBottom="37dp"
             android:textColor="@color/mainBottonFontColor"/>
         <Button
