@@ -25,7 +25,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-
+    android:background="#000000"
     >
 
 
@@ -33,7 +33,7 @@
         android:id="@+id/vp_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFFFFF"
+        android:background="@drawable/main_player_background"
         android:orientation="horizontal"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="-36dp"
@@ -47,7 +47,8 @@
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/main_top_view_background">
 
 
         <com.uos.vcommcerce.util.CustomEditText
@@ -74,19 +75,14 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:orientation="horizontal"
-            android:padding="5dp"
             android:gravity="center"
             android:background="@color/mainViewColor"
             >
-            <View
-                android:layout_width="16dp"
-                android:layout_height="50dp"/>
             <ImageView
                 android:id="@+id/moveItem1"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="#C4C4C4"
-                android:paddingRight="10dp"
                 android:onClick="@{topview::IconMove1}"/>
             <View
                 android:layout_width="0dp"
@@ -96,8 +92,7 @@
                 android:id="@+id/moveItem2"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="#C4C4C4"
-                android:paddingRight="10dp"/>
+                android:background="#C4C4C4"/>
             <View
                 android:layout_width="0dp"
                 android:layout_height="50dp"
@@ -106,8 +101,7 @@
                 android:id="@+id/moveItem3"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="#C4C4C4"
-                android:paddingRight="10dp"/>
+                android:background="#C4C4C4"/>
             <View
                 android:layout_width="0dp"
                 android:layout_height="50dp"
@@ -116,33 +110,11 @@
                 android:id="@+id/moveItem4"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="#C4C4C4"
-                android:paddingRight="10dp"/>
-            <View
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="0.1"/>
-            <ImageView
-                android:id="@+id/moveItem5"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="#C4C4C4"
-                android:paddingRight="10dp"/>
-            <View
-                android:layout_width="20dp"
-                android:layout_height="50dp"/>
+                android:background="#C4C4C4"/>
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/mainViewListCover"
-            android:layout_width="match_parent"
-            android:layout_height="20dp">
-            <GridLayout
-                android:id="@+id/mainViewList"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:background="@drawable/main_top_view_background" />
-        </LinearLayout>
+
+
     </LinearLayout>
 
     <!--2020/09/17 최석우 하단 바 -->
@@ -152,7 +124,7 @@
         android:layout_height="110dp"
         android:background="@drawable/main_bottom_view_background"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@+id/vp_viewpager"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:onClick="@{bottomview::BottomViewClick}"
@@ -169,7 +141,7 @@
             android:textColor="@color/mainBottonFontlightColor"
             android:layout_marginBottom="4dp"/>
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/titleview"
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:text="@{MediaContent.title}"
@@ -178,6 +150,7 @@
             android:textColor="@color/mainBottonFontColor"
             android:layout_marginBottom="8dp"/>
         <LinearLayout
+            android:id="@+id/bottomgroup1"
             android:layout_width="match_parent"
             android:layout_height="22dp"
             android:orientation="horizontal"
@@ -203,13 +176,14 @@
                 android:textColor="@color/mainBottonFontColor" />
         </LinearLayout>
         <TextView
-            android:id="@+id/mainContent"
+            android:id="@+id/contentview"
             android:layout_width="match_parent"
             android:layout_height="10dp"
             android:text="@{MediaContent.content}"
             android:layout_marginBottom="37dp"
             android:textColor="@color/mainBottonFontColor"/>
         <Button
+            android:id="@+id/review"
             android:layout_width="match_parent"
             android:layout_height="22dp"
             android:layout_marginBottom="31dp"
@@ -217,34 +191,32 @@
             style="?android:attr/borderlessButtonStyle"
             android:gravity="center_vertical|right"
             android:text="리뷰 보기 > "
-            android:textStyle="bold"
-            android:autoSizeTextType="uniform"
-            android:autoSizeMinTextSize="15sp" />
+            android:textStyle="bold"/>
         <LinearLayout
+            android:id="@+id/bottomgroup2"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:orientation="horizontal">
             <Button
+                android:id="@+id/like"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:background="@drawable/main_bottom_button"
                 android:textColor="@color/mainBottonButtonText"
                 style="?android:attr/borderlessButtonStyle"
-                android:autoSizeTextType="uniform"
                 android:textStyle="bold"
-                android:autoSizeMinTextSize="15sp"
                 android:text="♡"/>
             <View
                 android:layout_width="8dp"
                 android:layout_height="40dp"/>
             <Button
+                android:id="@+id/selectoption"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="3"
                 android:background="@drawable/main_bottom_button"
                 android:textColor="@color/mainBottonButtonText"
-                android:textStyle="bold"
                 style="?android:attr/borderlessButtonStyle"
                 android:text="Select Option"/>
 

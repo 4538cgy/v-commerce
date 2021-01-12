@@ -4,11 +4,13 @@
     <size android:width="100dp"
         android:height="100dp" />
 
-    <solid android:color="@color/mainViewColor" />
+    <solid android:color="#ffffff" />
 
 
     <corners
         android:topLeftRadius="20dp"
-        android:topRightRadius="20dp" />
+        android:topRightRadius="20dp"
+        android:bottomLeftRadius="20dp"
+        android:bottomRightRadius="20dp"/>
 
 </shape>

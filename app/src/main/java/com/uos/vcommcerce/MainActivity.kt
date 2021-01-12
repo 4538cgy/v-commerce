@@ -1,19 +1,14 @@
 package com.uos.vcommcerce
 
 import android.os.Bundle
-import android.util.Log
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.widget.ViewPager2
-import com.uos.vcommcerce.tranformer.ZoomOutPageTransformer
 import com.uos.vcommcerce.databinding.ActivityMainBinding
-import com.uos.vcommcerce.model.MediaContentDTO
 import com.uos.vcommcerce.mainslide.MainBottomView
 import com.uos.vcommcerce.mainslide.MainPlayer
 import com.uos.vcommcerce.mainslide.MainTopView
-import com.uos.vcommcerce.mainslide.returnDefaultView
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -33,11 +28,12 @@ class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
         // 최석우 일시적으로 앱터져서 막음
         //registerPushToken()
 
+
         var videoAdapter : MainPlayer.VideoAdapter = MainPlayer.instance.VideoAdapter(this)
         vp_viewpager.adapter = videoAdapter
 
         //비디오플레이어에
-        MainPlayer.instance.setPlayerView(binding,vp_viewpager)
+        MainPlayer.instance.setPlayerView(this, binding,vp_viewpager)
 
 
         //탑뷰의 서치뷰에 어뎁터 추가후 탑뷰에 전송
@@ -45,10 +41,15 @@ class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
         mainSearchListView.adapter = MainTopView.instance.SearchAdapter(this)
 
         //메인 탑뷰에 필요한 인자들 전송
-        MainTopView.instance.setTopView(mainTopView, mainSearchView, mainSearchListView, mainViewChange, mainViewListCover, mainViewList, adapter, this, binding);
+        var ViewList: ArrayList<ImageView> = ArrayList<ImageView>()
+        ViewList.add(moveItem1)
+        ViewList.add(moveItem2)
+        ViewList.add(moveItem3)
+        ViewList.add(moveItem4)
+        MainTopView.instance.setTopView(mainTopView, mainSearchView, mainSearchListView, mainViewChange,ViewList, adapter, this, binding);
 
         //메인 바텀뷰에 필요한 인자들 전송
-        MainBottomView.instance.setBottomView(mainBottomView,mainContent,this,binding)
+        MainBottomView.instance.setBottomView(mainBottomView,nickname,titleview,address,price,contentview,review,like,bottomgroup1,bottomgroup2,selectoption,this,binding)
 
         //키보드 숨기기위한 시스템 변수
         Imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager;
