@@ -16,6 +16,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
 import com.uos.vcommcerce.activity.login.LoginActivity
+import com.uos.vcommcerce.activity.oder.OrderActivity
 import com.uos.vcommcerce.activity.signup.WelcomeActivity
 import com.uos.vcommcerce.activity.videoupload.VideoSelectActivity
 import com.uos.vcommcerce.activity.videoupload.VideoUploadActivity
@@ -71,6 +72,7 @@ class SettingActivity : AppCompatActivity() {
             settingDTO.add(SettingDTO("로그아웃"))
             settingDTO.add(SettingDTO("비디오 화면 보기"))
             settingDTO.add(SettingDTO("그리드 화면 보기"))
+            settingDTO.add(SettingDTO("주문 화면 보기"))
             settingDTO.add(SettingDTO("RESTFULL TEST"))
             settingDTO.add(SettingDTO("RESTFULL TEST POST"))
             settingDTO.add(SettingDTO("비디오 리스트 보기"))
@@ -123,6 +125,9 @@ class SettingActivity : AppCompatActivity() {
 
                     "그리드 화면 보기" -> {
                         pageChange("Grid")
+                    }
+                    "주문 화면 보기"->{
+                        pageChange("Order")
                     }
 
                     "비디오 리스트 보기" -> {
@@ -254,6 +259,9 @@ class SettingActivity : AppCompatActivity() {
 
             "Grid" -> {
                 startActivity(Intent(this, UserActivity::class.java))
+            }
+            "Order" -> {
+                startActivity(Intent(this, OrderActivity::class.java))
             }
 
             "VideoList" -> {
