@@ -16,6 +16,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
 import com.uos.vcommcerce.activity.login.LoginActivity
+import com.uos.vcommcerce.activity.regist.RegistSellerActivity
 import com.uos.vcommcerce.activity.signup.WelcomeActivity
 import com.uos.vcommcerce.activity.videoupload.VideoSelectActivity
 import com.uos.vcommcerce.activity.videoupload.VideoUploadActivity
@@ -77,6 +78,7 @@ class SettingActivity : AppCompatActivity() {
             settingDTO.add(SettingDTO("비디오 업로드 하기"))
             settingDTO.add(SettingDTO("회원 가입 or 로그인 하기"))
             settingDTO.add(SettingDTO("저장된 정보 보기[로그인 상태에서만 가능]"))
+            settingDTO.add(SettingDTO("판매자 등록 화면 보기"))
             notifyDataSetChanged()
         }
 
@@ -138,6 +140,9 @@ class SettingActivity : AppCompatActivity() {
 
                     "저장된 정보 보기[로그인 상태에서만 가능]" -> {
                         pageChange("stateshow")
+                    }
+                    "판매자 등록 화면 보기" -> {
+                        pageChange("RegistSeller")
                     }
                     "RESTFULL TEST" -> {
                         //상세 정보 조회
@@ -270,6 +275,9 @@ class SettingActivity : AppCompatActivity() {
 
             "stateshow" -> {
                 startActivity(Intent(this, ShowMyUserInfoActivity::class.java))
+            }
+            "RegistSeller" -> {
+                startActivity(Intent(this, RegistSellerActivity::class.java))
             }
 
 

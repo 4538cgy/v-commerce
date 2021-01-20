@@ -18,5 +18,10 @@
     <color name="colorGlitch_00FFCB">#00FFCB</color>
     <color name="colorSystemBlue">#007AFF</color>
     <color name="colorRed">#FF0000</color>
+    <color name="color333333">#333333</color>
+    <color name="color999999">#999999</color>
+    <color name="color555555">#555555</color>
+    <color name="colorEEEEEE">#EEEEEE</color>
+    <color name="colorC4C4C4">#C4C4C4</color>
 
 </resources>

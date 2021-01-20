@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:state_checked="true"
+        android:drawable="@drawable/checkbox_checked_round_color_999999_5dp" />
+    <item
+        android:state_checked="false"
+        android:drawable="@drawable/checkbox_no_checked_round_color_999999_5dp" />
+</selector>
