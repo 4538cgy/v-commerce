@@ -13,21 +13,29 @@ import com.uos.vcommcerce.R
 import com.uos.vcommcerce.activity.login.LoginActivity
 import com.uos.vcommcerce.databinding.ActivityRegistSellerBinding
 
+/**
+ *  2021.1.23 작성자 박정우
+ *  판매자 등록 기본 페이지.
+ */
 class RegistSellerActivity : AppCompatActivity() {
     lateinit var binding: ActivityRegistSellerBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // 데이터 바인딩
         binding = DataBindingUtil.setContentView(this, R.layout.activity_regist_seller)
         binding.activityregistseller = this@RegistSellerActivity
 
+        // 우측 상단의 화면 닫는 X버튼 클릭
         binding.activityRegistSellerImageviewClose.setOnClickListener { finish() }
+        // 개인 사용자 클릭
         binding.activityRegistSellerLayoutIndividualMember.setOnClickListener {
             binding.activityRegistSellerLayoutIndividualMember.isSelected = true
             binding.activityRegistSellerLayoutCorporateMember.isSelected = false
             binding.activityRegistSellerLayoutCorporateInfo.visibility = View.GONE
             checNextBtnEnable()
         }
+        //기업 사용자 클릭
         binding.activityRegistSellerLayoutCorporateMember.setOnClickListener {
             binding.activityRegistSellerLayoutIndividualMember.isSelected = false
             binding.activityRegistSellerLayoutCorporateMember.isSelected = true
@@ -36,6 +44,7 @@ class RegistSellerActivity : AppCompatActivity() {
 
         }
 
+        // 이용약관 1,2,3,4 체크
         binding.activityRegistSellerLayoutTermsOfService1.findViewById<CheckBox>(R.id.item_terms_of_service_checkbox)
             .setOnCheckedChangeListener(checkBoxChangeListener)
         binding.activityRegistSellerLayoutTermsOfService2.findViewById<CheckBox>(R.id.item_terms_of_service_checkbox)
@@ -44,19 +53,22 @@ class RegistSellerActivity : AppCompatActivity() {
             .setOnCheckedChangeListener(checkBoxChangeListener)
         binding.activityRegistSellerLayoutTermsOfService4.findViewById<CheckBox>(R.id.item_terms_of_service_checkbox)
             .setOnCheckedChangeListener(checkBoxChangeListener)
+
+        // Next 버튼클릭
         binding.activityRegistSellerButtonNext.setOnClickListener {
 
             startActivity(Intent(this, RegistSellerInfoActivity::class.java))
         }
     }
-
-    private val checkBoxChangeListener = object : CompoundButton.OnCheckedChangeListener {
+    // 이용약관의 체크박스 클릭 시 동작
+    prvate val checkBoxChangeListener = object : CompoundButton.OnCheckedChangeListener {
         override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
             checNextBtnEnable()
         }
 
     }
-
+    // 다음으로 진행 할 수 있는지 체크 이용약관 모두 동의하고, 기업인지 개인인지 체크해야함크.
+    // 다음으로 넘어갈 수 있다면 Next 버튼이 활성화가 된다.
     private fun checNextBtnEnable() {
 
         if (binding.activityRegistSellerLayoutIndividualMember.isSelected) {
@@ -92,6 +104,7 @@ class RegistSellerActivity : AppCompatActivity() {
 
     }
 
+    // 이용약관 1,2,3,4 각 체크되었는지 체
     private fun checkBoxAllChecked(): Boolean {
         return binding.activityRegistSellerLayoutTermsOfService1.findViewById<CheckBox>(R.id.item_terms_of_service_checkbox).isChecked &&
                 binding.activityRegistSellerLayoutTermsOfService2.findViewById<CheckBox>(R.id.item_terms_of_service_checkbox).isChecked &&
