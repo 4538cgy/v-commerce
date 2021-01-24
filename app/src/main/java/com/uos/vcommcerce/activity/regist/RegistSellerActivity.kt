@@ -61,7 +61,7 @@ class RegistSellerActivity : AppCompatActivity() {
         }
     }
     // 이용약관의 체크박스 클릭 시 동작
-    prvate val checkBoxChangeListener = object : CompoundButton.OnCheckedChangeListener {
+    private val checkBoxChangeListener = object : CompoundButton.OnCheckedChangeListener {
         override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
             checNextBtnEnable()
         }
