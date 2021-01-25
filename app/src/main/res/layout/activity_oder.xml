@@ -5,7 +5,6 @@
     tools:context=".activity.oder.OrderActivity">
 
     <data>
-
         <variable
             name="activityorder"
             type="com.uos.vcommcerce.activity.oder.OrderActivity" />
@@ -93,18 +92,18 @@
                     android:layout_marginRight="24dp"
                     android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/order_zipcode"
+                    <WebView
+                        android:id="@+id/order_zipcode_webView"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:background="@drawable/grayractangle5"
-                        android:hint="우편 번호"></EditText>
+                        android:hint="우편 번호"></WebView>
 
                     <Button
                         android:id="@+id/address_search_btn"
                         android:layout_width="80dp"
                         android:layout_height="40dp"
-                        android:layout_alignRight="@+id/order_zipcode"
+                        android:layout_alignRight="@+id/order_zipcode_webView"
                         android:layout_centerVertical="true"
                         android:layout_margin="5dp"
                         android:background="@drawable/blackractangle5"
@@ -115,6 +114,7 @@
                 </RelativeLayout>
 
                 <EditText
+                    android:id="@+id/adress_result_view"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginLeft="24dp"

@@ -14,6 +14,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -70,6 +71,11 @@ class UserActivity : AppCompatActivity(){
 //        profile_Img.setOnClickListener{ v->
 //              profileTabClickEvent()
 //        }
+        if(intent.getStringExtra("history") == "history"){
+            binding.videoGridSelectBar.setBackgroundColor(Color.parseColor("#525252"))
+            binding.historySelectBar.setBackgroundColor(Color.parseColor("#000000"))
+            supportFragmentManager.beginTransaction().replace(R.id.recyclerViewBox, HistoryFragment()).commit()
+        }
     }
     //프로필 사진 탭 클릭 이벤트
     fun profileTabClickEvent(view:View){
