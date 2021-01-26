@@ -23,7 +23,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.databinding.ActivityOderBinding
 import com.uos.vcommcerce.databinding.ItemPaymentboxBinding
-import com.uos.vcommcerce.testpackagedeletesoon.TestExoplayerActivity
 import kotlinx.android.synthetic.main.activity_oder.*
 
 
@@ -31,7 +30,10 @@ data class PaymentBtnData(
     var btnName: String
 )
 
+private var webView: WebView?= null
+private var resultView: EditText? = null
 
+private var handler = Handler()
 
 class OrderActivity : AppCompatActivity() {
     val paymentBtnDataList = listOf(
@@ -42,12 +44,16 @@ class OrderActivity : AppCompatActivity() {
 
     lateinit var binding : ActivityOderBinding
 
-
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_oder)
         binding.activityorder = this@OrderActivity
+
+        webView = binding.orderZipcodeWebView
+        resultView = binding.adressResultView
+
+
 
         val paymentAdapter = PaymentBtnAdapter(this)
         binding.recyclerPaymentboxView.layoutManager = GridLayoutManager(this, 3)
@@ -61,7 +67,7 @@ class OrderActivity : AppCompatActivity() {
 
         //주소검색
         binding.addressSearchBtn.setOnClickListener {
-
+            init_webView()
         }
 
         
@@ -109,51 +115,50 @@ class OrderActivity : AppCompatActivity() {
     }
 
 
-//
-//    inner class AndroidBridge{
-//        @RequiresApi(Build.VERSION_CODES.O)
-//        fun setAddress(arg1: String?, arg2: String?, arg3: String?){
-//
-//            // 주소 전달
-//            val intent = Intent()
-//            intent.putExtra("address_arg1", arg1)
-//            intent.putExtra("address_arg2", arg2)
-//            intent.putExtra("address_arg3", arg3)
-//            setResult(Activity.RESULT_OK, intent)
-//
-//            //WebView를 초기화 하지 않으면 재사용할 수 없음
-//            init_webView()
-//            finish()
-//        }
-//    }
-//
-//    @SuppressLint("JavascriptInterface")
-//    @RequiresApi(Build.VERSION_CODES.O)
-//    fun init_webView(){
-//        var client: WebViewClient = object : WebViewClient(){
-//            override fun shouldOverrideUrlLoading(
-//                view: WebView?,
-//                request: WebResourceRequest?
-//            ): Boolean {
-//                return false
-//            }
-//        }
-//        webView!!.apply{
-//            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
-//                WebView.setWebContentsDebuggingEnabled(true)
-//            }
-//
-//            settings.javaScriptEnabled = true
-//            settings.javaScriptCanOpenWindowsAutomatically = true
-//
-//            settings.setSupportMultipleWindows(true)
-//            settings.loadWithOverviewMode = true
-//            settings.useWideViewPort = true
-//            webViewClient = client
-//
-//            webView!!.addJavascriptInterface(AndroidBridge(), "TestApp")
-//            webView!!.loadUrl("https://project-new-windy.web.app")
-//        }
-//
-//    }
+
+    inner class AndroidBridge{
+        @RequiresApi(Build.VERSION_CODES.O)
+        fun setAddress(arg1: String?, arg2: String?, arg3: String?){
+
+            // 주소 전달
+            val intent = Intent()
+            intent.putExtra("address_arg1", arg1)
+            intent.putExtra("address_arg2", arg2)
+            intent.putExtra("address_arg3", arg3)
+            setResult(Activity.RESULT_OK, intent)
+
+            //WebView를 초기화 하지 않으면 재사용할 수 없음
+            init_webView()
+            finish()
+        }
+    }
+
+    @SuppressLint("JavascriptInterface")
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun init_webView(){
+        var client: WebViewClient = object : WebViewClient(){
+            override fun shouldOverrideUrlLoading(
+                view: WebView?,
+                request: WebResourceRequest?
+            ): Boolean {
+                return false
+            }
+        }
+        webView!!.apply{
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+                WebView.setWebContentsDebuggingEnabled(true)
+            }
+
+            settings.javaScriptEnabled = true
+            settings.javaScriptCanOpenWindowsAutomatically = true
+            settings.setSupportMultipleWindows(true)
+            settings.loadWithOverviewMode = true
+            settings.useWideViewPort = true
+            webViewClient = client
+
+            webView!!.addJavascriptInterface(AndroidBridge(), "TestApp")
+            webView!!.loadUrl("https://project-new-windy.web.app")
+        }
+
+    }
 }
