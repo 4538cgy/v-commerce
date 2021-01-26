@@ -22,6 +22,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+
             <ImageButton
                 android:id="@+id/activity_order_imagebutton_close"
                 android:layout_width="40dp"
@@ -92,18 +93,18 @@
                     android:layout_marginRight="24dp"
                     android:orientation="horizontal">
 
-                    <WebView
-                        android:id="@+id/order_zipcode_webView"
+                    <TextView
+                        android:id="@+id/zipcode"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:background="@drawable/grayractangle5"
-                        android:hint="우편 번호"></WebView>
+                        android:hint="우편 번호"></TextView>
 
                     <Button
                         android:id="@+id/address_search_btn"
                         android:layout_width="80dp"
                         android:layout_height="40dp"
-                        android:layout_alignRight="@+id/order_zipcode_webView"
+                        android:layout_alignRight="@+id/zipcode"
                         android:layout_centerVertical="true"
                         android:layout_margin="5dp"
                         android:background="@drawable/blackractangle5"
@@ -113,17 +114,18 @@
                         android:textSize="16dp"></Button>
                 </RelativeLayout>
 
-                <EditText
-                    android:id="@+id/adress_result_view"
+                <TextView
+                    android:id="@+id/address_view"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginLeft="24dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginRight="24dp"
                     android:background="@drawable/grayractangle5"
-                    android:hint="주소"></EditText>
+                    android:hint="주소"></TextView>
 
                 <EditText
+                    android:id="@+id/address_detail_view"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginLeft="24dp"
