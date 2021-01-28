@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
+import com.uos.vcommcerce.MainActivity
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.SettingActivity
 import com.uos.vcommcerce.activity.signup.SignUpActivity
@@ -59,14 +60,17 @@ class LoginActivity : AppCompatActivity() {
         callbackManager = CallbackManager.Factory.create()
 
         //버튼 리스너
-        activity_login_button_login_google.setOnClickListener {
+        binding.activityLoginButtonLoginGoogle.setOnClickListener {
             //구글 로그인
             googleLogin()
-
         }
-        activity_login_button_login_facebook.setOnClickListener {
+        binding.activityLoginButtonLoginFacebook.setOnClickListener {
             //페이스북 로그인
             facebookLogin()
+        }
+        binding.activityLoginTextviewLoginwithemail.setOnClickListener {
+            //이메일 로그인
+            startActivity(Intent(this,LoginWithEmail::class.java))
         }
 
 
@@ -151,42 +155,7 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
-    /*
-    fun signinAndSignup() {
-        auth?.createUserWithEmailAndPassword(
-            activity_login_edittext_email.text.toString(),
-            activity_login_edittext_password.text.toString()
-        )?.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                //creating a user account
-                moveMainPage(task.result?.user)
-            } else if (task.exception?.message.isNullOrEmpty()) {
-                //show the error message
-                Toast.makeText(this, task.exception?.message, Toast.LENGTH_LONG).show()
-            } else {
-                signinEmail()
-            }
-        }
-    }
 
-     */
-    /*
-    fun signinEmail() {
-        auth?.signInWithEmailAndPassword(
-            activity_login_edittext_email.text.toString(),
-            activity_login_edittext_password.text.toString()
-        )?.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                //login
-                moveMainPage(task.result?.user)
-            } else {
-                //show the error message
-                Toast.makeText(this, task.exception?.message, Toast.LENGTH_LONG).show()
-            }
-        }
-    }
-    
-     */
 
     fun moveMainPage(user: FirebaseUser?) {
         if (user != null) {
@@ -207,7 +176,7 @@ class LoginActivity : AppCompatActivity() {
                         }
 
                         if (SharedData.prefs.getString("userInfo", "no").equals("yes")) {
-                            startActivity(Intent(this, SettingActivity::class.java))
+                            startActivity(Intent(this, MainActivity::class.java))
 
                         } else {
                             startActivity(Intent(this, SignUpActivity::class.java))
