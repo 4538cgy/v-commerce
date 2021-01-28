@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.uos.vcommcerce.activity.login.LoginActivity
 import com.uos.vcommcerce.activity.regist.RegistSellerActivity
 import com.uos.vcommcerce.activity.signup.WelcomeActivity
+import com.uos.vcommcerce.activity.splash.SplashActivity
 import com.uos.vcommcerce.activity.videoupload.VideoSelectActivity
 import com.uos.vcommcerce.activity.videoupload.VideoUploadActivity
 import com.uos.vcommcerce.http.RestApi
@@ -79,6 +80,7 @@ class SettingActivity : AppCompatActivity() {
             settingDTO.add(SettingDTO("회원 가입 or 로그인 하기"))
             settingDTO.add(SettingDTO("저장된 정보 보기[로그인 상태에서만 가능]"))
             settingDTO.add(SettingDTO("판매자 등록 화면 보기"))
+            settingDTO.add(SettingDTO("정상 프로세스 대로 실행"))
             notifyDataSetChanged()
         }
 
@@ -125,6 +127,9 @@ class SettingActivity : AppCompatActivity() {
 
                     "그리드 화면 보기" -> {
                         pageChange("Grid")
+                    }
+                    "정상 프로세스 대로 실행" -> {
+                        pageChange("startApp")
                     }
 
                     "비디오 리스트 보기" -> {
@@ -249,6 +254,9 @@ class SettingActivity : AppCompatActivity() {
 
                 startActivity(Intent(this, MainActivity::class.java))
 
+            }
+            "startApp" -> {
+                startActivity(Intent(this,SplashActivity::class.java))
             }
 
             "Video" -> {
