@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+
+
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="33dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="52dp"
+                    android:autoSizeTextType="uniform"
+                    android:text="Product"
+                    android:textStyle="bold"
+                    android:textColor="#333333"/>
+
+                <TextView
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:autoSizeTextType="uniform"
+                    android:gravity="center"
+                    android:text="X"
+                    android:textColor="#333333"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="36dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:text="상품명"
+                android:autoSizeTextType="uniform"
+                android:textColor="#333333"
+                android:textStyle="bold"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="16dp"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorwhiteGray"
+                android:padding="15dp"
+                android:gravity="center|left"
+                android:hint="상품명"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="24dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:text="상품분류"
+                android:autoSizeTextType="uniform"
+                android:textColor="#333333"
+                android:textStyle="bold"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="16dp"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/product_class"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </androidx.recyclerview.widget.RecyclerView>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="24dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:text="상품 가격"
+                android:autoSizeTextType="uniform"
+                android:textColor="#333333"
+                android:textStyle="bold"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="16dp"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorwhiteGray"
+                android:padding="15dp"
+                android:gravity="center|left"
+                android:hint="상품 가격"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="24dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="34dp"
+                    android:text="옵션"
+                    android:autoSizeTextType="uniform"
+                    android:textColor="#333333"
+                    android:textStyle="bold"/>
+                <Button
+                    android:id="@+id/option_add_button"
+                    android:layout_width="47dp"
+                    android:layout_height="match_parent"
+                    android:text="옵션추가"
+                    android:autoSizeTextType="uniform"
+                    android:autoSizeMinTextSize="1sp"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="16dp"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/product_option"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </LinearLayout>
+    </ScrollView>
+</layout>

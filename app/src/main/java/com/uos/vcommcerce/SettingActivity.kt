@@ -16,7 +16,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
 import com.uos.vcommcerce.activity.login.LoginActivity
+import com.uos.vcommcerce.activity.productinformation.ProductInformationActivity
 import com.uos.vcommcerce.activity.signup.WelcomeActivity
+import com.uos.vcommcerce.activity.videoupload.SelectVideoActivity
 import com.uos.vcommcerce.activity.videoupload.VideoSelectActivity
 import com.uos.vcommcerce.activity.videoupload.VideoUploadActivity
 import com.uos.vcommcerce.http.RestApi
@@ -77,6 +79,8 @@ class SettingActivity : AppCompatActivity() {
             settingDTO.add(SettingDTO("비디오 업로드 하기"))
             settingDTO.add(SettingDTO("회원 가입 or 로그인 하기"))
             settingDTO.add(SettingDTO("저장된 정보 보기[로그인 상태에서만 가능]"))
+            settingDTO.add(SettingDTO("비디오 업로드"))
+            settingDTO.add(SettingDTO("제품 정보"))
             notifyDataSetChanged()
         }
 
@@ -219,6 +223,12 @@ class SettingActivity : AppCompatActivity() {
 
                         })
                     }
+                    "비디오 업로드" -> {
+                        pageChange("Upload")
+                    }
+                    "제품 정보" -> {
+                        pageChange("ProductInformation")
+                    }
                 }
 
             }
@@ -272,6 +282,12 @@ class SettingActivity : AppCompatActivity() {
                 startActivity(Intent(this, ShowMyUserInfoActivity::class.java))
             }
 
+            "Upload" -> {
+                startActivity(Intent(this, SelectVideoActivity::class.java))
+            }
+            "ProductInformation" ->{
+                startActivity(Intent(this, ProductInformationActivity::class.java))
+            }
 
         }
     }

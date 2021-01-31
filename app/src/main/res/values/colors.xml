@@ -5,6 +5,7 @@
     <color name="colorAccent">#03DAC5</color>
     <color name="colorLightGray">#f1f1f1</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorwhiteGray">#F5F5F5</color>
     <color name="colorDivision">#e0e0e0</color>
     <color name="colorNavIcon">#1d1d1d</color>
     <color name="mainViewColor">#F5F5F5</color>
@@ -18,5 +19,6 @@
     <color name="colorGlitch_00FFCB">#00FFCB</color>
     <color name="colorSystemBlue">#007AFF</color>
     <color name="colorRed">#FF0000</color>
+    <color name="lightBlack">#313131</color>
 
 </resources>
