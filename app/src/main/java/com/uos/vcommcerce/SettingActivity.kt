@@ -18,7 +18,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.uos.vcommcerce.activity.login.LoginActivity
 import com.uos.vcommcerce.activity.regist.RegistSellerActivity
 import com.uos.vcommcerce.activity.signup.WelcomeActivity
-import com.uos.vcommcerce.activity.splash.SplashActivity
 import com.uos.vcommcerce.activity.videoupload.SelectVideoActivity
 import com.uos.vcommcerce.activity.videoupload.VideoSelectActivity
 import com.uos.vcommcerce.activity.videoupload.VideoUploadActivity
