@@ -83,6 +83,7 @@ class SettingActivity : AppCompatActivity() {
             settingDTO.add(SettingDTO("비디오 업로드"))
             settingDTO.add(SettingDTO("제품 정보"))
             settingDTO.add(SettingDTO("판매자 등록 화면 보기"))
+            settingDTO.add(SettingDTO("정상 프로세스 대로 실행"))
             notifyDataSetChanged()
         }
 
@@ -129,6 +130,9 @@ class SettingActivity : AppCompatActivity() {
 
                     "그리드 화면 보기" -> {
                         pageChange("Grid")
+                    }
+                    "정상 프로세스 대로 실행" -> {
+                        pageChange("startApp")
                     }
 
                     "비디오 리스트 보기" -> {
@@ -259,6 +263,9 @@ class SettingActivity : AppCompatActivity() {
 
                 startActivity(Intent(this, MainActivity::class.java))
 
+            }
+            "startApp" -> {
+                startActivity(Intent(this,SplashActivity::class.java))
             }
 
             "Video" -> {

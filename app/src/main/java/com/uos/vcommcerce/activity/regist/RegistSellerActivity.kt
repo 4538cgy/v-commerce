@@ -2,20 +2,20 @@ package com.uos.vcommcerce.activity.regist
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.View
 import android.widget.CheckBox
 import android.widget.CompoundButton
-import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.uos.vcommcerce.R
-import com.uos.vcommcerce.activity.login.LoginActivity
 import com.uos.vcommcerce.databinding.ActivityRegistSellerBinding
+import com.uos.vcommcerce.model.SellerDTO
+import com.uos.vcommcerce.util.Config
 
 /**
  *  2021.1.23 작성자 박정우
  *  판매자 등록 기본 페이지.
+ *  문서1 파일 업로드 부분은 미구현
  */
 class RegistSellerActivity : AppCompatActivity() {
     lateinit var binding: ActivityRegistSellerBinding
@@ -56,8 +56,20 @@ class RegistSellerActivity : AppCompatActivity() {
 
         // Next 버튼클릭
         binding.activityRegistSellerButtonNext.setOnClickListener {
+            val intent = Intent(this, RegistSellerInfoActivity::class.java)
+            val sellerDTO = SellerDTO().apply {
+                if(binding.activityRegistSellerLayoutCorporateMember.isSelected) {
+                    isCorporate = true
+                }else if(binding.activityRegistSellerLayoutIndividualMember.isSelected){
+                    isPersonal = true
+                }
+                corporateNum = binding.activityRegistSellerEdittextCompanyRegistrationNumber.text.toString()
+                corporateRepresentativeName = binding.activityRegistSellerEdittextRepresentativeName.text.toString()
 
-            startActivity(Intent(this, RegistSellerInfoActivity::class.java))
+            }
+
+            intent.putExtra(Config.Seller, sellerDTO)
+            startActivity(intent)
         }
     }
     // 이용약관의 체크박스 클릭 시 동작
