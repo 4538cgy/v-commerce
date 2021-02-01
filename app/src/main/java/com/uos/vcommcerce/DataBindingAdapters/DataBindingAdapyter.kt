@@ -1,9 +1,12 @@
 package com.uos.vcommcerce.DataBindingAdapters
 
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.uos.vcommcerce.R
+import com.uos.vcommcerce.util.dp
+import com.uos.vcommcerce.util.setHeight
 
 object DataBindingAdapyter {
 
@@ -21,8 +24,26 @@ object DataBindingAdapyter {
     //뷰보이기 안보이기
     @JvmStatic
     @BindingAdapter("visible")
-    fun setVisible(view: View, isVisible: Boolean) {
-        view.visibility = if (isVisible) View.VISIBLE else View.INVISIBLE
+    fun setVisible(view: View, isVisible: String) {
+        if (isVisible.equals("VISIBLE")) {
+            view.visibility = View.VISIBLE
+        }else if(isVisible.equals("INVISIBLE")) {
+            view.visibility = View.INVISIBLE
+        }else{
+            view.visibility = View.GONE
+        }
+    }
+
+    //뷰높이 조정
+    @JvmStatic
+    @BindingAdapter("viewheight")
+    fun setViewHeight(view: View, isheight : Int) {
+
+        val lp = view.layoutParams
+        lp?.let {
+            lp.height = isheight.dp();
+            view.layoutParams = lp
+        }
     }
 
 

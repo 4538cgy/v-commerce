@@ -8,15 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.databinding.ActivityUploadVideoBinding
 import com.uos.vcommcerce.databinding.UploadVideoItemBinding
-import com.uos.vcommcerce.model.ProductClassDTO
 import com.uos.vcommcerce.model.TextDTO
-import kotlinx.android.synthetic.main.activity_select_video.*
 import kotlinx.android.synthetic.main.activity_upload_video.*
 
 class UploadVideoActivity : AppCompatActivity() {
@@ -52,12 +50,6 @@ class UploadVideoActivity : AppCompatActivity() {
         override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
             holder.bind(SelectVideoActivity.SelectVideoList[position])
             //뷰클릭 이벤트 설정
-            holder.itemView.setOnClickListener(View.OnClickListener {
-                SelectVideoActivity.SelectVideoList.remove(SelectVideoActivity.SelectVideoList[position])
-                SelectVideoActivity.SelectVideoList[position].checked=false
-                SelectVideoActivity.SelectVideoList[position].liveVisible.value=false
-                notifyDataSetChanged()
-            })
         }
 
         inner class CustomViewHolder(var binding: UploadVideoItemBinding) : RecyclerView.ViewHolder(binding.root) {

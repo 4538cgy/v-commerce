@@ -10,103 +10,109 @@
     </data>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="184dp"
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="109dp"
             android:orientation="horizontal">
-
-            <ImageView
+            <LinearLayout
                 android:layout_width="91dp"
-                android:layout_height="match_parent"
-                android:visibility="visible"
-                android:background="@drawable/ic_launcher_background"
-                />
-
+                android:layout_height="109dp"
+                app:visible="@{ProductOptionAddItem.visible}"
+                >
+                <View
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"/>
+                <ImageView
+                    android:layout_width="71dp"
+                    android:layout_height="109dp"
+                    android:visibility="visible"
+                    android:background="@drawable/ic_launcher_background"
+                    />
+                <View
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="109dp"
                 android:orientation="vertical">
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:background="@color/colorwhiteGray"
-                        />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:gravity="center">
-                        <EditText
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="50dp"
-                            android:text="@{}"
-                            android:hint="선택 옵션명"
-                            android:gravity="left|center"/>
-                        <TextView
-                            android:layout_width="100dp"
-                            android:layout_height="50dp"
-                            android:text="사진추가"
-                            android:autoSizeTextType="uniform"
-                            android:gravity="center"
-                            android:paddingTop="10dp"
-                            android:paddingBottom="10dp"/>
-                    </LinearLayout>
-                </FrameLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal"
+                    android:background="@drawable/background_round_gray_5dp"
+                    android:gravity="center">
+                    <EditText
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="50dp"
+                        android:text="@{ProductOptionAddItem.Name}"
+                        android:hint="선택 옵션명"
+                        android:gravity="left|center"/>
+                    <Button
+                        android:layout_width="100dp"
+                        android:layout_height="50dp"
+                        android:text="사진추가"
+                        android:autoSizeTextType="uniform"
+                        android:gravity="center"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:background="#00ff0000"
+                        android:onClick="@{ProductOptionAddItem::ShowImg}"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="9dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
                     android:gravity="center">
-                    <FrameLayout
+
+                    <EditText
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:layout_height="match_parent">
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:background="@color/colorwhiteGray"
-                            />
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:text="@{}"
-                            android:hint="추가 금액"
-                            android:gravity="left|center"/>
-                    </FrameLayout>
+                        android:layout_height="50dp"
+                        android:text="@{ProductOptionAddItem.Price}"
+                        android:hint="추가 금액"
+                        android:background="@drawable/background_round_gray_5dp"
+                        android:gravity="left|center"/>
 
-                    <FrameLayout
+                    <View
+                        android:layout_width="8dp"
+                        android:layout_height="match_parent"/>
+
+
+                    <EditText
+                        android:id="@+id/UnderOptionAdd"
                         android:layout_width="80dp"
-                        android:layout_height="match_parent">
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:background="@color/colorwhiteGray"
-                            />
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:text="@{}"
-                            android:hint="수량"
-                            android:gravity="left|center"/>
-                    </FrameLayout>
+                        android:layout_height="50dp"
+                        android:background="@drawable/background_round_gray_5dp"
+                        android:text="@{ProductOptionAddItem.Count.toString()}"
+                        android:hint="수량"
+                        android:gravity="left|center"/>
                 </LinearLayout>
 
             </LinearLayout>
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="16dp"/>
         <Button
             android:layout_width="108dp"
             android:layout_height="29dp"
             android:layout_gravity="center"
             android:text="하위 옵션 추가"
             android:autoSizeTextType="uniform"
-            android:autoSizeMinTextSize="1sp"/>
+            android:autoSizeMinTextSize="1sp"
+            android:background="@drawable/background_round_white_50dp_black_strock"
+            android:padding="6dp"/>
+
     </LinearLayout>
 </layout>

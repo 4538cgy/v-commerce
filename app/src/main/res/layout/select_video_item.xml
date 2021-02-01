@@ -16,7 +16,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="185dp"
-            app:SelectItem="@{Value.liveVisible}"
+            app:SelectItem="@{Value.checked}"
             />
         <TextView
             app:visible="@{Value.liveVisible}"

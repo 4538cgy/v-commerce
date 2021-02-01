@@ -6,21 +6,21 @@
     >
 
     <data>
-
-
-
+        <variable
+            name="ProductInformationActivity"
+            type="com.uos.vcommcerce.activity.productinformation.ProductInformationActivity" />
     </data>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="33dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="33dp"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -64,7 +64,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@color/colorwhiteGray"
+                android:background="@drawable/background_round_gray_5dp"
                 android:padding="15dp"
                 android:gravity="center|left"
                 android:hint="상품명"
@@ -104,7 +104,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@color/colorwhiteGray"
+                android:background="@drawable/background_round_gray_5dp"
                 android:padding="15dp"
                 android:gravity="center|left"
                 android:hint="상품 가격"
@@ -130,18 +130,31 @@
                     android:layout_width="47dp"
                     android:layout_height="match_parent"
                     android:text="옵션추가"
+                    android:background="#00ff0000"
                     android:autoSizeTextType="uniform"
-                    android:autoSizeMinTextSize="1sp"/>
+                    android:autoSizeMinTextSize="1sp"
+                    android:onClick="@{ProductInformationActivity::addItem}"/>
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="16dp"/>
+            <EditText
+                android:id="@+id/option_name"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/background_round_gray_5dp"
+                android:gravity="left|center"
+                android:hint="옵션명"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="26dp"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/product_option"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="184dp">
             </androidx.recyclerview.widget.RecyclerView>
-
         </LinearLayout>
     </ScrollView>
 </layout>

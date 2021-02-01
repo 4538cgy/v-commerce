@@ -8,30 +8,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.uos.vcommcerce.R
-import com.uos.vcommcerce.activity.videoupload.SelectVideoActivity
 import com.uos.vcommcerce.databinding.*
 import com.uos.vcommcerce.model.ProductClassDTO
-import com.uos.vcommcerce.model.ProductOptionAdd
 import com.uos.vcommcerce.model.ProductOptionAddItem
-import com.uos.vcommcerce.model.TextDTO
+import com.uos.vcommcerce.util.setHeight
 import kotlinx.android.synthetic.main.activity_product_information.*
-import kotlinx.android.synthetic.main.activity_upload_video.*
-import kotlinx.android.synthetic.main.product_option_add.view.*
+import kotlin.math.log
 
 class ProductInformationActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityProductInformationBinding
+    var OptionItemHeight = 184
+    var Height = MutableLiveData<Int>(OptionItemHeight)
 
+    companion object {
+        lateinit var ProductOptionAdapter :ProductOptionRecyclerViewAdapter
+    }
 
     var ProductClassList: ArrayList<ProductClassDTO> = arrayListOf()
-    var ProductOptionList: ArrayList<ProductOptionAdd> = arrayListOf()
+    var ProductOptionList: ArrayList<ProductOptionAddItem> = arrayListOf()
 
 
-    init {
-    }
 
     fun getContext() : Context {
         return this
@@ -40,10 +41,12 @@ class ProductInformationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_information)
+        binding.productInformationActivity = this
         product_class.adapter = ProductClassRecyclerViewAdapter()
         product_class.layoutManager = LinearLayoutManager(this)
 
-        product_option.adapter = ProductOptionRecyclerViewAdapter()
+        ProductOptionAdapter = ProductOptionRecyclerViewAdapter()
+        product_option.adapter = ProductOptionAdapter
         product_option.layoutManager = LinearLayoutManager(this)
     }
 
@@ -94,14 +97,15 @@ class ProductInformationActivity : AppCompatActivity() {
 
         //최초1개 아이템 추가
         init {
-            ProductOptionList.add(ProductOptionAdd())
+            ProductOptionList.add(ProductOptionAddItem())
             notifyDataSetChanged()
         }
 
 
+
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
             var view = LayoutInflater.from(parent.context)
-            var binding = ProductOptionAddBinding.inflate(view,parent,false)
+            var binding = ProductOptionAddItemBinding.inflate(view,parent,false)
             return CustomViewHolder(binding)
         }
 
@@ -113,26 +117,19 @@ class ProductInformationActivity : AppCompatActivity() {
             holder.bind(ProductOptionList[position])
         }
 
-        inner class CustomViewHolder(var binding: ProductOptionAddBinding) : RecyclerView.ViewHolder(binding.root) {
-            fun bind(item: ProductOptionAdd) {
+        inner class CustomViewHolder(var binding: ProductOptionAddItemBinding) : RecyclerView.ViewHolder(binding.root) {
+            fun bind(item: ProductOptionAddItem) {
                 with(binding) {
-                    productOptionAdd = item
-                    optionAddItem.adapter = item.ProductOptionAddRecyclerViewAdapter()
-                    optionAddItem.layoutManager = LinearLayoutManager(getContext())
-
-                    //옵션 갯수 추가기능
-                   optionNumAddButton.setOnClickListener(View.OnClickListener {
-                        ProductOptionList.add(ProductOptionAdd())
-                        Log.d("옵션추가!","ProductOptionList" + ProductOptionList.count())
-
-                        notifyDataSetChanged()
-                    })
-                    executePendingBindings()
+                    productOptionAddItem = item
                 }
                 binding
             }
         }
+    }
 
-
+    fun addItem(view:View){
+        ProductOptionList.add(ProductOptionAddItem())
+        ProductOptionAdapter.notifyDataSetChanged()
+        product_option.setHeight(OptionItemHeight*ProductOptionAdapter.itemCount)
     }
 }

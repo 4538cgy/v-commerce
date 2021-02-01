@@ -87,13 +87,13 @@ class SelectVideoActivity : AppCompatActivity() {
                 if(VideoList[position].checked == false){
                     VideoList[position].checked = true
                     SelectVideoList.add(VideoList[position])
-                    VideoList[position].liveVisible.value = true
+                    VideoList[position].liveVisible.value = "VISIBLE"
                     selectedNumCheck()
                     Log.d("추가 확인 "," SelectVideoList : "+ SelectVideoList)
                 }else {
                     VideoList[position].checked = false
                     SelectVideoList.remove(VideoList[position])
-                    VideoList[position].liveVisible.value = false
+                    VideoList[position].liveVisible.value = "INVISIBLE"
                     selectedNumCheck()
                     Log.d("제거 확인 ", " SelectVideoList : " + SelectVideoList)
                 }

@@ -18,8 +18,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/background_round_gray_10dp"
             />
-        <TextView
-            app:visible="@{Value.liveVisible}"
+        <Button
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_gravity="right"
@@ -29,11 +28,12 @@
             android:autoSizeTextType="uniform"
             android:gravity="center"
             android:autoSizeMinTextSize="1sp"
+            android:onClick="@{Value::Remove}"
             />
         <TextView
             android:id="@+id/TestTitle"
             android:layout_width="match_parent"
-            android:layout_height="185dp"
+            android:layout_height="match_parent"
             android:text="@{Value.title}"
             android:gravity="center"/>
     </FrameLayout>
