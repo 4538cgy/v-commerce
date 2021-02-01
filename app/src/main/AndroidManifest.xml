@@ -60,6 +60,8 @@
         </activity>
         <activity android:name=".activity.splash.SplashActivity" />
         <activity android:name=".activity.login.LoginActivity" />
+        <activity android:name=".activity.regist.RegistSellerActivity" />
+        <activity android:name=".activity.regist.RegistSellerInfoActivity"/>
         <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustNothing" />
