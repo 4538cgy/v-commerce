@@ -16,9 +16,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
 import com.uos.vcommcerce.activity.login.LoginActivity
+import com.uos.vcommcerce.activity.oder.OrderActivity
 import com.uos.vcommcerce.activity.productinformation.ProductInformationActivity
 import com.uos.vcommcerce.activity.regist.RegistSellerActivity
 import com.uos.vcommcerce.activity.signup.WelcomeActivity
+import com.uos.vcommcerce.activity.splash.SplashActivity
 import com.uos.vcommcerce.activity.videoupload.SelectVideoActivity
 import com.uos.vcommcerce.activity.videoupload.VideoSelectActivity
 import com.uos.vcommcerce.activity.videoupload.VideoUploadActivity
@@ -265,7 +267,7 @@ class SettingActivity : AppCompatActivity() {
 
             }
             "startApp" -> {
-                startActivity(Intent(this,SplashActivity::class.java))
+                startActivity(Intent(this, SplashActivity::class.java))
             }
 
             "Video" -> {
