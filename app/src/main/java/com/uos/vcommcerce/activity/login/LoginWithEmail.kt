@@ -125,6 +125,7 @@ class LoginWithEmail : AppCompatActivity() {
         when (state) {
             0 -> {
                 //로그인 성공시
+
             }
             1 -> {
                 //로그인 실패시
