@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+        <data>
+                <variable
+                    name="paymentbtndata"
+                    type="com.uos.vcommcerce.activity.oder.PaymentBtnData" />
+        </data>
+        <androidx.constraintlayout.widget.ConstraintLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/paymentbox_btn"
+                    android:layout_width="103dp"
+                    android:layout_height="40dp"
+                    android:text="@{paymentbtndata.btnName}"
+                    android:textSize="14dp"
+                    android:lineHeight="20dp"
+                    tools:ignore="MissingConstraints"
+                    android:background="@drawable/grayractangle5">
+                </Button>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

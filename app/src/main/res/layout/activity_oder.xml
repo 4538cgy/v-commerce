@@ -5,7 +5,6 @@
     tools:context=".activity.oder.OrderActivity">
 
     <data>
-
         <variable
             name="activityorder"
             type="com.uos.vcommcerce.activity.oder.OrderActivity" />
@@ -13,7 +12,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/activity_order_const_top_bar"
@@ -29,6 +28,7 @@
                 android:layout_height="40dp"
                 android:background="@android:color/transparent"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_baseline_arrow_back_ios_24" />
@@ -37,30 +37,355 @@
                 android:id="@+id/activity_order_textview_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:lineHeight="20dp"
+                android:lineHeight="52dp"
                 android:text="Order"
                 android:textColor="@color/colorBlack"
-                android:textSize="14dp"
+                android:textSize="40sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-        <Button
-            android:id="@+id/activity_order_button_pay"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="24dp"
-            android:background="@drawable/button_background_round_black_16dp"
-            android:text="PAY"
-            android:textColor="@color/colorWhite"
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="50dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/activity_order_const_top_bar"
+            tools:layout_editor_absoluteX="221dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/activity_order_const_top_bar">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="36dp"
+                    android:layout_marginRight="24dp"
+                    android:text="배송지"
+                    android:textSize="24sp"
+                    android:textStyle="bold"></TextView>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="24dp"
+                    android:background="@drawable/grayractangle5"
+                    android:hint="수령인 이름"></EditText>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="24dp"
+                    android:orientation="horizontal">
+
+                    <WebView
+                        android:id="@+id/order_zipcode_webView"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@drawable/grayractangle5"
+                        android:hint="우편 번호"></WebView>
+
+                    <Button
+                        android:id="@+id/address_search_btn"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:layout_alignRight="@+id/order_zipcode_webView"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/blackractangle5"
+                        android:lineHeight="22dp"
+                        android:text="검색"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="16dp"></Button>
+                </RelativeLayout>
+
+                <EditText
+                    android:id="@+id/adress_result_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="24dp"
+                    android:background="@drawable/grayractangle5"
+                    android:hint="주소"></EditText>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="24dp"
+                    android:background="@drawable/grayractangle5"
+                    android:hint="상세 주소"></EditText>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="36dp"
+                    android:layout_marginRight="24dp"
+                    android:text="할인"
+                    android:textSize="24sp"
+                    android:textStyle="bold"></TextView>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="24dp"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/order_reserves"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@drawable/grayractangle5"
+                        android:hint="적립금"></EditText>
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:layout_alignRight="@+id/order_reserves"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="5dp"
+                        android:gravity="center"
+                        android:lineHeight="20dp"
+                        android:text="최대 3,140원"
+                        android:textSize="14dp"></TextView>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="24dp"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/order_coupon"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@drawable/grayractangle5"
+                        android:hint="쿠폰"></EditText>
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:layout_alignRight="@+id/order_coupon"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="5dp"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:lineHeight="20dp"
+                        android:text="3장 사용 가능"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14dp"></TextView>
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="36dp"
+                    android:layout_marginRight="24dp"
+                    android:text="결제 수단"
+                    android:textSize="24sp"
+                    android:textStyle="bold">
+
+                </TextView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerPaymentboxView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="24dp">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginRight="12dp"
+                    android:background="#AAAAAA" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="22.5dp"
+                    android:layout_marginRight="24dp"
+                    android:text="최종 결제 금액"
+                    android:textSize="24sp"
+                    android:textStyle="bold"></TextView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="10"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="24dp"
+                        android:layout_weight="7"
+                        android:gravity="center_vertical|left"
+                        android:lineHeight="20dp"
+                        android:text="상품 금액"
+                        android:textSize="14sp"></TextView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="24dp"
+                        android:layout_weight="3"
+                        android:gravity="center_vertical|right"
+                        android:lineHeight="20dp"
+                        android:text="28,500원"
+                        android:textSize="14sp">
+
+                    </TextView>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="12dp"
+                    android:background="#AAAAAA" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="10"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="24dp"
+                        android:layout_weight="7"
+                        android:gravity="center_vertical|left"
+                        android:lineHeight="20dp"
+                        android:text="할인 금액"
+                        android:textSize="14sp"></TextView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="24dp"
+                        android:layout_weight="3"
+                        android:gravity="center_vertical|right"
+                        android:lineHeight="20dp"
+                        android:text="4,590원"
+                        android:textSize="14sp">
+
+                    </TextView>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="12dp"
+                    android:background="#AAAAAA" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="10"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="24dp"
+                        android:layout_weight="7"
+                        android:gravity="center_vertical|left"
+                        android:lineHeight="20dp"
+                        android:text="기타 금액"
+                        android:textSize="14sp"></TextView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="24dp"
+                        android:layout_weight="3"
+                        android:gravity="center_vertical|right"
+                        android:lineHeight="20dp"
+                        android:text="22,422원"
+                        android:textSize="14sp"></TextView>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="12dp"
+                    android:background="#AAAAAA" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="24dp"
+                    android:gravity="center_vertical|right"
+                    android:lineHeight="22dp"
+                    android:text="22,422원"
+                    android:textSize="16sp"
+                    android:textStyle="bold"></TextView>
+
+                <Button
+                    android:id="@+id/activityOrderButtonPay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="68dp"
+                    android:layout_marginRight="24dp"
+                    android:background="@drawable/button_background_round_gray_16dp"
+                    android:lineHeight="22dp"
+                    android:text="22,422원 결제"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="16dp"
+                    android:textStyle="bold">
+
+                </Button>
+            </LinearLayout>
+
+        </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 
 </layout>

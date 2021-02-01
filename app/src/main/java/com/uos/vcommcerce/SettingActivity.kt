@@ -277,6 +277,9 @@ class SettingActivity : AppCompatActivity() {
             "Grid" -> {
                 startActivity(Intent(this, UserActivity::class.java))
             }
+            "Order" -> {
+                startActivity(Intent(this, OrderActivity::class.java))
+            }
 
             "VideoList" -> {
                 startActivity(Intent(this, VideoSelectActivity::class.java))
