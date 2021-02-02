@@ -34,13 +34,3 @@ fun ViewAnimation(TargetView:View, StartPos: Int, EndPos : Int, during : Long, C
     }
 }
 
-fun returnDefaultView() {
-    if (mainActivityState == MainActivityState.search) {
-        MainTopView.instance.SearchEnd()
-        Imm?.hideSoftInputFromWindow(MainTopView.SearchView?.windowToken, 0);
-    }
-    MainBottomView.instance.BottonViewShow(MainActivityState.default)
-    MainPlayer.instance.PlayerUp()
-    MainTopView.instance.TopViewHide()
-
-}

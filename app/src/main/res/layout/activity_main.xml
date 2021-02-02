@@ -28,7 +28,7 @@
         >
 
         <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/vp_viewpager"
+            android:id="@+id/vpViewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/main_player_background"
@@ -51,7 +51,7 @@
             android:background="@drawable/main_top_view_background">
 
             <com.uos.vcommcerce.util.CustomEditText
-                android:id="@+id/mainSearchView"
+                android:id="@+id/mainSearch"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:background="@drawable/main_top_search_view_background"
@@ -61,7 +61,7 @@
 
 
             <ListView
-                android:id="@+id/mainSearchListView"
+                android:id="@+id/mainSearchList"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:orientation="horizontal"

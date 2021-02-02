@@ -1,6 +1,8 @@
 package com.uos.vcommcerce
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
@@ -25,7 +27,7 @@ class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
     //메인에 물려있는 탑과 바텀뷰 + 플레이어
     var MainTop : MainTopView = MainTopView()
     var MainBottom : MainBottomView = MainBottomView()
-
+    var MainPlayer : MainPlayer = MainPlayer()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,28 +36,15 @@ class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
         // 최석우 일시적으로 앱터져서 막음
         //registerPushToken()
 
-        var videoAdapter : MainPlayer.VideoAdapter = MainPlayer.instance.VideoAdapter(this)
-        vp_viewpager.adapter = videoAdapter
-
-        //비디오플레이어에
-        MainPlayer.instance.setPlayerView(this, binding,vp_viewpager)
-
 
         //탑뷰의 서치뷰에 어뎁터 추가후 탑뷰에 전송
-        var adapter: MainTopView.SearchAdapter = MainTopView.instance.SearchAdapter(this)
-        mainSearchListView.adapter = MainTopView.instance.SearchAdapter(this)
-
-        //메인 탑뷰에 필요한 인자들 전송
-        var ViewList: ArrayList<ImageView> = ArrayList<ImageView>()
-        ViewList.add(moveItem1)
-        ViewList.add(moveItem2)
-        ViewList.add(moveItem3)
-        ViewList.add(moveItem4)
-        MainTopView.instance.setTopView(mainTopView, mainSearchView, mainSearchListView, mainViewChange,ViewList, adapter, this, binding);
+        MainTop.getMainActivity(binding,this)
 
         //메인 바텀뷰에 필요한 인자들 전송
         MainBottom.getMainBinding(binding,this)
-
+        Log.d("메인 ","넘어감??")
+        //비디오플레이어에 바인딩 전송
+        MainPlayer.getMainActivity( binding,this)
 
         //키보드 숨기기위한 시스템 변수
         Imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager;
