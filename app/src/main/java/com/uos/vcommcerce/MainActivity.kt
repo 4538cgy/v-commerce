@@ -1,6 +1,7 @@
 package com.uos.vcommcerce
 
 import android.os.Bundle
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -19,7 +20,12 @@ var Imm: InputMethodManager? = null;
 class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
 
     //메인 엑티비티에 물려있는 바인딩
-    private lateinit var binding: ActivityMainBinding
+     private lateinit var binding: ActivityMainBinding
+
+    //메인에 물려있는 탑과 바텀뷰 + 플레이어
+    var MainTop : MainTopView = MainTopView()
+    var MainBottom : MainBottomView = MainBottomView()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +33,6 @@ class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
 
         // 최석우 일시적으로 앱터져서 막음
         //registerPushToken()
-
 
         var videoAdapter : MainPlayer.VideoAdapter = MainPlayer.instance.VideoAdapter(this)
         vp_viewpager.adapter = videoAdapter
@@ -49,7 +54,8 @@ class MainActivity : AppCompatActivity() /*, TextView.OnEditorActionListener*/ {
         MainTopView.instance.setTopView(mainTopView, mainSearchView, mainSearchListView, mainViewChange,ViewList, adapter, this, binding);
 
         //메인 바텀뷰에 필요한 인자들 전송
-        MainBottomView.instance.setBottomView(mainBottomView,nickname,titleview,address,price,contentview,review,like,bottomgroup1,bottomgroup2,selectoption,this,binding)
+        MainBottom.getMainBinding(binding,this)
+
 
         //키보드 숨기기위한 시스템 변수
         Imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager;

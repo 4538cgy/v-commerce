@@ -140,7 +140,7 @@
                 android:textColor="@color/mainBottonFontlightColor"
                 android:layout_marginBottom="4dp" />
             <TextView
-                android:id="@+id/titleview"
+                android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
                 android:text="@{MediaContent.productTile}"
@@ -176,7 +176,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/contentview"
+                android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
                 android:text="@{MediaContent.productExplain}"
