@@ -35,9 +35,8 @@
             android:orientation="horizontal"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="-36dp"
-            >
 
-        </androidx.viewpager2.widget.ViewPager2>
+            />
 
         <!--2020/09/17 최석우 상단 바 -->
         <LinearLayout
