@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_gravity="center"
+    tools:context=".activity.popup.ErrorPopUpActivity">
+
+    <data>
+
+        <variable
+            name="activityerrorpopup"
+            type="com.uos.vcommcerce.activity.popup.ErrorPopUpActivity" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="300dp"
+        android:layout_height="120dp"
+        android:background="@drawable/background_round_white_12dp">
+
+
+        <TextView
+            android:id="@+id/activity_error_pop_up_textview_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="19dp"
+            android:text="비밀번호 오류"
+            android:textColor="@color/colorBlack"
+            android:textSize="17dp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/activity_error_pop_up_textview_subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="비밀번호를 확인해주세요"
+            android:textColor="@color/colorBlack"
+            android:textSize="13dp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activity_error_pop_up_textview_title" />
+
+        <View
+            android:id="@+id/activity_error_pop_up_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="11dp"
+            android:layout_marginBottom="19dp"
+            android:background="@color/colorGray"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activity_error_pop_up_textview_subtitle" />
+
+        <Button
+            android:id="@+id/activity_error_pop_up_button_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:text="확인"
+            android:onClick="@{activityerrorpopup::mOnClose}"
+            android:textColor="@color/colorSystemBlue"
+            android:textSize="17dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activity_password_error_pop_up_line" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

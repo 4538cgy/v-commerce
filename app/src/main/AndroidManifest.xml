@@ -32,7 +32,8 @@
         <activity android:name=".activity.videoupload.VideoSelectActivity" />
         <activity android:name=".activity.videoupload.SelectVideoActivity" />
         <activity android:name=".activity.videoupload.UploadVideoActivity" />
-
+        <activity android:name=".activity.popup.ErrorPopUpActivity"
+            android:theme="@style/DialogTheme"></activity>
         <activity android:name=".activity.oder.OrderCompleteActivitiy" />
         <activity android:name=".activity.oder.OrderActivity" />
         <activity android:name=".activity.cart.CartActivity" />
