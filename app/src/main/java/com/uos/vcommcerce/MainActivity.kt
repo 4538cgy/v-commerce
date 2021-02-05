@@ -1,6 +1,7 @@
 package com.uos.vcommcerce
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Point
 import android.os.Bundle
@@ -17,6 +18,8 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.firebase.firestore.FirebaseFirestore
+import com.uos.vcommcerce.activity.review.ReviewActivity
+import com.uos.vcommcerce.activity.review.ReviewDetailActivity
 import com.uos.vcommcerce.databinding.ActivityMainBinding
 import com.uos.vcommcerce.mainslide.*
 import com.uos.vcommcerce.model.ObservableProductDTO
@@ -77,7 +80,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-
+        Binding.mainActivity = this
         //아이템 정보 바인딩에 할당
         Binding.mediaContent = mediaContent
 
@@ -169,6 +172,15 @@ class MainActivity : AppCompatActivity() {
         //FcmPush.instance.sendMessage("IIBpkwk5jUSNDa0qnDZxgwEvq812", "hi", "bye")
     }
 
+    fun openReview(view:View){
+        var intent = Intent(this, ReviewActivity::class.java)
+        intent.apply {
+            putExtra("mediaContent",mediaContent.productTile)
+        }
+        startActivity(intent)
+    }
+
+
     inner class VideoAdapter(private val context: Context) :
         RecyclerView.Adapter<VideoAdapter.ViewHolder>() {
 
@@ -204,7 +216,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         //최석우 뷰 컨트롤을위한 클릭과 터치리스너
-
         private val ViewPageClickListner = View.OnClickListener { }
         private val ViewPageTouchListner = View.OnTouchListener { v, event ->
             when (event?.action) {
@@ -276,6 +287,7 @@ class MainActivity : AppCompatActivity() {
     fun PlayerDown(state: MainActivityState = MainActivityState.notChange) {
         ViewAnimation(Binding.vpViewpager, 0, 138.dp(), 500, state)
     }
+
 
 
 }
