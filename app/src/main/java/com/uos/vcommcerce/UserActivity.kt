@@ -54,8 +54,7 @@ class UserActivity : AppCompatActivity(){
             binding.messageBtn.visibility = View.INVISIBLE
         }
         supportFragmentManager.beginTransaction().replace(R.id.recyclerViewBox, VideoGridFragment()).commit()
-        binding.videoGridSelectBar.setBackgroundColor(Color.parseColor("#000000"))
-        binding.historySelectBar.setBackgroundColor(Color.parseColor("#525252"))
+
 //        //비디오 버튼 눌럿을 때
 //        videoGridBtn.setOnClickListener{
 //            supportFragmentManager.beginTransaction().replace(R.id.recyclerViewBox, VideoGridFragment()).commit()
@@ -72,8 +71,7 @@ class UserActivity : AppCompatActivity(){
 //              profileTabClickEvent()
 //        }
         if(intent.getStringExtra("history") == "history"){
-            binding.videoGridSelectBar.setBackgroundColor(Color.parseColor("#525252"))
-            binding.historySelectBar.setBackgroundColor(Color.parseColor("#000000"))
+
             supportFragmentManager.beginTransaction().replace(R.id.recyclerViewBox, HistoryFragment()).commit()
         }
     }
@@ -107,15 +105,11 @@ class UserActivity : AppCompatActivity(){
     }
     //비디오 탭 클릭 이벤트
     fun videoTabClickEvent(view: View){
-        binding.videoGridSelectBar.setBackgroundColor(Color.parseColor("#000000"))
-        binding.historySelectBar.setBackgroundColor(Color.parseColor("#525252"))
         supportFragmentManager.beginTransaction().replace(R.id.recyclerViewBox, VideoGridFragment()).commit()
     }
 
     //히스토리 탭 클릭 이벤트
     fun historyTabClickEvent(view: View){
-        binding.videoGridSelectBar.setBackgroundColor(Color.parseColor("#525252"))
-        binding.historySelectBar.setBackgroundColor(Color.parseColor("#000000"))
         supportFragmentManager.beginTransaction().replace(R.id.recyclerViewBox, HistoryFragment()).commit()
     }
 
