@@ -19,12 +19,22 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="343dp">
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profile_Img"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="343dp"
-                android:src="@mipmap/ic_launcher"
-                />
+                android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/profile_Img"
+                    android:layout_width="match_parent"
+                    android:layout_height="343dp"
+                    android:src="@mipmap/ic_launcher"
+                    />
+                <ImageView
+                    android:id="@+id/profile_Img_Mask"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/mask"
+                    />
+            </FrameLayout>
             <Button
                 android:layout_width="19dp"
                 android:layout_height="19dp"

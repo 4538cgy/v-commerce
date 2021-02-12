@@ -18,6 +18,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.BlendModeColorFilterCompat
+import androidx.core.graphics.BlendModeCompat
 import androidx.databinding.DataBindingUtil
 import com.google.firebase.auth.FirebaseAuth
 import com.uos.vcommcerce.databinding.ActivityUserViewBinding
@@ -74,6 +76,7 @@ class UserActivity : AppCompatActivity(){
 
             supportFragmentManager.beginTransaction().replace(R.id.recyclerViewBox, HistoryFragment()).commit()
         }
+
     }
     //프로필 사진 탭 클릭 이벤트
     fun profileTabClickEvent(view:View){

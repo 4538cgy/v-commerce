@@ -7,37 +7,14 @@
             type="com.uos.vcommcerce.GridData" />
     </data>
 
-    <androidx.cardview.widget.CardView
 
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_margin="20dp">
+    <ImageView
+        android:id="@+id/content_Img"
+        android:layout_width="match_parent"
+        android:layout_height="222dp"
+        app:imageUrl = "@{griditem.gridImg}"
+        app:error="@{@drawable/ic_push_alert_24}"
+        android:scaleType="fitXY"
+        />
 
-        <FrameLayout
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:background="@color/colorWhite"
-            >
-            <ImageView
-                android:id="@+id/content_Img"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                app:imageUrl = "@{griditem.gridImg}"
-                app:error="@{@drawable/ic_push_alert_24}"
-
-                />
-
-            <TextView
-                android:id="@+id/content_Text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{griditem.gridTitle}"
-                android:textSize="20sp"
-                android:layout_gravity="center|bottom"
-                />
-
-        </FrameLayout>
-
-
-    </androidx.cardview.widget.CardView>
 </layout>

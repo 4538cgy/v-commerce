@@ -1,8 +1,13 @@
 package com.uos.vcommcerce.DataBindingAdapters
 
+import android.app.Activity
+import android.graphics.Color
+import android.graphics.ColorFilter
+import android.graphics.PorterDuff
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.util.dp
@@ -45,7 +50,6 @@ object DataBindingAdapyter {
             view.layoutParams = lp
         }
     }
-
 
 
 

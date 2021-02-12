@@ -59,11 +59,7 @@ class HistoryFragment : Fragment() {
     //lateinit var historyView: RecyclerView
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_history,container, false)
 
         binding.recyclerHistoryView.layoutManager = LinearLayoutManager(requireContext())
