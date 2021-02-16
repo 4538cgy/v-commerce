@@ -20,14 +20,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.uos.vcommcerce.Model.UserDataVM
 import com.uos.vcommcerce.databinding.FragmentVideoGridBinding
-import com.uos.vcommcerce.databinding.RecyclerGridItemBinding
+import com.uos.vcommcerce.databinding.VideoGridItemBinding
+import com.uos.vcommcerce.model.UserVideoData
 import com.uos.vcommcerce.testpackagedeletesoon.TestExoplayerActivity
 
-data class GridData(
-    var gridImg:String,
-    var gridTitle:String,
-    var gridUrl:String
-)
+
 
 class VideoGridFragment : Fragment() {
 
@@ -36,11 +33,7 @@ class VideoGridFragment : Fragment() {
     lateinit var userDataViewModel: UserDataVM
     //lateinit var recyclerGridView :RecyclerView
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         //val fragmentView = inflater.inflate(R.layout.fragment_video_grid, container, false)
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_video_grid, container,false)
@@ -68,22 +61,22 @@ class VideoGridFragment : Fragment() {
     //inner class GridData(val img:Int, val title:String, val videoUrl:String)
 
 
-    inner class RecyclerGridViewHolder(val binding: RecyclerGridItemBinding) : RecyclerView.ViewHolder(binding.root){
-        fun onBind(data : GridData){
+    inner class RecyclerGridViewHolder(val binding: VideoGridItemBinding) : RecyclerView.ViewHolder(binding.root){
+        fun onBind(data : UserVideoData){
             binding.griditem = data
             binding.executePendingBindings()
         }
 
     }
 
-    inner class RecyclerGridViewAdapter(var data:List<GridData> ,val context: Context)  : RecyclerView.Adapter<RecyclerGridViewHolder>() {
+    inner class RecyclerGridViewAdapter(var data:List<UserVideoData> ,val context: Context)  : RecyclerView.Adapter<RecyclerGridViewHolder>() {
         //생성하는부분
-        fun setDataList(gridData: List<GridData>) {
+        fun setDataList(gridData: List<UserVideoData>) {
             this.data = gridData
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerGridViewHolder {
-            val binding = RecyclerGridItemBinding.inflate(LayoutInflater.from(context),parent,false)
+            val binding = VideoGridItemBinding.inflate(LayoutInflater.from(context),parent,false)
             //val cellForRow = LayoutInflater.from(context).inflate(R.layout.recycler_grid_item, parent, false)
             return RecyclerGridViewHolder(binding)
         }
@@ -96,12 +89,11 @@ class VideoGridFragment : Fragment() {
 
             //그리드 안 이미지(item) 클릭시 나중에 영상 재생?
             holder.itemView.setOnClickListener{
-                Toast.makeText(context, data[position].gridTitle, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context,"영상 클릭됨" , Toast.LENGTH_SHORT).show()
 
                 val vedioIntent = Intent(requireActivity(), TestExoplayerActivity::class.java )
-                vedioIntent.putExtra("title", data[position].gridTitle)
-                vedioIntent.putExtra("img", data[position].gridImg)
-                vedioIntent.putExtra("url", data[position].gridUrl)
+                vedioIntent.putExtra("img", data[position].Img)
+                vedioIntent.putExtra("url", data[position].Url)
                 startActivity(vedioIntent)
 
             }
