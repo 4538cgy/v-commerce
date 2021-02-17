@@ -19,6 +19,7 @@ import com.uos.vcommcerce.Model.UserDataVM
 import com.uos.vcommcerce.databinding.FragmentHistoryBinding
 import com.uos.vcommcerce.databinding.VideoGridItemBinding
 import com.uos.vcommcerce.model.UserVideoData
+import com.uos.vcommcerce.util.setHeight
 import kotlinx.android.synthetic.main.fragment_history.*
 
 
@@ -74,6 +75,9 @@ class HistoryFragment : Fragment() {
         //수정하는부분
         override fun onBindViewHolder(holder: RecyclerHistoryViewHolder, position: Int) {
             holder.onBind(data[position])
+            //페이지 높이 증가
+            var lowcount : Int = getItemCount()/3+1
+            binding.recyclerHistoryView.setHeight(222*lowcount)
         }
     }
 }

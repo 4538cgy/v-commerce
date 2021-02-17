@@ -23,7 +23,7 @@ import com.uos.vcommcerce.databinding.FragmentVideoGridBinding
 import com.uos.vcommcerce.databinding.VideoGridItemBinding
 import com.uos.vcommcerce.model.UserVideoData
 import com.uos.vcommcerce.testpackagedeletesoon.TestExoplayerActivity
-
+import com.uos.vcommcerce.util.setHeight
 
 
 class VideoGridFragment : Fragment() {
@@ -95,8 +95,11 @@ class VideoGridFragment : Fragment() {
                 vedioIntent.putExtra("img", data[position].Img)
                 vedioIntent.putExtra("url", data[position].Url)
                 startActivity(vedioIntent)
-
             }
+
+            //페이지 높이 증가
+            var lowcount : Int = getItemCount()/3+1
+            binding.recyclerGridView.setHeight(222*lowcount)
         }
     }
 
