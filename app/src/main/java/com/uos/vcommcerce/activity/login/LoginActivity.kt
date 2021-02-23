@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
+import com.bumptech.glide.Glide
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -54,6 +55,9 @@ class LoginActivity : AppCompatActivity() {
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
+
+
+        Glide.with(this).load(R.drawable.gradient_login_background).into(binding.activityLoginImageviewBackgroundGif)
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
