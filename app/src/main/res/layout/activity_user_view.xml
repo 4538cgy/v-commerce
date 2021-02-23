@@ -119,7 +119,7 @@
                 android:id="@+id/user_introduction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{useractivity.nickName}"
+                android:text="@{useractivity.introduction}"
                 android:textSize="14dp"
                 android:layout_marginTop="16dp"
                 />

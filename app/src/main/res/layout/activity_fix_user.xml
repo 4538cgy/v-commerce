@@ -42,8 +42,10 @@
             android:layout_height="146dp"
             android:gravity="center">
             <ImageView
+                android:id="@+id/profile_Img"
                 android:layout_width="146dp"
-                android:layout_height="146dp" />
+                android:layout_height="146dp"
+                android:onClick="@{fixuseractivity::profileTabClickEvent}"/>
         </LinearLayout>
 
         <View
@@ -55,7 +57,8 @@
             android:layout_height="50dp"
             android:textSize="14sp"
             android:paddingLeft="16dp"
-            android:background="@drawable/background_round_gray_5dp"/>
+            android:background="@drawable/background_round_gray_5dp"
+            android:text="@{fixuseractivity.nickName}"/>
 
         <View
             android:layout_width="match_parent"
@@ -81,7 +84,9 @@
             android:hint="[채널이름]에 오신걸 환영합니다."
             android:padding="16dp"
             android:gravity="left|top"
-            android:textSize="14sp"/>
+            android:textSize="14sp"
+            android:text="@{fixuseractivity.introduction}"/>
+
 
         <View
             android:layout_width="match_parent"
