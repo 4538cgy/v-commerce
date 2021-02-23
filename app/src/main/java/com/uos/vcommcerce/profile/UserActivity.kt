@@ -115,7 +115,7 @@ class UserActivity : AppCompatActivity(){
                 }
                 R.id.profile_Basic -> {
                     Imguri = null
-                    profile_Img.setImageResource(R.mipmap.ic_launcher_round                 )
+                    profile_Img.setImageResource(R.mipmap.ic_launcher)
                 }//기본이미지 세팅(현재는 안드로이드..)
             }
             false
