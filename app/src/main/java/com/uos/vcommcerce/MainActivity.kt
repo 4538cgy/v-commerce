@@ -114,7 +114,8 @@ class MainActivity : AppCompatActivity() {
         //플레이어 크기
         var PlayerSize : Int = 610
 
-
+        
+        
         //비디오 플레이어 설정
 
         // 스크롤 수평 설정

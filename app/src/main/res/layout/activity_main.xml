@@ -79,17 +79,17 @@
                 android:gravity="center"
                 android:background="@color/mainViewColor"
                 >
-                <ImageView
-                    android:id="@+id/moveItem1"
+                <ImageButton
+                    android:id="@+id/activity_main_imagebutton_profile"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:background="#C4C4C4"
+                    android:background="@drawable/ic_baseline_person_24"
                     android:onClick="@{topview::IconMove1}"/>
                 <View
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="0.1"/>
-                <ImageView
+                <ImageButton
                     android:id="@+id/moveItem2"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
@@ -98,7 +98,7 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="0.1"/>
-                <ImageView
+                <ImageButton
                     android:id="@+id/moveItem3"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
@@ -107,11 +107,12 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="0.1"/>
-                <ImageView
-                    android:id="@+id/moveItem4"
+                <ImageButton
+                    android:id="@+id/activity_main_imagebutton_setting"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:background="#C4C4C4"/>
+                    android:onClick="@{topview::IconMove4}"
+                    android:background="@drawable/ic_baseline_settings_24"/>
             </LinearLayout>
 
 

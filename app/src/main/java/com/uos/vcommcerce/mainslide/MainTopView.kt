@@ -17,6 +17,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import com.uos.vcommcerce.R
+import com.uos.vcommcerce.SettingActivity
 import com.uos.vcommcerce.UserActivity
 import com.uos.vcommcerce.databinding.ActivityMainBinding
 import com.uos.vcommcerce.mainslide.ViewAnimation
@@ -118,8 +119,10 @@ class MainTopView {
 
         Binding.mainViewChange.setHeight((size_Y*MoveListViewSize).toInt())
 
-        Binding.moveItem1.setHeight((size_Y*MoveListViewSize).toInt())
-        Binding.moveItem1.setWidth((size_Y*MoveListViewSize).toInt())
+
+        //moveItem1 => activityMainImageButtonProfile
+        Binding.activityMainImagebuttonProfile.setHeight((size_Y*MoveListViewSize).toInt())
+        Binding.activityMainImagebuttonProfile.setWidth((size_Y*MoveListViewSize).toInt())
 
         Binding.moveItem2.setHeight((size_Y*MoveListViewSize).toInt())
         Binding.moveItem2.setWidth((size_Y*MoveListViewSize).toInt())
@@ -127,8 +130,9 @@ class MainTopView {
         Binding.moveItem3.setHeight((size_Y*MoveListViewSize).toInt())
         Binding.moveItem3.setWidth((size_Y*MoveListViewSize).toInt())
 
-        Binding.moveItem4.setHeight((size_Y*MoveListViewSize).toInt())
-        Binding.moveItem4.setWidth((size_Y*MoveListViewSize).toInt())
+        //movewItem4 => activityMainImageButtonSetting
+        Binding.activityMainImagebuttonSetting.setHeight((size_Y*MoveListViewSize).toInt())
+        Binding.activityMainImagebuttonSetting.setWidth((size_Y*MoveListViewSize).toInt())
 
 
     }
@@ -156,6 +160,9 @@ class MainTopView {
 
     //상단뷰 1번아이콘 클릭이벤트
     fun IconMove1(view : View) { MainActivity.startActivity(Intent(MainActivity, UserActivity::class.java)) }
+    //4번 아이콘
+    fun IconMove4(view : View) { MainActivity.startActivity(Intent(MainActivity, SettingActivity::class.java))}
+
 
     fun SearchEvent(view: View){
         Log.d("검색창 오픈!","검색창오픈!!")
