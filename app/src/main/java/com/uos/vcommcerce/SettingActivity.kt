@@ -27,6 +27,7 @@ import com.uos.vcommcerce.activity.videoupload.VideoUploadActivity
 import com.uos.vcommcerce.http.RestApi
 import com.uos.vcommcerce.model.HttpResponseDTO
 import com.uos.vcommcerce.model.SettingDTO
+import com.uos.vcommcerce.profile.UserActivity
 import com.uos.vcommcerce.testpackagedeletesoon.ShowMyUserInfoActivity
 import com.uos.vcommcerce.testpackagedeletesoon.TestExoplayerActivity
 import com.uos.vcommcerce.util.SharedData

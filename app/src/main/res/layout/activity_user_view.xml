@@ -5,7 +5,7 @@
     <data>
         <variable
             name="useractivity"
-            type="com.uos.vcommcerce.UserActivity" />
+            type="com.uos.vcommcerce.profile.UserActivity" />
     </data>
 
     <ScrollView
@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:padding="16dp"
             android:orientation="vertical"
-            tools:context=".UserActivity">
+            tools:context=".profile.UserActivity">
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -47,13 +47,14 @@
                     android:layout_marginTop="26dp"
                     android:layout_marginRight="26dp"
                     style="?android:attr/borderlessButtonStyle"
-                    android:onClick="@{useractivity::profileTabClickEvent}"
+                    android:onClick="@{useractivity::moveFixUserActivity}"
                     />
                 <TextView
+                    android:id="@+id/user_nickname"
                     android:layout_width="match_parent"
                     android:layout_height="46dp"
                     android:gravity="right"
-                    android:text="NickName"
+                    android:text="@{useractivity.nickName}"
                     android:autoSizeTextType="uniform"
                     android:lineHeight="18sp"
                     android:textStyle="bold"
@@ -115,9 +116,10 @@
             </FrameLayout>
 
             <TextView
+                android:id="@+id/user_introduction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="나는 낭만고양이\nSweet little kitty"
+                android:text="@{useractivity.nickName}"
                 android:textSize="14dp"
                 android:layout_marginTop="16dp"
                 />

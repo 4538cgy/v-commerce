@@ -3,7 +3,6 @@ package com.uos.vcommcerce.Model
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.uos.vcommcerce.VideoGridFragment
 import com.uos.vcommcerce.model.UserVideoData
 
 

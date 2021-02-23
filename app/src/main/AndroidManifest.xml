@@ -18,13 +18,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.productinformation.ProductInformationActivity"></activity>
+        <activity android:name=".profile.FixUserActivity"></activity>
+        <activity android:name=".activity.productinformation.ProductInformationActivity" />
         <activity
             android:name=".activity.login.popup.PasswordErrorPopUpActivity"
-            android:theme="@style/DialogTheme"></activity>
+            android:theme="@style/DialogTheme" />
         <activity android:name=".activity.signup.ProfileRegistActivity" />
-        <activity android:name=".activity.login.FindPasswordActivity"></activity>
-        <activity android:name=".activity.login.LoginWithEmail"></activity>
+        <activity android:name=".activity.login.FindPasswordActivity" />
+        <activity android:name=".activity.login.LoginWithEmail" />
         <activity android:name=".testpackagedeletesoon.ShowMyUserInfoActivity" />
         <activity android:name=".activity.signup.WelcomeActivity" />
         <activity android:name=".activity.signup.SignUpActivity" />
@@ -32,8 +33,9 @@
         <activity android:name=".activity.videoupload.VideoSelectActivity" />
         <activity android:name=".activity.videoupload.SelectVideoActivity" />
         <activity android:name=".activity.videoupload.UploadVideoActivity" />
-        <activity android:name=".activity.popup.ErrorPopUpActivity"
-            android:theme="@style/DialogTheme"></activity>
+        <activity
+            android:name=".activity.popup.ErrorPopUpActivity"
+            android:theme="@style/DialogTheme" />
         <activity android:name=".activity.oder.OrderCompleteActivitiy" />
         <activity android:name=".activity.oder.OrderActivity" />
         <activity android:name=".activity.cart.CartActivity" />
@@ -50,7 +52,7 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <activity android:name=".UserActivity" />
+        <activity android:name=".profile.UserActivity" />
         <activity android:name=".testpackagedeletesoon.TestExoplayerActivity" />
         <activity android:name=".SettingActivity">
             <intent-filter>
@@ -62,7 +64,7 @@
         <activity android:name=".activity.splash.SplashActivity" />
         <activity android:name=".activity.login.LoginActivity" />
         <activity android:name=".activity.regist.RegistSellerActivity" />
-        <activity android:name=".activity.regist.RegistSellerInfoActivity"/>
+        <activity android:name=".activity.regist.RegistSellerInfoActivity" />
         <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustNothing" />

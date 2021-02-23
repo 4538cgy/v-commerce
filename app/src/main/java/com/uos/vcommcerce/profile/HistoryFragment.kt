@@ -1,28 +1,22 @@
-package com.uos.vcommcerce
+package com.uos.vcommcerce.profile
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.BaseObservable
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ObservableField
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.uos.vcommcerce.Model.UserDataVM
+import com.uos.vcommcerce.R
 import com.uos.vcommcerce.databinding.FragmentHistoryBinding
 import com.uos.vcommcerce.databinding.VideoGridItemBinding
 import com.uos.vcommcerce.model.UserVideoData
 import com.uos.vcommcerce.util.setHeight
-import kotlinx.android.synthetic.main.fragment_history.*
-
-
 
 
 class HistoryFragment : Fragment() {

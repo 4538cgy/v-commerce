@@ -12,10 +12,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.uos.vcommcerce.HistoryFragment
+import com.uos.vcommcerce.profile.HistoryFragment
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.SettingActivity
-import com.uos.vcommcerce.UserActivity
+import com.uos.vcommcerce.profile.UserActivity
 import com.uos.vcommcerce.databinding.ActivityOderCompleteActivitiyBinding
 import com.uos.vcommcerce.databinding.ItemRecommendedProductBinding
 import com.uos.vcommcerce.testpackagedeletesoon.TestExoplayerActivity

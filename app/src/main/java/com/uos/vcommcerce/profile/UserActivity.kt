@@ -1,4 +1,4 @@
-package com.uos.vcommcerce
+package com.uos.vcommcerce.profile
 
 import android.Manifest
 import android.app.Activity
@@ -6,23 +6,23 @@ import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.BlendModeColorFilterCompat
-import androidx.core.graphics.BlendModeCompat
 import androidx.databinding.DataBindingUtil
 import com.google.firebase.auth.FirebaseAuth
+import com.uos.vcommcerce.R
+import com.uos.vcommcerce.activity.review.ReviewDetailActivity
 import com.uos.vcommcerce.databinding.ActivityUserViewBinding
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_user_view.*
 import java.io.FileOutputStream
 import java.lang.Exception
@@ -32,6 +32,7 @@ private const val FLAG_PERM_CAMERA = 98
 private const val FLAG_PERM_STORAGE = 99
 private const val FLAG_REQ_CAMERA = 101
 private const val FLAG_REQ_GALLERY = 102
+private const val FLAG_FIX_RESULT = 0
 
 class UserActivity : AppCompatActivity(){
     private lateinit var binding:ActivityUserViewBinding
@@ -39,10 +40,13 @@ class UserActivity : AppCompatActivity(){
 
     val CAMERA_PERMISSION = arrayOf(Manifest.permission.CAMERA) //카메라 퍼미션
     val STORAGE_PERMISSION = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE) //외부저장소 권한요청
+    var Imguri : Uri? = null
+    var NickName : String? = "Nickname"
+    var Introduction : String? = "나는 낭만고양이\nSweet little kitty"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_user_view)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_user_view)
         binding.useractivity = this@UserActivity
         firebaseAuth = FirebaseAuth.getInstance()
         //setContentView(R.layout.activity_user_view)
@@ -55,7 +59,10 @@ class UserActivity : AppCompatActivity(){
             binding.followBtn.visibility = View.INVISIBLE
             binding.messageBtn.visibility = View.INVISIBLE
         }
-        supportFragmentManager.beginTransaction().replace(R.id.recyclerViewBox, VideoGridFragment()).commit()
+        supportFragmentManager.beginTransaction().replace(
+            R.id.recyclerViewBox, 
+            VideoGridFragment()
+        ).commit()
 
 //        //비디오 버튼 눌럿을 때
 //        videoGridBtn.setOnClickListener{
@@ -74,7 +81,10 @@ class UserActivity : AppCompatActivity(){
 //        }
         if(intent.getStringExtra("history") == "history"){
 
-            supportFragmentManager.beginTransaction().replace(R.id.recyclerViewBox, HistoryFragment()).commit()
+            supportFragmentManager.beginTransaction().replace(
+                R.id.recyclerViewBox,
+                HistoryFragment()
+            ).commit()
         }
 
     }
@@ -89,17 +99,24 @@ class UserActivity : AppCompatActivity(){
                     if(isPermitted(CAMERA_PERMISSION)) { // 권한 체크하는 함수
                         openCamera()
                     }else{
-                        ActivityCompat.requestPermissions(this, CAMERA_PERMISSION,FLAG_PERM_CAMERA )
+                        ActivityCompat.requestPermissions(this, CAMERA_PERMISSION,
+                            FLAG_PERM_CAMERA
+                        )
                     }
                 }
                 R.id.profile_Gallery -> {
                     if(isPermitted(STORAGE_PERMISSION)){ // 권한 체크하는 함수
                         openGallery()
                     }else{
-                        ActivityCompat.requestPermissions(this,STORAGE_PERMISSION, FLAG_PERM_STORAGE)
+                        ActivityCompat.requestPermissions(this,STORAGE_PERMISSION,
+                            FLAG_PERM_STORAGE
+                        )
                     }
                 }
-                R.id.profile_Basic -> profile_Img.setImageResource(R.mipmap.ic_launcher_round)  //기본이미지 세팅(현재는 안드로이드..)
+                R.id.profile_Basic -> {
+                    Imguri = null
+                    profile_Img.setImageResource(R.mipmap.ic_launcher_round                 )
+                }//기본이미지 세팅(현재는 안드로이드..)
             }
             false
         }
@@ -108,12 +125,18 @@ class UserActivity : AppCompatActivity(){
     }
     //비디오 탭 클릭 이벤트
     fun videoTabClickEvent(view: View){
-        supportFragmentManager.beginTransaction().replace(R.id.recyclerViewBox, VideoGridFragment()).commit()
+        supportFragmentManager.beginTransaction().replace(
+            R.id.recyclerViewBox,
+            VideoGridFragment()
+        ).commit()
     }
 
     //히스토리 탭 클릭 이벤트
     fun historyTabClickEvent(view: View){
-        supportFragmentManager.beginTransaction().replace(R.id.recyclerViewBox, HistoryFragment()).commit()
+        supportFragmentManager.beginTransaction().replace(
+            R.id.recyclerViewBox,
+            HistoryFragment()
+        ).commit()
     }
 
     //갤러리 호출 함수
@@ -138,7 +161,7 @@ class UserActivity : AppCompatActivity(){
     //카메라 열기
     fun openCamera(){
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        startActivityForResult(intent,FLAG_REQ_CAMERA )
+        startActivityForResult(intent, FLAG_REQ_CAMERA)
     }
 
     //이미지 저장
@@ -181,6 +204,7 @@ class UserActivity : AppCompatActivity(){
     }
 
     //카메라 촬영한 이미지 프로필 사진에 넣어주기
+    //결과 받아오는 함수
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         //Log.d("카메라","req=$requestCode, result = $resultCode, data = $data")
@@ -191,12 +215,13 @@ class UserActivity : AppCompatActivity(){
                         val bitmap = data?.extras?.get("data") as Bitmap
                         val filename = newFileName()
                         val uri = saveImageFile(filename,"image/jpg",bitmap)
-
+                        Imguri = uri
                         profile_Img.setImageURI(uri)
                     }
                 }
-                FLAG_REQ_GALLERY->{
+                FLAG_REQ_GALLERY ->{
                     val uri = data?.data
+                    Imguri = uri
                     profile_Img.setImageURI(uri)
                 }
             }
@@ -210,7 +235,7 @@ class UserActivity : AppCompatActivity(){
         grantResults: IntArray
     ) {
         when(requestCode){
-            FLAG_PERM_CAMERA->{
+            FLAG_PERM_CAMERA ->{
                 var checked = true
                 for(grant in grantResults){
                     if(grant != PackageManager.PERMISSION_GRANTED){
@@ -223,6 +248,16 @@ class UserActivity : AppCompatActivity(){
                 }
             }
         }
+    }
+
+    fun moveFixUserActivity(view:View){
+        var intent = Intent(binding.root.context, FixUserActivity::class.java)
+        intent.apply {
+            putExtra("Name",NickName)
+            putExtra("introduction",Introduction)
+            putExtra("uri",Imguri)
+        }
+        startActivityForResult(intent, FLAG_FIX_RESULT)
     }
 
 }

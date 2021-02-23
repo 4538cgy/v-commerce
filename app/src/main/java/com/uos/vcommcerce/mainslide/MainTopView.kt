@@ -18,7 +18,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.SettingActivity
-import com.uos.vcommcerce.UserActivity
+import com.uos.vcommcerce.profile.UserActivity
 import com.uos.vcommcerce.databinding.ActivityMainBinding
 import com.uos.vcommcerce.mainslide.ViewAnimation
 import com.uos.vcommcerce.mainslide.ViewAnimation
