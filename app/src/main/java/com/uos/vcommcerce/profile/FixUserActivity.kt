@@ -18,9 +18,11 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.ObservableField
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.databinding.ActivityFixUserBinding
-import com.uos.vcommcerce.databinding.ActivityUserViewBinding
 import kotlinx.android.synthetic.main.activity_user_view.*
 import java.io.FileOutputStream
 import java.lang.Exception
@@ -30,6 +32,7 @@ private const val FLAG_PERM_CAMERA = 98
 private const val FLAG_PERM_STORAGE = 99
 private const val FLAG_REQ_CAMERA = 101
 private const val FLAG_REQ_GALLERY = 102
+private const val FLAG_FIX_RESULT = 103
 
 class FixUserActivity : AppCompatActivity() {
 
@@ -39,36 +42,38 @@ class FixUserActivity : AppCompatActivity() {
     val CAMERA_PERMISSION = arrayOf(Manifest.permission.CAMERA) //카메라 퍼미션
     val STORAGE_PERMISSION = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE) //외부저장소 권한요청
 
-    var Imguri : Uri? = null
-    var NickName : String?  = null
-    var Introduction : String?  = null
+    var Imguri :MutableLiveData<Uri> = MutableLiveData()
+    var NickName : MutableLiveData<String> = MutableLiveData()
+    var Introduction : MutableLiveData<String> = MutableLiveData()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_fix_user)
         binding.fixuseractivity = this
 
+
+
         if(intent.getStringExtra("Name") != null){
-            NickName = intent.getStringExtra("Name")
-            Log.d("NickName 값: " ,NickName)
+            NickName.value = intent.getStringExtra("Name")
+            Log.d("NickName 값: " ,NickName.value)
         }else{
-            NickName = ""
+            NickName.value = ""
         }
 
         if(intent.getStringExtra("Introduction") != null){
-            Introduction = intent.getStringExtra("Introduction")
-            Log.d("Introduction 값: " ,Introduction)
+            Introduction.value = intent.getStringExtra("Introduction")
+            Log.d("Introduction 값: " ,Introduction.value)
         }else{
-            Introduction = ""
+            Introduction.value = ""
         }
 
         if(intent.getStringExtra("Uri") != "null"){
-            Imguri = Uri.parse(intent.getStringExtra("Uri"))
-            binding.profileImg.setImageURI(Imguri)
+            Imguri.value = Uri.parse(intent.getStringExtra("Uri"))
+            binding.profileImg.setImageURI(Imguri.value)
             Log.d("Uri 값: " ,Imguri.toString())
 
         }else{
-            Imguri = null
+            Imguri.value = null
             binding.profileImg.setImageResource(R.mipmap.ic_launcher)
             Log.d("Uri 값: " ,"설정안됨")
         }
@@ -98,7 +103,7 @@ class FixUserActivity : AppCompatActivity() {
                     }
                 }
                 R.id.profile_Basic -> {
-                    Imguri = null
+                    Imguri.value = null
                     binding.profileImg.setImageResource(R.mipmap.ic_launcher)
                 }//기본이미지 세팅(현재는 안드로이드..)
             }
@@ -120,13 +125,13 @@ class FixUserActivity : AppCompatActivity() {
                         val bitmap = data?.extras?.get("data") as Bitmap
                         val filename = newFileName()
                         val uri = saveImageFile(filename,"image/jpg",bitmap)
-                        Imguri = uri
+                        Imguri.value = uri
                         profile_Img.setImageURI(uri)
                     }
                 }
                 FLAG_REQ_GALLERY ->{
                     val uri = data?.data
-                    Imguri = uri
+                    Imguri.value = uri
                     profile_Img.setImageURI(uri)
                 }
             }
@@ -221,6 +226,25 @@ class FixUserActivity : AppCompatActivity() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = MediaStore.Images.Media.CONTENT_TYPE
         startActivityForResult(intent, FLAG_REQ_GALLERY)
+    }
+
+    //결과값 반환
+    fun returnResult(view: View){
+        var intent = Intent(binding.root.context, UserActivity::class.java)
+        intent.apply {
+            putExtra("Name",NickName.value)
+            putExtra("Introduction",Introduction.value)
+            putExtra("Uri",Imguri.value.toString())
+        }
+        setResult(Activity.RESULT_OK, intent);
+        finish();
+    }
+
+    //결과 반환 취소
+    fun CancleResult(view: View){
+        var intent = Intent(binding.root.context, UserActivity::class.java)
+        setResult(Activity.RESULT_CANCELED, intent);
+        finish();
     }
 
 }
