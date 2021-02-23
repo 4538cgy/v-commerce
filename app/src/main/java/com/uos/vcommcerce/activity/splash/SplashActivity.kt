@@ -1,7 +1,10 @@
 package com.uos.vcommcerce.activity.splash
 
+import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
@@ -16,61 +19,83 @@ class SplashActivity : AppCompatActivity() {
 
     lateinit var binding : ActivitySplashBinding
 
-    var firebaseRemoteConfig : FirebaseRemoteConfig ? = null
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_splash)
         binding.activitysplash = this@SplashActivity
 
 
-      firebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
+      val firebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
 
-        val configSettings = FirebaseRemoteConfigSettings.Builder()
-            .setMinimumFetchIntervalInSeconds(0)
-            .build()
-
-        firebaseRemoteConfig!!.setConfigSettingsAsync(configSettings)
-        firebaseRemoteConfig!!.setDefaultsAsync(R.xml.default_config)
-
-        firebaseRemoteConfig!!.fetchAndActivate().addOnCompleteListener { task ->
-
-            if (task.isSuccessful){
-
-            }else{
-
+        firebaseRemoteConfig.fetch(0).addOnCompleteListener { task ->
+            if(task.isSuccessful)
+            {
+                firebaseRemoteConfig.fetchAndActivate()
+                DialogDisplay(firebaseRemoteConfig)
             }
-            session()
+            else{
+                AlertDialog.Builder(this)
+                    .setTitle("Error")
+                    .setMessage("앱 실행에 오류가 발생하였습니다. 다시 실행해주시기 바랍니다.")
+                    .setCancelable(false)
+                    .setPositiveButton("종료", DialogInterface.OnClickListener { dialog, which ->
+                        this.finishAffinity()
+                    }).show()
+            }
         }
 
+    }
 
+    //앱버전 체크
+    fun appVersionCheckWithRemoteConfig() : String{
+
+        val packageManager = this.packageManager
+
+        return packageManager.getPackageInfo(this.packageName, PackageManager.GET_ACTIVITIES).versionName
     }
 
 
-    fun Permission(){
 
-    }
+    fun DialogDisplay(firebaseRemoteConfig : FirebaseRemoteConfig){
+        val strVersionName = appVersionCheckWithRemoteConfig()
+        //version from Firebase
+        var strLatestVersion = firebaseRemoteConfig.getString("message_version")
+        var strMaintenanceCheck = firebaseRemoteConfig.getBoolean("check_maintenance")
 
-    fun session(){
-
-        var check : Boolean = firebaseRemoteConfig!!.getBoolean("check")
-
-
-
-        if(check){
-
-            //check가 true면 점검중 메세지 혹은 팝업 
-
+        if (strMaintenanceCheck){
+            DialogDisplayDownServer()
         }else{
-
-            //check가 false면 그냥 넘어감
-            
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
-
+            if(strVersionName != strLatestVersion){
+                AlertDialog.Builder(this)
+                    .setTitle("Update")
+                    .setMessage("최신 버전의 앱을 설치 후 재실행 해주시기 바랍니다.")
+                    .setCancelable(false)
+                    .setPositiveButton("종료",DialogInterface.OnClickListener{
+                            dialog, which ->
+                        this.finish()
+                    }).show()
+            }
+            else{
+                startActivity(Intent(this,LoginActivity::class.java))
+                this.finish()
+            }
         }
 
+
+
     }
+
+    fun DialogDisplayDownServer(){
+        AlertDialog.Builder(this)
+            .setTitle("Maintenance")
+            .setMessage("서버 점검중입니다. \n PM 06:00 ~ PM 08:00")
+            .setCancelable(false)
+            .setPositiveButton("종료",DialogInterface.OnClickListener{
+                    dialog, which ->
+                this.finishAffinity()
+            }).show()
+    }
+
+
+
 }
