@@ -18,18 +18,19 @@
             android:layout_height="match_parent"
             android:background="@drawable/background_round_gray_10dp"
             />
+
+
         <Button
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:background="@drawable/ic_baseline_close_24"
             android:layout_gravity="right"
             android:layout_marginRight="6dp"
             android:layout_marginTop="10dp"
-            android:text="X"
-            android:autoSizeTextType="uniform"
-            android:gravity="center"
-            android:autoSizeMinTextSize="1sp"
+            android:stateListAnimator="@null"
             android:onClick="@{Value::Remove}"
             />
+
         <TextView
             android:id="@+id/TestTitle"
             android:layout_width="match_parent"

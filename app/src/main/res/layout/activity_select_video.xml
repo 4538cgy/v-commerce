@@ -39,16 +39,15 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"/>
+
             <Button
-                android:onClick="@{activityselectvideo::Uploadvideo}"
                 android:id= "@+id/nextPage"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:autoSizeTextType="uniform"
+                android:background="@drawable/ic_baseline_close_24"
                 android:gravity="right"
-                android:text="X"
-                android:textColor="#333333"
-                />
+                android:stateListAnimator="@null"
+                android:onClick="@{activityselectvideo::Uploadvideo}" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView

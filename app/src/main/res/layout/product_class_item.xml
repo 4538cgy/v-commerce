@@ -29,13 +29,14 @@
                 android:text="@{ProductClassItem.procudtClass}"
                 android:hint="@{ProductClassItem.procudtClassHint}"
                 android:gravity="left|center"/>
-            <TextView
+
+            <Button
                 android:id="@+id/AddClass"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:text="∨"
-                android:autoSizeTextType="uniform"
-                android:gravity="center"/>
+                android:background="@drawable/ic_baseline_arrow_open_24"
+                android:gravity="center"
+                android:stateListAnimator="@null" />
         </LinearLayout>
     </FrameLayout>
 </layout>

@@ -40,15 +40,15 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"/>
+
             <Button
                 android:id= "@+id/nextPage"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:autoSizeTextType="uniform"
+                android:background="@drawable/ic_baseline_close_24"
                 android:gravity="right"
-                android:text="X"
-                android:textColor="#333333"
-                />
+                android:stateListAnimator="@null" />
+
         </LinearLayout>
         <TextView
             android:layout_width="match_parent"
@@ -87,7 +87,9 @@
                 android:layout_height="40dp"
                 android:text="Editor"
                 android:textColor="#ffffff"
-                android:background="@drawable/background_round_black_13dp"/>
+                android:background="@drawable/background_round_black_13dp"
+                android:stateListAnimator="@null" />
+
             <View
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -98,7 +100,9 @@
                 android:layout_height="40dp"
                 android:text="Upload"
                 android:textColor="#ffffff"
-                android:background="@drawable/background_round_black_13dp"/>
+                android:background="@drawable/background_round_black_13dp"
+                android:stateListAnimator="@null" />
+
         </LinearLayout>
 
     </LinearLayout>

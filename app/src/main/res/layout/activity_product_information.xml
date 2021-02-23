@@ -39,13 +39,13 @@
                     android:textStyle="bold"
                     android:textColor="#333333"/>
 
-                <TextView
+                <Button
                     android:layout_width="52dp"
                     android:layout_height="52dp"
-                    android:autoSizeTextType="uniform"
+                    android:background="@drawable/ic_baseline_close_24"
                     android:gravity="center"
-                    android:text="X"
-                    android:textColor="#333333"/>
+                    android:stateListAnimator="@null" />
+
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
@@ -133,7 +133,9 @@
                     android:background="#00ff0000"
                     android:autoSizeTextType="uniform"
                     android:autoSizeMinTextSize="1sp"
-                    android:onClick="@{ProductInformationActivity::addItem}"/>
+                    android:onClick="@{ProductInformationActivity::addItem}"
+                    android:stateListAnimator="@null" />
+
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
