@@ -1,4 +1,4 @@
-package com.uos.vcommcerce.http
+package com.uos.vcommcerce.http.test
 
 import android.util.Log
 import com.google.gson.JsonArray

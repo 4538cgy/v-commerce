@@ -1,4 +1,4 @@
-package com.uos.vcommcerce.http
+package com.uos.vcommcerce.http.test
 
 import com.uos.vcommcerce.model.HttpResponseDTO
 import okhttp3.MultipartBody
