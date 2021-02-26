@@ -44,7 +44,8 @@
                     android:layout_height="52dp"
                     android:background="@drawable/ic_baseline_close_24"
                     android:gravity="center"
-                    android:stateListAnimator="@null" />
+                    android:stateListAnimator="@null"
+                    android:onClick="@{ProductInformationActivity::activityfinish}"/>
 
             </LinearLayout>
             <View

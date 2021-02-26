@@ -24,6 +24,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.uos.vcommcerce.R
+import com.uos.vcommcerce.activity.productinformation.ProductInformationActivity
 import com.uos.vcommcerce.activity.review.ReviewDetailActivity
 import com.uos.vcommcerce.databinding.ActivityUserViewBinding
 import kotlinx.android.synthetic.main.activity_main.*
@@ -141,6 +142,11 @@ class UserActivity : AppCompatActivity(){
         }else if(resultCode == Activity.RESULT_CANCELED){
             Log.d("resultCode : ","Activity.RESULT_CANCELED")
         }
+    }
+
+    fun moveProductInfomation(view: View){
+        var intent = Intent(binding.root.context, ProductInformationActivity::class.java)
+        startActivity(intent)
     }
 
 }

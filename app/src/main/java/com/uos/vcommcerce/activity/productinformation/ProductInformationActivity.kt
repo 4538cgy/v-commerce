@@ -138,4 +138,8 @@ class ProductInformationActivity : AppCompatActivity() {
         ProductOptionAdapter.notifyDataSetChanged()
         product_option.setHeight(OptionItemHeight*ProductOptionAdapter.itemCount)
     }
+
+    fun activityfinish(view:View){
+        finish()
+    }
 }
