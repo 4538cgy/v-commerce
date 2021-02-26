@@ -1,20 +1,16 @@
 package com.uos.vcommcerce.activity.videoupload
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.databinding.ActivityUploadVideoBinding
 import com.uos.vcommcerce.databinding.UploadVideoItemBinding
-import com.uos.vcommcerce.model.TextDTO
+import com.uos.vcommcerce.datamodel.TextDTO
 import kotlinx.android.synthetic.main.activity_upload_video.*
 
 class UploadVideoActivity : AppCompatActivity() {

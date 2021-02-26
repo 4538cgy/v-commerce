@@ -2,7 +2,7 @@ package com.uos.vcommcerce.http.test
 
 import android.util.Log
 import com.google.gson.JsonArray
-import com.uos.vcommcerce.model.HttpResponseDTO
+import com.uos.vcommcerce.datamodel.HttpResponseDTO
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient

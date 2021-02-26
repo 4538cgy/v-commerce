@@ -3,7 +3,7 @@ package com.uos.vcommcerce.util
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
 import com.squareup.okhttp.*
-import com.uos.vcommcerce.model.PushDTO
+import com.uos.vcommcerce.datamodel.PushDTO
 import java.io.IOException
 
 class FcmPush {

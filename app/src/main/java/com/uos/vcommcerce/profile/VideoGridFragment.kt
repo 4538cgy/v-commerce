@@ -21,7 +21,7 @@ import com.uos.vcommcerce.Model.UserDataVM
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.databinding.FragmentVideoGridBinding
 import com.uos.vcommcerce.databinding.VideoGridItemBinding
-import com.uos.vcommcerce.model.UserVideoData
+import com.uos.vcommcerce.datamodel.UserVideoData
 import com.uos.vcommcerce.testpackagedeletesoon.TestExoplayerActivity
 import com.uos.vcommcerce.util.setHeight
 
@@ -70,7 +70,7 @@ class VideoGridFragment : Fragment() {
 
     }
 
-    inner class RecyclerGridViewAdapter(var data:List<UserVideoData> ,val context: Context)  : RecyclerView.Adapter<RecyclerGridViewHolder>() {
+    inner class RecyclerGridViewAdapter(var data:List<UserVideoData>, val context: Context)  : RecyclerView.Adapter<RecyclerGridViewHolder>() {
         //생성하는부분
         fun setDataList(gridData: List<UserVideoData>) {
             this.data = gridData

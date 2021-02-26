@@ -8,7 +8,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.databinding.ActivityShowMyUserInfoBinding
-import com.uos.vcommcerce.model.UserDTO
+import com.uos.vcommcerce.datamodel.UserDTO
 
 class ShowMyUserInfoActivity : AppCompatActivity() {
 

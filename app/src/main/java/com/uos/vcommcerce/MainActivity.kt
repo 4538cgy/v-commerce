@@ -19,11 +19,10 @@ import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.firebase.firestore.FirebaseFirestore
 import com.uos.vcommcerce.activity.review.ReviewActivity
-import com.uos.vcommcerce.activity.review.ReviewDetailActivity
 import com.uos.vcommcerce.databinding.ActivityMainBinding
 import com.uos.vcommcerce.mainslide.*
-import com.uos.vcommcerce.model.ObservableProductDTO
-import com.uos.vcommcerce.model.ProductDTO
+import com.uos.vcommcerce.datamodel.ObservableProductDTO
+import com.uos.vcommcerce.datamodel.ProductDTO
 import com.uos.vcommcerce.tranformer.ZoomOutPageTransformer
 import com.uos.vcommcerce.util.MainActivityState
 import com.uos.vcommcerce.util.dp
@@ -45,7 +44,8 @@ class MainActivity : AppCompatActivity() {
     //상품 정보 리스트
     var items: ArrayList<ProductDTO> = arrayListOf()
     //현재 아이템 정보
-    var mediaContent: ObservableProductDTO = ObservableProductDTO(ProductDTO())
+    var mediaContent: ObservableProductDTO =
+        ObservableProductDTO(ProductDTO())
 
     //메인에 물려있는 탑과 바텀뷰 + 플레이어
     var MainTop : MainTopView = MainTopView()

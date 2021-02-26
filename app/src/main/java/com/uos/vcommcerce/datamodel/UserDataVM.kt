@@ -3,7 +3,7 @@ package com.uos.vcommcerce.Model
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.uos.vcommcerce.model.UserVideoData
+import com.uos.vcommcerce.datamodel.UserVideoData
 
 
 // 데이터의 변경

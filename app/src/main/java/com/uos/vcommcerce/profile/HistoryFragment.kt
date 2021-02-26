@@ -15,7 +15,7 @@ import com.uos.vcommcerce.Model.UserDataVM
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.databinding.FragmentHistoryBinding
 import com.uos.vcommcerce.databinding.VideoGridItemBinding
-import com.uos.vcommcerce.model.UserVideoData
+import com.uos.vcommcerce.datamodel.UserVideoData
 import com.uos.vcommcerce.util.setHeight
 
 

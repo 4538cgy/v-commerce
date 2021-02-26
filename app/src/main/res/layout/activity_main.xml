@@ -11,7 +11,7 @@
 
         <variable
             name="MediaContent"
-            type="com.uos.vcommcerce.model.ObservableProductDTO" />
+            type="com.uos.vcommcerce.datamodel.ObservableProductDTO" />
         <variable
             name="topview"
             type="com.uos.vcommcerce.mainslide.MainTopView" />

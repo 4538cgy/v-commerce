@@ -25,8 +25,8 @@ import com.uos.vcommcerce.activity.videoupload.SelectVideoActivity
 import com.uos.vcommcerce.activity.videoupload.VideoSelectActivity
 import com.uos.vcommcerce.activity.videoupload.VideoUploadActivity
 import com.uos.vcommcerce.http.test.RestApi
-import com.uos.vcommcerce.model.HttpResponseDTO
-import com.uos.vcommcerce.model.SettingDTO
+import com.uos.vcommcerce.datamodel.HttpResponseDTO
+import com.uos.vcommcerce.datamodel.SettingDTO
 import com.uos.vcommcerce.profile.UserActivity
 import com.uos.vcommcerce.testpackagedeletesoon.ShowMyUserInfoActivity
 import com.uos.vcommcerce.testpackagedeletesoon.TestExoplayerActivity

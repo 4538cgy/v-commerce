@@ -6,7 +6,7 @@
     <data>
         <variable
             name="Value"
-            type="com.uos.vcommcerce.model.TextDTO" />
+            type="com.uos.vcommcerce.datamodel.TextDTO" />
     </data>
     <FrameLayout
         android:layout_width="match_parent"

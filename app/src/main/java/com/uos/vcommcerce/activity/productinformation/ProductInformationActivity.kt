@@ -3,7 +3,6 @@ package com.uos.vcommcerce.activity.productinformation
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,11 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.databinding.*
-import com.uos.vcommcerce.model.ProductClassDTO
-import com.uos.vcommcerce.model.ProductOptionAddItem
+import com.uos.vcommcerce.datamodel.ProductClassDTO
+import com.uos.vcommcerce.datamodel.ProductOptionAddItem
 import com.uos.vcommcerce.util.setHeight
 import kotlinx.android.synthetic.main.activity_product_information.*
-import kotlin.math.log
 
 class ProductInformationActivity : AppCompatActivity() {
 
@@ -55,7 +53,11 @@ class ProductInformationActivity : AppCompatActivity() {
 
         //기본아이템 추가
         init {
-            ProductClassList.add(ProductClassDTO(ProductClassList.count()))
+            ProductClassList.add(
+                ProductClassDTO(
+                    ProductClassList.count()
+                )
+            )
             notifyDataSetChanged()
         }
 
@@ -82,7 +84,11 @@ class ProductInformationActivity : AppCompatActivity() {
                     executePendingBindings()
                     //화살표에 임시로 추가기능 추가
                     AddClass.setOnClickListener(View.OnClickListener {
-                        ProductClassList.add(ProductClassDTO(ProductClassList.count()))
+                        ProductClassList.add(
+                            ProductClassDTO(
+                                ProductClassList.count()
+                            )
+                        )
                         notifyDataSetChanged()
                     })
                 }

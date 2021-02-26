@@ -11,7 +11,7 @@ import com.uos.vcommcerce.R
 import com.uos.vcommcerce.activity.cart.cartrecyclerviewadapter.CartInnerRecyclerViewAdapter
 import com.uos.vcommcerce.databinding.ActivityCartBinding
 import com.uos.vcommcerce.databinding.ItemCartBinding
-import com.uos.vcommcerce.model.CartDTO
+import com.uos.vcommcerce.datamodel.CartDTO
 
 class CartActivity : AppCompatActivity() {
 

@@ -1,6 +1,6 @@
 package com.uos.vcommcerce.http.test
 
-import com.uos.vcommcerce.model.HttpResponseDTO
+import com.uos.vcommcerce.datamodel.HttpResponseDTO
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call

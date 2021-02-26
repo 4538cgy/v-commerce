@@ -11,14 +11,13 @@ import android.provider.MediaStore
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.crashlytics.internal.common.SystemCurrentTimeProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.SettingActivity
 import com.uos.vcommcerce.databinding.ActivityVideoUpload2Binding
-import com.uos.vcommcerce.model.ProductDTO
+import com.uos.vcommcerce.datamodel.ProductDTO
 import com.uos.vcommcerce.util.ProgressDialogLoading
 import com.uos.vcommcerce.util.TimeUtil
 

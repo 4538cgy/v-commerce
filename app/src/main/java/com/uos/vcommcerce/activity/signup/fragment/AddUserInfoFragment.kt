@@ -13,8 +13,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.SettingActivity
 import com.uos.vcommcerce.databinding.FragmentAddUserInfoBinding
-import com.uos.vcommcerce.model.SettingDTO
-import com.uos.vcommcerce.model.UserDTO
+import com.uos.vcommcerce.datamodel.UserDTO
 import com.uos.vcommcerce.util.SharedData
 import com.uos.vcommcerce.util.TimeUtil
 

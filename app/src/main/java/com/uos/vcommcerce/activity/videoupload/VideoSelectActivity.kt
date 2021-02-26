@@ -1,15 +1,12 @@
 package com.uos.vcommcerce.activity.videoupload
 
 
-import android.Manifest
 import android.annotation.SuppressLint
-import android.content.ContentResolver
 import android.content.ContentUris
 import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.CalendarContract.Instances.query
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
@@ -19,7 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.databinding.ActivityVideoUploadBinding
-import com.uos.vcommcerce.model.Video
+import com.uos.vcommcerce.datamodel.Video
 import java.util.concurrent.TimeUnit
 
 
@@ -154,7 +151,12 @@ class VideoSelectActivity : AppCompatActivity() {
 
                 // Stores column values and the contentUri in a local object
                 // that represents the media file.
-                videoList += Video(contentUri, name, duration, size)
+                videoList += Video(
+                    contentUri,
+                    name,
+                    duration,
+                    size
+                )
             } }
 
 

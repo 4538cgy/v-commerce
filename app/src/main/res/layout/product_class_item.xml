@@ -6,7 +6,7 @@
     <data>
         <variable
             name="ProductClassItem"
-            type="com.uos.vcommcerce.model.ProductClassDTO" />
+            type="com.uos.vcommcerce.datamodel.ProductClassDTO" />
     </data>
     <FrameLayout
         android:layout_width="match_parent"

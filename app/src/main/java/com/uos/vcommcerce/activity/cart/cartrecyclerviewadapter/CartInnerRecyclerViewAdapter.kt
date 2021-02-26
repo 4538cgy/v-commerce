@@ -4,9 +4,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.uos.vcommcerce.databinding.ItemCartBinding
 import com.uos.vcommcerce.databinding.ItemCartInnerOptionBinding
-import com.uos.vcommcerce.model.CartDTO
+import com.uos.vcommcerce.datamodel.CartDTO
 
 class CartInnerRecyclerViewAdapter(context: Context, list: ArrayList<CartDTO.CartInnerDTO>) : RecyclerView.Adapter<CartInnerRecyclerViewAdapter.CartInnerRecyclerViewAdapterViewHolder>(){
 

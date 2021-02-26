@@ -7,15 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.databinding.ActivitySelectVideoBinding
 import com.uos.vcommcerce.databinding.SelectVideoItemBinding
-import com.uos.vcommcerce.databinding.UploadVideoItemBinding
-import com.uos.vcommcerce.model.TextDTO
+import com.uos.vcommcerce.datamodel.TextDTO
 import kotlinx.android.synthetic.main.activity_select_video.*
 
 
