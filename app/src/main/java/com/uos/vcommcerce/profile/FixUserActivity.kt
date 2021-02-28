@@ -16,12 +16,10 @@ import android.view.View
 import android.widget.PopupMenu
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import com.uos.vcommcerce.R
+import com.uos.vcommcerce.activity.regist.RegistSellerActivity
 import com.uos.vcommcerce.databinding.ActivityFixUserBinding
 import kotlinx.android.synthetic.main.activity_user_view.*
 import java.io.FileOutputStream
@@ -245,6 +243,12 @@ class FixUserActivity : AppCompatActivity() {
         var intent = Intent(binding.root.context, UserActivity::class.java)
         setResult(Activity.RESULT_CANCELED, intent);
         finish();
+    }
+
+    //판매자 등록 버튼
+    fun RegistSeller(view :View){
+        val intent = Intent(this, RegistSellerActivity::class.java)
+        startActivity(intent)
     }
 
 }

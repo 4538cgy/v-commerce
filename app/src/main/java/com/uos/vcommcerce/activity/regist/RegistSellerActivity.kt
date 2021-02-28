@@ -58,9 +58,9 @@ class RegistSellerActivity : AppCompatActivity() {
         binding.activityRegistSellerButtonNext.setOnClickListener {
             val intent = Intent(this, RegistSellerInfoActivity::class.java)
             val sellerDTO = SellerDTO().apply {
-                if(binding.activityRegistSellerLayoutCorporateMember.isSelected) {
+                if(binding.activityRegistSellerLayoutCorporateMember.isSelected) {//기업
                     isCorporate = true
-                }else if(binding.activityRegistSellerLayoutIndividualMember.isSelected){
+                }else if(binding.activityRegistSellerLayoutIndividualMember.isSelected){//개인
                     isPersonal = true
                 }
                 corporateNum = binding.activityRegistSellerEdittextCompanyRegistrationNumber.text.toString()
