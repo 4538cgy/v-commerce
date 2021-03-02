@@ -24,9 +24,7 @@ import com.uos.vcommcerce.mainslide.*
 import com.uos.vcommcerce.datamodel.ObservableProductDTO
 import com.uos.vcommcerce.datamodel.ProductDTO
 import com.uos.vcommcerce.tranformer.ZoomOutPageTransformer
-import com.uos.vcommcerce.util.MainActivityState
-import com.uos.vcommcerce.util.dp
-import com.uos.vcommcerce.util.setHeight
+import com.uos.vcommcerce.util.*
 import kotlinx.android.synthetic.main.item_exoplayer.view.*
 import kotlin.math.abs
 
@@ -50,6 +48,16 @@ class MainActivity : AppCompatActivity() {
     //메인에 물려있는 탑과 바텀뷰 + 플레이어
     var MainTop : MainTopView = MainTopView()
     var MainBottom : MainBottomView = MainBottomView()
+
+    //피그마 기준 값
+    var standardSize_Y : Int = 770
+    var standardSize_X : Int = 375
+
+    //플레이어 크기
+    var PlayerSize : Int = 560
+    //피그마크기1px 당 실제뷰 크기값
+    var size_Y :Float = 0f
+    var size_X :Float = 0f
 
     //파이어 베이스에서 데이터를 불러옴
     init {
@@ -107,17 +115,15 @@ class MainActivity : AppCompatActivity() {
         var ScreenSize: Point = size
         var density = Resources.getSystem().displayMetrics.density
 
-        //피그마 기준 값
-        var standardSize_Y : Int = 770
         //피그마크기1px 당 실제뷰 크기값
         var size_Y = (ScreenSize.y / density)/standardSize_Y
-        //플레이어 크기
-        var PlayerSize : Int = 610
+        var size_X = (ScreenSize.x / density)/standardSize_X
+
+
 
         
         
         //비디오 플레이어 설정
-
         // 스크롤 수평 설정
         Binding.vpViewpager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         Binding.vpViewpager.setPageTransformer(ZoomOutPageTransformer())
@@ -151,6 +157,9 @@ class MainActivity : AppCompatActivity() {
 
         //비디오 플레이어 크기 설정
         Binding.vpViewpager.setHeight((size_Y*PlayerSize).toInt())
+        //비디오 플레이어 위치 조정
+        ViewAnimation(Binding.vpViewpager, 0, (63*size_Y).toInt().dp(), 0)
+
     }
 
 //최석우 앱터져서 일시적으로 막음
@@ -239,18 +248,14 @@ class MainActivity : AppCompatActivity() {
                                     Binding.bottomview?.BottonViewSlideUp1(MainActivityState.slideUp1)
                                 }
                                 MainActivityState.slideDown1 -> {
-                                    Binding.topview?.TopViewHide(MainActivityState.default)
                                     Binding.bottomview?.BottonViewShow()
-                                    PlayerUp()
                                 }
                             }
                         } else {
                             Log.d("드레그 DOWN : ", "드레그 DOWN")
                             when (mainActivityState) {
                                 MainActivityState.default -> {
-                                    Binding.topview?.TopViewShow(MainActivityState.slideDown1)
                                     Binding.bottomview?.BottonViewHide()
-                                    PlayerDown()
                                 }
 
                                 MainActivityState.slideUp1 -> {
@@ -276,18 +281,9 @@ class MainActivity : AppCompatActivity() {
             Imm?.hideSoftInputFromWindow(Binding.mainSearch.windowToken, 0);
         }
         Binding.bottomview?.BottonViewShow(MainActivityState.default)
-        PlayerUp()
-        Binding.topview?.TopViewHide()
-
     }
 
-    //비디오 플레이어 조정 함수
-    fun PlayerUp(state: MainActivityState = MainActivityState.notChange) {
-        ViewAnimation(Binding.vpViewpager, 0, 22.dp(), 500, state)
-    }
-    fun PlayerDown(state: MainActivityState = MainActivityState.notChange) {
-        ViewAnimation(Binding.vpViewpager, 0, 138.dp(), 500, state)
-    }
+
 
 
 

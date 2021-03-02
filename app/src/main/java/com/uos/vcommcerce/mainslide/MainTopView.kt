@@ -31,7 +31,7 @@ class MainTopView {
     //피그마 기준 값
     var standardSize_Y : Int = 770
     var standardSize_X : Int = 375
-    val standardTopViewSize : Int = 130
+    val standardTopViewSize : Int = 55
 
 
     //피그마크기1px 당 실제뷰 크기값
@@ -44,31 +44,9 @@ class MainTopView {
     //각 뷰 기본사이즈
     val SearchViewSize: Int = 40;//검색창 크기
     val RecyclerItemSize: Int = 30;//검색 아이템 크기
-    val MoveListViewSize = 48;//이동아이콘 크기
+    val MoveListViewSize = 55;//이동아이콘 크기
     val viewHandleSize = 16;//하단바 손잡이 크기
 
-    var beforeState: MainActivityState = MainActivityState.slideDown1;
-//    //메인뷰 엑티비티
-//    lateinit var mainActivity: Activity;
-//
-//    //이동뷰 리스트
-//    var moveItemList : ArrayList<View> = arrayListOf()
-//
-//    companion object {
-//        //싱글톤 생성
-//        //외부에서 받아온 리사이클러 어댑터
-//        var SearchViewAdapter: SearchAdapter? = null
-//        //외부에서 받아온 뷰들
-//        lateinit var TopView: View  //탑뷰
-//        lateinit var SearchView: EditText   //검색뷰
-//        lateinit var SearchListView: View;  //검색리스트 뷰
-//        lateinit var MoveListView: View;     //이동뷰 그룹
-//
-//        //검색창용 변수및 리스트
-//        lateinit var originalList: ArrayList<String>
-//        var filterList: MutableList<String> = mutableListOf<String>()
-//        var writedWord: String = ""
-//    }
 
     companion object {
         //검색창용 변수및 리스트
@@ -108,62 +86,41 @@ class MainTopView {
         size_X = (ScreenSize.x / density)/standardSize_X
         TopViewSize = (size_Y*standardTopViewSize).toInt()
 
+        //탑뷰 전체크기 수정
         Binding.mainTopView.setHeight(TopViewSize)     //하단뷰 크기 설정
-        Binding.mainTopView.setPadding(24*size_X.toInt().dp(),0,24*size_X.toInt().dp(),0)
 
-        Binding.mainSearch.setHeight((size_Y*SearchViewSize).toInt())
-        Binding.mainSearch.setMarginTop((size_Y*10).toInt())
-
+        //검색뷰 크기 설정
+        Binding.mainSearch.setHeight(0)
+        //검색 리스트 크기 설정
         Binding.mainSearchList.setHeight(0)
-        Binding.mainSearchList.setMarginBottom((size_Y*16).toInt())
 
+        //아이콘레이아웃 크기설정
         Binding.mainViewChange.setHeight((size_Y*MoveListViewSize).toInt())
 
-
+        //각 아이템 크기 성정
         //moveItem1 => activityMainImageButtonProfile
         Binding.activityMainImagebuttonProfile.setHeight((size_Y*MoveListViewSize).toInt())
         Binding.activityMainImagebuttonProfile.setWidth((size_Y*MoveListViewSize).toInt())
 
-        Binding.moveItem2.setHeight((size_Y*MoveListViewSize).toInt())
-        Binding.moveItem2.setWidth((size_Y*MoveListViewSize).toInt())
+        Binding.activityMainImagebuttonVideoList.setHeight((size_Y*MoveListViewSize).toInt())
+        Binding.activityMainImagebuttonVideoList.setWidth((size_Y*MoveListViewSize).toInt())
 
-        Binding.moveItem3.setHeight((size_Y*MoveListViewSize).toInt())
-        Binding.moveItem3.setWidth((size_Y*MoveListViewSize).toInt())
+        Binding.activityMainImagebuttonCart.setHeight((size_Y*MoveListViewSize).toInt())
+        Binding.activityMainImagebuttonCart.setWidth((size_Y*MoveListViewSize).toInt())
 
         //movewItem4 => activityMainImageButtonSetting
-        Binding.activityMainImagebuttonSetting.setHeight((size_Y*MoveListViewSize).toInt())
-        Binding.activityMainImagebuttonSetting.setWidth((size_Y*MoveListViewSize).toInt())
+        Binding.activityMainImagebuttonSearch.setHeight((size_Y*MoveListViewSize).toInt())
+        Binding.activityMainImagebuttonSearch.setWidth((size_Y*MoveListViewSize).toInt())
 
 
     }
-
-//    fun setTopView(topView: View, searchView: CustomEditText, searchListView: View, moveListView: View,moveViewList : ArrayList<ImageView>, searchViewAdapter: SearchAdapter, MainActivity:Activity, Binding : ActivityMainBinding) {
-//        //메인의 탑뷰
-//        TopView = topView;
-//        //탑뷰의 서치뷰
-//        SearchView = searchView
-//        //탑뷰의 서치뷰 리스트
-//        SearchListView = searchListView;
-//        //탑뷰의 이동뷰
-//        MoveListView = moveListView;
-//        //탑뷰의 어댑터
-//        SearchViewAdapter = searchViewAdapter
-//        //메인액티비티받아와서 넘겨주기
-//        SetSize(MainActivity,moveViewList)
-//
-//
-//        //메인 서치뷰에 텍스트 변경인식 리스너 추가
-//        searchView.addTextChangedListener(MainTopView.instance.TextChangeListener)
-//        //백키 누를시 적용될 함수 - 서치리스트뷰 숨기기
-//        searchView.setCallback { MainTopView.instance.SearchEnd() }
-//    }
 
     //상단뷰 1번아이콘 클릭이벤트
     fun IconMove1(view : View) { MainActivity.startActivity(Intent(MainActivity, UserActivity::class.java)) }
     //4번 아이콘
     fun IconMove4(view : View) { MainActivity.startActivity(Intent(MainActivity, SettingActivity::class.java))}
 
-
+    //검색창 클릭
     fun SearchEvent(view: View){
         Log.d("검색창 오픈!","검색창오픈!!")
         //메인 상태를 검색으로 변경
@@ -177,7 +134,6 @@ class MainTopView {
     fun searchingViewChange() {
         var searchItemCount = filterList?.size ?: 0
         if(mainActivityState!=MainActivityState.search) {
-            beforeState = mainActivityState;
         }
         mainActivityState = MainActivityState.search
         if (searchItemCount < 3) {
@@ -199,27 +155,11 @@ class MainTopView {
 
     //검색창 종료함수
     fun SearchEnd(){
-        Log.d("beforeState 값3 : ",""+beforeState )
-        mainActivityState = beforeState
         Binding.mainTopView.setHeight(TopViewSize)     //하단뷰 크기 설정
         Binding.mainViewChange.setHeight(MoveListViewSize)
         Binding.mainSearchList.setHeight(0)
         Binding.mainSearchList.setMarginBottom((size_Y*16).toInt())
         Binding.mainSearch.clearFocus()
-    }
-
-
-    //뷰이동 슬라이드 다운 함수
-    fun TopViewShow(state: MainActivityState = MainActivityState.notChange ) {
-        ViewAnimation(Binding.mainTopView, 0, 0, 500,state)
-    }
-
-
-
-    //뷰이동 슬라이드 업 함수
-    fun TopViewHide(state: MainActivityState = MainActivityState.notChange ) {
-        SearchEnd()
-        ViewAnimation(Binding.mainTopView, 0,  -TopViewSize.dp(), 500, state)
     }
 
     //초기화
