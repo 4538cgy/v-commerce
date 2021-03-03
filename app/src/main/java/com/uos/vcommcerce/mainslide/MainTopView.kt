@@ -62,7 +62,6 @@ class MainTopView {
 
     //해당클래스에 필요한 뷰를 main에서 받아옴
     fun getMainActivity(binding: ActivityMainBinding, mainActivity: Activity){
-        Log.d("여기냐?!","당햇다")
         //메인엑티비티뷰 바인드 캐싱후 자신을 연결하기
         Binding = binding
         Binding.topview = this

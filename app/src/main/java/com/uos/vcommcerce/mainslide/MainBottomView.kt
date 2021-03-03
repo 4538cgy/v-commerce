@@ -113,30 +113,22 @@ class MainBottomView {
 //        binding.bottomview = this
 //    }
 
-    //하단바 온클릭 이벤트
+    //하단바 온클릭 이벤트 (디폴트로)
     fun BottomViewClick(view: View) {
-        when (mainActivityState) {
-            MainActivityState.slideUp1 -> {
-                BottonViewShow(MainActivityState.default)
-            }
+        if (mainActivityState == MainActivityState.slideUp) {
+            BottonViewSlideDown(MainActivityState.default)
         }
     }
 
 
     //하단 바텀뷰 보이게 하는 함수
-    fun BottonViewShow(state: MainActivityState = MainActivityState.notChange) {
+    fun BottonViewSlideDown(state: MainActivityState = MainActivityState.notChange) {
         Log.d("쇼 실행", "쇼!")
         ViewAnimation(Binding.mainBottomView, 0, BottomMid.dp() - BottomMin.dp(), 500, state)
     }
 
-    //하단 바텀뷰 숨기는 함수
-    fun BottonViewHide(state: MainActivityState = MainActivityState.notChange) {
-        Log.d("하이드 실행", "하이드!")
-        ViewAnimation(Binding.mainBottomView, 0, BottomMid.dp(), 500, state)
-    }
-
     //하단 바텀뷰 확장하는 함수
-    fun BottonViewSlideUp1(state: MainActivityState = MainActivityState.notChange) {
+    fun BottonViewSlideUp(state: MainActivityState = MainActivityState.notChange) {
         Log.d("업 실행", "업!")
         ViewAnimation(Binding.mainBottomView, 0, 0, 500, state)
     }

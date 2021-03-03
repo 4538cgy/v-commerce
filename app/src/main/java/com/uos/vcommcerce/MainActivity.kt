@@ -253,25 +253,13 @@ class MainActivity : AppCompatActivity() {
                     if (abs(distance) > 50) {//드래기일시 해당하는 창을 열기
                         if (distance > 0) {
                             Log.d("드레그 UP : ", "드레그 UP")
-                            when (mainActivityState) {
-                                MainActivityState.default -> {
-                                    Binding.bottomview?.BottonViewSlideUp1(MainActivityState.slideUp1)
-                                }
-                                MainActivityState.slideDown1 -> {
-                                    Binding.bottomview?.BottonViewShow()
-                                }
+                            if (mainActivityState == MainActivityState.default) {
+                                    Binding.bottomview?.BottonViewSlideUp(MainActivityState.slideUp)
                             }
                         } else {
                             Log.d("드레그 DOWN : ", "드레그 DOWN")
-                            when (mainActivityState) {
-                                MainActivityState.default -> {
-                                    Binding.bottomview?.BottonViewHide()
-                                }
-
-                                MainActivityState.slideUp1 -> {
-                                    Binding.bottomview?.BottonViewShow(MainActivityState.default)
-                                }
-
+                            if (mainActivityState == MainActivityState.slideUp) {
+                                    Binding.bottomview?.BottonViewSlideDown(MainActivityState.default)
                             }
                         }
                     } else {//터치일시 각 창을 닫음
@@ -286,11 +274,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun returnDefaultView() {
+        //검색중일때 작용
         if (mainActivityState == MainActivityState.search) {
             Binding.topview?.SearchEnd()
             Imm?.hideSoftInputFromWindow(Binding.mainSearch.windowToken, 0);
         }
-        Binding.bottomview?.BottonViewShow(MainActivityState.default)
+        Binding.bottomview?.BottonViewSlideDown(MainActivityState.default)
     }
 
 
