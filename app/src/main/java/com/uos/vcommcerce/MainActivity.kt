@@ -11,7 +11,9 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -157,6 +159,14 @@ class MainActivity : AppCompatActivity() {
 
         //비디오 플레이어 크기 설정
         Binding.vpViewpager.setHeight((size_Y*PlayerSize).toInt())
+        //비디오 플레이어 마진 설정
+        val lp = Binding.vpViewpager.layoutParams as ConstraintLayout.LayoutParams
+        lp?.let {
+            lp.rightMargin = (30*size_X).toInt().dp()
+            lp.leftMargin = (30*size_X).toInt().dp()
+            Binding.vpViewpager.layoutParams = lp
+        }
+
         //비디오 플레이어 위치 조정
         ViewAnimation(Binding.vpViewpager, 0, (63*size_Y).toInt().dp(), 0)
 
