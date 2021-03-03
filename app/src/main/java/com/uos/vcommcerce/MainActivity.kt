@@ -27,6 +27,7 @@ import com.uos.vcommcerce.datamodel.ObservableProductDTO
 import com.uos.vcommcerce.datamodel.ProductDTO
 import com.uos.vcommcerce.tranformer.ZoomOutPageTransformer
 import com.uos.vcommcerce.util.*
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item_exoplayer.view.*
 import kotlin.math.abs
 
@@ -191,6 +192,17 @@ class MainActivity : AppCompatActivity() {
         //4538cgy@gmail.com UID 값 [ 너무 푸쉬를 많이 보내서 일시적으로 사용 중지 주석 풀지마세요! ]
         //FcmPush.instance.sendMessage("IIBpkwk5jUSNDa0qnDZxgwEvq812", "hi", "bye")
     }
+
+    //검색중에 백키누르면 검색종료 하도록 기능변경
+    override fun onBackPressed() {
+        if(mainActivityState == MainActivityState.search){
+            Binding.topview?.SearchEnd()
+        }else {
+            super.onBackPressed()
+        }
+    }
+
+
 
     fun openReview(view:View){
         var intent = Intent(this, ReviewActivity::class.java)
