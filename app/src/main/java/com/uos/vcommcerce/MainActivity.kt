@@ -25,6 +25,9 @@ import com.uos.vcommcerce.databinding.ActivityMainBinding
 import com.uos.vcommcerce.mainslide.*
 import com.uos.vcommcerce.datamodel.ObservableProductDTO
 import com.uos.vcommcerce.datamodel.ProductDTO
+import com.uos.vcommcerce.profile.UserActivity
+import com.uos.vcommcerce.profile.VideoGridFragment
+import com.uos.vcommcerce.search.SearchFragment
 import com.uos.vcommcerce.tranformer.ZoomOutPageTransformer
 import com.uos.vcommcerce.util.*
 import kotlinx.android.synthetic.main.activity_main.*
@@ -49,7 +52,6 @@ class MainActivity : AppCompatActivity() {
         ObservableProductDTO(ProductDTO())
 
     //메인에 물려있는 탑과 바텀뷰 + 플레이어
-    var MainTop : MainTopView = MainTopView()
     var MainBottom : MainBottomView = MainBottomView()
 
     //피그마 기준 값
@@ -58,6 +60,10 @@ class MainActivity : AppCompatActivity() {
 
     //플레이어 크기
     var PlayerSize : Int = 560
+
+    //탑뷰 크기
+    val TopViewSize : Int = 55
+
     //피그마크기1px 당 실제뷰 크기값
     var size_Y :Float = 0f
     var size_X :Float = 0f
@@ -101,9 +107,6 @@ class MainActivity : AppCompatActivity() {
         //뷰페이져 어댑터 설정
         Binding.vpViewpager.adapter = VideoAdapter(this)
 
-        //탑뷰의 서치뷰에 어뎁터 추가후 탑뷰에 전송
-        MainTop.getMainActivity(Binding, this)
-
         //메인 바텀뷰에 필요한 인자들 전송
         MainBottom.getMainBinding(Binding, this)
         Log.d("메인 ", "넘어감??")
@@ -124,8 +127,27 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        
-        
+
+        //탑뷰 크기 설정
+
+        //아이콘레이아웃 크기설정
+        Binding.mainViewChange.setHeight((size_Y*TopViewSize).toInt())
+
+        //각 아이템 크기 성정
+        //moveItem1 => activityMainImageButtonProfile
+        Binding.activityMainImagebuttonProfile.setHeight((size_Y*TopViewSize).toInt())
+        Binding.activityMainImagebuttonProfile.setWidth((size_Y*TopViewSize).toInt())
+
+        Binding.activityMainImagebuttonVideoList.setHeight((size_Y*TopViewSize).toInt())
+        Binding.activityMainImagebuttonVideoList.setWidth((size_Y*TopViewSize).toInt())
+
+        Binding.activityMainImagebuttonCart.setHeight((size_Y*TopViewSize).toInt())
+        Binding.activityMainImagebuttonCart.setWidth((size_Y*TopViewSize).toInt())
+
+        //movewItem4 => activityMainImageButtonSetting
+        Binding.activityMainImagebuttonSearch.setHeight((size_Y*TopViewSize).toInt())
+        Binding.activityMainImagebuttonSearch.setWidth((size_Y*TopViewSize).toInt())
+
         //비디오 플레이어 설정
         // 스크롤 수평 설정
         Binding.vpViewpager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
@@ -171,6 +193,9 @@ class MainActivity : AppCompatActivity() {
         //비디오 플레이어 위치 조정
         ViewAnimation(Binding.vpViewpager, 0, (63*size_Y).toInt().dp(), 0)
 
+
+        //검색창 프라그먼트
+        supportFragmentManager.beginTransaction().replace(R.id.search_view, SearchFragment()).commit()
     }
 
 //최석우 앱터져서 일시적으로 막음
@@ -196,13 +221,27 @@ class MainActivity : AppCompatActivity() {
     //검색중에 백키누르면 검색종료 하도록 기능변경
     override fun onBackPressed() {
         if(mainActivityState == MainActivityState.search){
-            Binding.topview?.SearchEnd()
+            //검색창 닫기
+//            Binding.topview?.SearchEnd()
         }else {
             super.onBackPressed()
         }
     }
 
+    //상단뷰 1번아이콘 클릭이벤트
+    fun IconMove1(view : View) { startActivity(Intent(this, UserActivity::class.java)) }
+    //4번 아이콘
+    fun IconMove4(view : View) {startActivity(Intent(this, SettingActivity::class.java))}
 
+
+    //검색창 클릭
+    fun SearchEvent(view: View){
+        Log.d("검색창 오픈!","검색창오픈!!")
+        //메인 상태를 검색으로 변경
+//        val text = writedWord ?: ""
+//        search(text)
+//        searchingViewChange()
+    }
 
     fun openReview(view:View){
         var intent = Intent(this, ReviewActivity::class.java)
@@ -287,10 +326,10 @@ class MainActivity : AppCompatActivity() {
 
     fun returnDefaultView() {
         //검색중일때 작용
-        if (mainActivityState == MainActivityState.search) {
-            Binding.topview?.SearchEnd()
-            Imm?.hideSoftInputFromWindow(Binding.mainSearch.windowToken, 0);
-        }
+//        if (mainActivityState == MainActivityState.search) {
+//            Binding.topview?.SearchEnd()
+//            Imm?.hideSoftInputFromWindow(Binding.mainSearch.windowToken, 0);
+//        }
         Binding.bottomview?.BottonViewSlideDown(MainActivityState.default)
     }
 

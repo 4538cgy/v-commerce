@@ -13,9 +13,6 @@
             name="MediaContent"
             type="com.uos.vcommcerce.datamodel.ObservableProductDTO" />
         <variable
-            name="topview"
-            type="com.uos.vcommcerce.mainslide.MainTopView" />
-        <variable
             name="bottomview"
             type="com.uos.vcommcerce.mainslide.MainBottomView" />
         <variable
@@ -41,82 +38,58 @@
 
             />
 
-        <!--2020/09/17 최석우 상단 바 -->
-        <LinearLayout
-            android:id="@+id/mainTopView"
+
+
+
+        <!-- 상단에 위치한 앱바 -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/mainViewChange"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:orientation="vertical"
+            android:orientation="horizontal"
+            android:gravity="center"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <!--검색창-->
-            <com.uos.vcommcerce.util.CustomEditText
-                android:id="@+id/mainSearch"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:maxLines="1"
-                android:inputType="text"
+
+            <ImageButton
+                android:id="@+id/activity_main_imagebutton_profile"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:background="@drawable/main_profile_btn"
+                android:onClick="@{MainActivity::IconMove1}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 />
 
-            <!--검색리스트-->
-            <ListView
-                android:id="@+id/mainSearchList"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:orientation="horizontal"
-                android:dividerHeight="1dp"/>
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/mainViewChange"
-                android:layout_width="match_parent"
+            <ImageButton
+                android:id="@+id/activityMainImagebuttonVideoList"
+                android:layout_width="55dp"
                 android:layout_height="55dp"
-                android:orientation="horizontal"
-                android:gravity="center"
-                >
+                android:background="@drawable/main_video_btn"
+                app:layout_constraintEnd_toStartOf="@+id/activityMainImagebuttonCart"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageButton
-                    android:id="@+id/activity_main_imagebutton_profile"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
-                    android:background="@drawable/main_profile_btn"
-                    android:onClick="@{topview::IconMove1}"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    />
+            <ImageButton
+                android:id="@+id/activityMainImagebuttonCart"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:background="@drawable/main_cart_btn"
+                app:layout_constraintEnd_toStartOf="@+id/activityMainImagebuttonSearch"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageButton
-                    android:id="@+id/activityMainImagebuttonVideoList"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
-                    android:background="@drawable/main_video_btn"
-                    app:layout_constraintEnd_toStartOf="@+id/activityMainImagebuttonCart"
-                    app:layout_constraintTop_toTopOf="parent" />
+            <ImageButton
+                android:id="@+id/activityMainImagebuttonSearch"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:background="@drawable/main_search_btn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:onClick="@{MainActivity::SearchEvent}"/>
 
-                <ImageButton
-                    android:id="@+id/activityMainImagebuttonCart"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
-                    android:background="@drawable/main_cart_btn"
-                    app:layout_constraintEnd_toStartOf="@+id/activityMainImagebuttonSearch"
-                    app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <ImageButton
-                    android:id="@+id/activityMainImagebuttonSearch"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
-                    android:background="@drawable/main_search_btn"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:onClick="@{topview::SearchEvent}"/>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-        </LinearLayout>
 
         <!--2020/09/17 최석우 하단 바 -->
         <LinearLayout
@@ -227,6 +200,14 @@
             </LinearLayout>
 
         </LinearLayout>
+
+
+
+        <FrameLayout
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </FrameLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

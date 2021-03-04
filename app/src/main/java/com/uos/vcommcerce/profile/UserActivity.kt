@@ -63,6 +63,7 @@ class UserActivity : AppCompatActivity(){
             binding.followBtn.visibility = View.INVISIBLE
             binding.messageBtn.visibility = View.INVISIBLE
         }
+
         supportFragmentManager.beginTransaction().replace(
             R.id.recyclerViewBox, 
             VideoGridFragment()
