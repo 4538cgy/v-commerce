@@ -10,5 +10,7 @@ data class ProductDTO(
     var productTile : String ? = null,
     var serverTimestamp : Long ? = null,
     var timestamp : String ? = null,
-    var userEmail : String ? = null
+    var userEmail : String ? = null,
+    var sellerUid : String ? = null,
+    var sellerProfileImg : String ? = null
 )

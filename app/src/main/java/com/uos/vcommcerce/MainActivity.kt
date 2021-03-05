@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.uos.vcommcerce.activity.review.ReviewActivity
 import com.uos.vcommcerce.databinding.ActivityMainBinding
@@ -45,10 +46,12 @@ var Imm: InputMethodManager? = null;
 class MainActivity : AppCompatActivity() {
 
     //메인 엑티비티에 물려있는 바인딩
-     private lateinit var Binding: ActivityMainBinding
+    private lateinit var Binding: ActivityMainBinding
 
     //파이어 스토어 객체
     var firestore = FirebaseFirestore.getInstance()
+    private var firebaseAuth : FirebaseAuth = FirebaseAuth.getInstance();
+
     //상품 정보 리스트
     var items: ArrayList<ProductDTO> = arrayListOf()
     //현재 아이템 정보
@@ -75,11 +78,9 @@ class MainActivity : AppCompatActivity() {
 
     //파이어 베이스에서 데이터를 불러옴
     init {
-        Log.d("생명주기 : ","init 시작");
 
         firestore.collection("product").document("productInfo").collection("normalProduct")
             .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
-                Log.d("생명주기 : ","파베 시작");
 
                 if (querySnapshot == null) {
                     return@addSnapshotListener
@@ -95,11 +96,8 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 Binding.vpViewpager.adapter?.notifyDataSetChanged()
-                Log.d("생명주기 : ","파베 종료");
-
             }
 
-        Log.d("생명주기 : ","init 종료");
     }
 
     companion object {
@@ -108,7 +106,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("생명주기 : ","onCreate 시작");
 
         Binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         Binding.mainActivity = this
@@ -123,7 +120,6 @@ class MainActivity : AppCompatActivity() {
 
         //메인 바텀뷰에 필요한 인자들 전송
         MainBottom.getMainBinding(Binding, this)
-        Log.d("메인 ", "넘어감??")
 
         //키보드 숨기기위한 시스템 변수
         Imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager;
@@ -230,8 +226,6 @@ class MainActivity : AppCompatActivity() {
         //검색창 프라그먼트
         supportFragmentManager.beginTransaction().replace(R.id.search_view, SearchFragmentView).commit()
 
-        Log.d("생명주기 : ","onCreate 종료");
-
     }
 
 //최석우 앱터져서 일시적으로 막음
@@ -266,9 +260,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     //상단뷰 1번아이콘 클릭이벤트
-    fun IconMove1(view : View) { startActivity(Intent(this, UserActivity::class.java)) }
+    fun IconMove1(view : View) {
+        intent = Intent(this, UserActivity::class.java)
+        intent.putExtra("Uid",firebaseAuth.currentUser?.uid)
+        startActivity(intent)
+
+    }
     //4번 아이콘
     fun IconMove4(view : View) {startActivity(Intent(this, SettingActivity::class.java))}
+
+
+    fun moveProfile(view: View ){
+        intent = Intent(this, UserActivity::class.java)
+        intent.putExtra("Uid",mediaContent.sellerUid.get())
+        startActivity(intent)
+    }
 
 
     //검색창 클릭

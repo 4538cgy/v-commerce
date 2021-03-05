@@ -18,15 +18,19 @@ import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.activity.productinformation.ProductInformationActivity
 import com.uos.vcommcerce.activity.review.ReviewDetailActivity
 import com.uos.vcommcerce.databinding.ActivityUserViewBinding
+import com.uos.vcommcerce.datamodel.ProductDTO
+import com.uos.vcommcerce.datamodel.ProfileDTO
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_user_view.*
 import java.io.FileOutputStream
@@ -41,27 +45,57 @@ private const val FLAG_FIX_RESULT = 103
 
 class UserActivity : AppCompatActivity(){
     private lateinit var binding:ActivityUserViewBinding
-    private var firebaseAuth : FirebaseAuth? = null;
+    private var firebaseAuth : FirebaseAuth = FirebaseAuth.getInstance();
 
+    var firestore = FirebaseFirestore.getInstance()
 
 
     var Imguri : ObservableField<Uri?> = ObservableField()
     var NickName : ObservableField<String> = ObservableField("Nickname")
     var Introduction : ObservableField<String> = ObservableField("나는 낭만고양이\nSweet little kitty")
 
+    //파이어 베이스에서 데이터를 불러옴
+    init {
+        Log.d("체크-1 ","");
+
+        firestore.collection("userInfo").document("userData").collection("accountInfo")
+            .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                if (querySnapshot == null) {
+                    return@addSnapshotListener
+                }
+                //파베에서의 유저데이터중 엑스트라로 받아온데이터와 일치하는걸 찾기
+                for (snapshot in querySnapshot!!.documents) {
+                    Log.d("체크1 ","");
+                    if( snapshot.id == intent.getStringExtra("Uid")){
+                        var profile = snapshot.toObject(ProfileDTO::class.java)
+                        NickName.set(profile?.userNickName);
+                        Introduction.set(profile?.introduce);
+                        Imguri.set(Uri.parse(profile?.profileImg));
+                        binding.profileImg.setImageURI(Imguri.get())
+                        break;
+                    }
+                }
+            }
+    }
+
+
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_user_view)
         binding.useractivity = this
-        firebaseAuth = FirebaseAuth.getInstance()
 
         //기본 그리드 뷰 실행
         if(firebaseAuth?.currentUser != null){   //로그인 체크 이거 맞나?
             binding.followBtn.visibility = View.VISIBLE
             binding.messageBtn.visibility = View.VISIBLE
+            Log.d("currentUser1 : " , firebaseAuth?.currentUser!!.uid.toString())
         }else{
             binding.followBtn.visibility = View.INVISIBLE
             binding.messageBtn.visibility = View.INVISIBLE
+            Log.d("currentUser2 : " ,firebaseAuth?.currentUser.toString())
         }
 
         supportFragmentManager.beginTransaction().replace(

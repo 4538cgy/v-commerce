@@ -48,7 +48,8 @@
                 android:layout_height="60dp"
                 android:background="@drawable/background_round_gray_13dp"
                 app:layout_constraintBottom_toTopOf="@+id/likeBtn"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                android:onClick="@{MainActivity::moveProfile}"/>
 
             <ImageButton
                 android:id="@+id/likeBtn"
