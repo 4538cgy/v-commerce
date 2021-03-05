@@ -116,6 +116,10 @@ class SearchFragment : Fragment() {
 //        Binding.mainSearch.clearFocus()
     }
 
+    //검색창 최초상태
+    fun SearchSet(){
+
+    }
 
 
     //서치 어댑터 클래스

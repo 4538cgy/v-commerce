@@ -27,16 +27,37 @@
         android:background="#000000"
         >
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/vpViewpager"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/VideoView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/main_player_background"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="-36dp"
+            >
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/vpViewpager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/main_player_background"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="-36dp"
+                />
 
-            />
+            <ImageButton
+                android:id="@+id/sellerImg"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/background_round_gray_13dp"
+                app:layout_constraintBottom_toTopOf="@+id/likeBtn"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <ImageButton
+                android:id="@+id/likeBtn"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/main_like_btn"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
@@ -206,8 +227,9 @@
         <FrameLayout
             android:id="@+id/search_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </FrameLayout>
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

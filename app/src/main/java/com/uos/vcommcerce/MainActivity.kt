@@ -4,16 +4,20 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Point
+import android.opengl.Visibility
 import android.os.Bundle
+import android.os.Debug
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.marginRight
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -48,11 +52,12 @@ class MainActivity : AppCompatActivity() {
     //상품 정보 리스트
     var items: ArrayList<ProductDTO> = arrayListOf()
     //현재 아이템 정보
-    var mediaContent: ObservableProductDTO =
-        ObservableProductDTO(ProductDTO())
+    var mediaContent: ObservableProductDTO = ObservableProductDTO(ProductDTO())
 
     //메인에 물려있는 탑과 바텀뷰 + 플레이어
     var MainBottom : MainBottomView = MainBottomView()
+
+    var SearchFragmentView : SearchFragment = SearchFragment()
 
     //피그마 기준 값
     var standardSize_Y : Int = 770
@@ -70,8 +75,11 @@ class MainActivity : AppCompatActivity() {
 
     //파이어 베이스에서 데이터를 불러옴
     init {
+        Log.d("생명주기 : ","init 시작");
+
         firestore.collection("product").document("productInfo").collection("normalProduct")
             .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                Log.d("생명주기 : ","파베 시작");
 
                 if (querySnapshot == null) {
                     return@addSnapshotListener
@@ -87,7 +95,11 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 Binding.vpViewpager.adapter?.notifyDataSetChanged()
+                Log.d("생명주기 : ","파베 종료");
+
             }
+
+        Log.d("생명주기 : ","init 종료");
     }
 
     companion object {
@@ -96,6 +108,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("생명주기 : ","onCreate 시작");
+
         Binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         Binding.mainActivity = this
         //아이템 정보 바인딩에 할당
@@ -181,21 +195,43 @@ class MainActivity : AppCompatActivity() {
         )
 
         //비디오 플레이어 크기 설정
-        Binding.vpViewpager.setHeight((size_Y*PlayerSize).toInt())
+        Binding.VideoView.setHeight((size_Y*PlayerSize).toInt())
+        Binding.sellerImg.setHeight((size_Y*60).toInt())
+        Binding.sellerImg.setWidth((size_Y*60).toInt())
+        Binding.likeBtn.setHeight((size_Y*48).toInt())
+        Binding.likeBtn.setWidth((size_Y*48).toInt())
+
         //비디오 플레이어 마진 설정
-        val lp = Binding.vpViewpager.layoutParams as ConstraintLayout.LayoutParams
-        lp?.let {
-            lp.rightMargin = (30*size_X).toInt().dp()
-            lp.leftMargin = (30*size_X).toInt().dp()
-            Binding.vpViewpager.layoutParams = lp
+        var lp1 = Binding.VideoView.layoutParams as ConstraintLayout.LayoutParams
+        lp1?.let {
+            lp1.rightMargin = (30*size_X).toInt().dp()
+            lp1.leftMargin = (30*size_X).toInt().dp()
+            Binding.VideoView.layoutParams = lp1
+        }
+
+        var lp2 = Binding.sellerImg.layoutParams as ConstraintLayout.LayoutParams
+        lp2?.let {
+            lp2.rightMargin = (6*size_X).toInt().dp()
+            lp2.bottomMargin = (6*size_X).toInt().dp()
+            Binding.sellerImg.layoutParams = lp2
+        }
+
+        var lp3 = Binding.likeBtn.layoutParams as ConstraintLayout.LayoutParams
+        lp3?.let {
+            lp3.rightMargin = (12*size_X).toInt().dp()
+            lp3.bottomMargin = (12*size_X).toInt().dp()
+            Binding.likeBtn.layoutParams = lp3
         }
 
         //비디오 플레이어 위치 조정
-        ViewAnimation(Binding.vpViewpager, 0, (63*size_Y).toInt().dp(), 0)
+        ViewAnimation(Binding.VideoView, 0, (63*size_Y).toInt().dp(), 0)
 
 
         //검색창 프라그먼트
-        supportFragmentManager.beginTransaction().replace(R.id.search_view, SearchFragment()).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.search_view, SearchFragmentView).commit()
+
+        Log.d("생명주기 : ","onCreate 종료");
+
     }
 
 //최석우 앱터져서 일시적으로 막음
@@ -222,7 +258,8 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
         if(mainActivityState == MainActivityState.search){
             //검색창 닫기
-//            Binding.topview?.SearchEnd()
+            Binding.searchView.visibility = View.GONE
+            returnDefaultView()
         }else {
             super.onBackPressed()
         }
@@ -238,9 +275,11 @@ class MainActivity : AppCompatActivity() {
     fun SearchEvent(view: View){
         Log.d("검색창 오픈!","검색창오픈!!")
         //메인 상태를 검색으로 변경
-//        val text = writedWord ?: ""
-//        search(text)
-//        searchingViewChange()
+        mainActivityState = MainActivityState.search
+        //검색창 띄우기
+        Binding.searchView.visibility = View.VISIBLE
+        //검색창 최초상태로 변환
+        SearchFragmentView.SearchSet();
     }
 
     fun openReview(view:View){

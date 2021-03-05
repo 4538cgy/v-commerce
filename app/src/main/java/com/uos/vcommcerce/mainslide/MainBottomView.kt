@@ -102,6 +102,8 @@ class MainBottomView {
 
         Binding.selectoption.setButtonHeight((size_Y * 40).toInt())
         Binding.selectoption.setTextSize((size_Y * 22).toInt().toFloat())
+
+
     }
 
 
