@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.marginTop
 
 
@@ -56,7 +57,7 @@ fun Button.setButtonHeight(value: Int) {
     }
 }
 
-fun View.setMarginLeft(value: Int) {
+fun View.setLMarginLeft(value: Int) {
     val lp = this.layoutParams as LinearLayout.LayoutParams
     lp?.let {
         lp.leftMargin = value.dp()
@@ -64,7 +65,7 @@ fun View.setMarginLeft(value: Int) {
     }
 }
 
-fun View.setMarginTop(value: Int) {
+fun View.setLMarginTop(value: Int) {
     val lp = this.layoutParams as LinearLayout.LayoutParams
     lp?.let {
         lp.topMargin = value.dp()
@@ -72,7 +73,7 @@ fun View.setMarginTop(value: Int) {
     }
 }
 
-fun View.setMarginRight(value: Int) {
+fun View.setLMarginRight(value: Int) {
     val lp = this.layoutParams as LinearLayout.LayoutParams
     lp?.let {
         lp.rightMargin = value.dp()
@@ -80,9 +81,44 @@ fun View.setMarginRight(value: Int) {
     }
 }
 
-
-fun View.setMarginBottom(value: Int) {
+fun View.setLMarginBottom(value: Int) {
     val lp = this.layoutParams as LinearLayout.LayoutParams
+    lp?.let {
+        lp.bottomMargin = value.dp()
+        layoutParams = lp
+    }
+}
+
+
+
+
+fun View.setCMarginLeft(value: Int) {
+    val lp = this.layoutParams as ConstraintLayout.LayoutParams
+    lp?.let {
+        lp.leftMargin = value.dp()
+        layoutParams = lp
+    }
+}
+
+fun View.setCMarginTop(value: Int) {
+    val lp = this.layoutParams as ConstraintLayout.LayoutParams
+    lp?.let {
+        lp.topMargin = value.dp()
+        layoutParams = lp
+    }
+}
+
+
+fun View.setCMarginRight(value: Int) {
+    val lp = this.layoutParams as ConstraintLayout.LayoutParams
+    lp?.let {
+        lp.rightMargin = value.dp()
+        layoutParams = lp
+    }
+}
+
+fun View.setCMarginBottom(value: Int) {
+    val lp = this.layoutParams as ConstraintLayout.LayoutParams
     lp?.let {
         lp.bottomMargin = value.dp()
         layoutParams = lp

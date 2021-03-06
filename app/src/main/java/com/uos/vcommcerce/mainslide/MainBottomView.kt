@@ -65,13 +65,13 @@ class MainBottomView {
         //닉네임 크기 설정
         Binding.nickname.setTextHeight((size_Y * 18).toInt())
         Binding.nickname.setTextSize((size_Y * 12).toInt().toFloat())
-        Binding.nickname.setMarginBottom((size_Y * 4).toInt())
-        Binding.nickname.setMarginTop((size_Y * 16).toInt())
+        Binding.nickname.setLMarginBottom((size_Y * 4).toInt())
+        Binding.nickname.setLMarginTop((size_Y * 16).toInt())
 
         //상품명 크기 설정
         Binding.title.setTextHeight((size_Y * 22).toInt())
         Binding.title.setTextSize((size_Y * 16).toInt().toFloat())
-        Binding.title.setMarginBottom((size_Y * 8).toInt())
+        Binding.title.setLMarginBottom((size_Y * 8).toInt())
 
         //주소와 가격뷰의 그륩 크기설정
         Binding.bottomgroup1.setHeight((size_Y * 53).toInt())
@@ -87,12 +87,12 @@ class MainBottomView {
         //본문 크기 설정
         Binding.content.setTextHeight((size_Y * 60).toInt())
         Binding.content.setTextSize((size_Y * 15))
-        Binding.content.setMarginBottom((size_Y * 24).toInt())
+        Binding.content.setLMarginBottom((size_Y * 24).toInt())
 
         //리뷰 크기 설정
         Binding.review.setButtonHeight((size_Y * 22).toInt())
         Binding.review.setTextSize((size_Y * 16).toInt().toFloat())
-        Binding.review.setMarginBottom((size_Y * 24).toInt())
+        Binding.review.setLMarginBottom((size_Y * 24).toInt())
 
         //좋아요와 옵션선택의 그륩 크기설정
         Binding.bottomgroup2.setHeight((size_Y * 76).toInt())
@@ -125,13 +125,11 @@ class MainBottomView {
 
     //하단 바텀뷰 보이게 하는 함수
     fun BottonViewSlideDown(state: MainActivityState = MainActivityState.notChange) {
-        Log.d("쇼 실행", "쇼!")
         ViewAnimation(Binding.mainBottomView, 0, BottomMid.dp() - BottomMin.dp(), 500, state)
     }
 
     //하단 바텀뷰 확장하는 함수
     fun BottonViewSlideUp(state: MainActivityState = MainActivityState.notChange) {
-        Log.d("업 실행", "업!")
         ViewAnimation(Binding.mainBottomView, 0, 0, 500, state)
     }
 

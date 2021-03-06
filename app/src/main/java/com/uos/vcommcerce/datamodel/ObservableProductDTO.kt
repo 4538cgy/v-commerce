@@ -9,7 +9,7 @@ class ObservableProductDTO( product : ProductDTO){
     var address : ObservableField<String> = ObservableField("address")
     var cost : ObservableField<String> = ObservableField("cost")
     var productTile : ObservableField<String> = ObservableField("productTile")
-    var sellerUid : ObservableField<String> = ObservableField("sellerUid")
+    var uid : ObservableField<String> = ObservableField("uid")
     var sellerProfileImg : ObservableField<String> = ObservableField("sellerProfileImg")
 
     fun set(product: ProductDTO){
@@ -18,7 +18,7 @@ class ObservableProductDTO( product : ProductDTO){
         if(product.address!=null){ address.set(product.address!!)}
         if(product.cost!=null){ cost.set(product.cost!!)}
         if(product.productTile!=null){ productTile.set(product.productTile!!)}
-        if(product.sellerUid!=null){ sellerUid.set(product.sellerUid!!)}
+        if(product.uid!=null){ uid.set(product.uid!!)}
         if(product.sellerProfileImg!=null){ sellerProfileImg.set(product.sellerProfileImg!!)}
     }
 

@@ -70,7 +70,9 @@ class UserActivity : AppCompatActivity(){
                         var profile = snapshot.toObject(ProfileDTO::class.java)
                         NickName.set(profile?.userNickName);
                         Introduction.set(profile?.introduce);
-                        Imguri.set(Uri.parse(profile?.profileImg));
+                        if( profile?.profileImg!=null) {
+                            Imguri.set(Uri.parse(profile?.profileImg));
+                        }
                         binding.profileImg.setImageURI(Imguri.get())
                         break;
                     }

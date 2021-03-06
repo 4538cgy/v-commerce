@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
 
     //메인에 물려있는 탑과 바텀뷰 + 플레이어
     var MainBottom : MainBottomView = MainBottomView()
-
+    //검색창 프라그먼트
     var SearchFragmentView : SearchFragment = SearchFragment()
 
     //피그마 기준 값
@@ -89,6 +89,7 @@ class MainActivity : AppCompatActivity() {
                 items.clear()
                 for (snapshot in querySnapshot!!.documents) {
 
+//                    Log.d("아이템 정보", snapshot.id)
                     var item = snapshot.toObject(ProductDTO::class.java)
                     Log.d("ItemInfo", "아이템정보 " + item)
                     if (item != null) {
@@ -192,32 +193,16 @@ class MainActivity : AppCompatActivity() {
 
         //비디오 플레이어 크기 설정
         Binding.VideoView.setHeight((size_Y*PlayerSize).toInt())
+        Binding.VideoView.setCMarginRight((size_X*30).toInt())
+        Binding.VideoView.setCMarginLeft((size_X*30).toInt())
         Binding.sellerImg.setHeight((size_Y*60).toInt())
         Binding.sellerImg.setWidth((size_Y*60).toInt())
+        Binding.sellerImg.setCMarginRight((size_X*6).toInt())
+        Binding.sellerImg.setCMarginBottom((size_X*6).toInt())
         Binding.likeBtn.setHeight((size_Y*48).toInt())
         Binding.likeBtn.setWidth((size_Y*48).toInt())
-
-        //비디오 플레이어 마진 설정
-        var lp1 = Binding.VideoView.layoutParams as ConstraintLayout.LayoutParams
-        lp1?.let {
-            lp1.rightMargin = (30*size_X).toInt().dp()
-            lp1.leftMargin = (30*size_X).toInt().dp()
-            Binding.VideoView.layoutParams = lp1
-        }
-
-        var lp2 = Binding.sellerImg.layoutParams as ConstraintLayout.LayoutParams
-        lp2?.let {
-            lp2.rightMargin = (6*size_X).toInt().dp()
-            lp2.bottomMargin = (6*size_X).toInt().dp()
-            Binding.sellerImg.layoutParams = lp2
-        }
-
-        var lp3 = Binding.likeBtn.layoutParams as ConstraintLayout.LayoutParams
-        lp3?.let {
-            lp3.rightMargin = (12*size_X).toInt().dp()
-            lp3.bottomMargin = (12*size_X).toInt().dp()
-            Binding.likeBtn.layoutParams = lp3
-        }
+        Binding.likeBtn.setCMarginRight((size_X*12).toInt())
+        Binding.likeBtn.setCMarginBottom((size_X*12).toInt())
 
         //비디오 플레이어 위치 조정
         ViewAnimation(Binding.VideoView, 0, (63*size_Y).toInt().dp(), 0)
@@ -272,7 +257,7 @@ class MainActivity : AppCompatActivity() {
 
     fun moveProfile(view: View ){
         intent = Intent(this, UserActivity::class.java)
-        intent.putExtra("Uid",mediaContent.sellerUid.get())
+        intent.putExtra("Uid",mediaContent.uid.get())
         startActivity(intent)
     }
 

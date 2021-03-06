@@ -1,6 +1,8 @@
 package com.uos.vcommcerce.search
 
 import android.content.Context
+import android.content.res.Resources
+import android.graphics.Point
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -15,15 +17,14 @@ import androidx.databinding.DataBindingUtil
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.databinding.FragmentSearchBinding
 import com.uos.vcommcerce.mainslide.mainActivityState
-import com.uos.vcommcerce.util.MainActivityState
-import com.uos.vcommcerce.util.setHeight
+import com.uos.vcommcerce.util.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 
 
 class SearchFragment : Fragment() {
 
     //binding을 바인딩용 객체로생성
-    lateinit var binding: FragmentSearchBinding
-    lateinit var maincontext : Context
+    private  lateinit var binding: FragmentSearchBinding
     private lateinit var SearchListAdapter: SearchAdapter
 
 
@@ -34,9 +35,12 @@ class SearchFragment : Fragment() {
         var writedWord: String = ""
     }
 
-    //검색 아이템 크기
-     val RecyclerItemSize: Int = 30;
 
+    //피그마 기준 값
+    var standardSize_Y : Int = 770
+    var standardSize_X : Int = 375
+    //검색 아이템 크기
+    val RecyclerItemSize: Int = 30;
 
     //초기화
     init {
@@ -76,10 +80,37 @@ class SearchFragment : Fragment() {
 
         //binding 할당
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_search,container,false)
+        binding.searchfragment = this
 
-        if (container != null) { maincontext = container.context }
 
-        SearchListAdapter = SearchAdapter(maincontext)
+
+
+        SearchListAdapter = SearchAdapter(container!!.context)
+
+
+
+
+        //해상도 측정
+        val display = activity?.windowManager?.defaultDisplay
+        val size = Point()
+        display?.getSize(size)
+        var ScreenSize: Point = size
+        var density = Resources.getSystem().displayMetrics.density
+
+        //피그마크기1px 당 실제뷰 크기값
+        var size_Y = (ScreenSize.y / density)/standardSize_Y
+        var size_X = (ScreenSize.x / density)/standardSize_X
+
+        binding.searchLayout.setHeight((size_Y*55).toInt())
+        binding.searchLayout.setLMarginTop((size_Y*16).toInt())
+        binding.searchLayout.setLMarginLeft((size_X*16).toInt())
+        binding.searchLayout.setLMarginRight((size_X*16).toInt())
+
+        binding.backbtn.setHeight((size_Y*48).toInt())
+        binding.backbtn.setWidth((size_Y*48).toInt())
+
+        binding.searchBtn.setHeight((size_Y*48).toInt())
+        binding.searchBtn.setWidth((size_Y*48).toInt())
 
 
         return binding.root
