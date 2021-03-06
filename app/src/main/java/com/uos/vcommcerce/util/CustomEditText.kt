@@ -17,6 +17,7 @@ class CustomEditText : EditText {
 
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
     private lateinit var callback : () -> Unit
+
     fun setCallback(callback: () -> Unit){
         this.callback = callback
     }
@@ -24,7 +25,9 @@ class CustomEditText : EditText {
     override fun onKeyPreIme(keyCode: Int, event: KeyEvent?): Boolean {
 
         Log.d("TEST","keyCode: ${keyCode} | event: ${event?.action}")
-        this.callback()
+        if(keyCode == KeyEvent.KEYCODE_BACK) {
+            this.callback()
+        }
         return super.onKeyPreIme(keyCode, event)
     }
 
@@ -33,6 +36,10 @@ class CustomEditText : EditText {
         if(focused){
             callOnClick()
         }
+    }
+
+    override fun callOnClick(): Boolean {
+        return super.callOnClick()
     }
 
 }

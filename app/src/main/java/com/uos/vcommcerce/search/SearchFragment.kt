@@ -6,6 +6,7 @@ import android.graphics.Point
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -89,12 +90,7 @@ class SearchFragment : Fragment() {
 
         searchend  = activity as MainActivity
 
-
-
         SearchListAdapter = SearchAdapter(container!!.context)
-
-
-
 
         //해상도 측정
         val display = activity?.windowManager?.defaultDisplay
@@ -107,10 +103,9 @@ class SearchFragment : Fragment() {
         var size_Y = (ScreenSize.y / density)/standardSize_Y
         var size_X = (ScreenSize.x / density)/standardSize_X
 
+        //검색창 뷰 크기
         binding.searchLayout.setHeight((size_Y*55).toInt())
         binding.searchLayout.setLMarginTop((size_Y*16).toInt())
-        binding.searchLayout.setLMarginLeft((size_X*16).toInt())
-        binding.searchLayout.setLMarginRight((size_X*16).toInt())
 
         binding.backbtn.setHeight((size_Y*48).toInt())
         binding.backbtn.setWidth((size_Y*48).toInt())
@@ -118,9 +113,66 @@ class SearchFragment : Fragment() {
         binding.searchBtn.setHeight((size_Y*48).toInt())
         binding.searchBtn.setWidth((size_Y*48).toInt())
 
+        //뒤로가기누르면 포커스 제거
+        binding.searchView.setCallback {
+            binding.searchView.clearFocus()
+        }
+        binding.searchView.onFocusChangeListener = onFocusChabgeListener
+        binding.searchView.addTextChangedListener(TextChangeListener)
+
+        //최근 검색어 뷰 크기
+        binding.recentSearch.setHeight((size_Y*325).toInt())
+        binding.recentSearch.setLMarginRight((size_X*16).toInt())
+        binding.recentSearch.setLMarginLeft((size_X*16).toInt())
+
+        binding.recentSearchText.setHeight((size_Y*47).toInt())
+        binding.recentSearchText.setLMarginTop((size_Y*25).toInt())
+
+        //찾으시는 상품이 없서요
+        binding.notfind.setHeight((size_Y*132).toInt())
+        binding.notfind.setLMarginTop((size_Y*25).toInt())
+
+        //이런상품은 어떄요 뷰 크기
+        binding.howAbout.setHeight((size_Y*325).toInt())
+        binding.howAbout.setLMarginRight((size_X*16).toInt())
+        binding.howAbout.setLMarginLeft((size_X*16).toInt())
+
+        binding.howAboutText.setHeight((size_Y*47).toInt())
+        binding.howAboutText.setLMarginTop((size_Y*25).toInt())
+
+        SearchSet()
 
         return binding.root
     }
+
+
+
+    //검색창 최초상태 세팅
+    fun SearchSet(){
+        binding.searchView.setText("");
+        binding.recentSearch.visibility = View.GONE;
+        binding.notfind.visibility = View.GONE;
+        binding.howAbout.visibility = View.VISIBLE;
+    }
+
+    val onFocusChabgeListener = object : View.OnFocusChangeListener {
+        override fun onFocusChange(v: View?, hasFocus: Boolean) {
+            if(hasFocus == true) {
+                binding.recentSearch.visibility = View.VISIBLE;
+                binding.notfind.visibility = View.GONE;
+                binding.howAbout.visibility = View.GONE;
+            }else if(binding.searchView.text.toString().length == 0){
+                binding.recentSearch.visibility = View.GONE;
+                binding.notfind.visibility = View.GONE;
+                binding.howAbout.visibility = View.VISIBLE;
+            }
+        }
+
+    }
+
+
+
+
 
 
 
@@ -145,11 +197,6 @@ class SearchFragment : Fragment() {
 
 
 
-
-    //검색창 최초상태
-    fun SearchSet(){
-
-    }
 
 
     //서치 어댑터 클래스
@@ -178,15 +225,24 @@ class SearchFragment : Fragment() {
 
     }
 
-
+    //검색창 텍스트 확인기
     val TextChangeListener = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
             //검색창에서 검색 글자 추출하기
-//            writedWord = Binding.mainSearch.text.toString()
+            writedWord = binding.searchView.text.toString()
+            Log.d("현재 입력된 글자", writedWord)
             //추출한뒤 writedWord에 집어 넣어줘야함
-            val text = writedWord ?: ""
-            search(text)
-            searchingViewChange()
+//            val text = writedWord ?: ""
+//            search(text)
+//            searchingViewChange
+
+            //모든 글자를 지웟을 경우 최근검색어 아닐시 자동완성
+            if(writedWord.length == 0 ){
+
+            }else{
+
+            }
+
         }
         override fun beforeTextChanged(charSequence: CharSequence?, start: Int, count: Int, after: Int) {}
         override fun onTextChanged(charSequence: CharSequence?, start: Int, before: Int, count: Int) {}
@@ -214,10 +270,9 @@ class SearchFragment : Fragment() {
                 }
             }
         }
-        // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
         SearchListAdapter.notifyDataSetChanged()
+        // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
     }
-
 
 
 }

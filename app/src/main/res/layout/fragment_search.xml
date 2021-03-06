@@ -14,7 +14,8 @@
         android:id="@+id/search_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorWhite">
+        android:background="@color/colorWhite"
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/search_layout"
@@ -29,7 +30,7 @@
                 android:background="@drawable/main_back_btn_black"
                 android:onClick="@{searchfragment.searchend::searchEnd}"/>
 
-            <EditText
+            <com.uos.vcommcerce.util.CustomEditText
                 android:id="@+id/search_view"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -44,6 +45,54 @@
                 android:background="@drawable/main_search_btn_black"/>
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/recent_search"
+            android:layout_width="match_parent"
+            android:layout_height="325dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/recent_search_text"
+                android:layout_width="match_parent"
+                android:layout_height="47dp"
+                android:text="최근 검색어"
+                android:textStyle="bold"
+                android:textColor="#333333"
+                android:textSize="20sp"/>
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/notfind"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:text="찾으시는 상품이 보이지 않네요!"
+            android:textColor="#555555"
+            android:gravity="center"
+            android:textStyle="bold"/>
+
+        <LinearLayout
+            android:id="@+id/how_about"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/how_about_text"
+                android:layout_width="match_parent"
+                android:layout_height="47dp"
+                android:text="이런 상품은 어때요?"
+                android:textStyle="bold"
+                android:textColor="#333333"
+                android:textSize="20sp"/>
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 

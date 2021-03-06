@@ -227,6 +227,7 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
 
     //검색중에 백키누르면 검색종료 하도록 기능변경
     override fun onBackPressed() {
+        Log.d("뒤로가기 누른거 확인 ",mainActivityState.toString())
         if(mainActivityState == MainActivityState.search){
             searchEnd()
         }else {
@@ -359,6 +360,7 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
         Binding.searchView.visibility = View.GONE
         returnDefaultView()
     }
+
 
 
 }
