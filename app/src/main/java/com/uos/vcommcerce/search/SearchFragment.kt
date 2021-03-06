@@ -6,7 +6,6 @@ import android.graphics.Point
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,11 +13,11 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
+import com.uos.vcommcerce.MainActivity
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.databinding.FragmentSearchBinding
 import com.uos.vcommcerce.mainslide.mainActivityState
 import com.uos.vcommcerce.util.*
-import kotlinx.android.synthetic.main.activity_main.view.*
 
 
 class SearchFragment : Fragment() {
@@ -35,6 +34,12 @@ class SearchFragment : Fragment() {
         var writedWord: String = ""
     }
 
+    //검색창 종료함수
+    interface searchEnd{
+        fun searchEnd(view: View? = null)
+    }
+
+    lateinit var searchend : searchEnd
 
     //피그마 기준 값
     var standardSize_Y : Int = 770
@@ -82,6 +87,7 @@ class SearchFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_search,container,false)
         binding.searchfragment = this
 
+        searchend  = activity as MainActivity
 
 
 
@@ -138,14 +144,7 @@ class SearchFragment : Fragment() {
     }
 
 
-    //검색창 종료함수
-    fun SearchEnd(){
-//        Binding.mainTopView.setHeight(TopViewSize)     //하단뷰 크기 설정
-//        Binding.mainViewChange.setHeight(MoveListViewSize)
-//        Binding.mainSearchList.setHeight(0)
-//        Binding.mainSearchList.setMarginBottom((size_Y*16).toInt())
-//        Binding.mainSearch.clearFocus()
-    }
+
 
     //검색창 최초상태
     fun SearchSet(){
@@ -218,5 +217,7 @@ class SearchFragment : Fragment() {
         // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
         SearchListAdapter.notifyDataSetChanged()
     }
+
+
 
 }

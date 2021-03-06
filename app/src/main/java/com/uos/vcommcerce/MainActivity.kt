@@ -4,20 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Point
-import android.opengl.Visibility
 import android.os.Bundle
-import android.os.Debug
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.ImageButton
-import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.marginRight
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -31,11 +25,9 @@ import com.uos.vcommcerce.mainslide.*
 import com.uos.vcommcerce.datamodel.ObservableProductDTO
 import com.uos.vcommcerce.datamodel.ProductDTO
 import com.uos.vcommcerce.profile.UserActivity
-import com.uos.vcommcerce.profile.VideoGridFragment
 import com.uos.vcommcerce.search.SearchFragment
 import com.uos.vcommcerce.tranformer.ZoomOutPageTransformer
 import com.uos.vcommcerce.util.*
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item_exoplayer.view.*
 import kotlin.math.abs
 
@@ -43,7 +35,7 @@ import kotlin.math.abs
 var Imm: InputMethodManager? = null;
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
 
     //메인 엑티비티에 물려있는 바인딩
     private lateinit var Binding: ActivityMainBinding
@@ -236,9 +228,7 @@ class MainActivity : AppCompatActivity() {
     //검색중에 백키누르면 검색종료 하도록 기능변경
     override fun onBackPressed() {
         if(mainActivityState == MainActivityState.search){
-            //검색창 닫기
-            Binding.searchView.visibility = View.GONE
-            returnDefaultView()
+            searchEnd()
         }else {
             super.onBackPressed()
         }
@@ -364,7 +354,11 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
+    override fun searchEnd(view: View?) {
+        Log.d("인터페이스","메인")
+        Binding.searchView.visibility = View.GONE
+        returnDefaultView()
+    }
 
 
 }

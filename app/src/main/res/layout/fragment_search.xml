@@ -26,7 +26,8 @@
                 android:id="@+id/backbtn"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:background="@drawable/main_back_btn_black"/>
+                android:background="@drawable/main_back_btn_black"
+                android:onClick="@{searchfragment.searchend::searchEnd}"/>
 
             <EditText
                 android:id="@+id/search_view"
