@@ -17,7 +17,7 @@ data class ProductDTO(
     //리뷰 평점 총합
     var totalRating : Long?,
     //평점 갯수
-    var ratingCount : String?,
+    var ratingCount : Long?,
     //업로드 시간
     var timestamp : Long?,
     //게시글 비활성화 체크
