@@ -71,14 +71,14 @@ class VideoUploadActivity : AppCompatActivity() {
         println("DB저장 시작")
         
         product.apply {
-            videoUri = uri.toString()
-            uid = auth.currentUser?.uid.toString()
-            cost = binding.activityVideoUploadEidttextProductcost.text.toString()
-            productExplain = binding.activityVideoUploadEidttextProductexplain.text.toString()
-            productTile = binding.activityVideoUploadEidttextProductname.text.toString()
-            serverTimestamp = System.currentTimeMillis()
-            timestamp = TimeUtil().getTimeAll()
-            address = binding.activityVideoUploadEidttextAddress.text.toString()
+//            videoUri = uri.toString()
+//            uid = auth.currentUser?.uid.toString()
+//            cost = binding.activityVideoUploadEidttextProductcost.text.toString()
+//            productExplain = binding.activityVideoUploadEidttextProductexplain.text.toString()
+//            productTile = binding.activityVideoUploadEidttextProductname.text.toString()
+//            serverTimestamp = System.currentTimeMillis()
+//            timestamp = TimeUtil().getTimeAll()
+//            address = binding.activityVideoUploadEidttextAddress.text.toString()
             //sellerNickName = userModel에서 가져오기
         }
         firestore.collection("product").document("productInfo").collection("normalProduct").document().set(product)
