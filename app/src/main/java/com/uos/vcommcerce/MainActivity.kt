@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.ObservableField
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.exoplayer2.MediaItem
@@ -22,7 +23,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.uos.vcommcerce.activity.review.ReviewActivity
 import com.uos.vcommcerce.databinding.ActivityMainBinding
 import com.uos.vcommcerce.mainslide.*
-import com.uos.vcommcerce.datamodel.ObservableProductDTO
 import com.uos.vcommcerce.datamodel.ProductDTO
 import com.uos.vcommcerce.profile.UserActivity
 import com.uos.vcommcerce.search.SearchFragment
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
     //상품 정보 리스트
     var items: ArrayList<ProductDTO> = arrayListOf()
     //현재 아이템 정보
-    var mediaContent: ObservableProductDTO = ObservableProductDTO(ProductDTO())
+    var mediaContent: ObservableField<ProductDTO> = ObservableField(ProductDTO())
 
     //메인에 물려있는 탑과 바텀뷰 + 플레이어
     var MainBottom : MainBottomView = MainBottomView()
@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
     //파이어 베이스에서 데이터를 불러옴
     init {
 
-        firestore.collection("product").document("productInfo").collection("normalProduct")
+        firestore.collection("content")
             .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
 
                 if (querySnapshot == null) {
@@ -103,8 +103,6 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
         Binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         Binding.mainActivity = this
         //아이템 정보 바인딩에 할당
-        Binding.mediaContent = mediaContent
-
         // 최석우 일시적으로 앱터져서 막음
         //registerPushToken()
 
@@ -248,7 +246,7 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
 
     fun moveProfile(view: View ){
         intent = Intent(this, UserActivity::class.java)
-        intent.putExtra("Uid",mediaContent.uid.get())
+        intent.putExtra("Uid",mediaContent.get()?.sellerUid)
         startActivity(intent)
     }
 
@@ -267,7 +265,8 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
     fun openReview(view:View){
         var intent = Intent(this, ReviewActivity::class.java)
         intent.apply {
-            putExtra("mediaContent",mediaContent.productTile)
+            //임시로 막아둠
+//            putExtra("mediaContent",mediaContent.get()?.reviews)
         }
         startActivity(intent)
     }
@@ -292,14 +291,16 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
             var player = SimpleExoPlayer.Builder(context).build()
 
             //Glide.with(context).load(items[position]).into(holder.imageUrl)
-            var mediaItem = items[position]
+            mediaContent.set(items[position])
+            mediaContent .set(items[position])
             view.item_exoplayer.player = player
             view.item_exoplayer.hideController()
 
-            player?.setMediaItem(MediaItem.fromUri(mediaItem.videoUri as String))
+            player?.setMediaItem(MediaItem.fromUri(mediaContent.get()?.videoList?.get(0) as String))
             player?.prepare()
             player?.play()
 
+            Log.d("메인 컨텐츠",Binding.mainActivity?.mediaContent.toString())
 
             //뷰에 터치리스너 추가
 

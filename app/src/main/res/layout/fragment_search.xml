@@ -59,9 +59,11 @@
                 android:textColor="#333333"
                 android:textSize="20sp"/>
             <ListView
+                android:id="@+id/recent_search_list"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:divider="#FFFFFF" />
 
         </LinearLayout>
         <TextView

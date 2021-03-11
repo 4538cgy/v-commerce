@@ -71,15 +71,16 @@ class VideoUploadActivity : AppCompatActivity() {
         println("DB저장 시작")
         
         product.apply {
-            videoUri = uri.toString()
-            uid = auth.currentUser?.uid.toString()
-            cost = binding.activityVideoUploadEidttextProductcost.text.toString()
+            videoList?.add(uri.toString())
+            sellerUid = auth.currentUser?.uid.toString()
+            productCost = binding.activityVideoUploadEidttextProductcost.text.toString()
             productExplain = binding.activityVideoUploadEidttextProductexplain.text.toString()
-            productTile = binding.activityVideoUploadEidttextProductname.text.toString()
-            serverTimestamp = System.currentTimeMillis()
-            timestamp = TimeUtil().getTimeAll()
-            address = binding.activityVideoUploadEidttextAddress.text.toString()
-            //sellerNickName = userModel에서 가져오기
+            productName = binding.activityVideoUploadEidttextProductname.text.toString()
+            timestamp = System.currentTimeMillis()
+            //현재 모델엔 존재하지 않음
+//            timestamp = TimeUtil().getTimeAll()
+            sellerAddress = binding.activityVideoUploadEidttextAddress.text.toString()
+//            sellerNickName = userModel에서 가져오기
         }
         firestore.collection("product").document("productInfo").collection("normalProduct").document().set(product)
             .addOnSuccessListener {

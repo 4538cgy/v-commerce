@@ -10,9 +10,6 @@
         <import type="com.uos.vcommcerce.util.CustomEditText"/>
 
         <variable
-            name="MediaContent"
-            type="com.uos.vcommcerce.datamodel.ObservableProductDTO" />
-        <variable
             name="bottomview"
             type="com.uos.vcommcerce.mainslide.MainBottomView" />
         <variable
@@ -131,7 +128,7 @@
                 android:id="@+id/nickname"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:text="@{MediaContent.sellerNickName}"
+                android:text="@{MainActivity.MediaContent.sellerName}"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:textColor="@color/mainBottonFontlightColor"
@@ -140,7 +137,7 @@
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:text="@{MediaContent.productTile}"
+                android:text="@{MainActivity.MediaContent.productName}"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:textColor="@color/mainBottonFontColor"
@@ -157,7 +154,7 @@
                     android:layout_width="0dp"
                     android:layout_height="18dp"
                     android:layout_weight="1"
-                    android:text="@{MediaContent.address}"
+                    android:text="@{MainActivity.MediaContent.sellerAddress}"
                     android:textSize="12sp"
                     android:textStyle="bold"
                     android:textColor="@color/mainBottonFontlightColor" />
@@ -166,7 +163,7 @@
                     android:layout_width="0dp"
                     android:layout_height="22dp"
                     android:layout_weight="1"
-                    android:text="@{MediaContent.cost}"
+                    android:text="@{MainActivity.MediaContent.productCost}"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="@color/mainBottonFontColor" />
@@ -176,7 +173,7 @@
                 android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
-                android:text="@{MediaContent.productExplain}"
+                android:text="@{MainActivity.MediaContent.productExplain}"
                 android:layout_marginBottom="37dp"
                 android:textColor="@color/mainBottonFontColor"/>
             <Button
