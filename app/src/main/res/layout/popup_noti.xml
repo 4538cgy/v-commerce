@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="notimesage"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:background="@drawable/background_round_f2f2f2_14dp"
+            android:orientation="vertical"
+            android:layout_width="270dp"
+            android:layout_height="122dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="78dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16dp"
+                    android:text="@{notimesage}"
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    android:layout_centerInParent="true"
+                    tools:text="이미 존재하는 아이디입니다."/>
+            </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#cccccc"/>
+            <Button
+                android:id="@+id/popup_noti_confirm_btn"
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+                android:background="@android:color/transparent"
+                android:text="확인"
+                android:textSize="17dp"
+                android:textColor="#007aff"/>
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

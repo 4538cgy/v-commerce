@@ -9,6 +9,9 @@
         <variable
             name="activityprofileregist"
             type="com.uos.vcommcerce.activity.signup.ProfileRegistActivity" />
+        <variable
+            name="birthdaytext"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,6 +29,7 @@
             app:layout_constraintTop_toTopOf="parent" />
         
         <ImageView
+            android:id="@+id/activity_profile_take_picture_img"
             app:layout_constraintRight_toRightOf="@+id/activity_profile_regist_imageview_profile_photo"
             app:layout_constraintBottom_toBottomOf="@+id/activity_profile_regist_imageview_profile_photo"
             app:layout_constraintTop_toTopOf="@+id/activity_profile_regist_imageview_profile_photo"
@@ -35,7 +39,7 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:background="@drawable/button_background_round_black_16dp"
-
+            android:onClick="@{activityprofileregist::showPicturePopup}"
             />
 
         <LinearLayout
@@ -57,15 +61,18 @@
 
                 android:textSize="14dp" />
 
-            <EditText
-                android:id="@+id/activity_profile_regist_edittext_birthday"
+            <TextView
+                android:id="@+id/activity_profile_regist_text_birthday"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="16dp"
+                android:gravity="center_vertical"
                 android:background="@drawable/button_background_round_ligh_gray_8dp"
+                android:text="@{birthdaytext}"
                 android:hint="생일 입력"
                 android:paddingLeft="8dp"
-                android:textSize="14dp" />
+                android:textSize="14dp"
+                android:onClick="@{activityprofileregist::setBirthDay}"/>
 
 
 
@@ -132,6 +139,12 @@
             android:background="@drawable/button_background_round_black_16dp"
             android:paddingHorizontal="16dp"
             />
+
+        <FrameLayout
+            android:id="@+id/activity_profile_fragment_container_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
