@@ -108,7 +108,7 @@
                 app:layout_sizeY="@{55}"
                 app:stand_size="@{MainActivity.displaySize}"
                 android:background="@drawable/main_profile_btn"
-                android:onClick="@{MainActivity::IconMove1}"
+                android:onClick="@{MainActivity::profileMove}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 />
@@ -155,7 +155,7 @@
                 android:id="@+id/nickname"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:text="@{MainActivity.mediaContent.sellerName + ' ' + '@' + MainActivity.mediaContent.sellerUid}"
+                android:text="@{ProductList.product.sellerName + ' ' + '@' + ProductList.product.   sellerUid}"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:textColor="@color/mainBottonFontlightColor"
@@ -164,7 +164,7 @@
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:text="@{MainActivity.mediaContent.productName}"
+                android:text="@{ProductList.product.productName}"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:textColor="@color/mainBottonFontColor"
@@ -197,7 +197,7 @@
                         android:textColor="@color/mainBottonFontColor"
                         android:textSize="16sp"
                         android:textStyle="bold"
-                        android:text="@{MainActivity.mediaContent.sellerAddress}" />
+                        android:text="@{ProductList.product.   sellerAddress}" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -213,7 +213,7 @@
                         android:textColor="@color/mainBottonFontlightColor"
                         android:textSize="12sp"
                         android:textStyle="bold"
-                        app:productSalePrice="@{MainActivity.mediaContent.price}" />
+                        app:productSalePrice="@{ProductList.product.   price}" />
 
                     <TextView
                         android:id="@+id/price"
@@ -222,7 +222,7 @@
                         android:textColor="@color/mainBottonFontColor"
                         android:textSize="16sp"
                         android:textStyle="bold"
-                        app:productPrice="@{MainActivity.mediaContent.price}" />
+                        app:productPrice="@{ProductList.product.   price}" />
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -230,7 +230,7 @@
                 android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
-                android:text="@{MainActivity.mediaContent.productExplain}"
+                android:text="@{ProductList.product.   productExplain}"
                 android:layout_marginBottom="37dp"
                 android:textColor="@color/mainBottonFontColor"/>
             <Button

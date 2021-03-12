@@ -2,11 +2,10 @@ package com.uos.vcommcerce
 
 import android.content.Context
 import android.content.Intent
-import android.content.res.Resources
-import android.graphics.Point
 import android.os.Bundle
+import android.os.Handler
+import android.os.Message
 import android.util.Log
-import android.util.MutableFloat
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -18,20 +17,21 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableField
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import com.facebook.internal.Mutable
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.uos.vcommcerce.activity.review.ReviewActivity
 import com.uos.vcommcerce.databinding.ActivityMainBinding
-import com.uos.vcommcerce.mainslide.*
-import com.uos.vcommcerce.datamodel.ProductDTO
 import com.uos.vcommcerce.datamodel.ProductModel
+import com.uos.vcommcerce.mainslide.MainBottomView
+import com.uos.vcommcerce.mainslide.ViewAnimation
+import com.uos.vcommcerce.mainslide.mainActivityState
 import com.uos.vcommcerce.profile.UserActivity
 import com.uos.vcommcerce.search.SearchFragment
 import com.uos.vcommcerce.tranformer.ZoomOutPageTransformer
-import com.uos.vcommcerce.util.*
+import com.uos.vcommcerce.util.DisplaySize
+import com.uos.vcommcerce.util.MainActivityState
+import com.uos.vcommcerce.util.dp
 import kotlinx.android.synthetic.main.item_exoplayer.view.*
 import kotlin.math.abs
 
@@ -43,52 +43,16 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
 
     //메인 엑티비티에 물려있는 바인딩
     private lateinit var Binding: ActivityMainBinding
-
-    //파이어 스토어 객체
-    var firestore = FirebaseFirestore.getInstance()
-    private var firebaseAuth : FirebaseAuth = FirebaseAuth.getInstance();
-
     //제품리스트
     private val productList : ProductModel by viewModels()
-
-
-    //상품 정보 리스트
-    var items: ArrayList<ProductDTO> = arrayListOf()
-    //현재 아이템 정보
-    var mediaContent: ObservableField<ProductDTO> = ObservableField(ProductDTO())
-
+    //접속자 정보
+    private var firebaseAuth : FirebaseAuth = FirebaseAuth.getInstance();
     //메인에 물려있는 탑과 바텀뷰 + 플레이어
     var MainBottom : MainBottomView = MainBottomView()
     //검색창 프라그먼트
     var SearchFragmentView : SearchFragment = SearchFragment()
-
     //창크기 정보를 가지는 객체
     lateinit var DisplaySize : ObservableField<DisplaySize>
-
-    //파이어 베이스에서 데이터를 불러옴
-    init {
-
-        firestore.collection("content")
-            .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
-
-                if (querySnapshot == null) {
-                    return@addSnapshotListener
-                }
-
-                items.clear()
-                for (snapshot in querySnapshot!!.documents) {
-
-//                    Log.d("아이템 정보", snapshot.id)
-                    var item = snapshot.toObject(ProductDTO::class.java)
-                    Log.d("ItemInfo", "아이템정보 " + item)
-                    if (item != null) {
-                        items.add(item!!)
-                    }
-                }
-                Binding.vpViewpager.adapter?.notifyDataSetChanged()
-            }
-
-    }
 
     companion object {
         var TouchPoint: Int? = null
@@ -100,12 +64,10 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
         DisplaySize = ObservableField(DisplaySize(this))
         Binding.mainActivity = this
         Binding.productList = productList
+
         //아이템 정보 바인딩에 할당
         // 최석우 일시적으로 앱터져서 막음
         //registerPushToken()
-
-        Log.d("onCreate", "onCreate")
-
 
         //뷰페이져 어댑터 설정
         Binding.vpViewpager.adapter = VideoAdapter(this)
@@ -135,16 +97,10 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
         // 뷰페이저 리스너 (ViewPager 1과 다르게 2는 필요한 것만 오버라이딩이 가능하다.
         Binding.vpViewpager.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
-                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                    super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-                    Log.d("onPageScrolled", "onPageScrolled")
-                }
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
                     // 다른 페이지로 스크롤 됬을때 ViewPager 의 현재 페이지 텍스트뷰를 갱신해준다.
-//                    productList.setProduct(position)
-                    mediaContent.set(items[position])
-//                    Log.d("테스트",productList.ProductList.value.toString())
+                    productList.setProduct(position)
                     //페이지 이동후 디폴트 타입으로 변경
                     returnDefaultView()
                 }
@@ -154,10 +110,8 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
         //비디오 플레이어 위치 조정
         ViewAnimation(Binding.VideoView, 0, (63*DisplaySize.get()!!.size_Y).toInt().dp(), 0)
 
-
         //검색창 프라그먼트
         supportFragmentManager.beginTransaction().replace(R.id.search_view, SearchFragmentView).commit()
-
     }
 
 //최석우 앱터져서 일시적으로 막음
@@ -190,20 +144,20 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
         }
     }
 
-    //상단뷰 1번아이콘 클릭이벤트
-    fun IconMove1(view : View) {
+    //프로필 이동 이벤트
+    fun profileMove(view : View) {
         intent = Intent(this, UserActivity::class.java)
-//        intent.putExtra("Uid",firebaseAuth.currentUser?.uid)
+        intent.putExtra("Uid",firebaseAuth.currentUser?.uid)
         startActivity(intent)
 
     }
-    //4번 아이콘
+    //세팅으로 돌아가는 이벤트
     fun IconMove4(view : View) {startActivity(Intent(this, SettingActivity::class.java))}
 
 
     fun moveProfile(view: View ){
         intent = Intent(this, UserActivity::class.java)
-//        intent.putExtra("Uid",mediaContent.get()?.sellerUid)
+        intent.putExtra("Uid",productList.product.value?.sellerUid)
         startActivity(intent)
     }
 
@@ -219,6 +173,7 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
         SearchFragmentView.SearchSet();
     }
 
+    //리뷰열기
     fun openReview(view:View){
         var intent = Intent(this, ReviewActivity::class.java)
         intent.apply {
@@ -237,8 +192,8 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoAdapter.ViewHolder =
             ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_exoplayer, parent, false))
 
-//        override fun getItemCount(): Int = productList.ProductList.size
-        override fun getItemCount(): Int = items.size
+        override fun getItemCount(): Int = productList.productList.size
+//        override fun getItemCount(): Int = items.size
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             var view = holder.itemView
@@ -249,7 +204,7 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
             view.item_exoplayer.player = player
             view.item_exoplayer.hideController()
 
-            player?.setMediaItem(MediaItem.fromUri(items[0].videoList?.get(0) as String))
+            player?.setMediaItem(MediaItem.fromUri(productList.productList[0].videoList?.get(0) as String))
             player?.prepare()
             player?.play()
             //뷰에 터치리스너 추가
@@ -296,21 +251,17 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
 
     }
 
+    //기본상태로 돌아가기
     fun returnDefaultView() {
-        //검색중일때 작용
-//        if (mainActivityState == MainActivityState.search) {
-//            Binding.topview?.SearchEnd()
-//            Imm?.hideSoftInputFromWindow(Binding.mainSearch.windowToken, 0);
-//        }
         Binding.bottomview?.BottonViewSlideDown(MainActivityState.default)
     }
 
-
+    //검색 종료
     override fun searchEnd(view: View?) {
-        Log.d("인터페이스","메인")
         Binding.searchView.visibility = View.GONE
         returnDefaultView()
     }
+
 
 
 
