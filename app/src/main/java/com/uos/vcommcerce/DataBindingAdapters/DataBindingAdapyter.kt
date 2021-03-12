@@ -53,7 +53,6 @@ object DataBindingAdapyter {
 
         if (isHeight != null && display != null) {
             var Ysize = display.get()!!.size_Y
-            Log.d("뷰 높이 변경", "isheight : " + isHeight + "Ysize : " + Ysize)
             var size = (isHeight * Ysize).toInt().dp()
 
             val lp = view.layoutParams
@@ -61,7 +60,6 @@ object DataBindingAdapyter {
                 lp.height = size;
                 view.layoutParams = lp
             }
-            Log.d("뷰 높이 변경", view.id.toString() + "높이 변경 _ " + "size : " + size)
         }
     }
 
@@ -72,7 +70,6 @@ object DataBindingAdapyter {
 
         if (isWidth != null && display != null) {
             var Xsize = display.get()!!.size_X
-            Log.d("뷰 넓이 변경", "isWidth : " + isWidth + "Xsize : " + Xsize)
             var size = (isWidth * Xsize).toInt().dp()
 
             val lp = view.layoutParams
@@ -80,7 +77,6 @@ object DataBindingAdapyter {
                 lp.width = size;
                 view.layoutParams = lp
             }
-            Log.d("뷰 넓이 변경", view.id.toString() + "넓이 변경 _ " + "size : " + size)
         }
     }
 
@@ -91,7 +87,6 @@ object DataBindingAdapyter {
 
         if (isSize != null && display != null) {
             var Ysize = display.get()!!.size_Y
-            Log.d("뷰 크기 변경", "isheight : " + isSize + "Ysize : " + Ysize)
             var size = (isSize * Ysize).toInt().dp()
 
             val lp = view.layoutParams
@@ -100,7 +95,6 @@ object DataBindingAdapyter {
                 lp.width = size;
                 view.layoutParams = lp
             }
-            Log.d("뷰 크기 변경", view.id.toString() + "크기 변경 _ " + "size : " + size)
         }
     }
 

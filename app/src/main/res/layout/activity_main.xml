@@ -15,6 +15,10 @@
         <variable
             name="MainActivity"
             type="com.uos.vcommcerce.MainActivity" />
+
+        <variable
+            name="ProductList"
+            type="com.uos.vcommcerce.datamodel.ProductModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -151,7 +155,7 @@
                 android:id="@+id/nickname"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:text="@{MainActivity.MediaContent.sellerName + ' ' + '@' + MainActivity.MediaContent.sellerUid}"
+                android:text="@{MainActivity.mediaContent.sellerName + ' ' + '@' + MainActivity.mediaContent.sellerUid}"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:textColor="@color/mainBottonFontlightColor"
@@ -160,7 +164,7 @@
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:text="@{MainActivity.MediaContent.productName}"
+                android:text="@{MainActivity.mediaContent.productName}"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:textColor="@color/mainBottonFontColor"
@@ -226,7 +230,7 @@
                 android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
-                android:text="@{MainActivity.MediaContent.productExplain}"
+                android:text="@{MainActivity.mediaContent.productExplain}"
                 android:layout_marginBottom="37dp"
                 android:textColor="@color/mainBottonFontColor"/>
             <Button

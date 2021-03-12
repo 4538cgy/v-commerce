@@ -16,6 +16,10 @@ android {
 
      */
 
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
     defaultConfig {
         applicationId "com.uos.vcommcerce"
         minSdkVersion 19
@@ -142,5 +146,5 @@ dependencies {
     kapt 'com.android.databinding:compiler:3.5.0'
 
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
-
+    implementation 'androidx.activity:activity-ktx:1.1.0'
 }
