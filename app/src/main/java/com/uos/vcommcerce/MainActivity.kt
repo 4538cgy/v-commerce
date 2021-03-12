@@ -56,19 +56,8 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
     //검색창 프라그먼트
     var SearchFragmentView : SearchFragment = SearchFragment()
 
-    //피그마 기준 값
-    var standardSize_Y : Int = 770
-    var standardSize_X : Int = 375
 
-    //플레이어 크기
-    var PlayerSize : Int = 560
-
-    //탑뷰 크기
-    val TopViewSize : Int = 55
-
-    //피그마크기1px 당 실제뷰 크기값
-    var size_Y : ObservableField<Float> = ObservableField(0f)
-    var size_X :Float = 0f
+    lateinit var DisplaySize : ObservableField<DisplaySize>
 
     //파이어 베이스에서 데이터를 불러옴
     init {
@@ -101,8 +90,8 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         Binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        DisplaySize = ObservableField(DisplaySize(this))
         Binding.mainActivity = this
         //아이템 정보 바인딩에 할당
         // 최석우 일시적으로 앱터져서 막음
@@ -117,38 +106,6 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
         //키보드 숨기기위한 시스템 변수
         Imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager;
 
-        //해상도 측정
-        val display = this.windowManager.defaultDisplay
-        val size = Point()
-        display.getSize(size)
-        var ScreenSize: Point = size
-        var density = Resources.getSystem().displayMetrics.density
-
-        //피그마크기1px 당 실제뷰 크기값
-        size_Y.set((ScreenSize.y / density)/standardSize_Y)
-
-        var size_Y = (ScreenSize.y / density)/standardSize_Y
-        size_X = (ScreenSize.x / density)/standardSize_X
-
-
-
-
-        //탑뷰 크기 설정
-
-        //아이콘레이아웃 크기설정
-        Binding.mainViewChange.setHeight((size_Y*TopViewSize).toInt())
-
-        //각 아이템 크기 성정
-        //moveItem1 => activityMainImageButtonProfile
-        Binding.activityMainImagebuttonProfile.setHeight((size_Y*TopViewSize).toInt())
-        Binding.activityMainImagebuttonProfile.setWidth((size_Y*TopViewSize).toInt())
-
-        Binding.activityMainImagebuttonCart.setHeight((size_Y*TopViewSize).toInt())
-        Binding.activityMainImagebuttonCart.setWidth((size_Y*TopViewSize).toInt())
-
-        //movewItem4 => activityMainImageButtonSetting
-        Binding.activityMainImagebuttonSearch.setHeight((size_Y*TopViewSize).toInt())
-        Binding.activityMainImagebuttonSearch.setWidth((size_Y*TopViewSize).toInt())
 
         //비디오 플레이어 설정
         // 스크롤 수평 설정
@@ -182,21 +139,8 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
             }
         )
 
-        //비디오 플레이어 크기 설정
-        Binding.VideoView.setHeight((size_Y*PlayerSize).toInt())
-        Binding.VideoView.setCMarginRight((size_X*30).toInt())
-        Binding.VideoView.setCMarginLeft((size_X*30).toInt())
-        Binding.sellerImg.setHeight((size_Y*60).toInt())
-        Binding.sellerImg.setWidth((size_Y*60).toInt())
-        Binding.sellerImg.setCMarginRight((size_X*6).toInt())
-        Binding.sellerImg.setCMarginBottom((size_X*6).toInt())
-        Binding.likeBtn.setHeight((size_Y*48).toInt())
-        Binding.likeBtn.setWidth((size_Y*48).toInt())
-        Binding.likeBtn.setCMarginRight((size_X*12).toInt())
-        Binding.likeBtn.setCMarginBottom((size_X*12).toInt())
-
         //비디오 플레이어 위치 조정
-        ViewAnimation(Binding.VideoView, 0, (63*size_Y).toInt().dp(), 0)
+        ViewAnimation(Binding.VideoView, 0, (63*DisplaySize.get()!!.size_Y).toInt().dp(), 0)
 
 
         //검색창 프라그먼트

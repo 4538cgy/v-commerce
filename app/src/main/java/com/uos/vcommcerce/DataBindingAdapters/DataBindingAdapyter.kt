@@ -6,17 +6,19 @@ import android.graphics.ColorFilter
 import android.graphics.Paint
 import android.graphics.PorterDuff
 import android.util.Log
+import android.view.Display
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.databinding.ObservableField
 import com.facebook.internal.Mutable
 import com.uos.vcommcerce.R
-import com.uos.vcommcerce.util.dp
-import com.uos.vcommcerce.util.setHeight
+import com.uos.vcommcerce.util.*
 
 object DataBindingAdapyter {
 
@@ -47,12 +49,12 @@ object DataBindingAdapyter {
     //뷰높이 조정
     @JvmStatic
     @BindingAdapter("layout_height", "stand_size")
-    fun setViewHeight(view: View, isheight: Int, ysize: ObservableField<Float>) {
+    fun setViewHeight(view: View, isHeight: Int, display: ObservableField<DisplaySize>) {
 
-        if (isheight != null && ysize != null) {
-
-            Log.d("뷰 높이 변경", "isheight : " + isheight + "ysize : " + ysize.get())
-            var size = (isheight * ysize.get()!!).toInt().dp()
+        if (isHeight != null && display != null) {
+            var Ysize = display.get()!!.size_Y
+            Log.d("뷰 높이 변경", "isheight : " + isHeight + "Ysize : " + Ysize)
+            var size = (isHeight * Ysize).toInt().dp()
 
             val lp = view.layoutParams
             lp?.let {
@@ -60,10 +62,103 @@ object DataBindingAdapyter {
                 view.layoutParams = lp
             }
             Log.d("뷰 높이 변경", view.id.toString() + "높이 변경 _ " + "size : " + size)
-            view.viewTreeObserver.removeOnGlobalLayoutListener { this }
         }
-
     }
+
+    //뷰넓이 조정
+    @JvmStatic
+    @BindingAdapter("layout_width", "stand_size")
+    fun setViewWidth(view: View, isWidth: Int, display: ObservableField<DisplaySize>) {
+
+        if (isWidth != null && display != null) {
+            var Xsize = display.get()!!.size_X
+            Log.d("뷰 넓이 변경", "isWidth : " + isWidth + "Xsize : " + Xsize)
+            var size = (isWidth * Xsize).toInt().dp()
+
+            val lp = view.layoutParams
+            lp?.let {
+                lp.width = size;
+                view.layoutParams = lp
+            }
+            Log.d("뷰 넓이 변경", view.id.toString() + "넓이 변경 _ " + "size : " + size)
+        }
+    }
+
+    //뷰크기(높이 넓이 일정하게) 조정 (Y기준)
+    @JvmStatic
+    @BindingAdapter("layout_sizeY", "stand_size")
+    fun setViewSizeY(view: View, isSize: Int, display: ObservableField<DisplaySize>) {
+
+        if (isSize != null && display != null) {
+            var Ysize = display.get()!!.size_Y
+            Log.d("뷰 크기 변경", "isheight : " + isSize + "Ysize : " + Ysize)
+            var size = (isSize * Ysize).toInt().dp()
+
+            val lp = view.layoutParams
+            lp?.let {
+                lp.height = size;
+                lp.width = size;
+                view.layoutParams = lp
+            }
+            Log.d("뷰 크기 변경", view.id.toString() + "크기 변경 _ " + "size : " + size)
+        }
+    }
+
+    //뷰크기(높이 넓이 일정하게) 조정 (X기준)
+    @JvmStatic
+    @BindingAdapter("layout_sizeX", "stand_size")
+    fun setViewSizeX(view: View, isSize: Int, display: ObservableField<DisplaySize>) {
+
+        if (isSize != null && display != null) {
+            var Xsize = display.get()!!.size_X
+            Log.d("뷰 크기 변경", "isSize : " + isSize + "Xsize : " + Xsize)
+            var size = (isSize * Xsize).toInt().dp()
+
+            val lp = view.layoutParams
+            lp?.let {
+                lp.height = size;
+                lp.width = size;
+                view.layoutParams = lp
+            }
+            Log.d("뷰 크기 변경", view.id.toString() + "크기 변경 _ " + "size : " + size)
+        }
+    }
+
+    //뷰마진 설정
+    @JvmStatic
+    @BindingAdapter("stand_size_margin","latout_margin_left","latout_margin_top","latout_margin_right","latout_margin_bottom")
+    fun setViewMargin(view: View, display: ObservableField<DisplaySize>, margin_left : Int, margin_top : Int, margin_right : Int, margin_bottom : Int) {
+        if (display != null) {
+
+            if(view.layoutParams is LinearLayout.LayoutParams){
+                val lp = view.layoutParams as LinearLayout.LayoutParams
+                lp?.let {
+                    lp.leftMargin = (margin_left*display.get()!!.size_X).toInt().dp()
+                    lp.topMargin = (margin_top*display.get()!!.size_Y).toInt().dp()
+                    lp.rightMargin = (margin_right*display.get()!!.size_X).toInt().dp()
+                    lp.bottomMargin = (margin_bottom*display.get()!!.size_Y).toInt().dp()
+                    view.layoutParams = lp
+                }
+
+            }else if(view.layoutParams is ConstraintLayout.LayoutParams){
+                val lp = view.layoutParams as ConstraintLayout.LayoutParams
+                lp?.let {
+                    lp.leftMargin = (margin_left*display.get()!!.size_X).toInt().dp()
+                    lp.topMargin = (margin_top*display.get()!!.size_Y).toInt().dp()
+                    lp.rightMargin = (margin_right*display.get()!!.size_X).toInt().dp()
+                    lp.bottomMargin = (margin_bottom*display.get()!!.size_Y).toInt().dp()
+                    view.layoutParams = lp
+                }
+            }
+
+            Log.d("뷰 마진 변경", view.id.toString() + "마진 변경" )
+
+        }
+    }
+
+
+
+
 
     //제품 가격 표기
     @JvmStatic
