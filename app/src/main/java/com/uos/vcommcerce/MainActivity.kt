@@ -6,6 +6,7 @@ import android.content.res.Resources
 import android.graphics.Point
 import android.os.Bundle
 import android.util.Log
+import android.util.MutableFloat
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -16,6 +17,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableField
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.facebook.internal.Mutable
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.firebase.auth.FirebaseAuth
@@ -65,7 +67,7 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
     val TopViewSize : Int = 55
 
     //피그마크기1px 당 실제뷰 크기값
-    var size_Y :Float = 0f
+    var size_Y : ObservableField<Float> = ObservableField(0f)
     var size_X :Float = 0f
 
     //파이어 베이스에서 데이터를 불러옴
@@ -123,8 +125,10 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
         var density = Resources.getSystem().displayMetrics.density
 
         //피그마크기1px 당 실제뷰 크기값
+        size_Y.set((ScreenSize.y / density)/standardSize_Y)
+
         var size_Y = (ScreenSize.y / density)/standardSize_Y
-        var size_X = (ScreenSize.x / density)/standardSize_X
+        size_X = (ScreenSize.x / density)/standardSize_X
 
 
 
@@ -138,9 +142,6 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
         //moveItem1 => activityMainImageButtonProfile
         Binding.activityMainImagebuttonProfile.setHeight((size_Y*TopViewSize).toInt())
         Binding.activityMainImagebuttonProfile.setWidth((size_Y*TopViewSize).toInt())
-
-        Binding.activityMainImagebuttonVideoList.setHeight((size_Y*TopViewSize).toInt())
-        Binding.activityMainImagebuttonVideoList.setWidth((size_Y*TopViewSize).toInt())
 
         Binding.activityMainImagebuttonCart.setHeight((size_Y*TopViewSize).toInt())
         Binding.activityMainImagebuttonCart.setWidth((size_Y*TopViewSize).toInt())

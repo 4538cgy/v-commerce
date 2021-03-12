@@ -52,13 +52,13 @@ class AddUserInfoFragment : Fragment() {
 
     fun uploadUserInfo(){
 
-        var users = UserDTO()
+        var users = UserDTO( )
         users.uid = auth.currentUser?.uid.toString()
-        users.address = binding.fragmentAddUserInfoEdittextAddress.text.toString()
+//        users.Address = binding.fragmentAddUserInfoEdittextAddress.text.toString()
         users.userNickName = binding.fragmentAddUserInfoEdittextNickname.text.toString()
         users.phoneNumber = binding.fragmentAddUserInfoEdittextPhonenumber.text.toString()
-        users.serverTimestamp = System.currentTimeMillis()
-        users.timestamp = TimeUtil().getTimeAll()
+//        users.serverTimestamp = System.currentTimeMillis()
+//        users.timestamp = TimeUtil().getTimeAll()
 
         firestore.collection("userInfo").document("userData").collection("accountInfo").document(auth.currentUser?.uid.toString()).set(users)
             .addOnSuccessListener {

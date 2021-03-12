@@ -83,14 +83,6 @@
                 />
 
             <ImageButton
-                android:id="@+id/activityMainImagebuttonVideoList"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
-                android:background="@drawable/main_video_btn"
-                app:layout_constraintEnd_toStartOf="@+id/activityMainImagebuttonCart"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageButton
                 android:id="@+id/activityMainImagebuttonCart"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
@@ -128,7 +120,7 @@
                 android:id="@+id/nickname"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:text="@{MainActivity.MediaContent.sellerName}"
+                android:text="@{MainActivity.MediaContent.sellerName + ' ' + '@' + MainActivity.MediaContent.sellerUid}"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:textColor="@color/mainBottonFontlightColor"
@@ -141,33 +133,63 @@
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:textColor="@color/mainBottonFontColor"
-                android:layout_marginBottom="8dp"/>
-            <LinearLayout
+                android:layout_marginBottom="8dp"
+                app:stand_size ="@{MainActivity.size_Y}"
+                app:layout_height="@{20}"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/bottomgroup1"
                 android:layout_width="match_parent"
                 android:layout_height="22dp"
                 android:orientation="horizontal"
-                android:weightSum="2"
                 android:layout_marginBottom="19dp">
-                <TextView
-                    android:id="@+id/address"
-                    android:layout_width="0dp"
-                    android:layout_height="18dp"
-                    android:layout_weight="1"
-                    android:text="@{MainActivity.MediaContent.sellerAddress}"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/mainBottonFontlightColor" />
-                <TextView
-                    android:id="@+id/price"
-                    android:layout_width="0dp"
-                    android:layout_height="22dp"
-                    android:layout_weight="1"
-                    android:text="@{MainActivity.MediaContent.productCost}"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/mainBottonFontColor" />
-            </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/bottom_group_adress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <ImageView
+                        android:id="@+id/adress_simbol"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/address_simbol" />
+
+                    <TextView
+                        android:id="@+id/address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/mainBottonFontColor"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:text="@{MainActivity.mediaContent.sellerAddress}" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/bottom_group_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <TextView
+                        android:id="@+id/sale_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="18dp"
+                        android:textColor="@color/mainBottonFontlightColor"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        app:productSalePrice="@{MainActivity.mediaContent.price}" />
+
+                    <TextView
+                        android:id="@+id/price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="22dp"
+                        android:textColor="@color/mainBottonFontColor"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:productPrice="@{MainActivity.mediaContent.price}" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/content"

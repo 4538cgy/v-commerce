@@ -73,7 +73,7 @@ class VideoUploadActivity : AppCompatActivity() {
         product.apply {
             videoList?.add(uri.toString())
             sellerUid = auth.currentUser?.uid.toString()
-            productCost = binding.activityVideoUploadEidttextProductcost.text.toString()
+    //            productCost = binding.activityVideoUploadEidttextProductcost.text.toString()
             productExplain = binding.activityVideoUploadEidttextProductexplain.text.toString()
             productName = binding.activityVideoUploadEidttextProductname.text.toString()
             timestamp = System.currentTimeMillis()

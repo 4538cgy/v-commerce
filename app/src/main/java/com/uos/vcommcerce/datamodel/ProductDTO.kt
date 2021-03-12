@@ -1,5 +1,6 @@
 package com.uos.vcommcerce.datamodel
 
+import android.util.Log
 import androidx.databinding.ObservableField
 import java.util.*
 import kotlin.collections.ArrayList
@@ -14,8 +15,8 @@ data class ProductDTO (
     var productName : String? = null,
     //판매자 주소
     var sellerAddress : String? = null,
-    //제품 가격
-    var productCost : String? = null,
+    //가격 정보 맵
+    var price : MutableMap<String,Long> = HashMap(),
     //제품 설명
     var productExplain : String? = null,
     //리뷰 평점 총합

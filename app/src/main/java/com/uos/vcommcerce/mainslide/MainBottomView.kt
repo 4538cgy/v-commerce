@@ -69,16 +69,28 @@ class MainBottomView {
         Binding.nickname.setLMarginTop((size_Y * 16).toInt())
 
         //상품명 크기 설정
-        Binding.title.setTextHeight((size_Y * 22).toInt())
+//        Binding.title.setTextHeight((size_Y * 22).toInt())
         Binding.title.setTextSize((size_Y * 16).toInt().toFloat())
         Binding.title.setLMarginBottom((size_Y * 8).toInt())
 
         //주소와 가격뷰의 그륩 크기설정
         Binding.bottomgroup1.setHeight((size_Y * 53).toInt())
+        //주소와 가격뷰의 그륩 크기설정
+
+        Binding.bottomGroupAdress.setHeight((size_Y * 53).toInt())
+        Binding.address.setHeight((size_Y * 24).toInt())
+        Binding.adressSimbol.setHeight((size_Y * 24).toInt())
+        Binding.adressSimbol.setWidth((size_Y * 24).toInt())
+        Binding.adressSimbol.setLMarginRight((size_Y * 4).toInt())
+
+        Binding.bottomGroupPrice.setHeight((size_Y * 24).toInt())
+        Binding.salePrice.setHeight((size_Y * 24).toInt())
+        Binding.price.setHeight((size_Y * 24).toInt())
 
         //주소 크기 설정
-        Binding.address.setTextHeight((size_Y * 18).toInt())
-        Binding.address.setTextSize((size_Y * 12).toInt().toFloat())
+        Binding.salePrice.setTextHeight((size_Y * 18).toInt())
+        Binding.salePrice.setTextSize((size_Y * 12).toInt().toFloat())
+        Binding.salePrice.setLMarginRight((size_Y * 8).toInt())
 
         //가격 크기 설정
         Binding.price.setTextHeight((size_Y * 30).toInt())
