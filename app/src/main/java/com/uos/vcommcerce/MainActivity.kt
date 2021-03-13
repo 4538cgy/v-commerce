@@ -15,6 +15,9 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableField
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.exoplayer2.MediaItem
@@ -22,6 +25,7 @@ import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.firebase.auth.FirebaseAuth
 import com.uos.vcommcerce.activity.review.ReviewActivity
 import com.uos.vcommcerce.databinding.ActivityMainBinding
+import com.uos.vcommcerce.datamodel.ProductDTO
 import com.uos.vcommcerce.datamodel.ProductModel
 import com.uos.vcommcerce.mainslide.MainBottomView
 import com.uos.vcommcerce.mainslide.ViewAnimation
@@ -45,6 +49,8 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
     private lateinit var Binding: ActivityMainBinding
     //제품리스트
     private val productList : ProductModel by viewModels()
+    var productData :  MutableLiveData<ArrayList<ProductDTO>> = MutableLiveData<ArrayList<ProductDTO>>()
+
     //접속자 정보
     private var firebaseAuth : FirebaseAuth = FirebaseAuth.getInstance();
     //메인에 물려있는 탑과 바텀뷰 + 플레이어
@@ -65,13 +71,20 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
         Binding.mainActivity = this
         Binding.productList = productList
 
+        //리스트 변동을 확인할 옵저버 생성 뷰모델의 리스트가바뀌면 확인해서 메인의 리스트를바꾼다음 어댑터에 재할당
+        val dataObserver: Observer<ArrayList<ProductDTO>> =
+            Observer { livedata -> productData.value = livedata
+                Binding.vpViewpager.adapter = VideoAdapter(this,productData)
+            }
+        //뷰모델 리스트에 옵저버 장착
+        productList.productList.observe(this,dataObserver)
+
         //아이템 정보 바인딩에 할당
         // 최석우 일시적으로 앱터져서 막음
         //registerPushToken()
 
         //뷰페이져 어댑터 설정
-        Binding.vpViewpager.adapter = VideoAdapter(this)
-
+//        Binding.vpViewpager.adapter = VideoAdapter(this,productList.productList)
         //메인 바텀뷰에 필요한 인자들 전송
         MainBottom.getMainBinding(Binding, this)
 
@@ -157,7 +170,7 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
 
     fun moveProfile(view: View ){
         intent = Intent(this, UserActivity::class.java)
-        intent.putExtra("Uid",productList.product.value?.sellerUid)
+        intent.putExtra("Uid",productList.product.get()?.sellerUid)
         startActivity(intent)
     }
 
@@ -184,18 +197,17 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
     }
 
 
-    inner class VideoAdapter(private val context: Context) :
-        RecyclerView.Adapter<VideoAdapter.ViewHolder>() {
+    inner class VideoAdapter(private val context: Context, var data : LiveData<ArrayList<ProductDTO>>) : RecyclerView.Adapter<VideoAdapter.ViewHolder>() {
 
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {}
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoAdapter.ViewHolder =
-            ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_exoplayer, parent, false))
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoAdapter.ViewHolder = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_exoplayer, parent, false))
 
-        override fun getItemCount(): Int = productList.productList.size
+        override fun getItemCount(): Int = data.value!!.size
 //        override fun getItemCount(): Int = items.size
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            Log.d("재 바인드? : ", data.value.toString())
             var view = holder.itemView
 
             var player = SimpleExoPlayer.Builder(context).build()
@@ -204,7 +216,7 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
             view.item_exoplayer.player = player
             view.item_exoplayer.hideController()
 
-            player?.setMediaItem(MediaItem.fromUri(productList.productList[0].videoList?.get(0) as String))
+            player?.setMediaItem(MediaItem.fromUri(data.value!!.get(0)!!.videoList!!.get(0)))
             player?.prepare()
             player?.play()
             //뷰에 터치리스너 추가

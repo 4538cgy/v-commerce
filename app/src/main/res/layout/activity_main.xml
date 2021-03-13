@@ -155,7 +155,7 @@
                 android:id="@+id/nickname"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:text="@{ProductList.product.sellerName + ' ' + '@' + ProductList.product.   sellerUid}"
+                android:text="@{ProductList.product.sellerName + ' ' + '@' + ProductList.product.sellerUid}"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:textColor="@color/mainBottonFontlightColor"
@@ -171,33 +171,40 @@
                 android:layout_marginBottom="8dp"
                 app:stand_size ="@{MainActivity.displaySize}"
                 app:layout_height="@{20}"/>
+
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/bottomgroup1"
                 android:layout_width="match_parent"
                 android:layout_height="22dp"
                 android:orientation="horizontal"
-                android:layout_marginBottom="19dp">
+                android:layout_marginBottom="19dp"
+                app:stand_size ="@{MainActivity.displaySize}"
+                app:layout_height="@{20}">
 
                 <LinearLayout
                     android:id="@+id/bottom_group_adress"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    app:layout_constraintStart_toStartOf="parent">
+                    app:layout_constraintStart_toStartOf="parent"
+                    >
 
                     <ImageView
                         android:id="@+id/adress_simbol"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/address_simbol" />
+                        android:layout_height="match_parent"
+                        android:background="@drawable/address_simbol"
+                        app:stand_size ="@{MainActivity.displaySize}"
+                        app:layout_sizeY="@{20}"/>
 
                     <TextView
                         android:id="@+id/address"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:textColor="@color/mainBottonFontColor"
                         android:textSize="16sp"
                         android:textStyle="bold"
-                        android:text="@{ProductList.product.   sellerAddress}" />
+                        android:text="@{ProductList.product.sellerAddress}" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -213,7 +220,7 @@
                         android:textColor="@color/mainBottonFontlightColor"
                         android:textSize="12sp"
                         android:textStyle="bold"
-                        app:productSalePrice="@{ProductList.product.   price}" />
+                        app:productSalePrice="@{ProductList.product.price}" />
 
                     <TextView
                         android:id="@+id/price"
@@ -222,7 +229,7 @@
                         android:textColor="@color/mainBottonFontColor"
                         android:textSize="16sp"
                         android:textStyle="bold"
-                        app:productPrice="@{ProductList.product.   price}" />
+                        app:productPrice="@{ProductList.product.price}" />
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -230,7 +237,7 @@
                 android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
-                android:text="@{ProductList.product.   productExplain}"
+                android:text="@{ProductList.product.productExplain}"
                 android:layout_marginBottom="37dp"
                 android:textColor="@color/mainBottonFontColor"/>
             <Button

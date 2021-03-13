@@ -2,6 +2,8 @@ package com.uos.vcommcerce.datamodel
 
 import android.os.Message
 import android.util.Log
+import androidx.databinding.ObservableField
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,24 +18,24 @@ class ProductModel : ViewModel() {
     val repository = FirebaseContentRepository()
 
     //현재제품
-    var product : MutableLiveData<ProductDTO> = MutableLiveData(ProductDTO())
+    var product : ObservableField<ProductDTO> = ObservableField(ProductDTO())
 
     //제품리스트
-    var productList : ArrayList<ProductDTO> = ArrayList()
+    var productList :  MutableLiveData<ArrayList<ProductDTO>> = MutableLiveData<ArrayList<ProductDTO>>()
 
     lateinit var videoAdapter : MainActivity.VideoAdapter
 
     fun setProduct(position : Int){
-        Log.d("setProduct", "setProduct")
-        product.postValue(productList.get(position))
+        product.set(productList.value!!.get(position))
+        Log.d("setProduct", product.get().toString())
+
     }
 
 
     init{
         viewModelScope.launch(Dispatchers.IO) {
             repository.getContentAll().collect{
-                productList.addAll(it)
-                product.postValue(productList.get(0))
+                productList.postValue(it)
                 Log.d("init", productList.toString())
             }
         }
