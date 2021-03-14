@@ -11,14 +11,8 @@ class DisplaySize (var activity : Activity) {
 
 
     //피그마 기준 값
-    var standardSize_Y : Int = 770
+    var standardSize_Y : Int = 750
     var standardSize_X : Int = 375
-
-    //플레이어 크기
-    var PlayerSize : Int = 560
-
-    //탑뷰 크기
-    val TopViewSize : Int = 55
 
     //피그마크기1px 당 실제뷰 크기값
     var size_Y : Float =0f

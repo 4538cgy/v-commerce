@@ -151,6 +151,19 @@ object DataBindingAdapyter {
     }
 
 
+    //글자 크기 조정 (높이 넓이 일정하게) 조정 (Y기준)
+    @JvmStatic
+    @BindingAdapter("text_size", "stand_size_text")
+    fun setTestSizeY(view: TextView, isSize: Int, display: ObservableField<DisplaySize>) {
+
+        if (isSize != null && display != null) {
+            var Ysize = display.get()!!.size_Y
+            var size = (isSize * Ysize)
+            view.setTextSize(size)
+        }
+    }
+
+
 
 
 
@@ -189,8 +202,42 @@ object DataBindingAdapyter {
     //제품 할인 정보 표기
     @JvmStatic
     @BindingAdapter("productSaleInfo")
-    fun setSaleInfo(view: View, priceInfo: MutableMap<String,Long>) {
+    fun setSaleInfo(view: TextView, priceInfo: MutableMap<String,Long>) {
+        if(priceInfo["price"] != null) {
+            Log.d("가격정보 ",priceInfo.toString())
+            //할인 정보가 있을경우
+            if (priceInfo["miners"]!! < 0) {
+                view.text = priceInfo["miners"].toString()
+            }else if(priceInfo["persent"]!! > 0){
+                view.text = "-" + priceInfo["persent"].toString() + "%"
+            }else {      //할인 정보가 없을경우
+                view.text = ""
+            }
+        }
+    }
 
+
+    //평점 출력
+    @JvmStatic
+    @BindingAdapter("totalRating")
+    fun setTotalRating(view: TextView, totalRating: Float) {
+        if (totalRating == null) {
+            view.text = "평균 0점"
+        } else {
+            view.text = "평균 " + totalRating + "점"
+        }
+    }
+
+
+    //평점 출력
+    @JvmStatic
+    @BindingAdapter("ratingCount")
+    fun setRatingCount(view: TextView, ratingCount: Long) {
+        if (ratingCount == null) {
+            view.text = "총 0건"
+        } else {
+            view.text = "총 " + ratingCount + "건"
+        }
     }
 
 

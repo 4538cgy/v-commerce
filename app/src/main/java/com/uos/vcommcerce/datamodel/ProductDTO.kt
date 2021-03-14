@@ -20,7 +20,7 @@ data class ProductDTO (
     //제품 설명
     var productExplain : String? = null,
     //리뷰 평점 총합
-    var totalRating : Long? = null,
+    var totalRating : Float? = null,
     //평점 갯수
     var ratingCount : Long? = null,
     //업로드 시간
