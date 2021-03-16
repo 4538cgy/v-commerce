@@ -10,14 +10,15 @@
         <import type="com.uos.vcommcerce.util.CustomEditText"/>
 
         <variable
-            name="MediaContent"
-            type="com.uos.vcommcerce.datamodel.ObservableProductDTO" />
-        <variable
             name="bottomview"
             type="com.uos.vcommcerce.mainslide.MainBottomView" />
         <variable
             name="MainActivity"
             type="com.uos.vcommcerce.MainActivity" />
+
+        <variable
+            name="ProductList"
+            type="com.uos.vcommcerce.datamodel.ProductModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,7 +32,15 @@
             android:id="@+id/VideoView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:latout_margin_left="@{30}"
+            app:latout_margin_top="@{0}"
+            app:latout_margin_right="@{30}"
+            app:latout_margin_bottom="@{0}"
+            app:layout_height="@{560}"
+            app:stand_size="@{MainActivity.displaySize}"
+            app:stand_size_margin="@{MainActivity.displaySize}"
             >
+
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/vpViewpager"
                 android:layout_width="match_parent"
@@ -39,8 +48,7 @@
                 android:background="@drawable/main_player_background"
                 android:orientation="horizontal"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:layout_editor_absoluteX="-36dp"
-                />
+                tools:layout_editor_absoluteX="0dp" />
 
             <ImageButton
                 android:id="@+id/sellerImg"
@@ -49,7 +57,15 @@
                 android:background="@drawable/background_round_gray_13dp"
                 app:layout_constraintBottom_toTopOf="@+id/likeBtn"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:onClick="@{MainActivity::moveProfile}"/>
+                android:onClick="@{MainActivity::moveProfile}"
+                app:latout_margin_left="@{0}"
+                app:latout_margin_top="@{0}"
+                app:latout_margin_right="@{6}"
+                app:latout_margin_bottom="@{6}"
+                app:layout_sizeY="@{60}"
+                app:stand_size="@{MainActivity.displaySize}"
+                app:stand_size_margin="@{MainActivity.displaySize}"
+                />
 
             <ImageButton
                 android:id="@+id/likeBtn"
@@ -57,7 +73,15 @@
                 android:layout_height="48dp"
                 android:background="@drawable/main_like_btn"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:latout_margin_left="@{0}"
+                app:latout_margin_top="@{0}"
+                app:latout_margin_right="@{12}"
+                app:latout_margin_bottom="@{12}"
+                app:layout_sizeY="@{48}"
+                app:stand_size="@{MainActivity.displaySize}"
+                app:stand_size_margin="@{MainActivity.displaySize}"
+                />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -68,6 +92,8 @@
             android:id="@+id/mainViewChange"
             android:layout_width="match_parent"
             android:layout_height="55dp"
+            app:layout_height="@{55}"
+            app:stand_size="@{MainActivity.displaySize}"
             android:orientation="horizontal"
             android:gravity="center"
             app:layout_constraintTop_toTopOf="parent"
@@ -79,24 +105,20 @@
                 android:id="@+id/activity_main_imagebutton_profile"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
+                app:layout_sizeY="@{55}"
+                app:stand_size="@{MainActivity.displaySize}"
                 android:background="@drawable/main_profile_btn"
-                android:onClick="@{MainActivity::IconMove1}"
+                android:onClick="@{MainActivity::profileMove}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 />
 
             <ImageButton
-                android:id="@+id/activityMainImagebuttonVideoList"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
-                android:background="@drawable/main_video_btn"
-                app:layout_constraintEnd_toStartOf="@+id/activityMainImagebuttonCart"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageButton
                 android:id="@+id/activityMainImagebuttonCart"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
+                app:layout_sizeY="@{55}"
+                app:stand_size="@{MainActivity.displaySize}"
                 android:background="@drawable/main_cart_btn"
                 app:layout_constraintEnd_toStartOf="@+id/activityMainImagebuttonSearch"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -105,6 +127,8 @@
                 android:id="@+id/activityMainImagebuttonSearch"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
+                app:layout_sizeY="@{55}"
+                app:stand_size="@{MainActivity.displaySize}"
                 android:background="@drawable/main_search_btn"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -124,100 +148,388 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:onClick="@{bottomview::BottomViewClick}"
-            android:paddingTop="16dp"
-            android:paddingLeft="24dp"
-            android:paddingRight="24dp">
-            <TextView
-                android:id="@+id/nickname"
+
+            app:stand_size="@{MainActivity.displaySize}"
+            app:layout_height="@{400}"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:text="@{MediaContent.sellerNickName}"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:textColor="@color/mainBottonFontlightColor"
-                android:layout_marginBottom="4dp" />
+
+                app:stand_size="@{MainActivity.displaySize}"
+                app:layout_height="@{20}"
+
+                app:stand_size_margin="@{MainActivity.displaySize}"
+                app:latout_margin_left="@{0}"
+                app:latout_margin_top="@{16}"
+                app:latout_margin_right="@{0}"
+                app:latout_margin_bottom="@{2}"
+                >
+
+                <TextView
+                    android:id="@+id/seller_nickname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@{ProductList.product.sellerName}"
+                    android:textColor="@color/color333333"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+
+                    app:stand_size_text="@{MainActivity.displaySize}"
+                    app:text_size="@{14}" />
+
+                <TextView
+                    android:id="@+id/seller_uid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@{'@' + ProductList.product.sellerUid}"
+                    android:textStyle="bold"
+                    android:textColor="@color/mainBottonFontlightColor"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/seller_nickname"
+
+                    app:stand_size="@{MainActivity.displaySize}"
+                    app:layout_height="@{18}"
+
+                    app:stand_size_margin="@{MainActivity.displaySize}"
+                    app:latout_margin_left="@{4}"
+                    app:latout_margin_top="@{0}"
+                    app:latout_margin_right="@{0}"
+                    app:latout_margin_bottom="@{0}"
+
+                    app:stand_size_text="@{MainActivity.displaySize}"
+                    app:text_size="@{12}"
+                    />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
             <TextView
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:text="@{MediaContent.productTile}"
-                android:textSize="14sp"
+                android:text="@{ProductList.product.productName}"
                 android:textStyle="bold"
-                android:textColor="@color/mainBottonFontColor"
-                android:layout_marginBottom="8dp"/>
-            <LinearLayout
+                android:textColor="@color/color333333"
+
+                app:stand_size ="@{MainActivity.displaySize}"
+                app:layout_height="@{22}"
+
+                app:stand_size_text="@{MainActivity.displaySize}"
+                app:text_size="@{16}"
+                />
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/bottomgroup1"
                 android:layout_width="match_parent"
                 android:layout_height="22dp"
                 android:orientation="horizontal"
-                android:weightSum="2"
-                android:layout_marginBottom="19dp">
+                app:stand_size ="@{MainActivity.displaySize}"
+                app:layout_height="@{62}">
+
+
+                <ImageView
+                    android:id="@+id/adress_simbol"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/address_simbol"
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+
+                    app:stand_size="@{MainActivity.displaySize}"
+                    app:layout_sizeY="@{24}"
+
+                    app:stand_size_margin="@{MainActivity.displaySize}"
+                    app:latout_margin_left="@{0}"
+                    app:latout_margin_top="@{17}"
+                    app:latout_margin_right="@{4}"
+                    app:latout_margin_bottom="@{0}"
+
+
+                    />
+
                 <TextView
                     android:id="@+id/address"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@{ProductList.product.sellerAddress}"
+                    android:textColor="@color/mainBottonFontColor"
+                    android:textStyle="bold"
+
+                    app:layout_constraintLeft_toRightOf="@id/adress_simbol"
+                    app:layout_constraintTop_toTopOf="parent"
+
+                    app:stand_size="@{MainActivity.displaySize}"
+                    app:layout_height="@{18}"
+
+                    app:stand_size_margin="@{MainActivity.displaySize}"
+                    app:latout_margin_left="@{0}"
+                    app:latout_margin_top="@{20}"
+                    app:latout_margin_right="@{0}"
+                    app:latout_margin_bottom="@{0}"
+
+                    app:stand_size_text="@{MainActivity.displaySize}"
+                    app:text_size="@{12}"
+                    />
+
+
+
+                <TextView
+                    android:id="@+id/sale_info"
+                    android:layout_width="wrap_content"
                     android:layout_height="18dp"
-                    android:layout_weight="1"
-                    android:text="@{MediaContent.address}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:textStyle="italic"
+                    android:textColor="#E00000"
+                    app:productSaleInfo="@{ProductList.product.price}"
+
+                    app:stand_size="@{MainActivity.displaySize}"
+                    app:layout_height="@{14}"
+
+                    app:stand_size_text="@{MainActivity.displaySize}"
+                    app:text_size="@{12}"
+                    />
+
+
+                <TextView
+                    android:id="@+id/sale_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="18dp"
+                    android:textColor="@color/mainBottonFontlightColor"
                     android:textSize="12sp"
                     android:textStyle="bold"
-                    android:textColor="@color/mainBottonFontlightColor" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/price"
+                    app:productSalePrice="@{ProductList.product.price}"
+
+                    app:stand_size="@{MainActivity.displaySize}"
+                    app:layout_height="@{18}"
+
+                    app:stand_size_margin="@{MainActivity.displaySize}"
+                    app:latout_margin_left="@{0}"
+                    app:latout_margin_top="@{23}"
+                    app:latout_margin_right="@{8}"
+                    app:latout_margin_bottom="@{0}"
+
+                    app:stand_size_text="@{MainActivity.displaySize}"
+                    app:text_size="@{12}"
+                    />
+
                 <TextView
                     android:id="@+id/price"
-                    android:layout_width="0dp"
-                    android:layout_height="22dp"
-                    android:layout_weight="1"
-                    android:text="@{MediaContent.cost}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/color333333"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="@color/mainBottonFontColor" />
-            </LinearLayout>
+                    app:layout_constraintTop_toBottomOf="@id/sale_info"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:productPrice="@{ProductList.product.price}"
+
+                    app:stand_size="@{MainActivity.displaySize}"
+                    app:layout_height="@{30}"
+
+                    app:stand_size_text="@{MainActivity.displaySize}"
+                    app:text_size="@{20}"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
-                android:text="@{MediaContent.productExplain}"
-                android:layout_marginBottom="37dp"
-                android:textColor="@color/mainBottonFontColor"/>
-            <Button
-                android:id="@+id/review"
+                android:text="@{ProductList.product.productExplain}"
+                android:textColor="@color/mainBottonFontColor"
+
+                app:stand_size="@{MainActivity.displaySize}"
+                app:layout_height="@{140}"
+
+                app:stand_size_margin="@{MainActivity.displaySize}"
+                app:latout_margin_left="@{0}"
+                app:latout_margin_top="@{8}"
+                app:latout_margin_right="@{0}"
+                app:latout_margin_bottom="@{16}"
+
+                app:stand_size_text="@{MainActivity.displaySize}"
+                app:text_size="@{14}"
+                />
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="22dp"
-                android:layout_marginBottom="31dp"
-                android:background="@drawable/main_bottom_review_button"
-                style="?android:attr/borderlessButtonStyle"
-                android:gravity="center_vertical|right"
-                android:text="리뷰 보기 > "
-                android:textStyle="bold"
-                android:onClick="@{MainActivity::openReview}"/>
+                android:layout_height="48dp"
+
+                app:stand_size="@{MainActivity.displaySize}"
+                app:layout_height="@{48}"
+
+                app:stand_size_margin="@{MainActivity.displaySize}"
+                app:latout_margin_left="@{0}"
+                app:latout_margin_top="@{0}"
+                app:latout_margin_right="@{0}"
+                app:latout_margin_bottom="@{16}"
+                >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+
+                    app:stand_size="@{MainActivity.displaySize}"
+                    app:layout_height="@{48}"
+                    >
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/star"
+
+                        app:stand_size="@{MainActivity.displaySize}"
+                        app:layout_height="@{24}"
+
+                        app:stand_size_margin="@{MainActivity.displaySize}"
+                        app:latout_margin_left="@{0}"
+                        app:latout_margin_top="@{0}"
+                        app:latout_margin_right="@{4}"
+                        app:latout_margin_bottom="@{0}"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="18dp"
+                        app:totalRating="@{ProductList.product.totalRating}"
+                        android:textColor="@color/color333333"
+                        android:textStyle="bold"
+
+                        app:stand_size="@{MainActivity.displaySize}"
+                        app:layout_height="@{18}"
+
+                        app:stand_size_margin="@{MainActivity.displaySize}"
+                        app:latout_margin_left="@{0}"
+                        app:latout_margin_top="@{0}"
+                        app:latout_margin_right="@{8}"
+                        app:latout_margin_bottom="@{0}"
+
+                        app:stand_size_text="@{MainActivity.displaySize}"
+                        app:text_size="@{12}"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="18dp"
+                        app:ratingCount="@{ProductList.product.ratingCount}"
+                        android:textColor="#aaaaaa"
+
+                        app:stand_size="@{MainActivity.displaySize}"
+                        app:layout_height="@{18}"
+
+                        app:stand_size_text="@{MainActivity.displaySize}"
+                        app:text_size="@{12}"
+                        />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/review"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:onClick="@{MainActivity::openReview}"
+                    android:orientation="horizontal"
+
+                    app:stand_size="@{MainActivity.displaySize}"
+                    app:layout_height="@{48}"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:text="리뷰 보기"
+                        android:textStyle="bold"
+                        android:textColor="@color/color333333"
+                        app:layout_constraintEnd_toStartOf="@+id/review_simbol"
+                        android:gravity="center|right"
+
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_height="@{48}"
+
+                        app:stand_size="@{MainActivity.displaySize}"
+                        app:stand_size_text="@{MainActivity.displaySize}"
+                        app:text_size="@{16}" />
+
+                    <ImageView
+                        android:id="@+id/review_simbol"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/main_bottom_review_button"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+
+                        app:layout_sizeY="@{48}"
+                        app:stand_size="@{MainActivity.displaySize}" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
             <LinearLayout
                 android:id="@+id/bottomgroup2"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:orientation="horizontal">
-                <Button
+                android:orientation="horizontal"
+
+                app:stand_size="@{MainActivity.displaySize}"
+                app:layout_height="@{40}"
+                >
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/like"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_weight="1"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
                     android:background="@drawable/main_bottom_button"
-                    android:textColor="@color/mainBottonButtonText"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:textStyle="bold"
-                    android:text="♡"/>
-                <View
-                    android:layout_width="8dp"
-                    android:layout_height="40dp"/>
+
+                    app:stand_size="@{MainActivity.displaySize}"
+                    app:layout_width="@{80}"
+
+                    app:stand_size_margin="@{MainActivity.displaySize}"
+                    app:latout_margin_left="@{0}"
+                    app:latout_margin_top="@{0}"
+                    app:latout_margin_right="@{8}"
+                    app:latout_margin_bottom="@{0}"
+                    >
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/heart"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+
+                        app:stand_size="@{MainActivity.displaySize}"
+                        app:layout_sizeY="@{24}"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
                 <Button
                     android:id="@+id/selectoption"
+                    android:layout_height="match_parent"
                     android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_weight="3"
+                    android:layout_weight="1"
                     android:background="@drawable/main_bottom_button"
-                    android:textColor="@color/mainBottonButtonText"
+                    android:textColor="@color/exo_white"
                     style="?android:attr/borderlessButtonStyle"
                     android:textAllCaps="false"
-                    android:text="Select Option"/>
+                    android:textStyle="bold"
+                    android:text="옵션 구경하기"/>
 
             </LinearLayout>
 

@@ -2,32 +2,40 @@ package com.uos.vcommcerce
 
 import android.content.Context
 import android.content.Intent
-import android.content.res.Resources
-import android.graphics.Point
 import android.os.Bundle
+import android.os.Handler
+import android.os.Message
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.ObservableField
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.uos.vcommcerce.activity.review.ReviewActivity
 import com.uos.vcommcerce.databinding.ActivityMainBinding
-import com.uos.vcommcerce.mainslide.*
-import com.uos.vcommcerce.datamodel.ObservableProductDTO
 import com.uos.vcommcerce.datamodel.ProductDTO
+import com.uos.vcommcerce.datamodel.ProductModel
+import com.uos.vcommcerce.mainslide.MainBottomView
+import com.uos.vcommcerce.mainslide.ViewAnimation
+import com.uos.vcommcerce.mainslide.mainActivityState
 import com.uos.vcommcerce.profile.UserActivity
 import com.uos.vcommcerce.search.SearchFragment
 import com.uos.vcommcerce.tranformer.ZoomOutPageTransformer
-import com.uos.vcommcerce.util.*
+import com.uos.vcommcerce.util.DisplaySize
+import com.uos.vcommcerce.util.MainActivityState
+import com.uos.vcommcerce.util.dp
 import kotlinx.android.synthetic.main.item_exoplayer.view.*
 import kotlin.math.abs
 
@@ -39,59 +47,18 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
 
     //메인 엑티비티에 물려있는 바인딩
     private lateinit var Binding: ActivityMainBinding
+    //제품리스트
+    private val productList : ProductModel by viewModels()
+    var productData :  MutableLiveData<ArrayList<ProductDTO>> = MutableLiveData<ArrayList<ProductDTO>>()
 
-    //파이어 스토어 객체
-    var firestore = FirebaseFirestore.getInstance()
+    //접속자 정보
     private var firebaseAuth : FirebaseAuth = FirebaseAuth.getInstance();
-
-    //상품 정보 리스트
-    var items: ArrayList<ProductDTO> = arrayListOf()
-    //현재 아이템 정보
-    var mediaContent: ObservableProductDTO = ObservableProductDTO(ProductDTO())
-
     //메인에 물려있는 탑과 바텀뷰 + 플레이어
     var MainBottom : MainBottomView = MainBottomView()
     //검색창 프라그먼트
     var SearchFragmentView : SearchFragment = SearchFragment()
-
-    //피그마 기준 값
-    var standardSize_Y : Int = 770
-    var standardSize_X : Int = 375
-
-    //플레이어 크기
-    var PlayerSize : Int = 560
-
-    //탑뷰 크기
-    val TopViewSize : Int = 55
-
-    //피그마크기1px 당 실제뷰 크기값
-    var size_Y :Float = 0f
-    var size_X :Float = 0f
-
-    //파이어 베이스에서 데이터를 불러옴
-    init {
-
-        firestore.collection("product").document("productInfo").collection("normalProduct")
-            .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
-
-                if (querySnapshot == null) {
-                    return@addSnapshotListener
-                }
-
-                items.clear()
-                for (snapshot in querySnapshot!!.documents) {
-
-//                    Log.d("아이템 정보", snapshot.id)
-                    var item = snapshot.toObject(ProductDTO::class.java)
-                    Log.d("ItemInfo", "아이템정보 " + item)
-                    if (item != null) {
-                        items.add(item!!)
-                    }
-                }
-                Binding.vpViewpager.adapter?.notifyDataSetChanged()
-            }
-
-    }
+    //창크기 정보를 가지는 객체
+    lateinit var DisplaySize : ObservableField<DisplaySize>
 
     companion object {
         var TouchPoint: Int? = null
@@ -99,57 +66,31 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         Binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        DisplaySize = ObservableField(DisplaySize(this))
         Binding.mainActivity = this
-        //아이템 정보 바인딩에 할당
-        Binding.mediaContent = mediaContent
+        Binding.productList = productList
 
+        //리스트 변동을 확인할 옵저버 생성 뷰모델의 리스트가바뀌면 확인해서 메인의 리스트를바꾼다음 어댑터에 재할당
+        val dataObserver: Observer<ArrayList<ProductDTO>> =
+            Observer { livedata -> productData.value = livedata
+                Binding.vpViewpager.adapter = VideoAdapter(this,productData)
+            }
+        //뷰모델 리스트에 옵저버 장착
+        productList.productList.observe(this,dataObserver)
+
+        //아이템 정보 바인딩에 할당
         // 최석우 일시적으로 앱터져서 막음
         //registerPushToken()
 
         //뷰페이져 어댑터 설정
-        Binding.vpViewpager.adapter = VideoAdapter(this)
-
+//        Binding.vpViewpager.adapter = VideoAdapter(this,productList.productList)
         //메인 바텀뷰에 필요한 인자들 전송
         MainBottom.getMainBinding(Binding, this)
 
         //키보드 숨기기위한 시스템 변수
         Imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager;
 
-        //해상도 측정
-        val display = this.windowManager.defaultDisplay
-        val size = Point()
-        display.getSize(size)
-        var ScreenSize: Point = size
-        var density = Resources.getSystem().displayMetrics.density
-
-        //피그마크기1px 당 실제뷰 크기값
-        var size_Y = (ScreenSize.y / density)/standardSize_Y
-        var size_X = (ScreenSize.x / density)/standardSize_X
-
-
-
-
-        //탑뷰 크기 설정
-
-        //아이콘레이아웃 크기설정
-        Binding.mainViewChange.setHeight((size_Y*TopViewSize).toInt())
-
-        //각 아이템 크기 성정
-        //moveItem1 => activityMainImageButtonProfile
-        Binding.activityMainImagebuttonProfile.setHeight((size_Y*TopViewSize).toInt())
-        Binding.activityMainImagebuttonProfile.setWidth((size_Y*TopViewSize).toInt())
-
-        Binding.activityMainImagebuttonVideoList.setHeight((size_Y*TopViewSize).toInt())
-        Binding.activityMainImagebuttonVideoList.setWidth((size_Y*TopViewSize).toInt())
-
-        Binding.activityMainImagebuttonCart.setHeight((size_Y*TopViewSize).toInt())
-        Binding.activityMainImagebuttonCart.setWidth((size_Y*TopViewSize).toInt())
-
-        //movewItem4 => activityMainImageButtonSetting
-        Binding.activityMainImagebuttonSearch.setHeight((size_Y*TopViewSize).toInt())
-        Binding.activityMainImagebuttonSearch.setWidth((size_Y*TopViewSize).toInt())
 
         //비디오 플레이어 설정
         // 스크롤 수평 설정
@@ -169,40 +110,21 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
         // 뷰페이저 리스너 (ViewPager 1과 다르게 2는 필요한 것만 오버라이딩이 가능하다.
         Binding.vpViewpager.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
-                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                    super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-                    Log.d("onPageScrolled", "onPageScrolled")
-                }
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
                     // 다른 페이지로 스크롤 됬을때 ViewPager 의 현재 페이지 텍스트뷰를 갱신해준다.
-                    mediaContent.set(items[position])
+                    productList.setProduct(position)
                     //페이지 이동후 디폴트 타입으로 변경
                     returnDefaultView()
                 }
             }
         )
 
-        //비디오 플레이어 크기 설정
-        Binding.VideoView.setHeight((size_Y*PlayerSize).toInt())
-        Binding.VideoView.setCMarginRight((size_X*30).toInt())
-        Binding.VideoView.setCMarginLeft((size_X*30).toInt())
-        Binding.sellerImg.setHeight((size_Y*60).toInt())
-        Binding.sellerImg.setWidth((size_Y*60).toInt())
-        Binding.sellerImg.setCMarginRight((size_X*6).toInt())
-        Binding.sellerImg.setCMarginBottom((size_X*6).toInt())
-        Binding.likeBtn.setHeight((size_Y*48).toInt())
-        Binding.likeBtn.setWidth((size_Y*48).toInt())
-        Binding.likeBtn.setCMarginRight((size_X*12).toInt())
-        Binding.likeBtn.setCMarginBottom((size_X*12).toInt())
-
         //비디오 플레이어 위치 조정
-        ViewAnimation(Binding.VideoView, 0, (63*size_Y).toInt().dp(), 0)
-
+        ViewAnimation(Binding.VideoView, 0, (63*DisplaySize.get()!!.size_Y).toInt().dp(), 0)
 
         //검색창 프라그먼트
         supportFragmentManager.beginTransaction().replace(R.id.search_view, SearchFragmentView).commit()
-
     }
 
 //최석우 앱터져서 일시적으로 막음
@@ -235,20 +157,20 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
         }
     }
 
-    //상단뷰 1번아이콘 클릭이벤트
-    fun IconMove1(view : View) {
+    //프로필 이동 이벤트
+    fun profileMove(view : View) {
         intent = Intent(this, UserActivity::class.java)
         intent.putExtra("Uid",firebaseAuth.currentUser?.uid)
         startActivity(intent)
 
     }
-    //4번 아이콘
+    //세팅으로 돌아가는 이벤트
     fun IconMove4(view : View) {startActivity(Intent(this, SettingActivity::class.java))}
 
 
     fun moveProfile(view: View ){
         intent = Intent(this, UserActivity::class.java)
-        intent.putExtra("Uid",mediaContent.uid.get())
+        intent.putExtra("Uid",productList.product.get()?.sellerUid)
         startActivity(intent)
     }
 
@@ -264,43 +186,39 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
         SearchFragmentView.SearchSet();
     }
 
+    //리뷰열기
     fun openReview(view:View){
         var intent = Intent(this, ReviewActivity::class.java)
         intent.apply {
-            putExtra("mediaContent",mediaContent.productTile)
+            //임시로 막아둠
+//            putExtra("mediaContent",mediaContent.get()?.reviews)
         }
         startActivity(intent)
     }
 
 
-    inner class VideoAdapter(private val context: Context) :
-        RecyclerView.Adapter<VideoAdapter.ViewHolder>() {
+    inner class VideoAdapter(private val context: Context, var data : LiveData<ArrayList<ProductDTO>>) : RecyclerView.Adapter<VideoAdapter.ViewHolder>() {
 
-        //이미지뷰 터치 시작위치 측정
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {}
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoAdapter.ViewHolder =
-            ViewHolder(
-                LayoutInflater.from(parent.context).inflate(R.layout.item_exoplayer, parent, false)
-            )
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoAdapter.ViewHolder = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_exoplayer, parent, false))
 
-        override fun getItemCount(): Int = items.size
+        override fun getItemCount(): Int = data.value!!.size
+//        override fun getItemCount(): Int = items.size
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            Log.d("재 바인드? : ", data.value.toString())
             var view = holder.itemView
 
             var player = SimpleExoPlayer.Builder(context).build()
 
             //Glide.with(context).load(items[position]).into(holder.imageUrl)
-            var mediaItem = items[position]
             view.item_exoplayer.player = player
             view.item_exoplayer.hideController()
 
-            player?.setMediaItem(MediaItem.fromUri(mediaItem.videoUri as String))
+            player?.setMediaItem(MediaItem.fromUri(data.value!!.get(0)!!.videoList!!.get(0)))
             player?.prepare()
             player?.play()
-
-
             //뷰에 터치리스너 추가
 
             holder.itemView.setOnClickListener(ViewPageClickListner)
@@ -345,21 +263,17 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
 
     }
 
+    //기본상태로 돌아가기
     fun returnDefaultView() {
-        //검색중일때 작용
-//        if (mainActivityState == MainActivityState.search) {
-//            Binding.topview?.SearchEnd()
-//            Imm?.hideSoftInputFromWindow(Binding.mainSearch.windowToken, 0);
-//        }
         Binding.bottomview?.BottonViewSlideDown(MainActivityState.default)
     }
 
-
+    //검색 종료
     override fun searchEnd(view: View?) {
-        Log.d("인터페이스","메인")
         Binding.searchView.visibility = View.GONE
         returnDefaultView()
     }
+
 
 
 

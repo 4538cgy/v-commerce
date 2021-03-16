@@ -12,4 +12,6 @@ class HttpResponseDTO2(
         var day_of_birth: String? = null,         // "1999-01-01"
         var auth: String? = null                  //init google,kakao,apple,email select only one
     )
+
+
 }

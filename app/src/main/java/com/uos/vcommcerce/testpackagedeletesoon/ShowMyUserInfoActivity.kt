@@ -54,7 +54,7 @@ class ShowMyUserInfoActivity : AppCompatActivity() {
 
     fun ViewChange(){
         binding.testTextviewUiddb.text = users.uid
-        binding.testTextviewAddress.text = users.address
+//        binding.testTextviewAddress.text = users.address
         binding.testTextviewNickname.text = users.userNickName
         binding.testTextviewPhonenumberdb.text = users.phoneNumber
     }
