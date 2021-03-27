@@ -21,24 +21,19 @@ import androidx.lifecycle.MutableLiveData
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.activity.regist.RegistSellerActivity
 import com.uos.vcommcerce.databinding.ActivityFixUserBinding
+import com.uos.vcommcerce.util.Config
+import com.uos.vcommcerce.util.PermissionUtil
+import com.uos.vcommcerce.util.Util
 import kotlinx.android.synthetic.main.activity_user_view.*
 import java.io.FileOutputStream
 import java.lang.Exception
 import java.text.SimpleDateFormat
-
-private const val FLAG_PERM_CAMERA = 98
-private const val FLAG_PERM_STORAGE = 99
-private const val FLAG_REQ_CAMERA = 101
-private const val FLAG_REQ_GALLERY = 102
-private const val FLAG_FIX_RESULT = 103
 
 class FixUserActivity : AppCompatActivity() {
 
 
     private lateinit var binding: ActivityFixUserBinding
 
-    val CAMERA_PERMISSION = arrayOf(Manifest.permission.CAMERA) //카메라 퍼미션
-    val STORAGE_PERMISSION = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE) //외부저장소 권한요청
 
     var Imguri :MutableLiveData<Uri> = MutableLiveData()
     var NickName : MutableLiveData<String> = MutableLiveData()
@@ -87,17 +82,17 @@ class FixUserActivity : AppCompatActivity() {
         popup.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.profile_Camera -> {
-                    if(isPermitted(CAMERA_PERMISSION)) { // 권한 체크하는 함수
-                        openCamera()
+                    if(PermissionUtil().isPermitted(baseContext,Config.CAMERA_PERMISSION)) { // 권한 체크하는 함수
+                        Util().startCamera(this)
                     }else{
-                        ActivityCompat.requestPermissions(this, CAMERA_PERMISSION, FLAG_PERM_CAMERA)
+                        ActivityCompat.requestPermissions(this, Config.CAMERA_PERMISSION, Config.FLAG_PERM_CAMERA)
                     }
                 }
                 R.id.profile_Gallery -> {
-                    if(isPermitted(STORAGE_PERMISSION)){ // 권한 체크하는 함수
-                        openGallery()
+                    if(PermissionUtil().isPermitted(baseContext,Config.STORAGE_PERMISSION)){ // 권한 체크하는 함수
+                        Util().openGallery(this)
                     }else{
-                        ActivityCompat.requestPermissions(this,STORAGE_PERMISSION, FLAG_PERM_STORAGE)
+                        ActivityCompat.requestPermissions(this,Config.STORAGE_PERMISSION, Config.FLAG_PERM_STORAGE)
                     }
                 }
                 R.id.profile_Basic -> {
@@ -118,16 +113,16 @@ class FixUserActivity : AppCompatActivity() {
         //Log.d("카메라","req=$requestCode, result = $resultCode, data = $data")
         if(resultCode == Activity.RESULT_OK){
             when(requestCode){
-                FLAG_REQ_CAMERA -> {
+                Config.FLAG_REQ_CAMERA -> {
                     if(data?.extras?.get("data")!=null){
                         val bitmap = data?.extras?.get("data") as Bitmap
-                        val filename = newFileName()
-                        val uri = saveImageFile(filename,"image/jpg",bitmap)
+                        val filename = Util().newFileName()
+                        val uri = Util().saveImageFile(contentResolver,filename,"image/jpg",bitmap)
                         Imguri.value = uri
                         profile_Img.setImageURI(uri)
                     }
                 }
-                FLAG_REQ_GALLERY ->{
+                Config.FLAG_REQ_GALLERY ->{
                     val uri = data?.data
                     Imguri.value = uri
                     profile_Img.setImageURI(uri)
@@ -137,25 +132,6 @@ class FixUserActivity : AppCompatActivity() {
     }
 
 
-
-    //카메라 권한 여부 체크
-    fun isPermitted(permissions:Array<String>) : Boolean{
-
-        for (permission in permissions){
-            val result = ContextCompat.checkSelfPermission(this, permission)
-            if(result != PackageManager.PERMISSION_GRANTED){
-                return false
-            }
-        }
-        return true
-    }
-
-    //카메라 열기
-    fun openCamera(){
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        startActivityForResult(intent, FLAG_REQ_CAMERA)
-    }
-
     //카메라 등 권한 체크
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -163,7 +139,7 @@ class FixUserActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         when(requestCode){
-            FLAG_PERM_CAMERA ->{
+            Config.FLAG_PERM_CAMERA ->{
                 var checked = true
                 for(grant in grantResults){
                     if(grant != PackageManager.PERMISSION_GRANTED){
@@ -172,58 +148,10 @@ class FixUserActivity : AppCompatActivity() {
                     }
                 }
                 if(checked){
-                    openCamera()
+                    Util().startCamera(this)
                 }
             }
         }
-    }
-
-    //이미지 저장
-    fun saveImageFile(filename:String, mimeType:String, bitmap: Bitmap) : Uri? {
-        var values = ContentValues()
-        values.put(MediaStore.Images.Media.DISPLAY_NAME, filename)
-        values.put(MediaStore.Images.Media.MIME_TYPE, mimeType)
-
-        //안드로이드 버전이 Q보다 크거나 같으면
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
-            values.put(MediaStore.Images.Media.IS_PENDING, 1)   //사용중임을 알려주는 코드
-        }
-
-        //내가 저장할 사진의 주소값 생성
-        val uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
-
-        try{
-            if(uri != null){
-                //쓰기모드 열기
-                var descriptor = contentResolver.openFileDescriptor(uri,"w")
-                if(descriptor != null){
-                    val fos = FileOutputStream(descriptor.fileDescriptor)   //OutputStream 예외처리
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos)
-                    fos.close()
-                    return uri
-                }
-            }
-        }catch (e: Exception){
-            Log.e("Camera","${e.localizedMessage}")
-        }
-
-        return null
-    }
-
-    //파일명 생성 함수
-    fun newFileName() : String{
-        val sdf = SimpleDateFormat("yyyyMMdd_HHmmss")
-        val filename = sdf.format(System.currentTimeMillis())
-        return filename;
-    }
-
-
-
-    //갤러리 호출 함수
-    fun openGallery(){
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = MediaStore.Images.Media.CONTENT_TYPE
-        startActivityForResult(intent, FLAG_REQ_GALLERY)
     }
 
     //결과값 반환
