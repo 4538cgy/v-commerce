@@ -11,6 +11,8 @@ import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
 import android.util.TypedValue
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
 import java.io.FileOutputStream
 import java.lang.Exception
 import java.text.SimpleDateFormat
@@ -89,5 +91,12 @@ class Util {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = MediaStore.Images.Media.CONTENT_TYPE
         activity.startActivityForResult(intent, Config.FLAG_REQ_GALLERY)
+    }
+
+    fun cropImage(uri : Uri, activity : Activity){
+        CropImage.activity(uri).setGuidelines(CropImageView.Guidelines.ON)
+            .setCropShape(CropImageView.CropShape.RECTANGLE)
+            //사각형 모양으로 자른다
+            .start(activity)
     }
 }

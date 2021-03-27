@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
@@ -12,6 +13,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
+import com.theartofdev.edmodo.cropper.CropImage
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.databinding.ActivityProfileRegistBinding
 import com.uos.vcommcerce.popup.PopupManager
@@ -89,7 +91,13 @@ class ProfileRegistActivity : AppCompatActivity() {
         }
     }
 
-
+    private fun startCrop(uri: Uri?){
+        uri?.let{
+            Util().cropImage(uri, this)
+        } ?: {
+            Toast.makeText(this, "사진 생성을 실패하였습니다.", Toast.LENGTH_SHORT).show()
+        }()
+    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == Activity.RESULT_OK){
@@ -99,12 +107,26 @@ class ProfileRegistActivity : AppCompatActivity() {
                         val bitmap = data?.extras?.get("data") as Bitmap
                         val filename = Util().newFileName()
                         val uri = Util().saveImageFile(contentResolver, filename,"image/jpg",bitmap)
-                        binding.activityProfileRegistImageviewProfilePhoto.setImageURI(uri)
+                        startCrop(uri)
                     }
                 }
                 Config.FLAG_REQ_GALLERY ->{
                     val uri = data?.data
-                    binding.activityProfileRegistImageviewProfilePhoto.setImageURI(uri)
+                    startCrop(uri)
+                }
+                CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
+                    val result = CropImage.getActivityResult(data)
+                        result.uri?.let {
+                            binding.activityProfileRegistImageviewProfilePhoto.setImageBitmap(result.bitmap)
+                            binding.activityProfileRegistImageviewProfilePhoto.setImageURI(result.uri)
+                        }
+                }
+                CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE -> {
+
+                    val result = CropImage.getActivityResult(data)
+                    val error = result.error
+                    Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show()
+
                 }
             }
         }
