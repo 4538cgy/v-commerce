@@ -1,5 +1,9 @@
 package com.uos.vcommcerce.activity.review
 
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,13 +22,15 @@ import com.uos.vcommcerce.datamodel.ReviewDTO
 import com.uos.vcommcerce.datamodel.ReviewUploadItemDTO
 import com.uos.vcommcerce.datamodel.ReviewUploadItemFooterDTO
 
+import kotlinx.android.synthetic.main.activity_user_view.*
+
 class ReviewUpload : AppCompatActivity() {
 
-    private val TYPE_ITEM = 0
-    private val TYPE_FOOTER = 1
+    val FLAG_REQ_GALLERY = 102
 
     lateinit var binding: ActivityReviewUploadBinding
 
+    lateinit var adapter : reviewUploadPictureAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,17 +38,34 @@ class ReviewUpload : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_review_upload);
         binding.reviewupload = this
 
-        var adapter =reviewUploadPictureAdapter()
+        adapter = reviewUploadPictureAdapter()
         binding.reviewImgRecycler.adapter = adapter
         binding.reviewImgRecycler.layoutManager = LinearLayoutManager(binding.root.context,LinearLayoutManager.HORIZONTAL,false)
         adapter.notifyDataSetChanged();
 
-
     }
+
+    //사진 받아온것 처리하는 코드
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        //Log.d("카메라","req=$requestCode, result = $resultCode, data = $data")
+        if(resultCode == Activity.RESULT_OK){
+            when(requestCode){
+                FLAG_REQ_GALLERY ->{
+                    adapter.addItem(ReviewUploadItemDTO(data?.data))
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        }
+    }
+
+
 
 
     inner class reviewUploadPictureAdapter() : RecyclerView.Adapter<reviewUploadPictureAdapter.CustomViewHolder>() {
 
+        private val TYPE_ITEM = 0
+        private val TYPE_FOOTER = 1
 
         var reviewList : ArrayList<ReviewUploadItemDTO> = arrayListOf();
 
@@ -64,6 +87,11 @@ class ReviewUpload : AppCompatActivity() {
                 binding.reviewuploadItemFooter = data
             }
         }
+
+        fun addItem(ReviewUploadItem : ReviewUploadItemDTO){
+            reviewList.add(ReviewUploadItem);
+        }
+
 
         //여기서 바인딩을 할당
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
@@ -102,7 +130,7 @@ class ReviewUpload : AppCompatActivity() {
                 }
                 TYPE_FOOTER ->{
                     var holder = holder as ReviewUploadItemFooter
-                    holder.onBind(ReviewUploadItemFooterDTO())
+                    holder.onBind(ReviewUploadItemFooterDTO(this@ReviewUpload))
                 }
             }
         }
