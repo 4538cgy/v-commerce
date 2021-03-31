@@ -25,23 +25,25 @@ class ReviewActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_review)
         binding.activityreview = this@ReviewActivity
 
-        binding.activityReviewImagebuttonClose.setOnClickListener {
-            //창 닫기
-            finish()
-        }
 
+
+        //구분선 추가..?
         binding.activityReviewRecycler.addItemDecoration(DividerItemDecoration(binding.root.context,DividerItemDecoration.VERTICAL))
+        //어댑터 추가
         binding.activityReviewRecycler.adapter = ReviewRecyclerViewAdapter()
+        //리사이클러뷰 아래로 설정
         binding.activityReviewRecycler.layoutManager = LinearLayoutManager(binding.root.context,LinearLayoutManager.VERTICAL,false)
-
+    }
 
     fun reviewUpload(view : View){
         startActivity(Intent(this,ReviewUpload::class.java));
     }
 
 
-
+    fun returnReview(view : View){
+        finish()
     }
+
 
     inner class ReviewRecyclerViewAdapter() : RecyclerView.Adapter<ReviewRecyclerViewAdapter.ReviewRecyclerViewAdapterViewHolder>(){
 
@@ -49,9 +51,7 @@ class ReviewActivity : AppCompatActivity() {
         var data = listOf<ReviewDTO>()
 
         init {
-
             notifyDataSetChanged()
-
             data = reviews
         }
 
@@ -85,7 +85,6 @@ class ReviewActivity : AppCompatActivity() {
                     putExtra("reviewImageUrlList",reviews[position].reviewImageUrlList)
                     putExtra("timestamp",reviews[position].timestamp)
 
-
                 }
 
                 holder.binding.root.context.startActivity(intent)
@@ -110,6 +109,7 @@ class ReviewActivity : AppCompatActivity() {
                 binding.itemreviewitem = data
             }
         }
+
 
     }
 
