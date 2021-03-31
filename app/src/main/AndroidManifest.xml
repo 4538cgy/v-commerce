@@ -18,7 +18,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".profile.FixUserActivity"></activity>
+        <activity android:name=".activity.review.ReviewUploadItemFooter"></activity>
+        <activity android:name=".activity.review.ReviewUploadItem" />
+        <activity android:name=".activity.review.ReviewUpload" />
+        <activity android:name=".profile.FixUserActivity" />
         <activity android:name=".activity.productinformation.ProductInformationActivity" />
         <activity
             android:name=".activity.login.popup.PasswordErrorPopUpActivity"

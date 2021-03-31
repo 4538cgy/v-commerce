@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -33,6 +34,10 @@ class ReviewActivity : AppCompatActivity() {
         binding.activityReviewRecycler.adapter = ReviewRecyclerViewAdapter()
         binding.activityReviewRecycler.layoutManager = LinearLayoutManager(binding.root.context,LinearLayoutManager.VERTICAL,false)
 
+
+    fun reviewUpload(view : View){
+        startActivity(Intent(this,ReviewUpload::class.java));
+    }
 
 
 
@@ -105,7 +110,6 @@ class ReviewActivity : AppCompatActivity() {
                 binding.itemreviewitem = data
             }
         }
-
 
     }
 
