@@ -293,7 +293,7 @@
                     app:layout_height="@{14}"
 
                     app:stand_size_text="@{MainActivity.displaySize}"
-                    app:text_size="@{12}"
+                    app:text_size="@{10}"
                     />
 
 

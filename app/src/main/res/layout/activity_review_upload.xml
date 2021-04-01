@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="reviewupload"
+            type="com.uos.vcommcerce.activity.review.ReviewUpload" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorwhiteGray"
+        android:orientation="vertical"
+        android:layout_margin="24dp"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/activity_review_const_top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="38dp"
+                android:text="Review"
+                android:textColor="@color/colorBlack"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <Button
+                android:id="@+id/activity_review_imagebutton_close"
+                android:layout_width="wrap_content"
+                android:layout_height="38dp"
+                android:text="리뷰 등록"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                android:textColor="@color/exo_white"
+                android:background="@drawable/main_bottom_button"
+                style="?android:attr/borderlessButtonStyle"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/review_picture"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="사진및 동영상"
+            android:autoSizeTextType="uniform"
+            android:textColor="@color/colorBlack"
+            android:textStyle="bold"
+            android:padding="3dp"/>
+
+        <!--사진 또는 동영상 위치-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/review_img_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="리뷰 작성"
+            android:autoSizeTextType="uniform"
+            android:textColor="@color/colorBlack"
+            android:textStyle="bold"
+            android:padding="3dp"/>
+
+        <EditText
+            android:gravity="top"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_round_color_333333_10dp"
+            android:padding="10dp"/>
+
+
+    </LinearLayout>
+
+</layout>

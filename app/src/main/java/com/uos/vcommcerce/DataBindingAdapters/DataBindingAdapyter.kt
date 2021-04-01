@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.ColorFilter
 import android.graphics.Paint
 import android.graphics.PorterDuff
+import android.net.Uri
 import android.util.Log
 import android.view.Display
 import android.view.View
@@ -238,6 +239,13 @@ object DataBindingAdapyter {
         } else {
             view.text = "총 " + ratingCount + "건"
         }
+    }
+
+    //uri로 이미지 추가
+    @JvmStatic
+    @BindingAdapter("imageUri")
+    fun setimageUri(view: ImageView, uri: Uri) {
+        view.setImageURI(uri);
     }
 
 
