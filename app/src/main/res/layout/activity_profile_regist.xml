@@ -9,6 +9,7 @@
         <variable
             name="activityprofileregist"
             type="com.uos.vcommcerce.activity.signup.ProfileRegistActivity" />
+
         <variable
             name="birthdaytext"
             type="String" />
@@ -18,39 +19,63 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/activity_profile_regist_imageview_profile_photo"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/activity_profile_regist_layout_profile_photo"
+            android:layout_width="121dp"
+            android:layout_height="121dp"
             android:layout_marginTop="150dp"
-            android:background="@drawable/button_background_round_gray_16dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/button_round_color_eeeeee_16dp"
+            android:scaleType="centerCrop"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-        
-        <ImageView
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.uos.vcommcerce.util.view.RoundImageView
+                android:id="@+id/activity_profile_regist_imageview_profile_photo"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:adjustViewBounds="true"
+                android:background="@drawable/button_background_round_gray_16dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+
             android:id="@+id/activity_profile_take_picture_img"
-            app:layout_constraintRight_toRightOf="@+id/activity_profile_regist_imageview_profile_photo"
-            app:layout_constraintBottom_toBottomOf="@+id/activity_profile_regist_imageview_profile_photo"
-            app:layout_constraintTop_toTopOf="@+id/activity_profile_regist_imageview_profile_photo"
-            app:layout_constraintLeft_toLeftOf="@+id/activity_profile_regist_imageview_profile_photo"
-            android:layout_marginLeft="90dp"
-            android:layout_marginTop="90dp"
             android:layout_width="32dp"
             android:layout_height="32dp"
+            android:layout_marginLeft="97dp"
+            android:layout_marginTop="97dp"
             android:background="@drawable/button_background_round_black_16dp"
             android:onClick="@{activityprofileregist::showPicturePopup}"
-            />
+            app:layout_constraintBottom_toBottomOf="@id/activity_profile_regist_layout_profile_photo"
+            app:layout_constraintLeft_toLeftOf="@id/activity_profile_regist_layout_profile_photo"
+            app:layout_constraintRight_toRightOf="@id/activity_profile_regist_layout_profile_photo"
+            app:layout_constraintTop_toTopOf="@id/activity_profile_regist_layout_profile_photo">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_write_white" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:id="@+id/activity_profile_regist_linear_middle_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/activity_profile_regist_imageview_profile_photo"
             android:layout_marginHorizontal="24dp"
             android:layout_marginTop="24dp"
-            >
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/activity_profile_regist_layout_profile_photo">
+
             <EditText
                 android:id="@+id/activity_profile_regist_edittext_id"
                 android:layout_width="match_parent"
@@ -66,85 +91,80 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="16dp"
-                android:gravity="center_vertical"
                 android:background="@drawable/button_background_round_ligh_gray_8dp"
-                android:text="@{birthdaytext}"
+                android:gravity="center_vertical"
                 android:hint="생일 입력"
+                android:onClick="@{activityprofileregist::setBirthDay}"
                 android:paddingLeft="8dp"
-                android:textSize="14dp"
-                android:onClick="@{activityprofileregist::setBirthDay}"/>
-
+                android:text="@{birthdaytext}"
+                android:textSize="14dp" />
 
 
         </LinearLayout>
 
         <EditText
-            app:layout_constraintTop_toBottomOf="@+id/activity_profile_regist_linear_middle_bar"
             android:id="@+id/activity_profile_regist_edittext_phonenumber"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginHorizontal="24dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/button_background_round_ligh_gray_8dp"
             android:hint="휴대전화 번호"
             android:paddingLeft="8dp"
-            android:layout_marginHorizontal="24dp"
-            android:textSize="14dp" />
+            android:textSize="14dp"
+            app:layout_constraintTop_toBottomOf="@+id/activity_profile_regist_linear_middle_bar" />
 
         <EditText
-            app:layout_constraintTop_toBottomOf="@+id/activity_profile_regist_edittext_phonenumber"
             android:id="@+id/activity_profile_regist_edittext_phonenumber_auth_code"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginHorizontal="24dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/button_background_round_ligh_gray_8dp"
             android:hint="인증 번호"
             android:paddingLeft="8dp"
-            android:layout_marginHorizontal="24dp"
-            android:textSize="14dp" />
+            android:textSize="14dp"
+            app:layout_constraintTop_toBottomOf="@+id/activity_profile_regist_edittext_phonenumber" />
 
         <Button
-            app:layout_constraintTop_toTopOf="@+id/activity_profile_regist_edittext_phonenumber_auth_code"
-            app:layout_constraintBottom_toBottomOf="@+id/activity_profile_regist_edittext_phonenumber_auth_code"
-            app:layout_constraintRight_toRightOf="@+id/activity_profile_regist_edittext_phonenumber_auth_code"
             android:layout_width="80dp"
             android:layout_height="40dp"
+            android:background="@drawable/button_background_round_black_16dp"
             android:text="확인"
             android:textColor="@color/colorWhite"
-            android:background="@drawable/button_background_round_black_16dp"
-            />
-
+            app:layout_constraintBottom_toBottomOf="@+id/activity_profile_regist_edittext_phonenumber_auth_code"
+            app:layout_constraintRight_toRightOf="@+id/activity_profile_regist_edittext_phonenumber_auth_code"
+            app:layout_constraintTop_toTopOf="@+id/activity_profile_regist_edittext_phonenumber_auth_code" />
 
 
         <Button
-            app:layout_constraintTop_toTopOf="@+id/activity_profile_regist_edittext_phonenumber"
-            app:layout_constraintBottom_toBottomOf="@+id/activity_profile_regist_edittext_phonenumber"
-            app:layout_constraintRight_toRightOf="@+id/activity_profile_regist_edittext_phonenumber"
             android:layout_width="80dp"
             android:layout_height="40dp"
+            android:background="@drawable/button_background_round_black_16dp"
             android:text="인증"
             android:textColor="@color/colorWhite"
-            android:background="@drawable/button_background_round_black_16dp"
-            />
+            app:layout_constraintBottom_toBottomOf="@+id/activity_profile_regist_edittext_phonenumber"
+            app:layout_constraintRight_toRightOf="@+id/activity_profile_regist_edittext_phonenumber"
+            app:layout_constraintTop_toTopOf="@+id/activity_profile_regist_edittext_phonenumber" />
 
         <Button
             android:id="@+id/activity_profile_regist_button_next"
             android:layout_width="120dp"
             android:layout_height="40dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
             android:layout_margin="42dp"
+            android:background="@drawable/button_background_round_black_16dp"
+            android:drawableRight="@drawable/ic_baseline_arrow_forward_24"
+            android:paddingHorizontal="16dp"
             android:text="NEXT"
             android:textColor="@color/colorWhite"
-            android:drawableRight="@drawable/ic_baseline_arrow_forward_24"
-            android:background="@drawable/button_background_round_black_16dp"
-            android:paddingHorizontal="16dp"
-            />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
 
         <FrameLayout
             android:id="@+id/activity_profile_fragment_container_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -11,6 +11,7 @@ import com.uos.vcommcerce.R
 import com.uos.vcommcerce.databinding.PopupDatePickerBinding
 import com.uos.vcommcerce.databinding.PopupNotiBinding
 import com.uos.vcommcerce.databinding.PopupPictureOptionBinding
+import com.uos.vcommcerce.databinding.PopupTitleNotiBinding
 import com.uos.vcommcerce.util.Delegate
 import java.util.*
 
@@ -77,11 +78,13 @@ class PopupManager(activity: Activity) {
             binding.popupPictureOptionTakePictureLayout.setOnClickListener {
                 if (listener == null) return@setOnClickListener
                 listener.okBtn()
+                dismiss()
             }
             // 사진 선택
             binding.popupPictureOptionSelectPictureLayout.setOnClickListener {
                 if (listener == null) return@setOnClickListener
                 listener.cancelBtn()
+                dismiss()
             }
             //확인 버튼
             binding.popupPictureOptionConfirmBtn.setOnClickListener(View.OnClickListener {
@@ -136,6 +139,22 @@ class PopupManager(activity: Activity) {
         dialog?.let{
             it.requestWindowFeature(Window.FEATURE_NO_TITLE)
             it.setContentView(binding.root)
+            binding.notimesage = msg
+            binding.popupNotiConfirmBtn.setOnClickListener {
+                if (autoDismiss) {
+                    dismiss()
+                }
+            }
+        }
+        return this
+    }
+    fun titleNotiPopup(title:String , msg : String) : PopupManager {
+        val binding : PopupTitleNotiBinding = DataBindingUtil.inflate(LayoutInflater.from(activity), R.layout.popup_title_noti, null, false)
+        dialog = Dialog(activity!!, R.style.CustomTheme_CustomPopup)
+        dialog?.let{
+            it.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            it.setContentView(binding.root)
+            binding.title = title
             binding.notimesage = msg
             binding.popupNotiConfirmBtn.setOnClickListener {
                 if (autoDismiss) {

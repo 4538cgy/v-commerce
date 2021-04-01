@@ -6,4 +6,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="invalid_email">잘못 된 이메일</string>
+    <string name="input_wrong_email_address">이메일 주소를 잘 못 입력 하셨습니다.</string>
+    <string name="confirm_password_mismatch">확인 비밀번호 불일치</string>
+    <string name="enter_your_password_again">비밀번호를 다시 입력해주세요.</string>
 </resources>
