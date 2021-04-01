@@ -72,9 +72,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
 
         //리스트 변동을 확인할 옵저버 생성 뷰모델의 리스트가바뀌면 확인해서 메인의 리스트를바꾼다음 어댑터에 재할당
         val dataObserver: Observer<ArrayList<ProductDTO>> =
-            Observer { livedata ->
-                productData.value = livedata
-                binding.vpViewpager.adapter = VideoAdapter(this, productData)
+            Observer { livedata -> productData.value = livedata
+                Binding.vpViewpager.adapter = VideoAdapter(this,productData)
+
+                Binding.vpViewpager.offscreenPageLimit = 2
+                val pageMarginPx = DisplaySize.get()!!.size_X * 16 * DisplaySize.get()!!.density
+                val screenWidth =DisplaySize.get()!!.screenWidthPixel
+                val pagerWidth = screenWidth -  DisplaySize.get()!!.size_X * 60 * DisplaySize.get()!!.density
+                val offsetPx = screenWidth - pageMarginPx - pagerWidth
+                Binding.vpViewpager.setPageTransformer(){ page, position -> page.translationX = (position * -offsetPx) }
             }
         //뷰모델 리스트에 옵저버 장착
         productList.productList.observe(this, dataObserver)
@@ -94,8 +100,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
 
         //비디오 플레이어 설정
         // 스크롤 수평 설정
-        binding.vpViewpager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-        binding.vpViewpager.setPageTransformer(ZoomOutPageTransformer())
+
+        Binding.vpViewpager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        Binding.vpViewpager.setPageTransformer(ZoomOutPageTransformer())
         //뷰페이저 민감도 조절 코드
         var recyclerViewField = ViewPager2::class.java.getDeclaredField("mRecyclerView")
         recyclerViewField.isAccessible = true
@@ -105,7 +112,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
         var touchSlop: Int = touchSlopField.get(recyclerview) as Int
         //민감도를 6으로 설정.
         touchSlopField.set(recyclerview, touchSlop * 6)
-
 
         // 뷰페이저 리스너 (ViewPager 1과 다르게 2는 필요한 것만 오버라이딩이 가능하다.
         binding.vpViewpager.registerOnPageChangeCallback(object :
@@ -119,6 +125,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
             }
         }
         )
+
+
 
         //비디오 플레이어 위치 조정
         ViewAnimation(binding.VideoView, 0, (63 * DisplaySize.get()!!.size_Y).toInt().dp(), 0)
@@ -233,6 +241,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
 
             holder.itemView.setOnClickListener(ViewPageClickListner)
             holder.itemView.setOnTouchListener(ViewPageTouchListner)
+
+            var Xsize = DisplaySize.get()!!.size_X
+            var size = (315 * Xsize).toInt().dp()
+
+            val lp = view.item_exoplayer.layoutParams
+            lp?.let {
+                lp.width = size;
+                view.item_exoplayer.layoutParams = lp
+            }
+
+
         }
 
         //최석우 뷰 컨트롤을위한 클릭과 터치리스너
