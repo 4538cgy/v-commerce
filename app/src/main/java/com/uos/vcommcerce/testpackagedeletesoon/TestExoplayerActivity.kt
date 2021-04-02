@@ -11,10 +11,13 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.uos.vcommcerce.R
+import com.uos.vcommcerce.base.BaseActivity
+import com.uos.vcommcerce.databinding.TestExoplayerViewBinding
 import kotlinx.android.synthetic.main.test_exoplayer_view.*
 
-class TestExoplayerActivity : AppCompatActivity(){
-
+class TestExoplayerActivity : BaseActivity<TestExoplayerViewBinding>(
+    layoutId = R.layout.test_exoplayer_view
+){
 
     var backKeyPressedTime = 0
     private var player:SimpleExoPlayer ? = null
@@ -31,10 +34,6 @@ class TestExoplayerActivity : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.test_exoplayer_view)
-
-
-
 
         //initializePlayerDefault()
 

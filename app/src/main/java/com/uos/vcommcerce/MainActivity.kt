@@ -3,8 +3,6 @@ package com.uos.vcommcerce
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Message
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -12,8 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -24,6 +20,7 @@ import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.firebase.auth.FirebaseAuth
 import com.uos.vcommcerce.activity.review.ReviewActivity
+import com.uos.vcommcerce.base.BaseActivity
 import com.uos.vcommcerce.databinding.ActivityMainBinding
 import com.uos.vcommcerce.datamodel.ProductDTO
 import com.uos.vcommcerce.datamodel.ProductModel
@@ -39,26 +36,28 @@ import com.uos.vcommcerce.util.dp
 import kotlinx.android.synthetic.main.item_exoplayer.view.*
 import kotlin.math.abs
 
-
 var Imm: InputMethodManager? = null;
 
+class MainActivity : BaseActivity<ActivityMainBinding>(
+    layoutId = R.layout.activity_main
+), SearchFragment.searchEnd {
 
-class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
-
-    //메인 엑티비티에 물려있는 바인딩
-    private lateinit var Binding: ActivityMainBinding
     //제품리스트
-    private val productList : ProductModel by viewModels()
-    var productData :  MutableLiveData<ArrayList<ProductDTO>> = MutableLiveData<ArrayList<ProductDTO>>()
+    private val productList: ProductModel by viewModels()
+    var productData: MutableLiveData<ArrayList<ProductDTO>> =
+        MutableLiveData<ArrayList<ProductDTO>>()
 
     //접속자 정보
-    private var firebaseAuth : FirebaseAuth = FirebaseAuth.getInstance();
+    private var firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance();
+
     //메인에 물려있는 탑과 바텀뷰 + 플레이어
-    var MainBottom : MainBottomView = MainBottomView()
+    var MainBottom: MainBottomView = MainBottomView()
+
     //검색창 프라그먼트
-    var SearchFragmentView : SearchFragment = SearchFragment()
+    var SearchFragmentView: SearchFragment = SearchFragment()
+
     //창크기 정보를 가지는 객체
-    lateinit var DisplaySize : ObservableField<DisplaySize>
+    lateinit var DisplaySize: ObservableField<DisplaySize>
 
     companion object {
         var TouchPoint: Int? = null
@@ -66,18 +65,19 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
         DisplaySize = ObservableField(DisplaySize(this))
-        Binding.mainActivity = this
-        Binding.productList = productList
+        binding.mainActivity = this
+        binding.productList = productList
 
         //리스트 변동을 확인할 옵저버 생성 뷰모델의 리스트가바뀌면 확인해서 메인의 리스트를바꾼다음 어댑터에 재할당
         val dataObserver: Observer<ArrayList<ProductDTO>> =
-            Observer { livedata -> productData.value = livedata
-                Binding.vpViewpager.adapter = VideoAdapter(this,productData)
+            Observer { livedata ->
+                productData.value = livedata
+                binding.vpViewpager.adapter = VideoAdapter(this, productData)
             }
         //뷰모델 리스트에 옵저버 장착
-        productList.productList.observe(this,dataObserver)
+        productList.productList.observe(this, dataObserver)
 
         //아이템 정보 바인딩에 할당
         // 최석우 일시적으로 앱터져서 막음
@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
         //뷰페이져 어댑터 설정
 //        Binding.vpViewpager.adapter = VideoAdapter(this,productList.productList)
         //메인 바텀뷰에 필요한 인자들 전송
-        MainBottom.getMainBinding(Binding, this)
+        MainBottom.getMainBinding(binding, this)
 
         //키보드 숨기기위한 시스템 변수
         Imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager;
@@ -94,12 +94,12 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
 
         //비디오 플레이어 설정
         // 스크롤 수평 설정
-        Binding.vpViewpager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-        Binding.vpViewpager.setPageTransformer(ZoomOutPageTransformer())
+        binding.vpViewpager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        binding.vpViewpager.setPageTransformer(ZoomOutPageTransformer())
         //뷰페이저 민감도 조절 코드
         var recyclerViewField = ViewPager2::class.java.getDeclaredField("mRecyclerView")
         recyclerViewField.isAccessible = true
-        var recyclerview = recyclerViewField.get(Binding.vpViewpager)
+        var recyclerview = recyclerViewField.get(binding.vpViewpager)
         var touchSlopField = RecyclerView::class.java.getDeclaredField("mTouchSlop")
         touchSlopField.isAccessible = true
         var touchSlop: Int = touchSlopField.get(recyclerview) as Int
@@ -108,23 +108,24 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
 
 
         // 뷰페이저 리스너 (ViewPager 1과 다르게 2는 필요한 것만 오버라이딩이 가능하다.
-        Binding.vpViewpager.registerOnPageChangeCallback(object :
+        binding.vpViewpager.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
-                override fun onPageSelected(position: Int) {
-                    super.onPageSelected(position)
-                    // 다른 페이지로 스크롤 됬을때 ViewPager 의 현재 페이지 텍스트뷰를 갱신해준다.
-                    productList.setProduct(position)
-                    //페이지 이동후 디폴트 타입으로 변경
-                    returnDefaultView()
-                }
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                // 다른 페이지로 스크롤 됬을때 ViewPager 의 현재 페이지 텍스트뷰를 갱신해준다.
+                productList.setProduct(position)
+                //페이지 이동후 디폴트 타입으로 변경
+                returnDefaultView()
             }
+        }
         )
 
         //비디오 플레이어 위치 조정
-        ViewAnimation(Binding.VideoView, 0, (63*DisplaySize.get()!!.size_Y).toInt().dp(), 0)
+        ViewAnimation(binding.VideoView, 0, (63 * DisplaySize.get()!!.size_Y).toInt().dp(), 0)
 
         //검색창 프라그먼트
-        supportFragmentManager.beginTransaction().replace(R.id.search_view, SearchFragmentView).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.search_view, SearchFragmentView)
+            .commit()
     }
 
 //최석우 앱터져서 일시적으로 막음
@@ -149,45 +150,48 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
 
     //검색중에 백키누르면 검색종료 하도록 기능변경
     override fun onBackPressed() {
-        Log.d("뒤로가기 누른거 확인 ",mainActivityState.toString())
-        if(mainActivityState == MainActivityState.search){
+        Log.d("뒤로가기 누른거 확인 ", mainActivityState.toString())
+        if (mainActivityState == MainActivityState.search) {
             searchEnd()
-        }else {
+        } else {
             super.onBackPressed()
         }
     }
 
     //프로필 이동 이벤트
-    fun profileMove(view : View) {
+    fun profileMove(view: View) {
         intent = Intent(this, UserActivity::class.java)
-        intent.putExtra("Uid",firebaseAuth.currentUser?.uid)
+        intent.putExtra("Uid", firebaseAuth.currentUser?.uid)
         startActivity(intent)
 
     }
+
     //세팅으로 돌아가는 이벤트
-    fun IconMove4(view : View) {startActivity(Intent(this, SettingActivity::class.java))}
+    fun IconMove4(view: View) {
+        startActivity(Intent(this, SettingActivity::class.java))
+    }
 
 
-    fun moveProfile(view: View ){
+    fun moveProfile(view: View) {
         intent = Intent(this, UserActivity::class.java)
-        intent.putExtra("Uid",productList.product.get()?.sellerUid)
+        intent.putExtra("Uid", productList.product.get()?.sellerUid)
         startActivity(intent)
     }
 
 
     //검색창 클릭
-    fun SearchEvent(view: View){
-        Log.d("검색창 오픈!","검색창오픈!!")
+    fun SearchEvent(view: View) {
+        Log.d("검색창 오픈!", "검색창오픈!!")
         //메인 상태를 검색으로 변경
         mainActivityState = MainActivityState.search
         //검색창 띄우기
-        Binding.searchView.visibility = View.VISIBLE
+        binding.searchView.visibility = View.VISIBLE
         //검색창 최초상태로 변환
         SearchFragmentView.SearchSet();
     }
 
     //리뷰열기
-    fun openReview(view:View){
+    fun openReview(view: View) {
         var intent = Intent(this, ReviewActivity::class.java)
         intent.apply {
             //임시로 막아둠
@@ -197,11 +201,17 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
     }
 
 
-    inner class VideoAdapter(private val context: Context, var data : LiveData<ArrayList<ProductDTO>>) : RecyclerView.Adapter<VideoAdapter.ViewHolder>() {
+    inner class VideoAdapter(
+        private val context: Context,
+        var data: LiveData<ArrayList<ProductDTO>>
+    ) : RecyclerView.Adapter<VideoAdapter.ViewHolder>() {
 
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {}
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoAdapter.ViewHolder = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_exoplayer, parent, false))
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoAdapter.ViewHolder =
+            ViewHolder(
+                LayoutInflater.from(parent.context).inflate(R.layout.item_exoplayer, parent, false)
+            )
 
         override fun getItemCount(): Int = data.value!!.size
 //        override fun getItemCount(): Int = items.size
@@ -244,12 +254,12 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
                         if (distance > 0) {
                             Log.d("드레그 UP : ", "드레그 UP")
                             if (mainActivityState == MainActivityState.default) {
-                                    Binding.bottomview?.BottonViewSlideUp(MainActivityState.slideUp)
+                                binding.bottomview?.BottonViewSlideUp(MainActivityState.slideUp)
                             }
                         } else {
                             Log.d("드레그 DOWN : ", "드레그 DOWN")
                             if (mainActivityState == MainActivityState.slideUp) {
-                                    Binding.bottomview?.BottonViewSlideDown(MainActivityState.default)
+                                binding.bottomview?.BottonViewSlideDown(MainActivityState.default)
                             }
                         }
                     } else {//터치일시 각 창을 닫음
@@ -257,24 +267,18 @@ class MainActivity : AppCompatActivity(),SearchFragment.searchEnd {
                     }
                 }
             }
-
             false
         }
-
     }
 
     //기본상태로 돌아가기
     fun returnDefaultView() {
-        Binding.bottomview?.BottonViewSlideDown(MainActivityState.default)
+        binding.bottomview?.BottonViewSlideDown(MainActivityState.default)
     }
 
     //검색 종료
     override fun searchEnd(view: View?) {
-        Binding.searchView.visibility = View.GONE
+        binding.searchView.visibility = View.GONE
         returnDefaultView()
     }
-
-
-
-
 }
