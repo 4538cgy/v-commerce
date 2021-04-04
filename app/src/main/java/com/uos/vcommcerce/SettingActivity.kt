@@ -15,6 +15,7 @@ import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
+import com.uos.vcommcerce.activity.login.KakaoLoginTest
 import com.uos.vcommcerce.activity.login.LoginActivity
 import com.uos.vcommcerce.activity.oder.OrderActivity
 import com.uos.vcommcerce.activity.productinformation.ProductInformationActivity
@@ -87,6 +88,7 @@ class SettingActivity : AppCompatActivity() {
             settingDTO.add(SettingDTO("제품 정보"))
             settingDTO.add(SettingDTO("판매자 등록 화면 보기"))
             settingDTO.add(SettingDTO("정상 프로세스 대로 실행"))
+            settingDTO.add(SettingDTO("카카오 로그인"))
             notifyDataSetChanged()
         }
 
@@ -241,6 +243,10 @@ class SettingActivity : AppCompatActivity() {
                     "제품 정보" -> {
                         pageChange("ProductInformation")
                     }
+
+                    "카카오 로그인" ->{
+                        pageChange("kakaologin")
+                    }
                 }
 
             }
@@ -255,6 +261,9 @@ class SettingActivity : AppCompatActivity() {
 
 
         when (type) {
+            "kakaologin" ->{
+                startActivity(Intent(this,KakaoLoginTest::class.java))
+            }
             "Login" -> {
 
                 startActivity(Intent(this, LoginActivity::class.java))

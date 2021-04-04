@@ -3,7 +3,11 @@ package com.uos.vcommcerce.activity.splash
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.util.Base64
+import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -13,12 +17,14 @@ import com.uos.vcommcerce.MainActivity
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.activity.login.LoginActivity
 import com.uos.vcommcerce.databinding.ActivitySplashBinding
+import java.security.MessageDigest
 
 
 class SplashActivity : AppCompatActivity() {
 
     lateinit var binding : ActivitySplashBinding
 
+    @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_splash)
@@ -42,6 +48,23 @@ class SplashActivity : AppCompatActivity() {
                         this.finishAffinity()
                     }).show()
             }
+        }
+
+
+        try{
+            val info = packageManager.getPackageInfo(packageName,PackageManager.GET_SIGNING_CERTIFICATES)
+            val signatures = info.signingInfo.apkContentsSigners
+            val md = MessageDigest.getInstance("SHA")
+            for(signature in signatures){
+                val md: MessageDigest
+                md = MessageDigest.getInstance("SHA")
+                md.update(signature.toByteArray())
+                val key = String(Base64.encode(md.digest(),0))
+                Log.d("HASH KEY : ", "---- $key ----")
+
+            }
+        }catch (e: Exception){
+            Log.e("name not found", e.toString())
         }
 
     }

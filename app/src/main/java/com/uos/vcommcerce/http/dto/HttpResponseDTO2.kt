@@ -13,5 +13,11 @@ class HttpResponseDTO2(
         var auth: String? = null                  //init google,kakao,apple,email select only one
     )
 
+    data class customTokenDTO(
+        var token : String ?,
+        var status : String ?,
+        var detail : String
+    )
+
 
 }

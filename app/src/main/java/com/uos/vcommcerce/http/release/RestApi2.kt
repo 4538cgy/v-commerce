@@ -1,5 +1,6 @@
 package com.uos.vcommcerce.http.release
 
+import com.uos.vcommcerce.datamodel.KakaoTestDTO
 import com.uos.vcommcerce.http.dto.HttpResponseDTO2
 import retrofit2.Call
 import okhttp3.OkHttpClient
@@ -24,5 +25,9 @@ class RestApi2 {
 
     fun createUser(userDTO:HttpResponseDTO2.userDTO , unique_uid : String): Call<HttpResponseDTO2.userDTO> {
         return restApiServiceInterface.createUser(userDTO,unique_uid)
+    }
+
+    fun test(testDTO: KakaoTestDTO) : Call<HttpResponseDTO2.customTokenDTO>{
+        return restApiServiceInterface.test(testDTO)
     }
 }
