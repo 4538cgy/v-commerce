@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.auth.api.Auth
@@ -24,9 +23,11 @@ import com.uos.vcommcerce.activity.splash.SplashActivity
 import com.uos.vcommcerce.activity.videoupload.SelectVideoActivity
 import com.uos.vcommcerce.activity.videoupload.VideoSelectActivity
 import com.uos.vcommcerce.activity.videoupload.VideoUploadActivity
-import com.uos.vcommcerce.http.test.RestApi
+import com.uos.vcommcerce.base.BaseActivity
+import com.uos.vcommcerce.databinding.ActivitySettingBinding
 import com.uos.vcommcerce.datamodel.HttpResponseDTO
 import com.uos.vcommcerce.datamodel.SettingDTO
+import com.uos.vcommcerce.http.test.RestApi
 import com.uos.vcommcerce.profile.UserActivity
 import com.uos.vcommcerce.testpackagedeletesoon.ShowMyUserInfoActivity
 import com.uos.vcommcerce.testpackagedeletesoon.TestExoplayerActivity
@@ -38,18 +39,20 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
 
-class SettingActivity : AppCompatActivity() {
+class SettingActivity : BaseActivity<ActivitySettingBinding>(
+    layoutId = R.layout.activity_setting
+) {
 
     var gac: GoogleApiClient? = null
     var context: Context? = null
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_setting)
 
-        activity_setting_recycler?.adapter = SettingActivityRecyclerViewAdapter()
-        activity_setting_recycler?.layoutManager = LinearLayoutManager(this)
+        binding.activitySettingRecycler.apply {
+            adapter = SettingActivityRecyclerViewAdapter()
+            layoutManager = LinearLayoutManager(this@SettingActivity)
+        }
 
         context = this.applicationContext
 
@@ -306,7 +309,7 @@ class SettingActivity : AppCompatActivity() {
             "Upload" -> {
                 startActivity(Intent(this, SelectVideoActivity::class.java))
             }
-            "ProductInformation" ->{
+            "ProductInformation" -> {
                 startActivity(Intent(this, ProductInformationActivity::class.java))
             }
 
