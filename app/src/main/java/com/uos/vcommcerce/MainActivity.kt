@@ -210,10 +210,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
     }
 
 
-    inner class VideoAdapter(
-        private val context: Context,
-        var data: LiveData<ArrayList<ProductDTO>>
-    ) : RecyclerView.Adapter<VideoAdapter.ViewHolder>() {
+    inner class VideoAdapter(private val context: Context, var data: LiveData<ArrayList<ProductDTO>>) : RecyclerView.Adapter<VideoAdapter.ViewHolder>() {
 
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {}
 
