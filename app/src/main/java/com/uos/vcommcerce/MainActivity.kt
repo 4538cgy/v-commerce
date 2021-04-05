@@ -22,7 +22,10 @@ import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.firebase.auth.FirebaseAuth
 import com.uos.vcommcerce.activity.review.ReviewActivity
 import com.uos.vcommcerce.base.BaseActivity
+import com.uos.vcommcerce.base.BaseRecyclerAdapter
 import com.uos.vcommcerce.databinding.ActivityMainBinding
+import com.uos.vcommcerce.databinding.ItemExoplayerBinding
+import com.uos.vcommcerce.databinding.ItemExoplayerBindingImpl
 import com.uos.vcommcerce.datamodel.ProductDTO
 import com.uos.vcommcerce.datamodel.ProductModel
 import com.uos.vcommcerce.mainslide.MainBottomView
@@ -45,8 +48,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
 
     //제품리스트
     private val productList: ProductModel by viewModels()
-    var productData: MutableLiveData<ArrayList<ProductDTO>> =
-        MutableLiveData<ArrayList<ProductDTO>>()
+    var productData: ArrayList<ProductDTO> = ArrayList<ProductDTO>()
 
     //접속자 정보
     private var firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance();
@@ -69,12 +71,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
 
         DisplaySize = ObservableField(DisplaySize(this))
         binding.mainActivity = this
-        binding.productList = productList
+        binding.item = productList
 
         //리스트 변동을 확인할 옵저버 생성 뷰모델의 리스트가바뀌면 확인해서 메인의 리스트를바꾼다음 어댑터에 재할당
         val dataObserver: Observer<ArrayList<ProductDTO>> =
-            Observer { livedata -> productData.value = livedata
-                binding.vpViewpager.adapter = VideoAdapter(this,productData)
+            Observer { livedata -> productData = livedata
+                binding.vpViewpager.adapter = VideoAdapter<ProductDTO,ItemExoplayerBinding>(this,R.layout.item_exoplayer,productData)
 
                 binding.vpViewpager.offscreenPageLimit = 2
                 val pageMarginPx = DisplaySize.get()!!.size_X * 16 * DisplaySize.get()!!.density
@@ -210,20 +212,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
     }
 
 
-    inner class VideoAdapter(private val context: Context, var data: LiveData<ArrayList<ProductDTO>>) : RecyclerView.Adapter<VideoAdapter.ViewHolder>() {
+    inner class VideoAdapter<item : ProductDTO , viewBinding : ItemExoplayerBinding>(private val context: Context,var layoutid : Int, var itemlist: ArrayList<item>) : BaseRecyclerAdapter<item,viewBinding>(layoutid,itemlist) {
 
-        inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {}
+        override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
+            super.onBindViewHolder(holder,position)
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoAdapter.ViewHolder =
-            ViewHolder(
-                LayoutInflater.from(parent.context).inflate(R.layout.item_exoplayer, parent, false)
-            )
-
-        override fun getItemCount(): Int = data.value!!.size
-//        override fun getItemCount(): Int = items.size
-
-        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            Log.d("재 바인드? : ", data.value.toString())
+            Log.d("재 바인드? : ", itemlist.toString())
             var view = holder.itemView
 
             var player = SimpleExoPlayer.Builder(context).build()
@@ -232,7 +226,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
             view.item_exoplayer.player = player
             view.item_exoplayer.hideController()
 
-            player?.setMediaItem(MediaItem.fromUri(data.value!!.get(0)!!.videoList!!.get(0)))
+            player?.setMediaItem(MediaItem.fromUri(itemlist!!.get(0)!!.videoList!!.get(0)))
             player?.prepare()
             player?.play()
             //뷰에 터치리스너 추가
