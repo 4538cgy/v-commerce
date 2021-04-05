@@ -3,6 +3,7 @@ package com.uos.vcommcerce
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.renderscript.ScriptGroup
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -73,14 +74,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
         //리스트 변동을 확인할 옵저버 생성 뷰모델의 리스트가바뀌면 확인해서 메인의 리스트를바꾼다음 어댑터에 재할당
         val dataObserver: Observer<ArrayList<ProductDTO>> =
             Observer { livedata -> productData.value = livedata
-                Binding.vpViewpager.adapter = VideoAdapter(this,productData)
+                binding.vpViewpager.adapter = VideoAdapter(this,productData)
 
-                Binding.vpViewpager.offscreenPageLimit = 2
+                binding.vpViewpager.offscreenPageLimit = 2
                 val pageMarginPx = DisplaySize.get()!!.size_X * 16 * DisplaySize.get()!!.density
                 val screenWidth =DisplaySize.get()!!.screenWidthPixel
                 val pagerWidth = screenWidth -  DisplaySize.get()!!.size_X * 60 * DisplaySize.get()!!.density
                 val offsetPx = screenWidth - pageMarginPx - pagerWidth
-                Binding.vpViewpager.setPageTransformer(){ page, position -> page.translationX = (position * -offsetPx) }
+                binding.vpViewpager.setPageTransformer(){ page, position -> page.translationX = (position * -offsetPx) }
             }
         //뷰모델 리스트에 옵저버 장착
         productList.productList.observe(this, dataObserver)
@@ -90,7 +91,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
         //registerPushToken()
 
         //뷰페이져 어댑터 설정
-//        Binding.vpViewpager.adapter = VideoAdapter(this,productList.productList)
+//        binding.vpViewpager.adapter = VideoAdapter(this,productList.productList)
         //메인 바텀뷰에 필요한 인자들 전송
         MainBottom.getMainBinding(binding, this)
 
@@ -101,8 +102,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
         //비디오 플레이어 설정
         // 스크롤 수평 설정
 
-        Binding.vpViewpager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-        Binding.vpViewpager.setPageTransformer(ZoomOutPageTransformer())
+        binding.vpViewpager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        binding.vpViewpager.setPageTransformer(ZoomOutPageTransformer())
         //뷰페이저 민감도 조절 코드
         var recyclerViewField = ViewPager2::class.java.getDeclaredField("mRecyclerView")
         recyclerViewField.isAccessible = true
