@@ -17,7 +17,7 @@
             type="com.uos.vcommcerce.MainActivity" />
 
         <variable
-            name="ProductList"
+            name="item"
             type="com.uos.vcommcerce.datamodel.ProductModel" />
     </data>
 
@@ -168,7 +168,7 @@
                     android:id="@+id/seller_nickname"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="@{ProductList.product.sellerName}"
+                    android:text="@{item.product.sellerName}"
                     android:textColor="@color/color333333"
                     android:textStyle="bold"
                     app:layout_constraintTop_toTopOf="parent"
@@ -181,7 +181,7 @@
                     android:id="@+id/seller_uid"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="@{'@' + ProductList.product.sellerUid}"
+                    android:text="@{'@' + item.product.sellerUid}"
                     android:textStyle="bold"
                     android:textColor="@color/mainBottonFontlightColor"
                     app:layout_constraintTop_toTopOf="parent"
@@ -208,7 +208,7 @@
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:text="@{ProductList.product.productName}"
+                android:text="@{item.product.productName}"
                 android:textStyle="bold"
                 android:textColor="@color/color333333"
 
@@ -254,7 +254,7 @@
                     android:id="@+id/address"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="@{ProductList.product.sellerAddress}"
+                    android:text="@{item.product.sellerAddress}"
                     android:textColor="@color/mainBottonFontColor"
                     android:textStyle="bold"
 
@@ -284,7 +284,7 @@
                     app:layout_constraintRight_toRightOf="parent"
                     android:textStyle="italic"
                     android:textColor="#E00000"
-                    app:productSaleInfo="@{ProductList.product.price}"
+                    app:productSaleInfo="@{item.product.price}"
 
                     app:stand_size="@{MainActivity.displaySize}"
                     app:layout_height="@{14}"
@@ -303,7 +303,7 @@
                     android:textStyle="bold"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintRight_toLeftOf="@id/price"
-                    app:productSalePrice="@{ProductList.product.price}"
+                    app:productSalePrice="@{item.product.price}"
 
                     app:stand_size="@{MainActivity.displaySize}"
                     app:layout_height="@{18}"
@@ -327,7 +327,7 @@
                     android:textStyle="bold"
                     app:layout_constraintTop_toBottomOf="@id/sale_info"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:productPrice="@{ProductList.product.price}"
+                    app:productPrice="@{item.product.price}"
 
                     app:stand_size="@{MainActivity.displaySize}"
                     app:layout_height="@{30}"
@@ -342,7 +342,7 @@
                 android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
-                android:text="@{ProductList.product.productExplain}"
+                android:text="@{item.product.productExplain}"
                 android:textColor="@color/mainBottonFontColor"
 
                 app:stand_size="@{MainActivity.displaySize}"
@@ -402,7 +402,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="18dp"
-                        app:totalRating="@{ProductList.product.totalRating}"
+                        app:totalRating="@{item.product.totalRating}"
                         android:textColor="@color/color333333"
                         android:textStyle="bold"
 
@@ -422,7 +422,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="18dp"
-                        app:ratingCount="@{ProductList.product.ratingCount}"
+                        app:ratingCount="@{item.product.ratingCount}"
                         android:textColor="#aaaaaa"
 
                         app:stand_size="@{MainActivity.displaySize}"
