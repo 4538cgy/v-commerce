@@ -1,4 +1,4 @@
-package com.uos.vcommcerce.datamodel
+package com.uos.vcommcerce.datamodel.review
 
 data class ReviewDTO(
 

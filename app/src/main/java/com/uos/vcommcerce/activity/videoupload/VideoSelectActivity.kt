@@ -16,7 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.databinding.ActivityVideoUploadBinding
-import com.uos.vcommcerce.datamodel.Video
+import com.uos.vcommcerce.datamodel.video.Video
 import java.util.concurrent.TimeUnit
 
 

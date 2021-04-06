@@ -5,7 +5,7 @@
     <data>
         <variable
             name="itemcart"
-            type="com.uos.vcommcerce.datamodel.CartDTO" />
+            type="com.uos.vcommcerce.datamodel.cart.CartDTO" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -13,9 +13,7 @@ import com.uos.vcommcerce.R
 import com.uos.vcommcerce.activity.productinformation.ProductInformationActivity
 import com.uos.vcommcerce.base.BaseActivity
 import com.uos.vcommcerce.databinding.ActivityUserViewBinding
-import com.uos.vcommcerce.datamodel.ProfileDTO
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_user_view.*
+import com.uos.vcommcerce.datamodel.profile.ProfileDTO
 
 private const val FLAG_PERM_CAMERA = 98
 private const val FLAG_PERM_STORAGE = 99

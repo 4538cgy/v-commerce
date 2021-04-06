@@ -12,7 +12,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.uos.vcommcerce.MainActivity
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.databinding.ActivityRegistSellerInfoBinding
-import com.uos.vcommcerce.datamodel.SellerDTO
+import com.uos.vcommcerce.datamodel.seller.SellerDTO
 import com.uos.vcommcerce.util.Config
 import com.uos.vcommcerce.util.SharedData
 

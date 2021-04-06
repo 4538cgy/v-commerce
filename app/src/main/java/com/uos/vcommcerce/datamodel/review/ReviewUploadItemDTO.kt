@@ -1,4 +1,4 @@
-package com.uos.vcommcerce.datamodel
+package com.uos.vcommcerce.datamodel.review
 
 import android.Manifest
 import android.app.Activity

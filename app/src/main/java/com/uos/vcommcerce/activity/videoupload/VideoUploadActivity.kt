@@ -17,7 +17,7 @@ import com.google.firebase.storage.UploadTask
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.SettingActivity
 import com.uos.vcommcerce.databinding.ActivityVideoUpload2Binding
-import com.uos.vcommcerce.datamodel.ProductDTO
+import com.uos.vcommcerce.datamodel.product.ProductDTO
 import com.uos.vcommcerce.util.ProgressDialogLoading
 import com.uos.vcommcerce.util.TimeUtil
 

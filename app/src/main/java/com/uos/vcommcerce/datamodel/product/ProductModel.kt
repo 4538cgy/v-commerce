@@ -1,9 +1,7 @@
-package com.uos.vcommcerce.datamodel
+package com.uos.vcommcerce.datamodel.product
 
-import android.os.Message
 import android.util.Log
 import androidx.databinding.ObservableField
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

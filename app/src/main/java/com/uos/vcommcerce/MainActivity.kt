@@ -22,8 +22,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.uos.vcommcerce.activity.review.ReviewActivity
 import com.uos.vcommcerce.base.BaseActivity
 import com.uos.vcommcerce.databinding.ActivityMainBinding
-import com.uos.vcommcerce.datamodel.ProductDTO
-import com.uos.vcommcerce.datamodel.ProductModel
+import com.uos.vcommcerce.datamodel.product.ProductDTO
+import com.uos.vcommcerce.datamodel.product.ProductModel
 import com.uos.vcommcerce.mainslide.MainBottomView
 import com.uos.vcommcerce.mainslide.ViewAnimation
 import com.uos.vcommcerce.mainslide.mainActivityState

@@ -2,10 +2,7 @@ package com.uos.vcommcerce.activity.review
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,12 +14,8 @@ import com.uos.vcommcerce.R
 import com.uos.vcommcerce.databinding.ActivityReviewUploadBinding
 import com.uos.vcommcerce.databinding.ActivityReviewUploadItemBinding
 import com.uos.vcommcerce.databinding.ActivityReviewUploadItemFooterBinding
-import com.uos.vcommcerce.databinding.ItemReviewItemBinding
-import com.uos.vcommcerce.datamodel.ReviewDTO
-import com.uos.vcommcerce.datamodel.ReviewUploadItemDTO
-import com.uos.vcommcerce.datamodel.ReviewUploadItemFooterDTO
-
-import kotlinx.android.synthetic.main.activity_user_view.*
+import com.uos.vcommcerce.datamodel.review.ReviewUploadItemDTO
+import com.uos.vcommcerce.datamodel.review.ReviewUploadItemFooterDTO
 
 class ReviewUpload : AppCompatActivity() {
 

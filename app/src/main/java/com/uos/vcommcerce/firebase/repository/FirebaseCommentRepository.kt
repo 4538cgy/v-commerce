@@ -1,9 +1,7 @@
 package com.uos.vcommcerce.firebase.repository
 
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
-import com.uos.vcommcerce.datamodel.ProductDTO
-import kotlinx.coroutines.channels.awaitClose
+import com.uos.vcommcerce.datamodel.product.ProductDTO
 import kotlinx.coroutines.channels.sendBlocking
 import kotlinx.coroutines.flow.callbackFlow
 

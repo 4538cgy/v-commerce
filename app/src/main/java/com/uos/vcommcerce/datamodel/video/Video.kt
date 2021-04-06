@@ -1,4 +1,4 @@
-package com.uos.vcommcerce.datamodel
+package com.uos.vcommcerce.datamodel.video
 
 import android.net.Uri
 

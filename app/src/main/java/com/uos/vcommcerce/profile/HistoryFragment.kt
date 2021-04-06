@@ -9,12 +9,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.uos.vcommcerce.Model.UserDataVM
+import com.uos.vcommcerce.datamodel.user.UserDataVM
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.base.BaseFragment
 import com.uos.vcommcerce.databinding.FragmentHistoryBinding
 import com.uos.vcommcerce.databinding.VideoGridItemBinding
-import com.uos.vcommcerce.datamodel.UserVideoData
+import com.uos.vcommcerce.datamodel.user.UserVideoDTO
 import com.uos.vcommcerce.util.setHeight
 
 
@@ -51,13 +51,13 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>(
 
     inner class RecyclerHistoryViewHolder(val binding: VideoGridItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun onBind(data: UserVideoData) {
+        fun onBind(data: UserVideoDTO) {
             binding.griditem = data
             binding.executePendingBindings()
         }
     }
 
-    inner class RecyclerHistoryViewAdapter(var data: List<UserVideoData>, val context: Context) :
+    inner class RecyclerHistoryViewAdapter(var data: List<UserVideoDTO>, val context: Context) :
         RecyclerView.Adapter<RecyclerHistoryViewHolder>() {
         //생성하는부분
 //        var data = listOf<HistoryData>()

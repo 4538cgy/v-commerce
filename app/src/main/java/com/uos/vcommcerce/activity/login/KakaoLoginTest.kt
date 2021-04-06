@@ -2,17 +2,15 @@ package com.uos.vcommcerce.activity.login
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.google.firebase.auth.FirebaseAuth
 import com.kakao.sdk.common.KakaoSdk
-import com.kakao.sdk.user.UserApi
 import com.kakao.sdk.user.UserApiClient
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.databinding.ActivityKakaoLoginTestBinding
 import com.uos.vcommcerce.datamodel.KakaoTestDTO
-import com.uos.vcommcerce.http.dto.HttpResponseDTO2
+import com.uos.vcommcerce.datamodel.http.HttpResponseDTO2
 import com.uos.vcommcerce.http.release.RestApi2
 import retrofit2.Call
 import retrofit2.Callback

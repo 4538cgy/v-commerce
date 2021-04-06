@@ -1,8 +1,5 @@
-package com.uos.vcommcerce.datamodel
+package com.uos.vcommcerce.datamodel.product
 
-import android.util.Log
-import androidx.databinding.ObservableField
-import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
@@ -38,7 +35,7 @@ data class ProductDTO (
     //비디오 리스트
     var videoList : ArrayList<String>? = null,
     //리뷰들
-    var reviews : MutableMap<String,Review> = HashMap(),
+    var reviews : MutableMap<String, Review> = HashMap(),
     //해쉬태그 리스트
     var hashTagList : MutableMap<String,Boolean> = HashMap()
 ) {

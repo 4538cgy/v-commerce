@@ -3,7 +3,6 @@ package com.uos.vcommcerce.firebase.repository
 import android.net.Uri
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import com.uos.vcommcerce.datamodel.UserDTO
 import kotlinx.coroutines.channels.sendBlocking
 import kotlinx.coroutines.flow.callbackFlow
 

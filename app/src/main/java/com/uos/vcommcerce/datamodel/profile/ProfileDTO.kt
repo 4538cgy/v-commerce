@@ -1,6 +1,4 @@
-package com.uos.vcommcerce.datamodel
-
-import android.net.Uri
+package com.uos.vcommcerce.datamodel.profile
 
 data class ProfileDTO(
     var introduce :String? = null,

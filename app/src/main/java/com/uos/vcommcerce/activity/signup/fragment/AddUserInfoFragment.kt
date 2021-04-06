@@ -13,9 +13,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.SettingActivity
 import com.uos.vcommcerce.databinding.FragmentAddUserInfoBinding
-import com.uos.vcommcerce.datamodel.UserDTO
+import com.uos.vcommcerce.datamodel.user.UserDTO
 import com.uos.vcommcerce.util.SharedData
-import com.uos.vcommcerce.util.TimeUtil
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

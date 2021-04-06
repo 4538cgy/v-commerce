@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.databinding.ActivityReviewBinding
 import com.uos.vcommcerce.databinding.ItemReviewItemBinding
-import com.uos.vcommcerce.datamodel.ReviewDTO
+import com.uos.vcommcerce.datamodel.review.ReviewDTO
 
 class ReviewActivity : AppCompatActivity() {
 

@@ -1,4 +1,4 @@
-package com.uos.vcommcerce.datamodel
+package com.uos.vcommcerce.datamodel.product
 
 import androidx.lifecycle.MutableLiveData
 

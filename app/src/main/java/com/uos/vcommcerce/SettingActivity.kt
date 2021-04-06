@@ -26,8 +26,8 @@ import com.uos.vcommcerce.activity.videoupload.VideoSelectActivity
 import com.uos.vcommcerce.activity.videoupload.VideoUploadActivity
 import com.uos.vcommcerce.base.BaseActivity
 import com.uos.vcommcerce.databinding.ActivitySettingBinding
-import com.uos.vcommcerce.datamodel.HttpResponseDTO
-import com.uos.vcommcerce.datamodel.SettingDTO
+import com.uos.vcommcerce.datamodel.http.HttpResponseDTO
+import com.uos.vcommcerce.datamodel.setting.SettingDTO
 import com.uos.vcommcerce.http.test.RestApi
 import com.uos.vcommcerce.profile.UserActivity
 import com.uos.vcommcerce.testpackagedeletesoon.ShowMyUserInfoActivity

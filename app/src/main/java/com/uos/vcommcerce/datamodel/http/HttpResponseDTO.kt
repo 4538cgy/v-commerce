@@ -1,4 +1,4 @@
-package com.uos.vcommcerce.datamodel
+package com.uos.vcommcerce.datamodel.http
 
 data class HttpResponseDTO(
         var serverKey : String ? = "emptyServerKey",

@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.databinding.ActivityRegistSellerBinding
-import com.uos.vcommcerce.datamodel.SellerDTO
+import com.uos.vcommcerce.datamodel.seller.SellerDTO
 import com.uos.vcommcerce.util.Config
 
 /**

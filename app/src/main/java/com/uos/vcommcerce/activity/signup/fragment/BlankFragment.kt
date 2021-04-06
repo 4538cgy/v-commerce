@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.databinding.FragmentBlankBinding
-import com.uos.vcommcerce.datamodel.UserDTO
+import com.uos.vcommcerce.datamodel.user.UserDTO
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

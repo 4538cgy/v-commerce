@@ -6,7 +6,7 @@
 
         <variable
             name="itemreviewitem"
-            type="com.uos.vcommcerce.datamodel.ReviewDTO" />
+            type="com.uos.vcommcerce.datamodel.review.ReviewDTO" />
 
     </data>
 

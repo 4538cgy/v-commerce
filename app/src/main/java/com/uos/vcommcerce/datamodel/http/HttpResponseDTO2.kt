@@ -1,4 +1,4 @@
-package com.uos.vcommcerce.http.dto
+package com.uos.vcommcerce.datamodel.http
 
 class HttpResponseDTO2(
     var dummy : String ? = null

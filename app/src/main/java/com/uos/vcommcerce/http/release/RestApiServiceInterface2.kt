@@ -1,7 +1,7 @@
 package com.uos.vcommcerce.http.release
 
 import com.uos.vcommcerce.datamodel.KakaoTestDTO
-import com.uos.vcommcerce.http.dto.HttpResponseDTO2
+import com.uos.vcommcerce.datamodel.http.HttpResponseDTO2
 import retrofit2.Call
 import retrofit2.http.*
 

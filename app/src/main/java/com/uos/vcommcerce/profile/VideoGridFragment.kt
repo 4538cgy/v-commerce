@@ -15,12 +15,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.uos.vcommcerce.Model.UserDataVM
+import com.uos.vcommcerce.datamodel.user.UserDataVM
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.base.BaseFragment
 import com.uos.vcommcerce.databinding.FragmentVideoGridBinding
 import com.uos.vcommcerce.databinding.VideoGridItemBinding
-import com.uos.vcommcerce.datamodel.UserVideoData
+import com.uos.vcommcerce.datamodel.user.UserVideoDTO
 import com.uos.vcommcerce.testpackagedeletesoon.TestExoplayerActivity
 import com.uos.vcommcerce.util.setHeight
 
@@ -66,17 +66,17 @@ class VideoGridFragment : BaseFragment<FragmentVideoGridBinding>(
 
     inner class RecyclerGridViewHolder(val binding: VideoGridItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun onBind(data: UserVideoData) {
+        fun onBind(data: UserVideoDTO) {
             binding.griditem = data
             binding.executePendingBindings()
         }
 
     }
 
-    inner class RecyclerGridViewAdapter(var data: List<UserVideoData>, val context: Context) :
+    inner class RecyclerGridViewAdapter(var data: List<UserVideoDTO>, val context: Context) :
         RecyclerView.Adapter<RecyclerGridViewHolder>() {
         //생성하는부분
-        fun setDataList(gridData: List<UserVideoData>) {
+        fun setDataList(gridData: List<UserVideoDTO>) {
             this.data = gridData
         }
 

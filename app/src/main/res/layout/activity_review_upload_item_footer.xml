@@ -6,7 +6,7 @@
     <data>
         <variable
             name="reviewuploadItemFooter"
-            type="com.uos.vcommcerce.datamodel.ReviewUploadItemFooterDTO" />
+            type="com.uos.vcommcerce.datamodel.review.ReviewUploadItemFooterDTO" />
 
     </data>
 

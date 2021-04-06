@@ -1,8 +1,8 @@
 package com.uos.vcommcerce.firebase.repository
 
 import com.google.firebase.firestore.FirebaseFirestore
-import com.uos.vcommcerce.datamodel.UserDTO
-import com.uos.vcommcerce.datamodel.UserListDTO
+import com.uos.vcommcerce.datamodel.user.UserDTO
+import com.uos.vcommcerce.datamodel.user.UserListDTO
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.sendBlocking
 import kotlinx.coroutines.flow.callbackFlow

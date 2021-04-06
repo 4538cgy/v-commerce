@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.databinding.*
-import com.uos.vcommcerce.datamodel.ProductClassDTO
-import com.uos.vcommcerce.datamodel.ProductOptionAddItem
+import com.uos.vcommcerce.datamodel.product.ProductClassDTO
+import com.uos.vcommcerce.datamodel.product.ProductOptionAddItem
 import com.uos.vcommcerce.util.setHeight
 import kotlinx.android.synthetic.main.activity_product_information.*
 

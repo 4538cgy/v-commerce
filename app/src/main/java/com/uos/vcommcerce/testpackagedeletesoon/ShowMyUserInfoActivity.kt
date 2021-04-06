@@ -7,7 +7,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.base.BaseActivity
 import com.uos.vcommcerce.databinding.ActivityShowMyUserInfoBinding
-import com.uos.vcommcerce.datamodel.UserDTO
+import com.uos.vcommcerce.datamodel.user.UserDTO
 
 class ShowMyUserInfoActivity : BaseActivity<ActivityShowMyUserInfoBinding>(
     layoutId = R.layout.activity_show_my_user_info
