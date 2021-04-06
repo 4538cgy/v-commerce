@@ -73,25 +73,25 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(
     inner class SettingActivityRecyclerViewAdapter() :
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-        var settingDTO: ArrayList<SettingDTO> = arrayListOf()
+        var settingDTO: ArrayList<String> = arrayListOf()
 
         init {
-            settingDTO.add(SettingDTO("로그인 상태" + FirebaseAuth.getInstance().currentUser.toString()))
-            settingDTO.add(SettingDTO("메인 화면 보기"))
-            settingDTO.add(SettingDTO("로그아웃"))
-            settingDTO.add(SettingDTO("비디오 화면 보기"))
-            settingDTO.add(SettingDTO("그리드 화면 보기"))
-            settingDTO.add(SettingDTO("RESTFULL TEST"))
-            settingDTO.add(SettingDTO("RESTFULL TEST POST"))
-            settingDTO.add(SettingDTO("비디오 리스트 보기"))
-            settingDTO.add(SettingDTO("비디오 업로드 하기"))
-            settingDTO.add(SettingDTO("회원 가입 or 로그인 하기"))
-            settingDTO.add(SettingDTO("저장된 정보 보기[로그인 상태에서만 가능]"))
-            settingDTO.add(SettingDTO("비디오 업로드"))
-            settingDTO.add(SettingDTO("제품 정보"))
-            settingDTO.add(SettingDTO("판매자 등록 화면 보기"))
-            settingDTO.add(SettingDTO("정상 프로세스 대로 실행"))
-            settingDTO.add(SettingDTO("카카오 로그인"))
+            settingDTO.add("로그인 상태" + FirebaseAuth.getInstance().currentUser.toString())
+            settingDTO.add("메인 화면 보기")
+            settingDTO.add("로그아웃")
+            settingDTO.add("비디오 화면 보기")
+            settingDTO.add("그리드 화면 보기")
+            settingDTO.add("RESTFULL TEST")
+            settingDTO.add("RESTFULL TEST POST")
+            settingDTO.add("비디오 리스트 보기")
+            settingDTO.add("비디오 업로드 하기")
+            settingDTO.add("회원 가입 or 로그인 하기")
+            settingDTO.add("저장된 정보 보기[로그인 상태에서만 가능]")
+            settingDTO.add("비디오 업로드")
+            settingDTO.add("제품 정보")
+            settingDTO.add("판매자 등록 화면 보기")
+            settingDTO.add("정상 프로세스 대로 실행")
+            settingDTO.add("카카오 로그인")
             notifyDataSetChanged()
         }
 
@@ -113,11 +113,11 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
             var view = holder.itemView
-            view.item_setting_textview_title.text = settingDTO[position].title
+            view.item_setting_textview_title.text = settingDTO[position]
 
             view.item_setting_textview_title.setOnClickListener {
 
-                when (settingDTO[position].title) {
+                when (settingDTO[position]) {
 
                     "메인 화면 보기" -> {
                         pageChange("Main")
