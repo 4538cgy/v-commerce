@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="ProductClassItem"
-            type="com.uos.vcommcerce.datamodel.product.ProductClassDTO" />
+            name="item"
+            type="String" />
     </data>
     <FrameLayout
         android:layout_width="match_parent"
@@ -26,8 +26,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="50dp"
-                android:text="@{ProductClassItem.procudtClass}"
-                android:hint="@{ProductClassItem.procudtClassHint}"
+                android:hint="@{item}"
                 android:gravity="left|center"/>
 
             <Button

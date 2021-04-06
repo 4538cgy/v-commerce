@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.databinding.ActivityReviewBinding
 import com.uos.vcommcerce.databinding.ItemReviewItemBinding
-import com.uos.vcommcerce.datamodel.review.ReviewDTO
+import com.uos.vcommcerce.datamodel.product.ProductDTO
 
 class ReviewActivity : AppCompatActivity() {
 
@@ -47,8 +47,8 @@ class ReviewActivity : AppCompatActivity() {
 
     inner class ReviewRecyclerViewAdapter() : RecyclerView.Adapter<ReviewRecyclerViewAdapter.ReviewRecyclerViewAdapterViewHolder>(){
 
-        var reviews : ArrayList<ReviewDTO> = arrayListOf()
-        var data = listOf<ReviewDTO>()
+        var reviews : ArrayList<ProductDTO.Review> = arrayListOf()
+        var data = listOf<ProductDTO.Review>()
 
         init {
             notifyDataSetChanged()
@@ -76,11 +76,11 @@ class ReviewActivity : AppCompatActivity() {
                 var intent = Intent(binding.root.context, ReviewDetailActivity::class.java)
                 intent.apply {
 
-                    putExtra("uid",reviews[position].id)
-                    putExtra("nickName",reviews[position].nickName)
+                    putExtra("uid",reviews[position].userId)
+                    putExtra("nickName",reviews[position].userNickName)
                     putExtra("serverTimestamp",reviews[position].serverTimestamp)
-                    putExtra("reviewExplain",reviews[position].reviewExplain)
-                    putExtra("reviewPoint",reviews[position].reviewPoint)
+                    putExtra("reviewExplain",reviews[position].commentExplain)
+                    putExtra("reviewPoint",reviews[position].rating)
                     putExtra("reviewId",reviews[position].reviewId)
                     putExtra("reviewImageUrlList",reviews[position].reviewImageUrlList)
                     putExtra("timestamp",reviews[position].timestamp)
@@ -105,7 +105,7 @@ class ReviewActivity : AppCompatActivity() {
         }
 
         inner class ReviewRecyclerViewAdapterViewHolder(val binding: ItemReviewItemBinding) : RecyclerView.ViewHolder(binding.root){
-            fun onBind(data: ReviewDTO){
+            fun onBind(data: ProductDTO.Review){
                 binding.itemreviewitem = data
             }
         }

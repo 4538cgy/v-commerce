@@ -49,6 +49,12 @@ data class ProductDTO (
         //리뷰 평점
         var rating: Long? = null,
         //작성한 시간
-        var timstamp: Long? = null
+        var timestamp: Long? = null,
+        //리뷰 포스트 자체의 id
+        var reviewId : String ? = null,
+        //리뷰 사진 최대 N장의 리스트 - ArrayList
+        var reviewImageUrlList : ArrayList<String> ? = null,
+        //서버의 타임 MilliSecond로 저장
+        var serverTimestamp : Long ? = 0
     )
 }
