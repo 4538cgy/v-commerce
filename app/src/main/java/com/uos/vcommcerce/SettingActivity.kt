@@ -8,8 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.GoogleApiClient
@@ -25,9 +27,10 @@ import com.uos.vcommcerce.activity.videoupload.SelectVideoActivity
 import com.uos.vcommcerce.activity.videoupload.VideoSelectActivity
 import com.uos.vcommcerce.activity.videoupload.VideoUploadActivity
 import com.uos.vcommcerce.base.BaseActivity
+import com.uos.vcommcerce.base.BaseRecyclerAdapter
 import com.uos.vcommcerce.databinding.ActivitySettingBinding
+import com.uos.vcommcerce.databinding.ItemSettingBinding
 import com.uos.vcommcerce.datamodel.http.HttpResponseDTO
-import com.uos.vcommcerce.datamodel.setting.SettingDTO
 import com.uos.vcommcerce.http.test.RestApi
 import com.uos.vcommcerce.profile.UserActivity
 import com.uos.vcommcerce.testpackagedeletesoon.ShowMyUserInfoActivity
@@ -40,20 +43,41 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
 
-class SettingActivity : BaseActivity<ActivitySettingBinding>(
-    layoutId = R.layout.activity_setting
-) {
+class SettingActivity : BaseActivity<ActivitySettingBinding>(layoutId = R.layout.activity_setting) {
 
     var gac: GoogleApiClient? = null
     var context: Context? = null
+
+    var settingDTO: ArrayList<String> = arrayListOf()
+
+    init {
+        settingDTO.add("로그인 상태" + FirebaseAuth.getInstance().currentUser.toString())
+        settingDTO.add("메인 화면 보기")
+        settingDTO.add("로그아웃")
+        settingDTO.add("비디오 화면 보기")
+        settingDTO.add("그리드 화면 보기")
+        settingDTO.add("RESTFULL TEST")
+        settingDTO.add("RESTFULL TEST POST")
+        settingDTO.add("비디오 리스트 보기")
+        settingDTO.add("비디오 업로드 하기")
+        settingDTO.add("회원 가입 or 로그인 하기")
+        settingDTO.add("저장된 정보 보기[로그인 상태에서만 가능]")
+        settingDTO.add("비디오 업로드")
+        settingDTO.add("제품 정보")
+        settingDTO.add("판매자 등록 화면 보기")
+        settingDTO.add("정상 프로세스 대로 실행")
+        settingDTO.add("카카오 로그인")
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding.activitySettingRecycler.apply {
-            adapter = SettingActivityRecyclerViewAdapter()
+            adapter = SettingActivityRecyclerViewAdapter<String,ItemSettingBinding>(R.layout.item_setting,settingDTO)
             layoutManager = LinearLayoutManager(this@SettingActivity)
         }
+        binding.activitySettingRecycler.adapter?.notifyDataSetChanged()
+
 
         context = this.applicationContext
 
@@ -70,53 +94,15 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(
 
     }
 
-    inner class SettingActivityRecyclerViewAdapter() :
-        RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-        var settingDTO: ArrayList<String> = arrayListOf()
 
-        init {
-            settingDTO.add("로그인 상태" + FirebaseAuth.getInstance().currentUser.toString())
-            settingDTO.add("메인 화면 보기")
-            settingDTO.add("로그아웃")
-            settingDTO.add("비디오 화면 보기")
-            settingDTO.add("그리드 화면 보기")
-            settingDTO.add("RESTFULL TEST")
-            settingDTO.add("RESTFULL TEST POST")
-            settingDTO.add("비디오 리스트 보기")
-            settingDTO.add("비디오 업로드 하기")
-            settingDTO.add("회원 가입 or 로그인 하기")
-            settingDTO.add("저장된 정보 보기[로그인 상태에서만 가능]")
-            settingDTO.add("비디오 업로드")
-            settingDTO.add("제품 정보")
-            settingDTO.add("판매자 등록 화면 보기")
-            settingDTO.add("정상 프로세스 대로 실행")
-            settingDTO.add("카카오 로그인")
-            notifyDataSetChanged()
-        }
+    inner class SettingActivityRecyclerViewAdapter<item : String,viewBinding : ViewDataBinding>(layoutid : Int, itemList : ArrayList<item>) : BaseRecyclerAdapter<item,viewBinding>(layoutid,itemList){
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-            var view =
-                LayoutInflater.from(parent.context).inflate(R.layout.item_setting, parent, false)
 
-            return CustomViewHolder(view)
-        }
-
-        inner class CustomViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
-
-        }
-
-        override fun getItemCount(): Int {
-            return settingDTO.size
-        }
-
-        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-
+        override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
+            super.onBindViewHolder(holder, position)
             var view = holder.itemView
-            view.item_setting_textview_title.text = settingDTO[position]
-
             view.item_setting_textview_title.setOnClickListener {
-
                 when (settingDTO[position]) {
 
                     "메인 화면 보기" -> {
@@ -340,8 +326,7 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(
                             if (SharedData.prefs.getString("userInfo", "no") != null) {
                                 SharedData.prefs.setString("userInfo", "no")
                             }
-                            activity_setting_recycler?.adapter =
-                                SettingActivityRecyclerViewAdapter()
+                            activity_setting_recycler?.adapter = SettingActivityRecyclerViewAdapter<String,ItemSettingBinding>(R.layout.item_setting,settingDTO)
                             Toast.makeText(this@SettingActivity, "로그아웃 성공", Toast.LENGTH_SHORT)
                                 .show()
 
@@ -365,6 +350,6 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(
 
     override fun onResume() {
         super.onResume()
-        activity_setting_recycler?.adapter = SettingActivityRecyclerViewAdapter()
+        activity_setting_recycler?.adapter = SettingActivityRecyclerViewAdapter<String,ItemSettingBinding>(R.layout.item_setting,settingDTO)
     }
 }

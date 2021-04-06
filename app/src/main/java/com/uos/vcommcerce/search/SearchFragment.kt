@@ -19,9 +19,7 @@ import com.uos.vcommcerce.util.*
 import kotlinx.android.synthetic.main.main_search_item.view.*
 
 
-class SearchFragment : BaseFragment<FragmentSearchBinding>(
-    layoutId = R.layout.fragment_search
-) {
+class SearchFragment : BaseFragment<FragmentSearchBinding>(layoutId = R.layout.fragment_search) {
 
     private lateinit var SearchListAdapter: SearchAdapter
 
@@ -110,6 +108,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        super.onCreateView(inflater, container, savedInstanceState)
 
         binding.searchfragment = this
 

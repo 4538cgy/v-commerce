@@ -7,7 +7,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.uos.vcommcerce.BR
-import com.uos.vcommcerce.databinding.ItemReviewItemBinding
 import kotlin.collections.ArrayList
 
 
