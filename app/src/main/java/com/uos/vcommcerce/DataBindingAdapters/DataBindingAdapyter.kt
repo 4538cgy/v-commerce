@@ -18,6 +18,10 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.databinding.ObservableField
 import com.facebook.internal.Mutable
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.ui.PlayerView
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.util.*
 
@@ -218,7 +222,7 @@ object DataBindingAdapyter {
     }
 
 
-    //평점 출력
+    //평점 출력F
     @JvmStatic
     @BindingAdapter("totalRating")
     fun setTotalRating(view: TextView, totalRating: Float) {
@@ -249,4 +253,12 @@ object DataBindingAdapyter {
     }
 
 
+    //비디오 플레이 영상준비
+    @JvmStatic
+    @BindingAdapter("prepareVideo")
+    fun prepareVideolist(view: PlayerView,urilist: ArrayList<String>) {
+        view.hideController()
+        view.player!!.setMediaItem(MediaItem.fromUri(urilist.get(0)))
+        view.player!!.prepare();
+    }
 }

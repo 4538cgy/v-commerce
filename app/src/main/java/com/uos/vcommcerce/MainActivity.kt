@@ -25,7 +25,6 @@ import com.uos.vcommcerce.base.BaseActivity
 import com.uos.vcommcerce.base.BaseRecyclerAdapter
 import com.uos.vcommcerce.databinding.ActivityMainBinding
 import com.uos.vcommcerce.databinding.ItemExoplayerBinding
-import com.uos.vcommcerce.databinding.ItemExoplayerBindingImpl
 import com.uos.vcommcerce.datamodel.ProductDTO
 import com.uos.vcommcerce.datamodel.ProductModel
 import com.uos.vcommcerce.mainslide.MainBottomView
@@ -42,9 +41,7 @@ import kotlin.math.abs
 
 var Imm: InputMethodManager? = null;
 
-class MainActivity : BaseActivity<ActivityMainBinding>(
-    layoutId = R.layout.activity_main
-), SearchFragment.searchEnd {
+class MainActivity : BaseActivity<ActivityMainBinding>(layoutId = R.layout.activity_main), SearchFragment.searchEnd {
 
     //제품리스트
     private val productList: ProductModel by viewModels()
@@ -60,7 +57,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
     var SearchFragmentView: SearchFragment = SearchFragment()
 
     //창크기 정보를 가지는 객체
-    lateinit var DisplaySize: ObservableField<DisplaySize>
+    lateinit var displaySize: ObservableField<DisplaySize>
 
     companion object {
         var TouchPoint: Int? = null
@@ -69,7 +66,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        DisplaySize = ObservableField(DisplaySize(this))
+        displaySize = ObservableField(DisplaySize(this))
         binding.mainActivity = this
         binding.item = productList
 
@@ -79,9 +76,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
                 binding.vpViewpager.adapter = VideoAdapter<ProductDTO,ItemExoplayerBinding>(this,R.layout.item_exoplayer,productData)
 
                 binding.vpViewpager.offscreenPageLimit = 2
-                val pageMarginPx = DisplaySize.get()!!.size_X * 16 * DisplaySize.get()!!.density
-                val screenWidth =DisplaySize.get()!!.screenWidthPixel
-                val pagerWidth = screenWidth -  DisplaySize.get()!!.size_X * 60 * DisplaySize.get()!!.density
+                val pageMarginPx = displaySize.get()!!.size_X * 16 * displaySize.get()!!.density
+                val screenWidth =displaySize.get()!!.screenWidthPixel
+                val pagerWidth = screenWidth -  displaySize.get()!!.size_X * 60 * displaySize.get()!!.density
                 val offsetPx = screenWidth - pageMarginPx - pagerWidth
                 binding.vpViewpager.setPageTransformer(){ page, position -> page.translationX = (position * -offsetPx) }
             }
@@ -132,7 +129,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
 
 
         //비디오 플레이어 위치 조정
-        ViewAnimation(binding.VideoView, 0, (63 * DisplaySize.get()!!.size_Y).toInt().dp(), 0)
+        ViewAnimation(binding.VideoView, 0, (63 * displaySize.get()!!.size_Y).toInt().dp(), 0)
 
         //검색창 프라그먼트
         supportFragmentManager.beginTransaction().replace(R.id.search_view, SearchFragmentView)
@@ -214,36 +211,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
 
     inner class VideoAdapter<item : ProductDTO , viewBinding : ItemExoplayerBinding>(private val context: Context,var layoutid : Int, var itemlist: ArrayList<item>) : BaseRecyclerAdapter<item,viewBinding>(layoutid,itemlist) {
 
+
         override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
             super.onBindViewHolder(holder,position)
-
-            Log.d("재 바인드? : ", itemlist.toString())
-            var view = holder.itemView
-
+            holder.binding.displaySize = displaySize
             var player = SimpleExoPlayer.Builder(context).build()
-
-            //Glide.with(context).load(items[position]).into(holder.imageUrl)
-            view.item_exoplayer.player = player
-            view.item_exoplayer.hideController()
-
-            player?.setMediaItem(MediaItem.fromUri(itemlist!!.get(0)!!.videoList!!.get(0)))
-            player?.prepare()
+            holder.binding.itemExoplayer.player = player
             player?.play()
             //뷰에 터치리스너 추가
-
             holder.itemView.setOnClickListener(ViewPageClickListner)
             holder.itemView.setOnTouchListener(ViewPageTouchListner)
-
-            var Xsize = DisplaySize.get()!!.size_X
-            var size = (315 * Xsize).toInt().dp()
-
-            val lp = view.item_exoplayer.layoutParams
-            lp?.let {
-                lp.width = size;
-                view.item_exoplayer.layoutParams = lp
-            }
-
-
         }
 
         //최석우 뷰 컨트롤을위한 클릭과 터치리스너

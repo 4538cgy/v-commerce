@@ -1,5 +1,5 @@
 package com.uos.vcommcerce.datamodel
-
+//ProductDTO 통합 가능
 data class ReviewDTO(
 
     //닉네임

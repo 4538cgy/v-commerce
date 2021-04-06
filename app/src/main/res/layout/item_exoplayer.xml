@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
     <data>
         <variable
             name="item"
             type="com.uos.vcommcerce.datamodel.ProductDTO" />
+        <variable
+            name="displaySize"
+            type="androidx.databinding.ObservableField&lt;com.uos.vcommcerce.util.DisplaySize&gt;"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,6 +24,9 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:background="@drawable/main_player_background"
+            app:prepareVideo="@{item.videoList }"
+            app:layout_width="@{315}"
+            app:stand_size="@{displaySize}"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -45,8 +45,8 @@ class MainBottomView {
         //메인바인드를가져왓다 -> 메인 뷰 를가져왓다고 이해가능
         //메인뷰의 크기를 피그마와 동일하도록 바꿈
 
-        size_Y = Binding.mainActivity!!.DisplaySize.get()!!.size_Y
-        size_X = Binding.mainActivity!!.DisplaySize.get()!!.size_X
+        size_Y = Binding.mainActivity!!.displaySize.get()!!.size_Y
+        size_X = Binding.mainActivity!!.displaySize.get()!!.size_X
         BottomMin = (size_Y * standardBottomMin).toInt()
         BottomMid = (size_Y * standardBottomMid).toInt()
 
