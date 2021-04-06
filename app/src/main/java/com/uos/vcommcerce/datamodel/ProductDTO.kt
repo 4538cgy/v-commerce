@@ -1,9 +1,14 @@
 package com.uos.vcommcerce.datamodel
 
+import android.content.Context
+import android.content.Intent
 import android.util.Log
+import android.view.View
+import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.ObservableField
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
+import com.uos.vcommcerce.profile.UserActivity
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -56,5 +61,4 @@ data class ProductDTO (
         //작성한 시간
         var timstamp: Long? = null
     )
-
 }

@@ -1,6 +1,8 @@
 package com.uos.vcommcerce.DataBindingAdapters
 
 import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.ColorFilter
 import android.graphics.Paint
@@ -15,6 +17,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.BindingAdapter
 import androidx.databinding.ObservableField
 import com.facebook.internal.Mutable
@@ -23,6 +26,7 @@ import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ui.PlayerView
 import com.uos.vcommcerce.R
+import com.uos.vcommcerce.profile.UserActivity
 import com.uos.vcommcerce.util.*
 
 object DataBindingAdapyter {
@@ -260,5 +264,19 @@ object DataBindingAdapyter {
         view.hideController()
         view.player!!.setMediaItem(MediaItem.fromUri(urilist.get(0)))
         view.player!!.prepare();
+    }
+
+
+    //영상 제작자 프로필 열기
+    @JvmStatic
+    @BindingAdapter("getcontext","getuid")
+    fun openProfile(view: View,context : Context,uid: String) {
+        view.setOnClickListener(object : View.OnClickListener{
+            override fun onClick(v: View?) {
+                var intent = Intent(context, UserActivity::class.java)
+                intent.putExtra("Uid", uid)
+                context.startActivity(intent)
+            }
+        })
     }
 }

@@ -17,6 +17,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.google.ads.interactivemedia.v3.internal.v
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.firebase.auth.FirebaseAuth
@@ -36,6 +37,7 @@ import com.uos.vcommcerce.tranformer.ZoomOutPageTransformer
 import com.uos.vcommcerce.util.DisplaySize
 import com.uos.vcommcerce.util.MainActivityState
 import com.uos.vcommcerce.util.dp
+import kotlinx.android.synthetic.main.item_exoplayer.*
 import kotlinx.android.synthetic.main.item_exoplayer.view.*
 import kotlin.math.abs
 
@@ -129,7 +131,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(layoutId = R.layout.activ
 
 
         //비디오 플레이어 위치 조정
-        ViewAnimation(binding.VideoView, 0, (63 * displaySize.get()!!.size_Y).toInt().dp(), 0)
+        ViewAnimation(binding.vpViewpager, 0, (63 * displaySize.get()!!.size_Y).toInt().dp(), 0)
 
         //검색창 프라그먼트
         supportFragmentManager.beginTransaction().replace(R.id.search_view, SearchFragmentView)
@@ -169,7 +171,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(layoutId = R.layout.activ
     //프로필 이동 이벤트
     fun profileMove(view: View) {
         intent = Intent(this, UserActivity::class.java)
-        intent.putExtra("Uid", firebaseAuth.currentUser?.uid)
+        intent.putExtra("Uid", firebaseAuth.currentUser!!.uid)
         startActivity(intent)
 
     }
@@ -180,11 +182,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(layoutId = R.layout.activ
     }
 
 
-    fun moveProfile(view: View) {
-        intent = Intent(this, UserActivity::class.java)
-        intent.putExtra("Uid", productList.product.get()?.sellerUid)
-        startActivity(intent)
-    }
+
 
 
     //검색창 클릭
@@ -214,6 +212,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(layoutId = R.layout.activ
 
         override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
             super.onBindViewHolder(holder,position)
+            holder.binding.context = context
             holder.binding.displaySize = displaySize
             var player = SimpleExoPlayer.Builder(context).build()
             holder.binding.itemExoplayer.player = player

@@ -28,58 +28,19 @@
         android:background="#000000"
         >
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/VideoView"
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vpViewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            tools:layout_editor_absoluteX="0dp"
+            android:clipToPadding="false"
+            android:clipChildren="false"
             app:layout_height="@{560}"
-            app:stand_size="@{MainActivity.displaySize}"
-            >
-
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/vpViewpager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                tools:layout_editor_absoluteX="0dp"
-                android:clipToPadding="false"
-                android:clipChildren="false"/>
-
-            <ImageButton
-                android:id="@+id/sellerImg"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:background="@drawable/background_round_gray_13dp"
-                app:layout_constraintBottom_toTopOf="@+id/likeBtn"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:onClick="@{MainActivity::moveProfile}"
-                app:latout_margin_left="@{0}"
-                app:latout_margin_top="@{0}"
-                app:latout_margin_right="@{36}"
-                app:latout_margin_bottom="@{12}"
-                app:layout_sizeY="@{60}"
-                app:stand_size="@{MainActivity.displaySize}"
-                app:stand_size_margin="@{MainActivity.displaySize}"
-                />
-
-            <ImageButton
-                android:id="@+id/likeBtn"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@drawable/main_like_btn"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:latout_margin_left="@{0}"
-                app:latout_margin_top="@{0}"
-                app:latout_margin_right="@{42}"
-                app:latout_margin_bottom="@{18}"
-                app:layout_sizeY="@{48}"
-                app:stand_size="@{MainActivity.displaySize}"
-                app:stand_size_margin="@{MainActivity.displaySize}"
-                />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:stand_size="@{MainActivity.displaySize}"/>
 
 
 
