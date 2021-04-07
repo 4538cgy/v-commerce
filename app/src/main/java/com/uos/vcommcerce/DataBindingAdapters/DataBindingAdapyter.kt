@@ -259,11 +259,14 @@ object DataBindingAdapyter {
 
     //비디오 플레이 영상준비
     @JvmStatic
-    @BindingAdapter("prepareVideo")
-    fun prepareVideolist(view: PlayerView,urilist: ArrayList<String>) {
+    @BindingAdapter("prepareVideo","getcontext")
+    fun prepareVideolist(view: PlayerView,urilist: ArrayList<String>,context: Context) {
+        var player = SimpleExoPlayer.Builder(context).build()
+        view.player = player
         view.hideController()
         view.player!!.setMediaItem(MediaItem.fromUri(urilist.get(0)))
         view.player!!.prepare();
+        player?.play()
     }
 
 

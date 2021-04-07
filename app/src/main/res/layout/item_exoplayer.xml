@@ -28,6 +28,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:background="@drawable/main_player_background"
+            app:getcontext="@{context}"
             app:prepareVideo="@{item.videoList }"
             app:layout_width="@{315}"
             app:stand_size="@{displaySize}"

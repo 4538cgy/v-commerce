@@ -196,25 +196,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(layoutId = R.layout.f
     }
 
 
-//    //검색 리스트 변경 함수 - 검색창 열기
-//    fun searchingViewChange() {
-//        var searchItemCount = filterList?.size ?: 0
-//        if(mainActivityState != MainActivityState.search) {
-//        }
-//        mainActivityState = MainActivityState.search
-//        if (searchItemCount < 3) {
-////            Binding.mainTopView.setHeight((size_Y*(SearchViewSize + 10 + viewHandleSize + 3*RecyclerItemSize)).toInt() )
-////            Binding.mainSearchList.setHeight(3 * RecyclerItemSize)
-////            Binding.mainSearchList.setMarginBottom(0)
-//        } else {
-////            Binding.mainTopView.setHeight((size_Y*(SearchViewSize + 10 + viewHandleSize + searchItemCount*RecyclerItemSize)).toInt() )
-////            Binding.mainViewChange.setHeight(0)
-////            Binding.mainSearchList.setHeight(searchItemCount * RecyclerItemSize)
-////            Binding.mainSearchList.setMarginBottom(0)
-//        }
-//    }
-
-
     //서치 어댑터 클래스
     inner class SearchAdapter(private val context: Context) : BaseAdapter() {
 
@@ -240,15 +221,12 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(layoutId = R.layout.f
         override fun getItem(p0: Int): Any? {
             return null
         }
-
         override fun getItemId(p0: Int): Long {
             return 0
         }
-
         override fun getCount(): Int {
             return filterList?.size ?: 0
         }
-
     }
 
     //검색창 텍스트 확인기

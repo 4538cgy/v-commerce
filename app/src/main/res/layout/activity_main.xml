@@ -10,9 +10,6 @@
         <import type="com.uos.vcommcerce.util.CustomEditText"/>
 
         <variable
-            name="bottomview"
-            type="com.uos.vcommcerce.mainslide.MainBottomView" />
-        <variable
             name="MainActivity"
             type="com.uos.vcommcerce.MainActivity" />
 
@@ -105,7 +102,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:onClick="@{bottomview::BottomViewClick}"
+            android:onClick="@{MainActivity::BottomViewClick}"
 
             app:stand_size="@{MainActivity.displaySize}"
             app:layout_height="@{400}"

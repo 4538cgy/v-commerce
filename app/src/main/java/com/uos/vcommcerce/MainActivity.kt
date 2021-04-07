@@ -3,23 +3,15 @@ package com.uos.vcommcerce
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.renderscript.ScriptGroup
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.databinding.ObservableField
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import com.google.ads.interactivemedia.v3.internal.v
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.firebase.auth.FirebaseAuth
 import com.uos.vcommcerce.activity.review.ReviewActivity
 import com.uos.vcommcerce.base.BaseActivity
@@ -28,7 +20,6 @@ import com.uos.vcommcerce.databinding.ActivityMainBinding
 import com.uos.vcommcerce.databinding.ItemExoplayerBinding
 import com.uos.vcommcerce.datamodel.ProductDTO
 import com.uos.vcommcerce.datamodel.ProductModel
-import com.uos.vcommcerce.mainslide.MainBottomView
 import com.uos.vcommcerce.mainslide.ViewAnimation
 import com.uos.vcommcerce.mainslide.mainActivityState
 import com.uos.vcommcerce.profile.UserActivity
@@ -37,13 +28,11 @@ import com.uos.vcommcerce.tranformer.ZoomOutPageTransformer
 import com.uos.vcommcerce.util.DisplaySize
 import com.uos.vcommcerce.util.MainActivityState
 import com.uos.vcommcerce.util.dp
-import kotlinx.android.synthetic.main.item_exoplayer.*
-import kotlinx.android.synthetic.main.item_exoplayer.view.*
 import kotlin.math.abs
 
 var Imm: InputMethodManager? = null;
 
-class MainActivity : BaseActivity<ActivityMainBinding>(layoutId = R.layout.activity_main), SearchFragment.searchEnd {
+class MainActivity : BaseActivity<ActivityMainBinding>(layoutId = R.layout.activity_main), SearchFragment.searchEnd{
 
     //제품리스트
     private val productList: ProductModel by viewModels()
@@ -51,9 +40,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(layoutId = R.layout.activ
 
     //접속자 정보
     private var firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance();
-
-    //메인에 물려있는 탑과 바텀뷰 + 플레이어
-    var MainBottom: MainBottomView = MainBottomView()
 
     //검색창 프라그먼트
     var SearchFragmentView: SearchFragment = SearchFragment()
@@ -76,7 +62,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(layoutId = R.layout.activ
         val dataObserver: Observer<ArrayList<ProductDTO>> =
             Observer { livedata -> productData = livedata
                 binding.vpViewpager.adapter = VideoAdapter<ProductDTO,ItemExoplayerBinding>(this,R.layout.item_exoplayer,productData)
-
                 binding.vpViewpager.offscreenPageLimit = 2
                 val pageMarginPx = displaySize.get()!!.size_X * 16 * displaySize.get()!!.density
                 val screenWidth =displaySize.get()!!.screenWidthPixel
@@ -90,11 +75,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(layoutId = R.layout.activ
         //아이템 정보 바인딩에 할당
         // 최석우 일시적으로 앱터져서 막음
         //registerPushToken()
-
-        //뷰페이져 어댑터 설정
-//        binding.vpViewpager.adapter = VideoAdapter(this,productList.productList)
-        //메인 바텀뷰에 필요한 인자들 전송
-        MainBottom.getMainBinding(binding, this)
 
         //키보드 숨기기위한 시스템 변수
         Imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager;
@@ -128,6 +108,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(layoutId = R.layout.activ
         }
         )
 
+        binding.mainBottomView.setPadding(24 * displaySize.get()!!.size_X.toInt().dp(), 0, 24 * displaySize.get()!!.size_X.toInt().dp(), 0)
 
 
         //비디오 플레이어 위치 조정
@@ -209,14 +190,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(layoutId = R.layout.activ
 
     inner class VideoAdapter<item : ProductDTO , viewBinding : ItemExoplayerBinding>(private val context: Context,var layoutid : Int, var itemlist: ArrayList<item>) : BaseRecyclerAdapter<item,viewBinding>(layoutid,itemlist) {
 
-
         override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
             super.onBindViewHolder(holder,position)
             holder.binding.context = context
             holder.binding.displaySize = displaySize
-            var player = SimpleExoPlayer.Builder(context).build()
-            holder.binding.itemExoplayer.player = player
-            player?.play()
             //뷰에 터치리스너 추가
             holder.itemView.setOnClickListener(ViewPageClickListner)
             holder.itemView.setOnTouchListener(ViewPageTouchListner)
@@ -237,17 +214,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(layoutId = R.layout.activ
                 //손땟을때
                 MotionEvent.ACTION_UP -> {
                     var distance: Int = TouchPoint!!.minus(event.getY().toInt());
-                    if (abs(distance) > 50) {//드래기일시 해당하는 창을 열기
-                        if (distance > 0) {
-                            Log.d("드레그 UP : ", "드레그 UP")
-                            if (mainActivityState == MainActivityState.default) {
-                                binding.bottomview?.BottonViewSlideUp(MainActivityState.slideUp)
-                            }
-                        } else {
-                            Log.d("드레그 DOWN : ", "드레그 DOWN")
-                            if (mainActivityState == MainActivityState.slideUp) {
-                                binding.bottomview?.BottonViewSlideDown(MainActivityState.default)
-                            }
+                    if (distance > 50) {//드래기일시 해당하는 창을 열기
+                        Log.d("드레그 UP : ", "드레그 UP")
+                        if (mainActivityState == MainActivityState.default) {
+                            BottonViewSlideUp(MainActivityState.slideUp)
                         }
                     } else {//터치일시 각 창을 닫음
                         returnDefaultView()
@@ -260,7 +230,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(layoutId = R.layout.activ
 
     //기본상태로 돌아가기
     fun returnDefaultView() {
-        binding.bottomview?.BottonViewSlideDown(MainActivityState.default)
+        BottonViewSlideDown(MainActivityState.default)
     }
 
     //검색 종료
@@ -268,4 +238,25 @@ class MainActivity : BaseActivity<ActivityMainBinding>(layoutId = R.layout.activ
         binding.searchView.visibility = View.GONE
         returnDefaultView()
     }
+
+
+    //하단바 온클릭 이벤트 (디폴트로)
+    fun BottomViewClick(view: View) {
+        if (mainActivityState == MainActivityState.slideUp) {
+            BottonViewSlideDown(MainActivityState.default)
+        }
+    }
+
+    //하단 바텀뷰 보이게 하는 함수
+    fun BottonViewSlideDown(state: MainActivityState = MainActivityState.notChange) {
+        ViewAnimation(binding.mainBottomView, 0, displaySize.get()!!.BottomMid.dp() - displaySize.get()!!.BottomMin.dp(), 500, state)
+    }
+
+    //하단 바텀뷰 확장하는 함수
+    fun BottonViewSlideUp(state: MainActivityState = MainActivityState.notChange) {
+        ViewAnimation(binding.mainBottomView, 0, 0, 500, state)
+    }
+
+
+
 }
