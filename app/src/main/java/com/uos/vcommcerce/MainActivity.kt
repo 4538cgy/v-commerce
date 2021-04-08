@@ -41,11 +41,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(layoutId = R.layout.activ
     //접속자 정보
     private var firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance();
 
-    //검색창 프라그먼트
-    var SearchFragmentView: SearchFragment = SearchFragment()
-
     //창크기 정보를 가지는 객체
     lateinit var displaySize: ObservableField<DisplaySize>
+
+    //검색창 프라그먼트
+    lateinit var SearchFragmentView: SearchFragment
+
+
 
     companion object {
         var TouchPoint: Int? = null
@@ -55,6 +57,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(layoutId = R.layout.activ
         super.onCreate(savedInstanceState)
 
         displaySize = ObservableField(DisplaySize(this))
+        SearchFragmentView = SearchFragment(displaySize)
         binding.mainActivity = this
         binding.item = productList
 

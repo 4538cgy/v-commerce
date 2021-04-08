@@ -8,7 +8,9 @@
         <variable
             name="searchfragment"
             type="com.uos.vcommcerce.search.SearchFragment" />
-
+        <variable
+            name="displaySize"
+            type="androidx.databinding.ObservableField&lt;com.uos.vcommcerce.util.DisplaySize&gt;"/>
     </data>
     <LinearLayout
         android:id="@+id/search_fragment"
@@ -21,14 +23,25 @@
             android:id="@+id/search_layout"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:background="@drawable/main_search_view_unerbar">
+            android:background="@drawable/main_search_view_unerbar"
+            app:layout_height="@{55}"
+            app:stand_size="@{displaySize}"
+
+            app:latout_margin_left="@{0}"
+            app:latout_margin_top="@{16}"
+            app:latout_margin_right="@{0}"
+            app:latout_margin_bottom="@{0}"
+            app:stand_size_margin="@{displaySize}"
+            >
 
             <ImageButton
                 android:id="@+id/backbtn"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:background="@drawable/main_back_btn_black"
-                android:onClick="@{searchfragment.searchend::searchEnd}"/>
+                android:onClick="@{searchfragment.searchend::searchEnd}"
+                app:layout_sizeY="@{48}"
+                app:stand_size="@{displaySize}"/>
 
             <com.uos.vcommcerce.util.CustomEditText
                 android:id="@+id/search_view"
@@ -42,14 +55,25 @@
                 android:id="@+id/search_btn"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:background="@drawable/main_search_btn_black"/>
+                android:background="@drawable/main_search_btn_black"
+                app:layout_sizeY="@{48}"
+                app:stand_size="@{displaySize}"/>
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/recent_search"
             android:layout_width="match_parent"
             android:layout_height="325dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+
+            app:layout_height="@{325}"
+            app:stand_size="@{displaySize}"
+
+            app:latout_margin_left="@{16}"
+            app:latout_margin_top="@{0}"
+            app:latout_margin_right="@{16}"
+            app:latout_margin_bottom="@{0}"
+            app:stand_size_margin="@{displaySize}">
             <TextView
                 android:id="@+id/recent_search_text"
                 android:layout_width="match_parent"
@@ -57,7 +81,15 @@
                 android:text="최근 검색어"
                 android:textStyle="bold"
                 android:textColor="#333333"
-                android:textSize="20sp"/>
+                android:textSize="20sp"
+                app:layout_height="@{47}"
+                app:stand_size="@{displaySize}"
+
+                app:latout_margin_left="@{0}"
+                app:latout_margin_top="@{25}"
+                app:latout_margin_right="@{0}"
+                app:latout_margin_bottom="@{0}"
+                app:stand_size_margin="@{displaySize}"/>
             <ListView
                 android:id="@+id/recent_search_list"
                 android:layout_width="match_parent"
@@ -73,13 +105,29 @@
             android:text="찾으시는 상품이 보이지 않네요!"
             android:textColor="#555555"
             android:gravity="center"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            app:layout_height="@{132}"
+            app:stand_size="@{displaySize}"
+
+            app:latout_margin_left="@{0}"
+            app:latout_margin_top="@{25}"
+            app:latout_margin_right="@{0}"
+            app:latout_margin_bottom="@{0}"
+            app:stand_size_margin="@{displaySize}"/>
 
         <LinearLayout
             android:id="@+id/how_about"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_height="@{325}"
+            app:stand_size="@{displaySize}"
+
+            app:latout_margin_left="@{16}"
+            app:latout_margin_top="@{0}"
+            app:latout_margin_right="@{16}"
+            app:latout_margin_bottom="@{0}"
+            app:stand_size_margin="@{displaySize}">
 
             <TextView
                 android:id="@+id/how_about_text"
@@ -88,7 +136,15 @@
                 android:text="이런 상품은 어때요?"
                 android:textStyle="bold"
                 android:textColor="#333333"
-                android:textSize="20sp"/>
+                android:textSize="20sp"
+                app:layout_height="@{47}"
+                app:stand_size="@{displaySize}"
+
+                app:latout_margin_left="@{0}"
+                app:latout_margin_top="@{25}"
+                app:latout_margin_right="@{0}"
+                app:latout_margin_bottom="@{0}"
+                app:stand_size_margin="@{displaySize}"/>
             <ListView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"

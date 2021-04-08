@@ -11,24 +11,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ObservableField
 import com.uos.vcommcerce.MainActivity
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.base.BaseFragment
 import com.uos.vcommcerce.databinding.FragmentSearchBinding
+import com.uos.vcommcerce.databinding.MainSearchItemBinding
 import com.uos.vcommcerce.util.*
 import kotlinx.android.synthetic.main.main_search_item.view.*
 
 
-class SearchFragment : BaseFragment<FragmentSearchBinding>(layoutId = R.layout.fragment_search) {
+class SearchFragment(var displaySize: ObservableField<DisplaySize>) : BaseFragment<FragmentSearchBinding>(layoutId = R.layout.fragment_search) {
 
     private lateinit var SearchListAdapter: SearchAdapter
 
     companion object {
-        //검색창용 변수및 리스트
-        var topSearchList: ArrayList<String> = arrayListOf<String>()
-
         //최근 검색 기록
         var beforeSearchList: ArrayList<String> = arrayListOf<String>()
+
+        var topSearchList: ArrayList<String> = arrayListOf<String>()
 
         //전체 목록 리스트
         var allsearchList: ArrayList<String> = arrayListOf<String>()
@@ -45,17 +47,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(layoutId = R.layout.f
     }
 
     lateinit var searchend: searchEnd
-
-
-    var size_Y: Float = 0f
-    var size_X: Float = 0f
-
-    //피그마 기준 값
-    var standardSize_Y: Int = 770
-    var standardSize_X: Int = 375
-
-    //검색 아이템 크기
-    val RecyclerItemSize: Int = 40;
 
     //초기화 나중엔 파베에서 받아오는걸루
     init {
@@ -105,34 +96,12 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(layoutId = R.layout.f
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-
-
         binding.searchfragment = this
+        binding.displaySize = displaySize
 
         searchend = activity as MainActivity
 
-        SearchListAdapter = SearchAdapter(container!!.context)
-
-        //해상도 측정
-        val display = activity?.windowManager?.defaultDisplay
-        val size = Point()
-        display?.getSize(size)
-        var ScreenSize: Point = size
-        var density = Resources.getSystem().displayMetrics.density
-
-        //피그마크기1px 당 실제뷰 크기값
-        size_Y = (ScreenSize.y / density) / standardSize_Y
-        size_X = (ScreenSize.x / density) / standardSize_X
-
-        //검색창 뷰 크기
-        binding.searchLayout.setHeight((size_Y * 55).toInt())
-        binding.searchLayout.setLMarginTop((size_Y * 16).toInt())
-
-        binding.backbtn.setHeight((size_Y * 48).toInt())
-        binding.backbtn.setWidth((size_Y * 48).toInt())
-
-        binding.searchBtn.setHeight((size_Y * 48).toInt())
-        binding.searchBtn.setWidth((size_Y * 48).toInt())
+        SearchListAdapter = SearchAdapter(container!!.context,displaySize)
 
         //뒤로가기누르면 포커스 제거
         binding.searchView.setCallback {
@@ -142,28 +111,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(layoutId = R.layout.f
         binding.searchView.onFocusChangeListener = onFocusChabgeListener
         binding.searchView.addTextChangedListener(TextChangeListener)
 
-        //최근 검색어 뷰 크기
-        binding.recentSearch.setHeight((size_Y * 325).toInt())
-        binding.recentSearch.setLMarginRight((size_X * 16).toInt())
-        binding.recentSearch.setLMarginLeft((size_X * 16).toInt())
-
-        binding.recentSearchText.setHeight((size_Y * 47).toInt())
-        binding.recentSearchText.setLMarginTop((size_Y * 25).toInt())
-
         //최근 검색 리사이클러뷰 장착
         binding.recentSearchList.adapter = SearchListAdapter
-
-        //찾으시는 상품이 없서요
-        binding.notfind.setHeight((size_Y * 132).toInt())
-        binding.notfind.setLMarginTop((size_Y * 25).toInt())
-
-        //이런상품은 어떄요 뷰 크기
-        binding.howAbout.setHeight((size_Y * 325).toInt())
-        binding.howAbout.setLMarginRight((size_X * 16).toInt())
-        binding.howAbout.setLMarginLeft((size_X * 16).toInt())
-
-        binding.howAboutText.setHeight((size_Y * 47).toInt())
-        binding.howAboutText.setLMarginTop((size_Y * 25).toInt())
 
         SearchSet()
 
@@ -197,24 +146,12 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(layoutId = R.layout.f
 
 
     //서치 어댑터 클래스
-    inner class SearchAdapter(private val context: Context) : BaseAdapter() {
+    inner class SearchAdapter(context: Context ,var displaySize: ObservableField<DisplaySize>) : BaseAdapter() {
 
         override fun getView(position: Int, convertView: View?, viewGroup: ViewGroup?): View? {
-            val view: View = LayoutInflater.from(context).inflate(R.layout.main_search_item, null)
-            //뷰크기 재설정
-            view.search_item_layout.setHeight((RecyclerItemSize * size_Y).toInt());
-
-            view.search_view_simbol.setHeight((24 * size_Y).toInt())
-            view.search_view_simbol.setWidth((24 * size_Y).toInt())
-            view.search_view_simbol.setLMarginLeft((16 * size_Y).toInt())
-
-            //내용 이식
-            view.item_text.text = filterList?.get(position);
-            view.item_text.setHeight((22 * size_Y).toInt())
-            view.item_text.setLMarginLeft((8 * size_Y).toInt())
-
-            view.delete_record.setHeight((24 * size_Y).toInt())
-            view.delete_record.setWidth((24 * size_Y).toInt())
+            val binding : MainSearchItemBinding = DataBindingUtil.inflate(LayoutInflater.from(context),layoutId,viewGroup,false)
+            binding.item = filterList?.get(position)
+            binding.displaySize = displaySize
             return view
         }
 

@@ -29,6 +29,9 @@ class DisplaySize (var activity : Activity) {
     var BottomMin : Int = 0
     var BottomMid : Int = 0
 
+    //메인 제품검색창 아이템 크기
+    var mainSearchRecyclerItemSize = 40
+
     init {
         //해상도 측정
         val display = activity.windowManager.defaultDisplay

@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="item"
+            type="String" />
+        <variable
+            name="displaySize"
+            type="androidx.databinding.ObservableField&lt;com.uos.vcommcerce.util.DisplaySize&gt;"/>
+    </data>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -8,24 +18,45 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal"
-        android:gravity="center">
+        android:gravity="center"
+
+        app:layout_height="@{displaySize.mainSearchRecyclerItemSize}"
+        app:stand_size="@{displaySize}">
         
         <ImageView
             android:id="@+id/search_view_simbol"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:background="@drawable/search_post_record"
+
+            app:layout_sizeY="@{24}"
+            app:stand_size="@{displaySize}"
+
+            app:latout_margin_left="@{16}"
+            app:latout_margin_top="@{0}"
+            app:latout_margin_right="@{0}"
+            app:latout_margin_bottom="@{0}"
+            app:stand_size_margin="@{displaySize}"
             />
 
         <TextView
             android:id="@+id/item_text"
             android:textColor="#111111"
             android:textSize="22sp"
-            android:text=""
+            android:text="@{item}"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="29dp"
             android:gravity="left"
+
+            app:layout_height="@{22}"
+            app:stand_size="@{displaySize}"
+
+            app:latout_margin_left="@{8}"
+            app:latout_margin_top="@{0}"
+            app:latout_margin_right="@{0}"
+            app:latout_margin_bottom="@{0}"
+            app:stand_size_margin="@{displaySize}"
             />
         
         <ImageButton
@@ -33,9 +64,13 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:background="@drawable/ic_baseline_close_24"
+            app:layout_sizeY="@{24}"
+            app:stand_size="@{displaySize}"
             />
 
 
     </LinearLayout>
 
 </LinearLayout>
+
+</layout>
