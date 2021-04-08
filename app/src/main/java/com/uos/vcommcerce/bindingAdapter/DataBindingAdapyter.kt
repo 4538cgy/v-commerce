@@ -1,23 +1,14 @@
-package com.uos.vcommcerce.DataBindingAdapters
+package com.uos.vcommcerce.bindingAdapter
 
-import android.app.Activity
-import android.graphics.Color
-import android.graphics.ColorFilter
-import android.graphics.Paint
-import android.graphics.PorterDuff
 import android.net.Uri
 import android.util.Log
-import android.view.Display
 import android.view.View
-import android.view.ViewTreeObserver
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.databinding.ObservableField
-import com.facebook.internal.Mutable
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.util.*
 

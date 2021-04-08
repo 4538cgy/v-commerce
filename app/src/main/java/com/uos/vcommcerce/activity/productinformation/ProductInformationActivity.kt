@@ -11,34 +11,34 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.uos.vcommcerce.R
+import com.uos.vcommcerce.base.BaseActivity
 import com.uos.vcommcerce.databinding.*
 import com.uos.vcommcerce.datamodel.ProductClassDTO
 import com.uos.vcommcerce.datamodel.ProductOptionAddItem
 import com.uos.vcommcerce.util.setHeight
 import kotlinx.android.synthetic.main.activity_product_information.*
 
-class ProductInformationActivity : AppCompatActivity() {
+class ProductInformationActivity : BaseActivity<ActivityProductInformationBinding>(
+    layoutId = R.layout.activity_product_information
+) {
 
-    lateinit var binding: ActivityProductInformationBinding
     var OptionItemHeight = 184
     var Height = MutableLiveData<Int>(OptionItemHeight)
 
     companion object {
-        lateinit var ProductOptionAdapter :ProductOptionRecyclerViewAdapter
+        lateinit var ProductOptionAdapter: ProductOptionRecyclerViewAdapter
     }
 
     var ProductClassList: ArrayList<ProductClassDTO> = arrayListOf()
     var ProductOptionList: ArrayList<ProductOptionAddItem> = arrayListOf()
 
 
-
-    fun getContext() : Context {
+    fun getContext(): Context {
         return this
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_product_information)
         binding.productInformationActivity = this
         product_class.adapter = ProductClassRecyclerViewAdapter()
         product_class.layoutManager = LinearLayoutManager(this)
@@ -49,7 +49,8 @@ class ProductInformationActivity : AppCompatActivity() {
     }
 
     //상품분류 리사이클러뷰 어댑터
-    inner class ProductClassRecyclerViewAdapter() : RecyclerView.Adapter<ProductClassRecyclerViewAdapter.CustomViewHolder>() {
+    inner class ProductClassRecyclerViewAdapter() :
+        RecyclerView.Adapter<ProductClassRecyclerViewAdapter.CustomViewHolder>() {
 
         //기본아이템 추가
         init {
@@ -63,7 +64,7 @@ class ProductInformationActivity : AppCompatActivity() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
             var view = LayoutInflater.from(parent.context)
-            var binding = ProductClassItemBinding.inflate(view,parent,false)
+            var binding = ProductClassItemBinding.inflate(view, parent, false)
 
             return CustomViewHolder(binding)
         }
@@ -77,9 +78,10 @@ class ProductInformationActivity : AppCompatActivity() {
 
         }
 
-        inner class CustomViewHolder(var binding: ProductClassItemBinding) : RecyclerView.ViewHolder(binding.root) {
-            fun bind(item : ProductClassDTO){
-                with(binding){
+        inner class CustomViewHolder(var binding: ProductClassItemBinding) :
+            RecyclerView.ViewHolder(binding.root) {
+            fun bind(item: ProductClassDTO) {
+                with(binding) {
                     productClassItem = item
                     executePendingBindings()
                     //화살표에 임시로 추가기능 추가
@@ -99,7 +101,8 @@ class ProductInformationActivity : AppCompatActivity() {
 
 
     //옵션 추가 리사이클러뷰 어댑터
-    inner class ProductOptionRecyclerViewAdapter() : RecyclerView.Adapter<ProductOptionRecyclerViewAdapter.CustomViewHolder>() {
+    inner class ProductOptionRecyclerViewAdapter() :
+        RecyclerView.Adapter<ProductOptionRecyclerViewAdapter.CustomViewHolder>() {
 
         //최초1개 아이템 추가
         init {
@@ -108,10 +111,9 @@ class ProductInformationActivity : AppCompatActivity() {
         }
 
 
-
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
             var view = LayoutInflater.from(parent.context)
-            var binding = ProductOptionAddItemBinding.inflate(view,parent,false)
+            var binding = ProductOptionAddItemBinding.inflate(view, parent, false)
             return CustomViewHolder(binding)
         }
 
@@ -123,7 +125,8 @@ class ProductInformationActivity : AppCompatActivity() {
             holder.bind(ProductOptionList[position])
         }
 
-        inner class CustomViewHolder(var binding: ProductOptionAddItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        inner class CustomViewHolder(var binding: ProductOptionAddItemBinding) :
+            RecyclerView.ViewHolder(binding.root) {
             fun bind(item: ProductOptionAddItem) {
                 with(binding) {
                     productOptionAddItem = item
@@ -133,13 +136,13 @@ class ProductInformationActivity : AppCompatActivity() {
         }
     }
 
-    fun addItem(view:View){
+    fun addItem(view: View) {
         ProductOptionList.add(ProductOptionAddItem())
         ProductOptionAdapter.notifyDataSetChanged()
-        product_option.setHeight(OptionItemHeight*ProductOptionAdapter.itemCount)
+        product_option.setHeight(OptionItemHeight * ProductOptionAdapter.itemCount)
     }
 
-    fun activityfinish(view:View){
+    fun activityfinish(view: View) {
         finish()
     }
 }

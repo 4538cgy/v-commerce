@@ -1,29 +1,28 @@
 package com.uos.vcommcerce.activity.login
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
-import androidx.databinding.DataBindingUtil
 import com.google.firebase.auth.FirebaseAuth
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.activity.login.popup.PasswordErrorPopUpActivity
 import com.uos.vcommcerce.activity.signup.SignUpActivity
+import com.uos.vcommcerce.base.BaseActivity
 import com.uos.vcommcerce.databinding.ActivityLoginWithEmailBinding
 
 
-class LoginWithEmail : AppCompatActivity() {
+class LoginWithEmail : BaseActivity<ActivityLoginWithEmailBinding>(
+    layoutId = R.layout.activity_login_with_email
+) {
 
-    lateinit var binding: ActivityLoginWithEmailBinding
     val auth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_login_with_email)
         binding.activityloginwithemail = this@LoginWithEmail
 
         binding.activityLoginWithEmailEdittextId.addTextChangedListener(EditWatcher())
@@ -50,12 +49,12 @@ class LoginWithEmail : AppCompatActivity() {
 
         //비밀번호 찾기
         binding.activityLoginWithEmailTextviewFindPassword.setOnClickListener {
-            startActivity(Intent(this,FindPasswordActivity::class.java))
+            startActivity(Intent(this, FindPasswordActivity::class.java))
         }
 
         //회원가입
         binding.activityLoginWithEmailTextviewSignup.setOnClickListener {
-            startActivity(Intent(this,SignUpActivity::class.java))
+            startActivity(Intent(this, SignUpActivity::class.java))
         }
 
         //뒤로가기
