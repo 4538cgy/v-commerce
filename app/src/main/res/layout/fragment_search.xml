@@ -66,7 +66,7 @@
             android:layout_height="325dp"
             android:orientation="vertical"
 
-            app:layout_height="@{325}"
+            app:layout_height="@{272}"
             app:stand_size="@{displaySize}"
 
             app:latout_margin_left="@{16}"
@@ -90,7 +90,8 @@
                 app:latout_margin_right="@{0}"
                 app:latout_margin_bottom="@{0}"
                 app:stand_size_margin="@{displaySize}"/>
-            <ListView
+
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recent_search_list"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"

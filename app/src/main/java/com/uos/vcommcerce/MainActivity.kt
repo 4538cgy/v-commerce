@@ -26,28 +26,32 @@ import com.uos.vcommcerce.profile.UserActivity
 import com.uos.vcommcerce.search.SearchFragment
 import com.uos.vcommcerce.tranformer.ZoomOutPageTransformer
 import com.uos.vcommcerce.util.DisplaySize
+import com.uos.vcommcerce.util.I_searchEnd
 import com.uos.vcommcerce.util.MainActivityState
 import com.uos.vcommcerce.util.dp
 import kotlin.math.abs
 
 var Imm: InputMethodManager? = null;
 
-class MainActivity : BaseActivity<ActivityMainBinding>(layoutId = R.layout.activity_main), SearchFragment.searchEnd{
+class MainActivity : BaseActivity<ActivityMainBinding>(layoutId = R.layout.activity_main){
 
     //제품리스트
     private val productList: ProductModel by viewModels()
     var productData: ArrayList<ProductDTO> = ArrayList<ProductDTO>()
-
     //접속자 정보
     private var firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance();
-
     //창크기 정보를 가지는 객체
     lateinit var displaySize: ObservableField<DisplaySize>
-
     //검색창 프라그먼트
     lateinit var SearchFragmentView: SearchFragment
 
-
+    //검색종료 인터페이스 구현
+    var searchEndListener : I_searchEnd = object : I_searchEnd {
+        override fun searchEnd(view: View?) {
+            binding.searchView.visibility = View.GONE
+            returnDefaultView()
+        }
+    }
 
     companion object {
         var TouchPoint: Int? = null
@@ -55,9 +59,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(layoutId = R.layout.activ
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         displaySize = ObservableField(DisplaySize(this))
-        SearchFragmentView = SearchFragment(displaySize)
+
+
+        SearchFragmentView = SearchFragment(displaySize,searchEndListener)
         binding.mainActivity = this
         binding.item = productList
 
@@ -81,6 +86,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(layoutId = R.layout.activ
 
         //키보드 숨기기위한 시스템 변수
         Imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager;
+
+
+
 
 
         //비디오 플레이어 설정
@@ -146,7 +154,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(layoutId = R.layout.activ
     override fun onBackPressed() {
         Log.d("뒤로가기 누른거 확인 ", mainActivityState.toString())
         if (mainActivityState == MainActivityState.search) {
-            searchEnd()
+            searchEndListener.searchEnd()
         } else {
             super.onBackPressed()
         }
@@ -164,10 +172,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(layoutId = R.layout.activ
     fun IconMove4(view: View) {
         startActivity(Intent(this, SettingActivity::class.java))
     }
-
-
-
-
 
     //검색창 클릭
     fun SearchEvent(view: View) {
@@ -236,11 +240,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(layoutId = R.layout.activ
         BottonViewSlideDown(MainActivityState.default)
     }
 
-    //검색 종료
-    override fun searchEnd(view: View?) {
-        binding.searchView.visibility = View.GONE
-        returnDefaultView()
-    }
 
 
     //하단바 온클릭 이벤트 (디폴트로)
