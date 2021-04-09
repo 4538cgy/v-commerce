@@ -1,4 +1,4 @@
-package com.uos.vcommcerce
+package com.uos.vcommcerce.activity.main
 
 import android.content.Context
 import android.content.Intent
@@ -13,6 +13,9 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.firebase.auth.FirebaseAuth
+import com.uos.vcommcerce.R
+import com.uos.vcommcerce.SettingActivity
+import com.uos.vcommcerce.activity.profile.UserActivity
 import com.uos.vcommcerce.activity.review.ReviewActivity
 import com.uos.vcommcerce.base.BaseActivity
 import com.uos.vcommcerce.base.BaseRecyclerAdapter
@@ -22,7 +25,6 @@ import com.uos.vcommcerce.datamodel.ProductDTO
 import com.uos.vcommcerce.datamodel.ProductModel
 import com.uos.vcommcerce.mainslide.ViewAnimation
 import com.uos.vcommcerce.mainslide.mainActivityState
-import com.uos.vcommcerce.profile.UserActivity
 import com.uos.vcommcerce.search.SearchFragment
 import com.uos.vcommcerce.tranformer.ZoomOutPageTransformer
 import com.uos.vcommcerce.util.DisplaySize

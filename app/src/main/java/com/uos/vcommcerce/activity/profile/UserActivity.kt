@@ -1,4 +1,4 @@
-package com.uos.vcommcerce.profile
+package com.uos.vcommcerce.activity.profile
 
 import android.app.Activity
 import android.content.Intent
@@ -11,9 +11,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.activity.productinformation.ProductInformationActivity
+import com.uos.vcommcerce.activity.profile.FixUserActivity
+import com.uos.vcommcerce.activity.profile.HistoryFragment
 import com.uos.vcommcerce.base.BaseActivity
 import com.uos.vcommcerce.databinding.ActivityUserViewBinding
 import com.uos.vcommcerce.datamodel.ProfileDTO
+import com.uos.vcommcerce.profile.VideoGridFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_user_view.*
 
@@ -23,13 +26,10 @@ private const val FLAG_REQ_CAMERA = 101
 private const val FLAG_REQ_GALLERY = 102
 private const val FLAG_FIX_RESULT = 103
 
-class UserActivity : BaseActivity<ActivityUserViewBinding>(
-    layoutId = R.layout.activity_user_view
-) {
+class UserActivity : BaseActivity<ActivityUserViewBinding>(layoutId = R.layout.activity_user_view) {
     private var firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance();
 
     var firestore = FirebaseFirestore.getInstance()
-
 
     var Imguri: ObservableField<Uri?> = ObservableField()
     var NickName: ObservableField<String> = ObservableField("Nickname")
@@ -37,8 +37,6 @@ class UserActivity : BaseActivity<ActivityUserViewBinding>(
 
     //파이어 베이스에서 데이터를 불러옴
     init {
-        Log.d("체크-1 ", "");
-
         firestore.collection("userInfo").document("userData").collection("accountInfo")
             .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                 if (querySnapshot == null) {
@@ -46,7 +44,6 @@ class UserActivity : BaseActivity<ActivityUserViewBinding>(
                 }
                 //파베에서의 유저데이터중 엑스트라로 받아온데이터와 일치하는걸 찾기
                 for (snapshot in querySnapshot!!.documents) {
-                    Log.d("체크1 ", "");
                     if (snapshot.id == intent.getStringExtra("Uid")) {
                         var profile = snapshot.toObject(ProfileDTO::class.java)
                         NickName.set(profile?.userNickName);
@@ -77,17 +74,10 @@ class UserActivity : BaseActivity<ActivityUserViewBinding>(
             Log.d("currentUser2 : ", firebaseAuth?.currentUser.toString())
         }
 
-        supportFragmentManager.beginTransaction().replace(
-            R.id.recyclerViewBox,
-            VideoGridFragment()
-        ).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.recyclerViewBox, VideoGridFragment()).commit()
 
         if (intent.getStringExtra("history") == "history") {
-
-            supportFragmentManager.beginTransaction().replace(
-                R.id.recyclerViewBox,
-                HistoryFragment()
-            ).commit()
+            supportFragmentManager.beginTransaction().replace(R.id.recyclerViewBox, HistoryFragment()).commit()
         }
 
     }

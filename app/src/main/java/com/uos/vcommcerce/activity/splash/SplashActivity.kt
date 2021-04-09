@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
-import com.uos.vcommcerce.MainActivity
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.activity.login.LoginActivity
 import com.uos.vcommcerce.databinding.ActivitySplashBinding

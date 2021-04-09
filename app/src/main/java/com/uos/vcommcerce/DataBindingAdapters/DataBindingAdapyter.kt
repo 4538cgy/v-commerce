@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.ColorFilter
 import android.graphics.Paint
 import android.graphics.PorterDuff
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.util.Log
 import android.view.Display
@@ -21,13 +22,14 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.BindingAdapter
 import androidx.databinding.ObservableField
+import com.bumptech.glide.Glide
 import com.facebook.internal.Mutable
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ui.PlayerView
 import com.uos.vcommcerce.R
-import com.uos.vcommcerce.profile.UserActivity
+import com.uos.vcommcerce.activity.profile.UserActivity
 import com.uos.vcommcerce.util.*
 
 object DataBindingAdapyter {
@@ -283,6 +285,9 @@ object DataBindingAdapyter {
             }
         })
     }
+
+
+
 
 
 

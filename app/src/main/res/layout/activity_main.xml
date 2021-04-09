@@ -11,7 +11,7 @@
 
         <variable
             name="MainActivity"
-            type="com.uos.vcommcerce.MainActivity" />
+            type="com.uos.vcommcerce.activity.main.MainActivity" />
 
         <variable
             name="item"

@@ -16,8 +16,10 @@ import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
 import com.uos.vcommcerce.activity.login.KakaoLoginTest
 import com.uos.vcommcerce.activity.login.LoginActivity
+import com.uos.vcommcerce.activity.main.MainActivity
 import com.uos.vcommcerce.activity.oder.OrderActivity
 import com.uos.vcommcerce.activity.productinformation.ProductInformationActivity
+import com.uos.vcommcerce.activity.profile.UserActivity
 import com.uos.vcommcerce.activity.regist.RegistSellerActivity
 import com.uos.vcommcerce.activity.signup.WelcomeActivity
 import com.uos.vcommcerce.activity.splash.SplashActivity
@@ -29,7 +31,6 @@ import com.uos.vcommcerce.databinding.ActivitySettingBinding
 import com.uos.vcommcerce.datamodel.HttpResponseDTO
 import com.uos.vcommcerce.datamodel.SettingDTO
 import com.uos.vcommcerce.http.test.RestApi
-import com.uos.vcommcerce.profile.UserActivity
 import com.uos.vcommcerce.testpackagedeletesoon.ShowMyUserInfoActivity
 import com.uos.vcommcerce.testpackagedeletesoon.TestExoplayerActivity
 import com.uos.vcommcerce.util.SharedData

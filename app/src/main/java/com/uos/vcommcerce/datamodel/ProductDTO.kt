@@ -8,7 +8,6 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.ObservableField
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
-import com.uos.vcommcerce.profile.UserActivity
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap

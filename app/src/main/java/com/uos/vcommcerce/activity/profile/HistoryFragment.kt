@@ -1,4 +1,4 @@
-package com.uos.vcommcerce.profile
+package com.uos.vcommcerce.activity.profile
 
 import android.content.Context
 import android.os.Bundle

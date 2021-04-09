@@ -24,9 +24,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
-import com.uos.vcommcerce.MainActivity
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.SettingActivity
+import com.uos.vcommcerce.activity.main.MainActivity
 import com.uos.vcommcerce.activity.signup.SignUpActivity
 import com.uos.vcommcerce.databinding.ActivityLoginBinding
 import com.uos.vcommcerce.util.SharedData

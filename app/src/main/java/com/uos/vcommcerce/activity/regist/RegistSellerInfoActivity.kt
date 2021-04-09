@@ -9,8 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.uos.vcommcerce.MainActivity
 import com.uos.vcommcerce.R
+import com.uos.vcommcerce.activity.main.MainActivity
 import com.uos.vcommcerce.databinding.ActivityRegistSellerInfoBinding
 import com.uos.vcommcerce.datamodel.SellerDTO
 import com.uos.vcommcerce.util.Config

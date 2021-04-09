@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.util.Log
 import android.view.View
-import com.uos.vcommcerce.Imm
 import com.uos.vcommcerce.util.MainActivityState
 
 

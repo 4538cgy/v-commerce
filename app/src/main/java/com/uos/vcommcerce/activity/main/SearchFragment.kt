@@ -15,7 +15,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableField
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.internal.TextWatcherAdapter
-import com.uos.vcommcerce.MainActivity
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.base.BaseFragment
 import com.uos.vcommcerce.base.BaseRecyclerAdapter

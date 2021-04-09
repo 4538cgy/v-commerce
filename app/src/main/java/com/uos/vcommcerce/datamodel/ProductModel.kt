@@ -7,7 +7,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.uos.vcommcerce.MainActivity
 import com.uos.vcommcerce.firebase.repository.FirebaseContentRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect

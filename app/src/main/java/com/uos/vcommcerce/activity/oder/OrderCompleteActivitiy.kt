@@ -6,19 +6,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.uos.vcommcerce.profile.HistoryFragment
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.SettingActivity
-import com.uos.vcommcerce.profile.UserActivity
+import com.uos.vcommcerce.activity.profile.UserActivity
 import com.uos.vcommcerce.databinding.ActivityOderCompleteActivitiyBinding
 import com.uos.vcommcerce.databinding.ItemRecommendedProductBinding
-import com.uos.vcommcerce.testpackagedeletesoon.TestExoplayerActivity
 import kotlinx.android.synthetic.main.activity_user_view.*
 
 data class RecommendedProductData(
