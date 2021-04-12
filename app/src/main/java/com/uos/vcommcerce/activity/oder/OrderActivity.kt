@@ -13,47 +13,41 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.uos.vcommcerce.R
+import com.uos.vcommcerce.base.BaseActivity
 import com.uos.vcommcerce.databinding.ActivityOderBinding
 import com.uos.vcommcerce.databinding.ItemPaymentboxBinding
-import kotlinx.android.synthetic.main.activity_oder.*
 
 
 data class PaymentBtnData(
     var btnName: String
 )
 
-private var webView: WebView?= null
+private var webView: WebView? = null
 private var resultView: EditText? = null
 
 private var handler = Handler()
 
-class OrderActivity : AppCompatActivity() {
+class OrderActivity : BaseActivity<ActivityOderBinding>(
+    layoutId = R.layout.activity_oder
+) {
     val paymentBtnDataList = listOf(
         PaymentBtnData("신용카드"),
         PaymentBtnData("가상계좌"),
         PaymentBtnData("계좌이체")
     )
 
-    lateinit var binding : ActivityOderBinding
-
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_oder)
         binding.activityorder = this@OrderActivity
 
         webView = binding.orderZipcodeWebView
         resultView = binding.adressResultView
-
-
 
         val paymentAdapter = PaymentBtnAdapter(this)
         binding.recyclerPaymentboxView.layoutManager = GridLayoutManager(this, 3)
@@ -70,23 +64,23 @@ class OrderActivity : AppCompatActivity() {
             init_webView()
         }
 
-        
         //결제하기
-        binding.activityOrderButtonPay.setOnClickListener { 
+        binding.activityOrderButtonPay.setOnClickListener {
             startActivity(Intent(binding.root.context, OrderCompleteActivitiy::class.java))
         }
     }
 
     inner class PaymentBtnViewHolder(val binding: ItemPaymentboxBinding) : RecyclerView.ViewHolder(
         binding.root
-    ){
-        fun onBind(data: PaymentBtnData){
+    ) {
+        fun onBind(data: PaymentBtnData) {
             binding.paymentbtndata = data
         }
     }
 
 
-    inner class PaymentBtnAdapter(val context: Context): RecyclerView.Adapter<PaymentBtnViewHolder>(){
+    inner class PaymentBtnAdapter(val context: Context) :
+        RecyclerView.Adapter<PaymentBtnViewHolder>() {
 
         var data = listOf<PaymentBtnData>()
 
@@ -104,7 +98,7 @@ class OrderActivity : AppCompatActivity() {
             holder.onBind(data[position])
 
             //그리드 버튼 클릭시
-            holder.itemView.setOnClickListener{
+            holder.itemView.setOnClickListener {
                 Toast.makeText(context, data[position].btnName, Toast.LENGTH_SHORT).show()
 
                 //.val vedioIntent = Intent(requireActivity(), TestExoplayerActivity::class.java )
@@ -115,10 +109,9 @@ class OrderActivity : AppCompatActivity() {
     }
 
 
-
-    inner class AndroidBridge{
+    inner class AndroidBridge {
         @RequiresApi(Build.VERSION_CODES.O)
-        fun setAddress(arg1: String?, arg2: String?, arg3: String?){
+        fun setAddress(arg1: String?, arg2: String?, arg3: String?) {
 
             // 주소 전달
             val intent = Intent()
@@ -135,8 +128,8 @@ class OrderActivity : AppCompatActivity() {
 
     @SuppressLint("JavascriptInterface")
     @RequiresApi(Build.VERSION_CODES.O)
-    fun init_webView(){
-        var client: WebViewClient = object : WebViewClient(){
+    fun init_webView() {
+        var client: WebViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(
                 view: WebView?,
                 request: WebResourceRequest?
@@ -144,8 +137,8 @@ class OrderActivity : AppCompatActivity() {
                 return false
             }
         }
-        webView!!.apply{
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+        webView!!.apply {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 WebView.setWebContentsDebuggingEnabled(true)
             }
 

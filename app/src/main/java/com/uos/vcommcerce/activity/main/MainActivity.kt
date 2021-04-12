@@ -26,7 +26,7 @@ import com.uos.vcommcerce.datamodel.ProductModel
 import com.uos.vcommcerce.mainslide.ViewAnimation
 import com.uos.vcommcerce.mainslide.mainActivityState
 import com.uos.vcommcerce.search.SearchFragment
-import com.uos.vcommcerce.tranformer.ZoomOutPageTransformer
+import com.uos.vcommcerce.util.view.ZoomOutPageTransformer
 import com.uos.vcommcerce.util.DisplaySize
 import com.uos.vcommcerce.util.I_searchEnd
 import com.uos.vcommcerce.util.MainActivityState

@@ -7,10 +7,10 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RestApi2 {
+class RestApiRelease {
 
     private val APITAG : String = "RestApi"
-    private val restApiServiceInterface : RestApiServiceInterface2
+    private val restApiReleaseServiceInterface : RestApiReleaseServiceInterface
     private val baseUrl : String = "https://www.bogosa-dev.ml"
 
     init{
@@ -20,14 +20,14 @@ class RestApi2 {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        restApiServiceInterface = retrofit.create(RestApiServiceInterface2::class.java)
+        restApiReleaseServiceInterface = retrofit.create(RestApiReleaseServiceInterface::class.java)
     }
 
     fun createUser(userDTO:HttpResponseDTO2.userDTO , unique_uid : String): Call<HttpResponseDTO2.userDTO> {
-        return restApiServiceInterface.createUser(userDTO,unique_uid)
+        return restApiReleaseServiceInterface.createUser(userDTO,unique_uid)
     }
 
     fun test(testDTO: KakaoTestDTO) : Call<HttpResponseDTO2.customTokenDTO>{
-        return restApiServiceInterface.test(testDTO)
+        return restApiReleaseServiceInterface.test(testDTO)
     }
 }

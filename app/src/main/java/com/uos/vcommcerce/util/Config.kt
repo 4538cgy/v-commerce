@@ -2,6 +2,8 @@ package com.uos.vcommcerce.util
 
 import android.Manifest
 
+
+//util package에 있는 PermissionUtil과 성격이 겹치는 것 같습니다.
 class Config {
     companion object {
         const val Seller = "Seller"

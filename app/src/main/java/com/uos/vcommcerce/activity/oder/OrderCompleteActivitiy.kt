@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.SettingActivity
 import com.uos.vcommcerce.activity.profile.UserActivity
+import com.uos.vcommcerce.base.BaseActivity
 import com.uos.vcommcerce.databinding.ActivityOderCompleteActivitiyBinding
 import com.uos.vcommcerce.databinding.ItemRecommendedProductBinding
 import kotlinx.android.synthetic.main.activity_user_view.*
@@ -22,46 +23,48 @@ data class RecommendedProductData(
     var productName: String,
     var productPrice: String
 )
-class OrderCompleteActivitiy : AppCompatActivity() {
+
+class OrderCompleteActivitiy : BaseActivity<ActivityOderCompleteActivitiyBinding>(
+    layoutId = R.layout.activity_oder_complete_activitiy
+) {
     val sampleData = listOf(
         RecommendedProductData(
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScAV7G5jua33e66J2vVpL88cX7Onn9kdcqyw&usqp=CAU",
             "1번",
-            "10000원"),
+            "10000원"
+        ),
         RecommendedProductData(
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2y7EVaFYQ2uJ4Zl9y12-nV7X4l69yWPGTjA&usqp=CAU",
             "3번",
-            "120000원"),
+            "120000원"
+        ),
         RecommendedProductData(
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTgLnniLA0dWCgbvbS5EIYL-ANWzsQybuGLg&usqp=CAU",
             "44번",
-            "510000원")
-
+            "510000원"
         )
-
-
-    lateinit var binding : ActivityOderCompleteActivitiyBinding
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_oder_complete_activitiy)
         binding.activityordercompleteactivity = this@OrderCompleteActivitiy
 
         val recommendedProductAdapter = RecommendedProductAdapter(this)
         //binding.recommendedProductRecyclerview.layoutManager = GridLayoutManager(this,1)
-        binding.recommendedProductRecyclerview.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true)
+        binding.recommendedProductRecyclerview.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true)
         binding.recommendedProductRecyclerview.adapter = recommendedProductAdapter
         recommendedProductAdapter.data = sampleData
-        
+
         //뒤로가기
-        binding.activityOrderCompleteActivityImagebuttonClose.setOnClickListener { 
+        binding.activityOrderCompleteActivityImagebuttonClose.setOnClickListener {
             finish()
         }
 
 
         binding.activityOrderCompleteActivityButtonGoMain.setOnClickListener {
-            startActivity(Intent(binding.root.context , SettingActivity::class.java))
+            startActivity(Intent(binding.root.context, SettingActivity::class.java))
             finish()
         }
 
@@ -74,19 +77,25 @@ class OrderCompleteActivitiy : AppCompatActivity() {
     }
 
 
-    inner class RecommendedProductViewHolder(val binding : ItemRecommendedProductBinding) : RecyclerView.ViewHolder(binding.root){
-        fun onBind(data: RecommendedProductData){
+    inner class RecommendedProductViewHolder(val binding: ItemRecommendedProductBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun onBind(data: RecommendedProductData) {
             binding.recommendedproduct = data
         }
     }
 
-    inner class RecommendedProductAdapter(val context: Context): RecyclerView.Adapter<RecommendedProductViewHolder>(){
+    inner class RecommendedProductAdapter(val context: Context) :
+        RecyclerView.Adapter<RecommendedProductViewHolder>() {
 
         var data = listOf<RecommendedProductData>()
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecommendedProductViewHolder {
+        override fun onCreateViewHolder(
+            parent: ViewGroup,
+            viewType: Int
+        ): RecommendedProductViewHolder {
             val binding = ItemRecommendedProductBinding.inflate(
-                LayoutInflater.from(context), parent, false)
+                LayoutInflater.from(context), parent, false
+            )
 
             return RecommendedProductViewHolder(binding)
         }
@@ -97,7 +106,7 @@ class OrderCompleteActivitiy : AppCompatActivity() {
             holder.onBind(data[position])
 
             //그리드 버튼 클릭시
-            holder.itemView.setOnClickListener{
+            holder.itemView.setOnClickListener {
                 Toast.makeText(context, data[position].productImg, Toast.LENGTH_SHORT).show()
 
 //                val vedioIntent = Intent(requireActivity(), TestExoplayerActivity::class.java )

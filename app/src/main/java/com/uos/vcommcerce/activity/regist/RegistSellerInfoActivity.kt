@@ -5,12 +5,10 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.uos.vcommcerce.R
-import com.uos.vcommcerce.activity.main.MainActivity
+import com.uos.vcommcerce.base.BaseActivity
 import com.uos.vcommcerce.databinding.ActivityRegistSellerInfoBinding
 import com.uos.vcommcerce.datamodel.SellerDTO
 import com.uos.vcommcerce.util.Config
@@ -21,16 +19,17 @@ import com.uos.vcommcerce.util.SharedData
  *  판매자 등록 상세 정보 작성 화면
  *  임시 저장 기능 개발 필요
  */
-class RegistSellerInfoActivity : AppCompatActivity() {
+class RegistSellerInfoActivity : BaseActivity<ActivityRegistSellerInfoBinding>(
+    layoutId = R.layout.activity_regist_seller_info
+) {
 
     var auth = FirebaseAuth.getInstance()
     var firestore = FirebaseFirestore.getInstance()
-    lateinit var binding: ActivityRegistSellerInfoBinding
     lateinit var sellerInfo: SellerDTO
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_regist_seller_info)
         binding.apply {
             activityregistsellerinfo = this@RegistSellerInfoActivity
             activityRegistSellerImageviewClose.setOnClickListener { finish() }
@@ -42,19 +41,26 @@ class RegistSellerInfoActivity : AppCompatActivity() {
             activityRegistSellerButtonNext.setOnClickListener {
                 // 각 Edittext 값을 firebase에 전달할 데이터에 적용
                 sellerInfo.bankAccount = activityRegistSellerInfoEdittextBankAccount.text.toString()
-                sellerInfo.channelExplain = activityRegistSellerInfoEdittextChannelIntroduce.text.toString()
+                sellerInfo.channelExplain =
+                    activityRegistSellerInfoEdittextChannelIntroduce.text.toString()
                 sellerInfo.channelName = activityRegistSellerInfoEdittextChannelName.text.toString()
-                sellerInfo.channelUrl = activityRegistSellerInfoEdittextChannelAddress.text.toString()
+                sellerInfo.channelUrl =
+                    activityRegistSellerInfoEdittextChannelAddress.text.toString()
 
                 // firebase에 등록
-                firestore.collection(Config.userInfo).document("userData").collection(Config.sellerInfo).document(auth.currentUser?.uid.toString()).set(sellerInfo)
+                firestore.collection(Config.userInfo).document("userData")
+                    .collection(Config.sellerInfo).document(auth.currentUser?.uid.toString())
+                    .set(sellerInfo)
                     .addOnSuccessListener {
                         startActivity(
-                            Intent(binding.root.context,
-                                MainActivity::class.java)
+                            Intent(
+                                binding.root.context,
+                                MainActivity::class.java
+                            )
                         )
-                        Toast.makeText(binding.root.context," 판매자 등록 완료 ", Toast.LENGTH_SHORT).show()
-                        SharedData.prefs.setString(Config.sellerInfo,"yes")
+                        Toast.makeText(binding.root.context, " 판매자 등록 완료 ", Toast.LENGTH_SHORT)
+                            .show()
+                        SharedData.prefs.setString(Config.sellerInfo, "yes")
                         finish()
                     }
 

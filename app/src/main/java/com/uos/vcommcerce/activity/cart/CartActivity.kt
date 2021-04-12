@@ -9,19 +9,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.activity.cart.cartrecyclerviewadapter.CartInnerRecyclerViewAdapter
+import com.uos.vcommcerce.base.BaseActivity
 import com.uos.vcommcerce.databinding.ActivityCartBinding
 import com.uos.vcommcerce.databinding.ItemCartBinding
 import com.uos.vcommcerce.datamodel.CartDTO
 
-class CartActivity : AppCompatActivity() {
+class CartActivity : BaseActivity<ActivityCartBinding>(
+    layoutId = R.layout.activity_cart
+) {
 
-    lateinit var binding: ActivityCartBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_cart)
         binding.activitycart = this@CartActivity
-
 
         //뒤로가기
         binding.activityCartImagebuttonClose.setOnClickListener {

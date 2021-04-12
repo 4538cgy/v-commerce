@@ -28,12 +28,15 @@ import com.uos.vcommcerce.R
 import com.uos.vcommcerce.SettingActivity
 import com.uos.vcommcerce.activity.main.MainActivity
 import com.uos.vcommcerce.activity.signup.SignUpActivity
+import com.uos.vcommcerce.base.BaseActivity
 import com.uos.vcommcerce.databinding.ActivityLoginBinding
 import com.uos.vcommcerce.util.SharedData
 import kotlinx.android.synthetic.main.activity_login.*
 import java.util.*
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity<ActivityLoginBinding>(
+    layoutId = R.layout.activity_login
+) {
 
     var auth: FirebaseAuth? = null
     var googleSignInClient: GoogleSignInClient? = null
@@ -41,23 +44,21 @@ class LoginActivity : AppCompatActivity() {
     var callbackManager: CallbackManager? = null
     var firestore = FirebaseFirestore.getInstance()
 
-    lateinit var binding : ActivityLoginBinding
-
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_login)
         binding.activitylogin = this@LoginActivity
 
         auth = FirebaseAuth.getInstance()
 
-        var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
 
 
-        Glide.with(this).load(R.drawable.gradient_login_background).into(binding.activityLoginImageviewBackgroundGif)
+        Glide.with(this).load(R.drawable.gradient_login_background)
+            .into(binding.activityLoginImageviewBackgroundGif)
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
@@ -74,7 +75,7 @@ class LoginActivity : AppCompatActivity() {
         }
         binding.activityLoginTextviewLoginwithemail.setOnClickListener {
             //이메일 로그인
-            startActivity(Intent(this,LoginWithEmail::class.java))
+            startActivity(Intent(this, LoginWithEmail::class.java))
         }
 
 
@@ -172,11 +173,19 @@ class LoginActivity : AppCompatActivity() {
                     if (documentSnapshot != null) {
                         if (documentSnapshot!!.exists()) {
                             SharedData.prefs.setString("userInfo", "yes")
-                            Toast.makeText(this,"회원정보가 존재합니다. \n 메인 페이지로 이동합니다.",Toast.LENGTH_SHORT).show()
-                            
+                            Toast.makeText(
+                                this,
+                                "회원정보가 존재합니다. \n 메인 페이지로 이동합니다.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+
                         } else {
                             SharedData.prefs.setString("userInfo", "no")
-                            Toast.makeText(this,"회원정보가 존재하지 않습니다. \n 회원 정보 추가 페이지로 이동합니다.",Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this,
+                                "회원정보가 존재하지 않습니다. \n 회원 정보 추가 페이지로 이동합니다.",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
 
                         if (SharedData.prefs.getString("userInfo", "no").equals("yes")) {
