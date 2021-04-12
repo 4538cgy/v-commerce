@@ -8,6 +8,7 @@ import android.widget.CompoundButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.uos.vcommcerce.R
+import com.uos.vcommcerce.base.BaseActivity
 import com.uos.vcommcerce.databinding.ActivityRegistSellerBinding
 import com.uos.vcommcerce.datamodel.SellerDTO
 import com.uos.vcommcerce.util.Config
@@ -17,13 +18,12 @@ import com.uos.vcommcerce.util.Config
  *  판매자 등록 기본 페이지.
  *  문서1 파일 업로드 부분은 미구현
  */
-class RegistSellerActivity : AppCompatActivity() {
-    lateinit var binding: ActivityRegistSellerBinding
+class RegistSellerActivity : BaseActivity<ActivityRegistSellerBinding>(
+    layoutId = R.layout.activity_regist_seller
+) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // 데이터 바인딩
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_regist_seller)
         binding.activityregistseller = this@RegistSellerActivity
 
         // 우측 상단의 화면 닫는 X버튼 클릭
@@ -58,13 +58,15 @@ class RegistSellerActivity : AppCompatActivity() {
         binding.activityRegistSellerButtonNext.setOnClickListener {
             val intent = Intent(this, RegistSellerInfoActivity::class.java)
             val sellerDTO = SellerDTO().apply {
-                if(binding.activityRegistSellerLayoutCorporateMember.isSelected) {//기업
+                if (binding.activityRegistSellerLayoutCorporateMember.isSelected) {//기업
                     isCorporate = true
-                }else if(binding.activityRegistSellerLayoutIndividualMember.isSelected){//개인
+                } else if (binding.activityRegistSellerLayoutIndividualMember.isSelected) {//개인
                     isPersonal = true
                 }
-                corporateNum = binding.activityRegistSellerEdittextCompanyRegistrationNumber.text.toString()
-                corporateRepresentativeName = binding.activityRegistSellerEdittextRepresentativeName.text.toString()
+                corporateNum =
+                    binding.activityRegistSellerEdittextCompanyRegistrationNumber.text.toString()
+                corporateRepresentativeName =
+                    binding.activityRegistSellerEdittextRepresentativeName.text.toString()
 
             }
 
@@ -72,6 +74,7 @@ class RegistSellerActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
     // 이용약관의 체크박스 클릭 시 동작
     private val checkBoxChangeListener = object : CompoundButton.OnCheckedChangeListener {
         override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
@@ -79,6 +82,7 @@ class RegistSellerActivity : AppCompatActivity() {
         }
 
     }
+
     // 다음으로 진행 할 수 있는지 체크 이용약관 모두 동의하고, 기업인지 개인인지 체크해야함크.
     // 다음으로 넘어갈 수 있다면 Next 버튼이 활성화가 된다.
     private fun checNextBtnEnable() {

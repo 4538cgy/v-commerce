@@ -16,30 +16,27 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.uos.vcommcerce.MainActivity
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.activity.login.LoginActivity
+import com.uos.vcommcerce.base.BaseActivity
 import com.uos.vcommcerce.databinding.ActivitySplashBinding
 import java.security.MessageDigest
 
 
-class SplashActivity : AppCompatActivity() {
-
-    lateinit var binding : ActivitySplashBinding
+class SplashActivity : BaseActivity<ActivitySplashBinding>(
+    layoutId = R.layout.activity_splash
+) {
 
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_splash)
         binding.activitysplash = this@SplashActivity
 
-
-      val firebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
+        val firebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
 
         firebaseRemoteConfig.fetch(0).addOnCompleteListener { task ->
-            if(task.isSuccessful)
-            {
+            if (task.isSuccessful) {
                 firebaseRemoteConfig.fetchAndActivate()
                 DialogDisplay(firebaseRemoteConfig)
-            }
-            else{
+            } else {
                 AlertDialog.Builder(this)
                     .setTitle("Error")
                     .setMessage("앱 실행에 오류가 발생하였습니다. 다시 실행해주시기 바랍니다.")
@@ -51,74 +48,72 @@ class SplashActivity : AppCompatActivity() {
         }
 
 
-        try{
-            val info = packageManager.getPackageInfo(packageName,PackageManager.GET_SIGNING_CERTIFICATES)
+        try {
+            val info =
+                packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNING_CERTIFICATES)
             val signatures = info.signingInfo.apkContentsSigners
             val md = MessageDigest.getInstance("SHA")
-            for(signature in signatures){
+            for (signature in signatures) {
                 val md: MessageDigest
                 md = MessageDigest.getInstance("SHA")
                 md.update(signature.toByteArray())
-                val key = String(Base64.encode(md.digest(),0))
+                val key = String(Base64.encode(md.digest(), 0))
                 Log.d("HASH KEY : ", "---- $key ----")
 
             }
-        }catch (e: Exception){
+        } catch (e: Exception) {
             Log.e("name not found", e.toString())
         }
 
     }
 
     //앱버전 체크
-    fun appVersionCheckWithRemoteConfig() : String{
+    fun appVersionCheckWithRemoteConfig(): String {
 
         val packageManager = this.packageManager
 
-        return packageManager.getPackageInfo(this.packageName, PackageManager.GET_ACTIVITIES).versionName
+        return packageManager.getPackageInfo(
+            this.packageName,
+            PackageManager.GET_ACTIVITIES
+        ).versionName
     }
 
 
-
-    fun DialogDisplay(firebaseRemoteConfig : FirebaseRemoteConfig){
+    fun DialogDisplay(firebaseRemoteConfig: FirebaseRemoteConfig) {
         val strVersionName = appVersionCheckWithRemoteConfig()
         //version from Firebase
         var strLatestVersion = firebaseRemoteConfig.getString("message_version")
         var strMaintenanceCheck = firebaseRemoteConfig.getBoolean("check_maintenance")
 
-        if (strMaintenanceCheck){
+        if (strMaintenanceCheck) {
             DialogDisplayDownServer()
-        }else{
-            if(strVersionName != strLatestVersion){
+        } else {
+            if (strVersionName != strLatestVersion) {
                 AlertDialog.Builder(this)
                     .setTitle("Update")
                     .setMessage("최신 버전의 앱을 설치 후 재실행 해주시기 바랍니다.")
                     .setCancelable(false)
-                    .setPositiveButton("종료",DialogInterface.OnClickListener{
-                            dialog, which ->
+                    .setPositiveButton("종료", DialogInterface.OnClickListener { dialog, which ->
                         this.finish()
                     }).show()
-            }
-            else{
-                startActivity(Intent(this,LoginActivity::class.java))
+            } else {
+                startActivity(Intent(this, LoginActivity::class.java))
                 this.finish()
             }
         }
 
 
-
     }
 
-    fun DialogDisplayDownServer(){
+    fun DialogDisplayDownServer() {
         AlertDialog.Builder(this)
             .setTitle("Maintenance")
             .setMessage("서버 점검중입니다. \n PM 06:00 ~ PM 08:00")
             .setCancelable(false)
-            .setPositiveButton("종료",DialogInterface.OnClickListener{
-                    dialog, which ->
+            .setPositiveButton("종료", DialogInterface.OnClickListener { dialog, which ->
                 this.finishAffinity()
             }).show()
     }
-
 
 
 }

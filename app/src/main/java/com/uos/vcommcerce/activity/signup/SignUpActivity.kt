@@ -7,21 +7,20 @@ import android.view.View
 import androidx.databinding.DataBindingUtil
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.activity.popup.ErrorPopUpActivity
+import com.uos.vcommcerce.base.BaseActivity
 import com.uos.vcommcerce.databinding.ActivitySignUpBinding
 import com.uos.vcommcerce.popup.PopupManager
 import com.uos.vcommcerce.util.Util
 import java.util.regex.Pattern
 
 
-class SignUpActivity : AppCompatActivity() {
-
-    lateinit var binding: ActivitySignUpBinding
+class SignUpActivity : BaseActivity<ActivitySignUpBinding>(
+    layoutId = R.layout.activity_sign_up
+) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up)
         binding.activitysignup = this@SignUpActivity
-
     }
     fun nextClick(view : View){
         with(binding) {

@@ -1,19 +1,18 @@
 package com.uos.vcommcerce.activity.review
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
-import com.bumptech.glide.Glide
 import com.uos.vcommcerce.R
+import com.uos.vcommcerce.base.BaseActivity
 import com.uos.vcommcerce.databinding.ActivityReviewDetailBinding
 
-class ReviewDetailActivity : AppCompatActivity() {
-
-    lateinit var binding : ActivityReviewDetailBinding
+class ReviewDetailActivity : BaseActivity<ActivityReviewDetailBinding>(
+    layoutId = R.layout.activity_review_detail
+) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_review_detail)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_review_detail)
         binding.activityreviewdetail = this@ReviewDetailActivity
 
         //뒤로가기
