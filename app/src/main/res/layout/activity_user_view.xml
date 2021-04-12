@@ -6,7 +6,7 @@
     <data>
         <variable
             name="useractivity"
-            type="com.uos.vcommcerce.profile.UserActivity" />
+            type="com.uos.vcommcerce.activity.profile.UserActivity" />
     </data>
 <FrameLayout
     android:layout_width="match_parent"

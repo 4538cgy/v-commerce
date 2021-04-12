@@ -1,14 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.google.android.exoplayer2.ui.PlayerView
-        android:id="@+id/item_exoplayer"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="item"
+            type="com.uos.vcommcerce.datamodel.ProductDTO" />
+        <variable
+            name="displaySize"
+            type="androidx.databinding.ObservableField&lt;com.uos.vcommcerce.util.DisplaySize&gt;"/>
+        <variable
+            name="context"
+            type="android.content.Context"/>
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:use_controller="false"
-        />
+        android:layout_height="match_parent">
 
-</LinearLayout>
+        <com.google.android.exoplayer2.ui.PlayerView
+            android:id="@+id/item_exoplayer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:use_controller="false"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:background="@drawable/main_player_background"
+            app:getcontext="@{context}"
+            app:prepareVideo="@{item.videoList }"
+            app:layout_width="@{315}"
+            app:stand_size="@{displaySize}"
+            />
+
+        <ImageButton
+            android:id="@+id/sellerImg"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/background_round_gray_13dp"
+            app:layout_constraintBottom_toTopOf="@+id/likeBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:getcontext="@{context}"
+            app:getuid="@{item.sellerUid}"
+            app:latout_margin_left="@{0}"
+            app:latout_margin_top="@{0}"
+            app:latout_margin_right="@{36}"
+            app:latout_margin_bottom="@{12}"
+            app:layout_sizeY="@{60}"
+
+            app:stand_size="@{displaySize}"
+            app:stand_size_margin="@{displaySize}"
+            />
+
+        <ImageButton
+            android:id="@+id/likeBtn"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/main_like_btn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:latout_margin_left="@{0}"
+            app:latout_margin_top="@{0}"
+            app:latout_margin_right="@{42}"
+            app:latout_margin_bottom="@{18}"
+            app:layout_sizeY="@{48}"
+            app:stand_size="@{displaySize}"
+            app:stand_size_margin="@{displaySize}"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

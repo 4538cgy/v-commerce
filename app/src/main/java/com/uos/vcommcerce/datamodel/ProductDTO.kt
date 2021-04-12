@@ -1,7 +1,13 @@
 package com.uos.vcommcerce.datamodel
 
+import android.content.Context
+import android.content.Intent
 import android.util.Log
+import android.view.View
+import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.ObservableField
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.SimpleExoPlayer
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -41,7 +47,7 @@ data class ProductDTO (
     var reviews : MutableMap<String,Review> = HashMap(),
     //해쉬태그 리스트
     var hashTagList : MutableMap<String,Boolean> = HashMap()
-) {
+    ) {
     data class Review(
         //해당 글에 리뷰 작성한 유저 id
         var userId: String? = null,

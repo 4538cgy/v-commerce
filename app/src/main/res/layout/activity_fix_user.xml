@@ -8,7 +8,7 @@
 <data>
         <variable
             name="fixuseractivity"
-            type="com.uos.vcommcerce.profile.FixUserActivity" />
+            type="com.uos.vcommcerce.activity.profile.FixUserActivity" />
     </data>
 
     <LinearLayout

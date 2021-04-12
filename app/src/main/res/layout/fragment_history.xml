@@ -3,7 +3,7 @@
     <data>
         <variable
             name="historyfragment"
-            type="com.uos.vcommcerce.profile.HistoryFragment" />
+            type="com.uos.vcommcerce.activity.profile.HistoryFragment" />
     </data>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerHistoryView"

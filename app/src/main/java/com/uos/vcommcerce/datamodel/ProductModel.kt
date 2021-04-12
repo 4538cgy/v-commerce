@@ -7,7 +7,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.uos.vcommcerce.MainActivity
 import com.uos.vcommcerce.firebase.repository.FirebaseContentRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -23,12 +22,9 @@ class ProductModel : ViewModel() {
     //제품리스트
     var productList :  MutableLiveData<ArrayList<ProductDTO>> = MutableLiveData<ArrayList<ProductDTO>>()
 
-    lateinit var videoAdapter : MainActivity.VideoAdapter
-
     fun setProduct(position : Int){
         product.set(productList.value!!.get(position))
         Log.d("setProduct", product.get().toString())
-
     }
 
 

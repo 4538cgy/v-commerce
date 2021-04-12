@@ -1,5 +1,7 @@
 package com.uos.vcommcerce.bindingAdapter
 
+import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import android.view.View
@@ -9,7 +11,11 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import androidx.databinding.ObservableField
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.ui.PlayerView
 import com.uos.vcommcerce.R
+import com.uos.vcommcerce.activity.profile.UserActivity
 import com.uos.vcommcerce.util.*
 
 object DataBindingAdapyter {
@@ -209,7 +215,7 @@ object DataBindingAdapyter {
     }
 
 
-    //평점 출력
+    //평점 출력F
     @JvmStatic
     @BindingAdapter("totalRating")
     fun setTotalRating(view: TextView, totalRating: Float) {
@@ -238,6 +244,37 @@ object DataBindingAdapyter {
     fun setimageUri(view: ImageView, uri: Uri) {
         view.setImageURI(uri);
     }
+
+
+    //비디오 플레이 영상준비
+    @JvmStatic
+    @BindingAdapter("prepareVideo","getcontext")
+    fun prepareVideolist(view: PlayerView,urilist: ArrayList<String>,context: Context) {
+        var player = SimpleExoPlayer.Builder(context).build()
+        view.player = player
+        view.hideController()
+        view.player!!.setMediaItem(MediaItem.fromUri(urilist.get(0)))
+        view.player!!.prepare();
+        player?.play()
+    }
+
+
+    //영상 제작자 프로필 열기
+    @JvmStatic
+    @BindingAdapter("getcontext","getuid")
+    fun openProfile(view: View,context : Context,uid: String) {
+        view.setOnClickListener(object : View.OnClickListener{
+            override fun onClick(v: View?) {
+                var intent = Intent(context, UserActivity::class.java)
+                intent.putExtra("Uid", uid)
+                context.startActivity(intent)
+            }
+        })
+    }
+
+
+
+
 
 
 }

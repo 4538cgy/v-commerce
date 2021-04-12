@@ -8,29 +8,44 @@ import androidx.databinding.ObservableField
 
 class DisplaySize (var activity : Activity) {
 
-
+    //화면의 픽셀수
+    var screenWidthPixel :Int =0;
+    var screenHeightPixel :Int =0;
+    var density = Resources.getSystem().displayMetrics.density;
 
     //피그마 기준 값
     var standardSize_Y : Int = 750
     var standardSize_X : Int = 375
 
-    //피그마크기1px 당 실제뷰 크기값
+    //피그마크기1px 와 실제뷰으dp값 비율
     var size_Y : Float =0f
-
     var size_X : Float =0f
 
 
-    init {
+    //메인 하단뷰 피그마 px
+    val standardBottomMin: Int = 112 //고정값
+    val standardBottomMid: Int = 400
+    //메인 하단뷰 크기
+    var BottomMin : Int = 0
+    var BottomMid : Int = 0
 
+    //메인 제품검색창 아이템 크기
+    var mainSearchRecyclerItemSize = 40
+
+    init {
         //해상도 측정
         val display = activity.windowManager.defaultDisplay
         val size = Point()
         display.getSize(size)
         var ScreenSize: Point = size
-        var density = Resources.getSystem().displayMetrics.density
-        Log.d("return Y : ",((ScreenSize.y / density)/standardSize_Y).toString() )
+        screenWidthPixel = ScreenSize.x;
+        screenHeightPixel = ScreenSize.y
         size_Y = (ScreenSize.y / density)/standardSize_Y
         size_X = (ScreenSize.x / density)/standardSize_X
+
+        //하단뷰 크기 연산
+        BottomMin = (size_Y * standardBottomMin).toInt()
+        BottomMid = (size_Y * standardBottomMid).toInt()
     }
 
 }

@@ -23,7 +23,7 @@
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
-        <activity android:name=".profile.FixUserActivity" />
+        <activity android:name=".activity.profile.FixUserActivity" />
         <activity android:name=".activity.productinformation.ProductInformationActivity" />
         <activity
             android:name=".activity.login.popup.PasswordErrorPopUpActivity"
@@ -57,7 +57,7 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <activity android:name=".profile.UserActivity" />
+        <activity android:name=".activity.profile.UserActivity" />
         <activity android:name=".testpackagedeletesoon.TestExoplayerActivity" />
         <activity android:name=".SettingActivity">
             <intent-filter>
@@ -71,7 +71,7 @@
         <activity android:name=".activity.regist.RegistSellerActivity" />
         <activity android:name=".activity.regist.RegistSellerInfoActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.main.MainActivity"
             android:windowSoftInputMode="adjustNothing" />
 
         <meta-data
