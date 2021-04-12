@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.uos.vcommcerce.R
+import com.uos.vcommcerce.activity.main.MainActivity
 import com.uos.vcommcerce.base.BaseActivity
 import com.uos.vcommcerce.databinding.ActivityRegistSellerInfoBinding
 import com.uos.vcommcerce.datamodel.SellerDTO
