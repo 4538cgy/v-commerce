@@ -10,6 +10,8 @@ import androidx.databinding.DataBindingUtil.setContentView
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.databinding.DialogProgressLoadingBinding
 
+
+//정우님이 dialog 만들어두셔서 이거 지워도 되지않을까 싶습니다.
 class ProgressDialogLoading(context: Context) : Dialog(context) {
 
     lateinit var binding: DialogProgressLoadingBinding

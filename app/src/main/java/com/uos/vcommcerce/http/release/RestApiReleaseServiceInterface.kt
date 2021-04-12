@@ -5,7 +5,7 @@ import com.uos.vcommcerce.http.dto.HttpResponseDTO2
 import retrofit2.Call
 import retrofit2.http.*
 
-interface RestApiServiceInterface2 {
+interface RestApiReleaseServiceInterface {
 
 
     //유저 생성

@@ -15,6 +15,8 @@ import com.uos.vcommcerce.base.BaseActivity
 import com.uos.vcommcerce.databinding.TestExoplayerViewBinding
 import kotlinx.android.synthetic.main.test_exoplayer_view.*
 
+// exoplayer의 테스트를 위해 사용하던 Activity입니다. 삭제해도 되겠습니까?
+
 class TestExoplayerActivity : BaseActivity<TestExoplayerViewBinding>(
     layoutId = R.layout.test_exoplayer_view
 ){
