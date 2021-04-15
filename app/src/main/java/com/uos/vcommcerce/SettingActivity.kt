@@ -14,6 +14,7 @@ import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
+import com.uos.vcommcerce.activity.cart.CartActivity
 import com.uos.vcommcerce.activity.login.KakaoLoginTest
 import com.uos.vcommcerce.activity.login.LoginActivity
 import com.uos.vcommcerce.activity.main.MainActivity
@@ -93,6 +94,7 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(
             settingDTO.add(SettingDTO("판매자 등록 화면 보기"))
             settingDTO.add(SettingDTO("정상 프로세스 대로 실행"))
             settingDTO.add(SettingDTO("카카오 로그인"))
+            settingDTO.add(SettingDTO("카트액티비티"))
             notifyDataSetChanged()
         }
 
@@ -251,6 +253,9 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(
                     "카카오 로그인" ->{
                         pageChange("kakaologin")
                     }
+                    "카트액티비티" -> {
+                        pageChange("CartActivity")
+                    }
                 }
 
             }
@@ -321,6 +326,10 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(
             }
             "ProductInformation" -> {
                 startActivity(Intent(this, ProductInformationActivity::class.java))
+            }
+
+            "CartActivity" -> {
+                startActivity(Intent(this, CartActivity::class.java))
             }
 
         }
