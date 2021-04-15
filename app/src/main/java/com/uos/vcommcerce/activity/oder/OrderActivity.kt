@@ -15,10 +15,12 @@ import android.webkit.WebViewClient
 import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.uos.vcommcerce.R
 import com.uos.vcommcerce.base.BaseActivity
+import com.uos.vcommcerce.base.BaseRecyclerAdapter
 import com.uos.vcommcerce.databinding.ActivityOderBinding
 import com.uos.vcommcerce.databinding.ItemPaymentboxBinding
 
@@ -35,7 +37,7 @@ private var handler = Handler()
 class OrderActivity : BaseActivity<ActivityOderBinding>(
     layoutId = R.layout.activity_oder
 ) {
-    val paymentBtnDataList = listOf(
+    val paymentBtnDataList : ArrayList<PaymentBtnData> = arrayListOf(
         PaymentBtnData("신용카드"),
         PaymentBtnData("가상계좌"),
         PaymentBtnData("계좌이체")
@@ -49,10 +51,8 @@ class OrderActivity : BaseActivity<ActivityOderBinding>(
         webView = binding.orderZipcodeWebView
         resultView = binding.adressResultView
 
-        val paymentAdapter = PaymentBtnAdapter(this)
         binding.recyclerPaymentboxView.layoutManager = GridLayoutManager(this, 3)
-        binding.recyclerPaymentboxView.adapter = paymentAdapter
-        paymentAdapter.data = paymentBtnDataList
+        binding.recyclerPaymentboxView.adapter = PaymentBtnAdapter<PaymentBtnData,ItemPaymentboxBinding>(this,R.layout.item_paymentbox,paymentBtnDataList)
 
         //뒤로가기
         binding.activityOrderImagebuttonClose.setOnClickListener {
@@ -70,43 +70,7 @@ class OrderActivity : BaseActivity<ActivityOderBinding>(
         }
     }
 
-    inner class PaymentBtnViewHolder(val binding: ItemPaymentboxBinding) : RecyclerView.ViewHolder(
-        binding.root
-    ) {
-        fun onBind(data: PaymentBtnData) {
-            binding.paymentbtndata = data
-        }
-    }
 
-
-    inner class PaymentBtnAdapter(val context: Context) :
-        RecyclerView.Adapter<PaymentBtnViewHolder>() {
-
-        var data = listOf<PaymentBtnData>()
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PaymentBtnViewHolder {
-            val binding = ItemPaymentboxBinding.inflate(
-                LayoutInflater.from(context), parent, false
-            )
-
-            return PaymentBtnViewHolder(binding)
-        }
-
-        override fun getItemCount() = data.size
-
-        override fun onBindViewHolder(holder: PaymentBtnViewHolder, position: Int) {
-            holder.onBind(data[position])
-
-            //그리드 버튼 클릭시
-            holder.itemView.setOnClickListener {
-                Toast.makeText(context, data[position].btnName, Toast.LENGTH_SHORT).show()
-
-                //.val vedioIntent = Intent(requireActivity(), TestExoplayerActivity::class.java )
-                //vedioIntent.putExtra("btnName", data[position].btnName)
-                //startActivity(vedioIntent)
-            }
-        }
-    }
 
 
     inner class AndroidBridge {
@@ -153,5 +117,21 @@ class OrderActivity : BaseActivity<ActivityOderBinding>(
             webView!!.loadUrl("https://project-new-windy.web.app")
         }
 
+    }
+}
+
+
+//Toast 때문에 생성때 context 가져옴 해당 부분 사라지면 context넘겨줄 필요 없어짐
+class PaymentBtnAdapter<item:PaymentBtnData,viewBinding : ItemPaymentboxBinding>(var context: Context,layoutId: Int,itemlist : ArrayList<item>) : BaseRecyclerAdapter<item,viewBinding>(layoutId,itemlist) {
+
+    override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
+        super.onBindViewHolder(holder,position)
+        //그리드 버튼 클릭시
+        holder.itemView.setOnClickListener {
+            Toast.makeText(context, itemList[position].btnName, Toast.LENGTH_SHORT).show()
+            //.val vedioIntent = Intent(requireActivity(), TestExoplayerActivity::class.java )
+            //vedioIntent.putExtra("btnName", data[position].btnName)
+            //startActivity(vedioIntent)
+        }
     }
 }

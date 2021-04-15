@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
         <data>
                 <variable
-                    name="paymentbtndata"
+                    name="item"
                     type="com.uos.vcommcerce.activity.oder.PaymentBtnData" />
         </data>
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,7 +15,7 @@
                     android:id="@+id/paymentbox_btn"
                     android:layout_width="103dp"
                     android:layout_height="40dp"
-                    android:text="@{paymentbtndata.btnName}"
+                    android:text="@{item.btnName}"
                     android:textSize="14dp"
                     android:lineHeight="20dp"
                     tools:ignore="MissingConstraints"
