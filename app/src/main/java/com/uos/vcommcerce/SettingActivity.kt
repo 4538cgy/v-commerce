@@ -19,6 +19,7 @@ import com.uos.vcommcerce.activity.login.KakaoLoginTest
 import com.uos.vcommcerce.activity.login.LoginActivity
 import com.uos.vcommcerce.activity.main.MainActivity
 import com.uos.vcommcerce.activity.oder.OrderActivity
+import com.uos.vcommcerce.activity.oder.OrderCompleteActivitiy
 import com.uos.vcommcerce.activity.productinformation.ProductInformationActivity
 import com.uos.vcommcerce.activity.profile.UserActivity
 import com.uos.vcommcerce.activity.regist.RegistSellerActivity
@@ -329,7 +330,7 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(
             }
 
             "TestActivity" -> {
-                startActivity(Intent(this, OrderActivity::class.java))
+                startActivity(Intent(this, OrderCompleteActivitiy::class.java))
             }
 
         }
