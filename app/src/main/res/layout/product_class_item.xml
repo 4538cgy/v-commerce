@@ -5,8 +5,11 @@
 
     <data>
         <variable
-            name="ProductClassItem"
+            name="item"
             type="com.uos.vcommcerce.datamodel.ProductClassDTO" />
+        <variable
+            name="adapter"
+            type="com.uos.vcommcerce.activity.productinformation.ProductClassRecyclerViewAdapter" />
     </data>
     <FrameLayout
         android:layout_width="match_parent"
@@ -26,8 +29,8 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="50dp"
-                android:text="@{ProductClassItem.procudtClass}"
-                android:hint="@{ProductClassItem.procudtClassHint}"
+                android:text="@{item.procudtClass}"
+                android:hint="@{item.procudtClassHint}"
                 android:gravity="left|center"/>
 
             <Button
@@ -36,7 +39,8 @@
                 android:layout_height="50dp"
                 android:background="@drawable/ic_baseline_arrow_open_24"
                 android:gravity="center"
-                android:stateListAnimator="@null" />
+                android:stateListAnimator="@null"
+                android:onClick="@{adapter::addItem}"/>
         </LinearLayout>
     </FrameLayout>
 </layout>

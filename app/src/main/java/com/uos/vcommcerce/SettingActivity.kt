@@ -330,7 +330,7 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(
             }
 
             "TestActivity" -> {
-                startActivity(Intent(this, OrderCompleteActivitiy::class.java))
+                startActivity(Intent(this, ProductInformationActivity::class.java))
             }
 
         }

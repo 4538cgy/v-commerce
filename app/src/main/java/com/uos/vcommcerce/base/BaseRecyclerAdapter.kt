@@ -29,8 +29,9 @@ open class BaseRecyclerAdapter<item,viewBinding : ViewDataBinding>(@LayoutRes va
         }
     }
 
-    fun addItem(item : item){
+    open fun addItem(item : item){
         itemList.add(item);
+        notifyDataSetChanged()
     }
 
 
