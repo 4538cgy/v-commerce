@@ -5,9 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name="reviewuploadItemFooter"
-            type="com.uos.vcommcerce.datamodel.ReviewUploadItemFooterDTO" />
-
+            name="adapter"
+            type="com.uos.vcommcerce.activity.review.ReviewUploadPictureAdapter"/>
     </data>
 
     <FrameLayout
@@ -19,7 +18,7 @@
         <ImageButton
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:onClick="@{reviewuploadItemFooter::addPicture}"
+            android:onClick="@{adapter::addPicture}"
             android:background="@drawable/background_round_gray_13dp"
             />
         <androidx.constraintlayout.widget.ConstraintLayout
