@@ -6,6 +6,10 @@
         <variable
             name="item"
             type="com.uos.vcommcerce.activity.oder.RecommendedProductData" />
+
+        <variable
+            name="adapter"
+            type="com.uos.vcommcerce.activity.oder.RecommendedProductAdapter" />
     </data>
 
         <LinearLayout
@@ -20,7 +24,6 @@
                 android:layout_width="144dp"
                 android:layout_height="256dp"
                 android:clickable="true"
-                app:error="@{@drawable/ic_push_alert_24}"
                 app:imageUrl="@{item.productImg}"/>
 
             <TextView
@@ -42,7 +45,7 @@
                 android:lineHeight="18sp"
                 android:text="@{item.productPrice}"
                 android:textSize="12sp"
-                android:textStyle="normal"></TextView>
+                android:textStyle="normal"/>
 
 
         </LinearLayout>

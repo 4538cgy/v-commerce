@@ -3,7 +3,7 @@
     <data>
         <variable
             name="VideoGridFragment"
-            type="com.uos.vcommcerce.profile.VideoGridFragment" />
+            type="com.uos.vcommcerce.activity.profile.VideoGridFragment" />
     </data>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerGridView"

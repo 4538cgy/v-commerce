@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -17,6 +18,8 @@ import com.uos.vcommcerce.base.BaseActivity
 import com.uos.vcommcerce.base.BaseRecyclerAdapter
 import com.uos.vcommcerce.databinding.ActivityOderCompleteActivitiyBinding
 import com.uos.vcommcerce.databinding.ItemRecommendedProductBinding
+import com.uos.vcommcerce.datamodel.UserVideoData
+import com.uos.vcommcerce.testpackagedeletesoon.TestExoplayerActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_user_view.*
 
@@ -75,19 +78,22 @@ class OrderCompleteActivitiy : BaseActivity<ActivityOderCompleteActivitiyBinding
 }
 
 //Toast 때문에 생성때 context 가져옴 해당 부분 사라지면 context넘겨줄 필요 없어짐
-class RecommendedProductAdapter(val context: Context,layoutId: Int,itemlist : ArrayList<RecommendedProductData>) : BaseRecyclerAdapter<RecommendedProductData,ItemRecommendedProductBinding>(layoutId,itemlist){
+class RecommendedProductAdapter(val context: Context,layoutId: Int,itemlist : ArrayList<RecommendedProductData>)
+    : BaseRecyclerAdapter<RecommendedProductData,ItemRecommendedProductBinding>(layoutId,itemlist){
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         super.onBindViewHolder(holder,position)
         //그리드 버튼 클릭시
-        holder.itemView.setOnClickListener {
-            Toast.makeText(context, itemList[position].productImg, Toast.LENGTH_SHORT).show()
-//                val vedioIntent = Intent(requireActivity(), TestExoplayerActivity::class.java )
-//                vedioIntent.putExtra("title", data[position].gridTitle)
-//                vedioIntent.putExtra("img", data[position].gridImg)
-//                vedioIntent.putExtra("url", data[position].gridUrl)
-//                startActivity(vedioIntent)
 
-        }
+    }
+
+    fun itemClick(view: View, recommendedProductData: RecommendedProductData){
+        Toast.makeText(context, recommendedProductData.productName, Toast.LENGTH_SHORT).show()
+
+//        val vedioIntent = Intent( context, TestExoplayerActivity::class.java)
+//        vedioIntent.putExtra("title", recommendedProductData.gridTitle)
+//        vedioIntent.putExtra("img", recommendedProductData.productImg)
+//        vedioIntent.putExtra("url", recommendedProductData.pro)
+//        context.startActivity(vedioIntent)
     }
 }

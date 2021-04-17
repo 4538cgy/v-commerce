@@ -20,9 +20,7 @@ import com.uos.vcommcerce.util.PermissionUtil
 import com.uos.vcommcerce.util.Util
 import kotlinx.android.synthetic.main.activity_user_view.*
 
-class FixUserActivity : BaseActivity<ActivityFixUserBinding>(
-    layoutId = R.layout.activity_fix_user
-) {
+class FixUserActivity : BaseActivity<ActivityFixUserBinding>(layoutId = R.layout.activity_fix_user) {
 
     var Imguri: MutableLiveData<Uri> = MutableLiveData()
     var NickName: MutableLiveData<String> = MutableLiveData()
