@@ -1,5 +1,6 @@
 package com.uos.vcommcerce.firebase.repository
 
+import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.uos.vcommcerce.datamodel.UserDTO
 import com.uos.vcommcerce.datamodel.UserListDTO
@@ -39,7 +40,7 @@ class FirebaseUserRepository {
 
     //모든 유저의 Field 값 가져오기
     fun getUserDataAll() = callbackFlow<ArrayList<UserDTO>> {
-        val databaseReference = db.collection("user")
+        val databaseReference = db.collection("userInfo").document("userData").collection("accountInfo")
         val eventListener = databaseReference.addSnapshotListener { value, error ->
             var userData: ArrayList<UserDTO> = arrayListOf()
 
@@ -57,9 +58,9 @@ class FirebaseUserRepository {
     //특정 유저 data 값 한번 가져오기
     fun getUserData(uid: String) = callbackFlow<UserDTO> {
 
-        val databaseReference = db.collection("user").document(uid)
+        val databaseReference = db.collection("userInfo").document("userData").collection("accountInfo").document(uid)
         val eventListener = databaseReference.get().addOnCompleteListener {
-            var userData = it.result?.toObject(UserDTO::class.java)
+            var userData : UserDTO? = it.result?.toObject(UserDTO::class.java)
             if (it.isSuccessful) this@callbackFlow.sendBlocking(userData!!)
         }.addOnFailureListener {
             println("----------------------------------------")
@@ -67,7 +68,7 @@ class FirebaseUserRepository {
             println("----------------------------------------")
             this@FirebaseUserRepository
         }
-
+        awaitClose()
     }
 
     //특정 유저 전체 Data 일괄 Update

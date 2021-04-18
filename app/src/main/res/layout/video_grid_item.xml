@@ -3,8 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="griditem"
+            name="item"
             type="com.uos.vcommcerce.datamodel.UserVideoData" />
+
+        <variable
+            name="adapter"
+            type="com.uos.vcommcerce.activity.profile.RecyclerProfileVideoAdapter" />
     </data>
 
 
@@ -12,9 +16,9 @@
         android:id="@+id/content_Img"
         android:layout_width="match_parent"
         android:layout_height="222dp"
-        app:imageUrl = "@{griditem.Img}"
-        app:error="@{@drawable/ic_push_alert_24}"
+        app:imageUrl = "@{item.Img}"
         android:scaleType="fitXY"
+        android:onClick="@{()-> adapter.itemClick(item)}"
         />
 
 </layout>

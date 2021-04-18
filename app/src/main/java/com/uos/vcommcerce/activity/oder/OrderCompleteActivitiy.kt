@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -14,8 +15,12 @@ import com.uos.vcommcerce.R
 import com.uos.vcommcerce.SettingActivity
 import com.uos.vcommcerce.activity.profile.UserActivity
 import com.uos.vcommcerce.base.BaseActivity
+import com.uos.vcommcerce.base.BaseRecyclerAdapter
 import com.uos.vcommcerce.databinding.ActivityOderCompleteActivitiyBinding
 import com.uos.vcommcerce.databinding.ItemRecommendedProductBinding
+import com.uos.vcommcerce.datamodel.UserVideoData
+import com.uos.vcommcerce.testpackagedeletesoon.TestExoplayerActivity
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_user_view.*
 
 data class RecommendedProductData(
@@ -24,10 +29,8 @@ data class RecommendedProductData(
     var productPrice: String
 )
 
-class OrderCompleteActivitiy : BaseActivity<ActivityOderCompleteActivitiyBinding>(
-    layoutId = R.layout.activity_oder_complete_activitiy
-) {
-    val sampleData = listOf(
+class OrderCompleteActivitiy : BaseActivity<ActivityOderCompleteActivitiyBinding>(layoutId = R.layout.activity_oder_complete_activitiy) {
+    val sampleData = arrayListOf<RecommendedProductData>(
         RecommendedProductData(
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScAV7G5jua33e66J2vVpL88cX7Onn9kdcqyw&usqp=CAU",
             "1번",
@@ -50,18 +53,15 @@ class OrderCompleteActivitiy : BaseActivity<ActivityOderCompleteActivitiyBinding
 
         binding.activityordercompleteactivity = this@OrderCompleteActivitiy
 
-        val recommendedProductAdapter = RecommendedProductAdapter(this)
         //binding.recommendedProductRecyclerview.layoutManager = GridLayoutManager(this,1)
         binding.recommendedProductRecyclerview.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true)
-        binding.recommendedProductRecyclerview.adapter = recommendedProductAdapter
-        recommendedProductAdapter.data = sampleData
+        binding.recommendedProductRecyclerview.adapter = RecommendedProductAdapter(this,R.layout.item_recommended_product,sampleData)
 
         //뒤로가기
         binding.activityOrderCompleteActivityImagebuttonClose.setOnClickListener {
             finish()
         }
-
 
         binding.activityOrderCompleteActivityButtonGoMain.setOnClickListener {
             startActivity(Intent(binding.root.context, SettingActivity::class.java))
@@ -75,47 +75,25 @@ class OrderCompleteActivitiy : BaseActivity<ActivityOderCompleteActivitiyBinding
             finish()
         }
     }
+}
 
+//Toast 때문에 생성때 context 가져옴 해당 부분 사라지면 context넘겨줄 필요 없어짐
+class RecommendedProductAdapter(val context: Context,layoutId: Int,itemlist : ArrayList<RecommendedProductData>)
+    : BaseRecyclerAdapter<RecommendedProductData,ItemRecommendedProductBinding>(layoutId,itemlist){
 
-    inner class RecommendedProductViewHolder(val binding: ItemRecommendedProductBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        fun onBind(data: RecommendedProductData) {
-            binding.recommendedproduct = data
-        }
+    override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
+        super.onBindViewHolder(holder,position)
+        //그리드 버튼 클릭시
+
     }
 
-    inner class RecommendedProductAdapter(val context: Context) :
-        RecyclerView.Adapter<RecommendedProductViewHolder>() {
+    fun itemClick(view: View, recommendedProductData: RecommendedProductData){
+        Toast.makeText(context, recommendedProductData.productName, Toast.LENGTH_SHORT).show()
 
-        var data = listOf<RecommendedProductData>()
-
-        override fun onCreateViewHolder(
-            parent: ViewGroup,
-            viewType: Int
-        ): RecommendedProductViewHolder {
-            val binding = ItemRecommendedProductBinding.inflate(
-                LayoutInflater.from(context), parent, false
-            )
-
-            return RecommendedProductViewHolder(binding)
-        }
-
-        override fun getItemCount() = data.size
-
-        override fun onBindViewHolder(holder: RecommendedProductViewHolder, position: Int) {
-            holder.onBind(data[position])
-
-            //그리드 버튼 클릭시
-            holder.itemView.setOnClickListener {
-                Toast.makeText(context, data[position].productImg, Toast.LENGTH_SHORT).show()
-
-//                val vedioIntent = Intent(requireActivity(), TestExoplayerActivity::class.java )
-//                vedioIntent.putExtra("title", data[position].gridTitle)
-//                vedioIntent.putExtra("img", data[position].gridImg)
-//                vedioIntent.putExtra("url", data[position].gridUrl)
-//                startActivity(vedioIntent)
-
-            }
-        }
+//        val vedioIntent = Intent( context, TestExoplayerActivity::class.java)
+//        vedioIntent.putExtra("title", recommendedProductData.gridTitle)
+//        vedioIntent.putExtra("img", recommendedProductData.productImg)
+//        vedioIntent.putExtra("url", recommendedProductData.pro)
+//        context.startActivity(vedioIntent)
     }
 }

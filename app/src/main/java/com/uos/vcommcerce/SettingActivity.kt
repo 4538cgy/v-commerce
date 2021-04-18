@@ -14,10 +14,12 @@ import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
+import com.uos.vcommcerce.activity.cart.CartActivity
 import com.uos.vcommcerce.activity.login.KakaoLoginTest
 import com.uos.vcommcerce.activity.login.LoginActivity
 import com.uos.vcommcerce.activity.main.MainActivity
 import com.uos.vcommcerce.activity.oder.OrderActivity
+import com.uos.vcommcerce.activity.oder.OrderCompleteActivitiy
 import com.uos.vcommcerce.activity.productinformation.ProductInformationActivity
 import com.uos.vcommcerce.activity.profile.UserActivity
 import com.uos.vcommcerce.activity.regist.RegistSellerActivity
@@ -93,6 +95,7 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(
             settingDTO.add(SettingDTO("판매자 등록 화면 보기"))
             settingDTO.add(SettingDTO("정상 프로세스 대로 실행"))
             settingDTO.add(SettingDTO("카카오 로그인"))
+            settingDTO.add(SettingDTO("테스트중인 액티비티"))
             notifyDataSetChanged()
         }
 
@@ -251,6 +254,9 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(
                     "카카오 로그인" ->{
                         pageChange("kakaologin")
                     }
+                    "테스트중인 액티비티" -> {
+                        pageChange("TestActivity")
+                    }
                 }
 
             }
@@ -320,6 +326,10 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(
                 startActivity(Intent(this, SelectVideoActivity::class.java))
             }
             "ProductInformation" -> {
+                startActivity(Intent(this, ProductInformationActivity::class.java))
+            }
+
+            "TestActivity" -> {
                 startActivity(Intent(this, ProductInformationActivity::class.java))
             }
 

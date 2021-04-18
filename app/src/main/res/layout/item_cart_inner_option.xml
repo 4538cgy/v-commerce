@@ -5,7 +5,7 @@
     <data>
 
         <variable
-            name="itemcartinneroption"
+            name="item"
             type="com.uos.vcommcerce.datamodel.CartDTO.CartInnerDTO" />
     </data>
 
@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:paddingHorizontal="8dp"
             android:paddingVertical="4dp"
-            android:text="옵션"
+            android:text="@{item.option}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"

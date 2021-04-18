@@ -2,6 +2,7 @@ package com.uos.vcommcerce.bindingAdapter
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.util.Log
 import android.view.View
@@ -11,6 +12,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import androidx.databinding.ObservableField
+import com.bumptech.glide.Glide
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ui.PlayerView
@@ -273,8 +275,11 @@ object DataBindingAdapyter {
     }
 
 
-
-
-
-
+    @JvmStatic
+    @BindingAdapter("imageUrl")
+    fun loadImage(imageView: ImageView, url: String) {
+        Glide.with(imageView.context).load(url)
+            .error(R.drawable.ic_launcher_background)
+            .into(imageView)
+    }
 }

@@ -6,9 +6,7 @@ import com.uos.vcommcerce.R
 import com.uos.vcommcerce.base.BaseActivity
 import com.uos.vcommcerce.databinding.ActivityReviewDetailBinding
 
-class ReviewDetailActivity : BaseActivity<ActivityReviewDetailBinding>(
-    layoutId = R.layout.activity_review_detail
-) {
+class ReviewDetailActivity : BaseActivity<ActivityReviewDetailBinding>(layoutId = R.layout.activity_review_detail) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

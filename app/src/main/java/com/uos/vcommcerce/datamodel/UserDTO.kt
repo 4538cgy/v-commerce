@@ -6,6 +6,10 @@ data class UserDTO(
     var uid: String? = null,
     //유저 닉네임
     var userNickName: String? = null,
+    //유저 소개
+    var introduce :String? = null,
+    //프로필 이미지
+    var profileImg : String? = null,
     //유저 ID
     var id: String? = null,
     //유저 password

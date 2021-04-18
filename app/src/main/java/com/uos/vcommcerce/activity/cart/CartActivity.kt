@@ -1,26 +1,22 @@
 package com.uos.vcommcerce.activity.cart
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.uos.vcommcerce.R
-import com.uos.vcommcerce.activity.cart.cartrecyclerviewadapter.CartInnerRecyclerViewAdapter
 import com.uos.vcommcerce.base.BaseActivity
+import com.uos.vcommcerce.base.BaseRecyclerAdapter
 import com.uos.vcommcerce.databinding.ActivityCartBinding
 import com.uos.vcommcerce.databinding.ItemCartBinding
+import com.uos.vcommcerce.databinding.ItemCartInnerOptionBinding
 import com.uos.vcommcerce.datamodel.CartDTO
 
-class CartActivity : BaseActivity<ActivityCartBinding>(
-    layoutId = R.layout.activity_cart
-) {
+class CartActivity : BaseActivity<ActivityCartBinding>(layoutId = R.layout.activity_cart) {
+
+    var carts : ArrayList<CartDTO> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding.activitycart = this@CartActivity
 
         //뒤로가기
@@ -34,60 +30,26 @@ class CartActivity : BaseActivity<ActivityCartBinding>(
         }
 
         //리사이클러뷰 연동
-        binding.activityCartRecyclerList.adapter = CartRecyclerViewAdapter()
+        binding.activityCartRecyclerList.adapter = CartRecyclerViewAdapter<CartDTO,ItemCartBinding>(R.layout.item_cart,carts)
         binding.activityCartRecyclerList.layoutManager = LinearLayoutManager(binding.root.context,LinearLayoutManager.VERTICAL,false)
     }
+}
 
-    inner class CartRecyclerViewAdapter() : RecyclerView.Adapter<CartRecyclerViewAdapter.CartRecyclerViewAdapterViewHolder>(){
+class CartRecyclerViewAdapter<item : CartDTO,viewBinding : ItemCartBinding>(layoutId: Int,itemlist : ArrayList<item>) : BaseRecyclerAdapter<item,viewBinding>(layoutId,itemlist){
 
-        var carts : ArrayList<CartDTO> = arrayListOf()
-        var data = listOf<CartDTO>()
+    //카트 아이템이 없을때 테스트용 데이터 1개추가한것 실제사용시 제거
+    init { if(itemlist.count()==0) { addItem(item = CartDTO(null,null,"test") as item) } }
 
-        init {
-
-            notifyDataSetChanged()
-
-            data = carts
-        }
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartRecyclerViewAdapter.CartRecyclerViewAdapterViewHolder {
-
-            val binding = ItemCartBinding.inflate(LayoutInflater.from(binding.root.context),parent,false)
-            return CartRecyclerViewAdapterViewHolder(binding)
-
-
-
-        }
-
-
-        override fun getItemCount(): Int {
-            return data.size
-        }
-
-        override fun onBindViewHolder(holder: CartRecyclerViewAdapterViewHolder, position: Int) {
-            holder.onBind(data[position])
-
-
-
-            holder.binding.itemCartRecyclerProductOption.adapter = CartInnerRecyclerViewAdapter(holder.binding.root.context,
-                data[position].productAddOption!!
-            )
-            holder.binding.itemCartRecyclerProductOption.layoutManager = LinearLayoutManager(holder.binding.root.context,LinearLayoutManager.VERTICAL,false)
-
-
-
-
-
-
-
-        }
-
-        inner class CartRecyclerViewAdapterViewHolder(val binding: ItemCartBinding) : RecyclerView.ViewHolder(binding.root){
-            fun onBind(data: CartDTO){
-                binding.itemcart = data
-            }
-        }
-
-
+    override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
+        super.onBindViewHolder(holder, position)
+        Log.d("check",""+itemList[position].productAddOption!!)
+        holder.binding.itemCartRecyclerProductOption.adapter = CartInnerRecyclerViewAdapter<CartDTO.CartInnerDTO,ItemCartInnerOptionBinding>(R.layout.item_cart_inner_option ,itemList[position].productAddOption!!)
+        holder.binding.itemCartRecyclerProductOption.layoutManager = LinearLayoutManager(holder.binding.root.context,LinearLayoutManager.VERTICAL,false)
     }
+}
+
+class CartInnerRecyclerViewAdapter<item : CartDTO.CartInnerDTO,viewBinding : ItemCartInnerOptionBinding>(layoutId: Int, itemlist: ArrayList<item>) :  BaseRecyclerAdapter<item,viewBinding>(layoutId,itemlist){
+
+    //카트 추가 옵션 없을때 테스트용 데이터 1개추가한것 실제사용시 제거
+    init { if(itemlist.count()==0) { addItem(item = CartDTO.CartInnerDTO("testoption") as item) } }
 }

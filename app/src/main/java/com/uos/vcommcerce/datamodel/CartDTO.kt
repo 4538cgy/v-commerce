@@ -9,7 +9,7 @@ data class CartDTO(
     var productCount : String ? = null,
     var transCost : String ? = null,
     var totalCost : String ? = null,
-    var productAddOption : ArrayList<CartInnerDTO> ? = null
+    var productAddOption : ArrayList<CartInnerDTO> = ArrayList()
 
 )
 {

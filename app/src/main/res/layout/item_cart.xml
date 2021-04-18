@@ -4,7 +4,7 @@
 
     <data>
         <variable
-            name="itemcart"
+            name="item"
             type="com.uos.vcommcerce.datamodel.CartDTO" />
     </data>
 
@@ -29,7 +29,7 @@
                 android:textSize="14dp"
                 android:textColor="@color/colorBlack"
                 android:id="@+id/item_cart_textview_seller_name"
-                android:text="판매자 명"
+                android:text="@{item.sellerName}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
