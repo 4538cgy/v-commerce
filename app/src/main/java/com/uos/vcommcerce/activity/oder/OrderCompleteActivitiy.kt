@@ -2,24 +2,17 @@ package com.uos.vcommcerce.activity.oder
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.uos.vcommcerce.R
-import com.uos.vcommcerce.SettingActivity
+import com.uos.vcommcerce.activity.SettingActivity
 import com.uos.vcommcerce.activity.profile.UserActivity
 import com.uos.vcommcerce.base.BaseActivity
 import com.uos.vcommcerce.base.BaseRecyclerAdapter
 import com.uos.vcommcerce.databinding.ActivityOderCompleteActivitiyBinding
 import com.uos.vcommcerce.databinding.ItemRecommendedProductBinding
-import com.uos.vcommcerce.datamodel.UserVideoData
-import com.uos.vcommcerce.testpackagedeletesoon.TestExoplayerActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_user_view.*
 

@@ -11,11 +11,10 @@ import androidx.databinding.DataBindingUtil
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.uos.vcommcerce.R
-import com.uos.vcommcerce.SettingActivity
+import com.uos.vcommcerce.activity.SettingActivity
 import com.uos.vcommcerce.databinding.FragmentAddUserInfoBinding
 import com.uos.vcommcerce.datamodel.UserDTO
-import com.uos.vcommcerce.util.SharedData
-import com.uos.vcommcerce.util.TimeUtil
+import com.uos.vcommcerce.MyApplication
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,9 +61,9 @@ class AddUserInfoFragment : Fragment() {
 
         firestore.collection("userInfo").document("userData").collection("accountInfo").document(auth.currentUser?.uid.toString()).set(users)
             .addOnSuccessListener {
-                activity?.startActivity(Intent(binding.root.context,SettingActivity::class.java))
+                activity?.startActivity(Intent(binding.root.context, SettingActivity::class.java))
                 Toast.makeText(binding.root.context," 회원 가입 완료 ",Toast.LENGTH_SHORT).show()
-                SharedData.prefs.setString("userInfo","yes")
+                MyApplication.prefs.setString("userInfo","yes")
                 activity?.finish()
             }
 

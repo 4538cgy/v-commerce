@@ -1,12 +1,9 @@
 package com.uos.vcommcerce.activity.login
 
 import android.content.Intent
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import androidx.annotation.RequiresApi
-import androidx.databinding.DataBindingUtil
+import androidx.activity.viewModels
 import com.bumptech.glide.Glide
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
@@ -25,80 +22,75 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import com.uos.vcommcerce.R
-import com.uos.vcommcerce.SettingActivity
 import com.uos.vcommcerce.activity.main.MainActivity
 import com.uos.vcommcerce.activity.signup.SignUpActivity
 import com.uos.vcommcerce.base.BaseActivity
 import com.uos.vcommcerce.databinding.ActivityLoginBinding
-import com.uos.vcommcerce.util.SharedData
-import kotlinx.android.synthetic.main.activity_login.*
-import java.util.*
+import com.uos.vcommcerce.util.EventObserver
+import com.uos.vcommcerce.MyApplication
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginActivity : BaseActivity<ActivityLoginBinding>(
     layoutId = R.layout.activity_login
 ) {
 
-    var auth: FirebaseAuth? = null
-    var googleSignInClient: GoogleSignInClient? = null
-    var GOOGLE_LOGIN_CODE = 9001
-    var callbackManager: CallbackManager? = null
-    var firestore = FirebaseFirestore.getInstance()
+    companion object {
+        private const val GOOGLE_LOGIN_CODE = 9001
+    }
 
-    @RequiresApi(Build.VERSION_CODES.P)
+    private val googleSignInClient: GoogleSignInClient by lazy {
+        GoogleSignIn.getClient(
+            this, GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build()
+        )
+    }
+
+    val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
+    val firestore: FirebaseFirestore by lazy { FirebaseFirestore.getInstance() }
+    var callbackManager: CallbackManager? = null
+
+    private val viewModel: LoginViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.activitylogin = this@LoginActivity
-
-        auth = FirebaseAuth.getInstance()
-
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
-
+        binding.vm = viewModel
 
         Glide.with(this).load(R.drawable.gradient_login_background)
             .into(binding.activityLoginImageviewBackgroundGif)
 
-        googleSignInClient = GoogleSignIn.getClient(this, gso)
-
         callbackManager = CallbackManager.Factory.create()
 
-        //버튼 리스너
-        binding.activityLoginButtonLoginGoogle.setOnClickListener {
-            //구글 로그인
-            googleLogin()
-        }
-        binding.activityLoginButtonLoginFacebook.setOnClickListener {
-            //페이스북 로그인
+        viewModel.googleLogin.observe(this, EventObserver {
+            viewModel.createCustomToken("123")
+            //googleLogin()
+        })
+
+        viewModel.faceBookLogin.observe(this, EventObserver {
             facebookLogin()
-        }
-        binding.activityLoginTextviewLoginwithemail.setOnClickListener {
-            //이메일 로그인
+        })
+
+        viewModel.localLogin.observe(this, EventObserver {
             startActivity(Intent(this, LoginWithEmail::class.java))
-        }
-
-
+        })
     }
 
     override fun onStart() {
         super.onStart()
-        moveMainPage(auth?.currentUser)
+        moveMainPage(auth.currentUser)
     }
 
-    fun googleLogin() {
-        var signInIntent = googleSignInClient?.signInIntent
-        startActivityForResult(signInIntent, GOOGLE_LOGIN_CODE)
+    private fun googleLogin() {
+        startActivityForResult(googleSignInClient.signInIntent, GOOGLE_LOGIN_CODE)
     }
 
-    fun facebookLogin() {
-        LoginManager.getInstance()
-            .logInWithReadPermissions(this, Arrays.asList("public_profile", "email"))
-
-        LoginManager.getInstance()
-            .registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
+    private fun facebookLogin() {
+        LoginManager.getInstance().let { manager ->
+            manager.logInWithReadPermissions(this, listOf("public_profile", "email"))
+            manager.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
                 override fun onSuccess(result: LoginResult?) {
-
                     //second step
                     handleFacebookAccessToken(result?.accessToken)
                 }
@@ -110,21 +102,16 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
                 override fun onError(error: FacebookException?) {
 
                 }
-
             })
+        }
     }
 
     fun handleFacebookAccessToken(token: AccessToken?) {
-
-        var credential = FacebookAuthProvider.getCredential(token?.token!!)
-        auth?.signInWithCredential(credential)?.addOnCompleteListener { task ->
+        val credential = FacebookAuthProvider.getCredential(token?.token!!)
+        auth.signInWithCredential(credential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-
-                //third step
-                //login
                 moveMainPage(task.result?.user)
             } else {
-                //show the error message
                 Toast.makeText(this, task.exception?.message, Toast.LENGTH_LONG).show()
             }
         }
@@ -133,24 +120,22 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
         callbackManager?.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == GOOGLE_LOGIN_CODE) {
-            var result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
+            val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
             if (result != null) {
                 if (result.isSuccess) {
-                    var account = result.signInAccount
-                    //second step
+                    val account = result.signInAccount
                     firebaseAuthWithGoogle(account)
                 }
             }
         }
     }
 
-    fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {
-        var credential = GoogleAuthProvider.getCredential(account?.idToken, null)
-        auth?.signInWithCredential(credential)?.addOnCompleteListener { task ->
+    private fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {
+        val credential = GoogleAuthProvider.getCredential(account?.idToken, null)
+        auth.signInWithCredential(credential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 //login
                 moveMainPage(task.result?.user)
@@ -162,17 +147,15 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
     }
 
 
-    fun moveMainPage(user: FirebaseUser?) {
+    private fun moveMainPage(user: FirebaseUser?) {
         if (user != null) {
-
-
             firestore.collection("userInfo").document("userData").collection("accountInfo")
-                .document(auth?.currentUser?.uid!!)
-                .addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
+                .document(auth.currentUser?.uid!!)
+                .addSnapshotListener { documentSnapshot, exception ->
 
                     if (documentSnapshot != null) {
                         if (documentSnapshot!!.exists()) {
-                            SharedData.prefs.setString("userInfo", "yes")
+                            MyApplication.prefs.setString("userInfo", "yes")
                             Toast.makeText(
                                 this,
                                 "회원정보가 존재합니다. \n 메인 페이지로 이동합니다.",
@@ -180,7 +163,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
                             ).show()
 
                         } else {
-                            SharedData.prefs.setString("userInfo", "no")
+                            MyApplication.prefs.setString("userInfo", "no")
                             Toast.makeText(
                                 this,
                                 "회원정보가 존재하지 않습니다. \n 회원 정보 추가 페이지로 이동합니다.",
@@ -188,16 +171,13 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
                             ).show()
                         }
 
-                        if (SharedData.prefs.getString("userInfo", "no").equals("yes")) {
+                        if (MyApplication.prefs.getString("userInfo", "no") == "yes") {
                             startActivity(Intent(this, MainActivity::class.java))
-
                         } else {
                             startActivity(Intent(this, SignUpActivity::class.java))
                         }
                         finish()
                     }
-
-
                 }
         }
     }

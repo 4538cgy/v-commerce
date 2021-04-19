@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.firebase.auth.FirebaseAuth
 import com.uos.vcommcerce.R
-import com.uos.vcommcerce.SettingActivity
+import com.uos.vcommcerce.activity.SettingActivity
 import com.uos.vcommcerce.activity.profile.UserActivity
 import com.uos.vcommcerce.activity.review.ReviewActivity
 import com.uos.vcommcerce.base.BaseActivity
@@ -31,7 +31,6 @@ import com.uos.vcommcerce.util.DisplaySize
 import com.uos.vcommcerce.util.I_searchEnd
 import com.uos.vcommcerce.util.MainActivityState
 import com.uos.vcommcerce.util.dp
-import kotlin.math.abs
 
 var Imm: InputMethodManager? = null;
 

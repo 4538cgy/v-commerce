@@ -13,7 +13,7 @@ import com.uos.vcommcerce.base.BaseActivity
 import com.uos.vcommcerce.databinding.ActivityRegistSellerInfoBinding
 import com.uos.vcommcerce.datamodel.SellerDTO
 import com.uos.vcommcerce.util.Config
-import com.uos.vcommcerce.util.SharedData
+import com.uos.vcommcerce.MyApplication
 
 /**
  *  2021.1.23 작성자 박정우
@@ -61,7 +61,7 @@ class RegistSellerInfoActivity : BaseActivity<ActivityRegistSellerInfoBinding>(
                         )
                         Toast.makeText(binding.root.context, " 판매자 등록 완료 ", Toast.LENGTH_SHORT)
                             .show()
-                        SharedData.prefs.setString(Config.sellerInfo, "yes")
+                        MyApplication.prefs.setString(Config.sellerInfo, "yes")
                         finish()
                     }
 

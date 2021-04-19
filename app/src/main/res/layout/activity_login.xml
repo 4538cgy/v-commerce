@@ -5,109 +5,99 @@
     tools:context=".activity.login.LoginActivity">
 
     <data>
+
         <variable
-            name="activitylogin"
-            type="com.uos.vcommcerce.activity.login.LoginActivity" />
+            name="vm"
+            type="com.uos.vcommcerce.activity.login.LoginViewModel" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorBlack"
-        >
+        android:background="@color/colorBlack">
 
         <ImageView
             android:id="@+id/activity_login_imageview_background_gif"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="fitXY"
             android:adjustViewBounds="true"
-            />
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/activity_login_imageview_banner"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@color/colorWhite"
             android:layout_marginTop="150dp"
-            app:layout_constraintTop_toTopOf="parent"
+            android:src="@color/colorWhite"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            />
 
-
-    <LinearLayout
-        android:id="@+id/activity_login_linearlayout_signin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/activity_login_imageview_banner"
-        android:layout_marginTop="100dp"
-        >
-
-        <Button
-            android:id="@+id/activity_login_button_login_google"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@drawable/btn_signin_google"
-            android:layout_marginHorizontal="20dp"
-            android:textColor="@color/colorWhite"
-            android:text="구글 로그인"
-            android:layout_marginTop="20dp"
-            />
-
-        <Button
-            android:id="@+id/activity_login_button_login"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:theme="@style/ButtonStyle"
-            android:background="@drawable/button_background_round_glitch_4dp"
-            android:layout_marginHorizontal="20dp"
-            android:text="카카오 로그인"
-            android:layout_marginTop="20dp"
-            />
-
-        <Button
-            android:id="@+id/activity_login_button_login_facebook"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@drawable/button_background_round_glitch_4dp"
-            android:layout_marginHorizontal="20dp"
-
-            android:text="애플 로그인"
-            android:layout_marginTop="20dp"
-            />
-
-        <TextView
-            android:id="@+id/activity_login_textview_loginwithemail"
+        <LinearLayout
+            android:id="@+id/activity_login_linearlayout_signin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Login with E-mail"
-            android:gravity="center"
-            android:textSize="14dp"
-            android:textColor="@color/colorWhite"
-            android:layout_marginTop="20dp"
-            />
+            android:layout_marginTop="100dp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/activity_login_imageview_banner">
 
-        <TextView
-            android:id="@+id/activity_login_textview_gotoproduct"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="이 상품 보러가기"
-            android:gravity="center"
-            android:textSize="14dp"
-            android:textColor="@color/colorWhite"
-            android:layout_marginTop="20dp"
-            />
-        
-        
-    </LinearLayout>
+            <Button
+                android:id="@+id/activity_login_button_login_google"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/btn_signin_google"
+                android:onClick="@{()->vm.clickGoogleLogin()}"
+                android:text="구글 로그인"
+                android:textColor="@color/colorWhite" />
+
+            <Button
+                android:id="@+id/activity_login_button_login"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_background_round_glitch_4dp"
+                android:text="카카오 로그인"
+                android:theme="@style/ButtonStyle" />
+
+            <Button
+                android:id="@+id/activity_login_button_login_facebook"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_background_round_glitch_4dp"
+                android:text="애플 로그인" />
+
+            <TextView
+                android:id="@+id/activity_login_textview_loginwithemail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:onClick="@{()->vm.clickLocalLogin()}"
+                android:text="Login with E-mail"
+                android:textColor="@color/colorWhite"
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/activity_login_textview_gotoproduct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="이 상품 보러가기"
+                android:textColor="@color/colorWhite"
+                android:textSize="14dp" />
+
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>
