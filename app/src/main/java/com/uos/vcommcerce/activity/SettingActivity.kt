@@ -1,4 +1,4 @@
-package com.uos.vcommcerce
+package com.uos.vcommcerce.activity
 
 import android.content.Context
 import android.content.Intent
@@ -14,12 +14,11 @@ import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
-import com.uos.vcommcerce.activity.cart.CartActivity
+import com.uos.vcommcerce.R
 import com.uos.vcommcerce.activity.login.KakaoLoginTest
 import com.uos.vcommcerce.activity.login.LoginActivity
 import com.uos.vcommcerce.activity.main.MainActivity
 import com.uos.vcommcerce.activity.oder.OrderActivity
-import com.uos.vcommcerce.activity.oder.OrderCompleteActivitiy
 import com.uos.vcommcerce.activity.productinformation.ProductInformationActivity
 import com.uos.vcommcerce.activity.profile.UserActivity
 import com.uos.vcommcerce.activity.regist.RegistSellerActivity
@@ -35,7 +34,7 @@ import com.uos.vcommcerce.datamodel.SettingDTO
 import com.uos.vcommcerce.http.test.RestApi
 import com.uos.vcommcerce.testpackagedeletesoon.ShowMyUserInfoActivity
 import com.uos.vcommcerce.testpackagedeletesoon.TestExoplayerActivity
-import com.uos.vcommcerce.util.SharedData
+import com.uos.vcommcerce.MyApplication
 import kotlinx.android.synthetic.main.activity_setting.*
 import kotlinx.android.synthetic.main.item_setting.view.*
 import retrofit2.Call
@@ -48,7 +47,6 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(
 ) {
 
     var gac: GoogleApiClient? = null
-    var context: Context? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,8 +55,6 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(
             adapter = SettingActivityRecyclerViewAdapter()
             layoutManager = LinearLayoutManager(this@SettingActivity)
         }
-
-        context = this.applicationContext
 
         val gso =
             GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -100,7 +96,7 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-            var view =
+            val view =
                 LayoutInflater.from(parent.context).inflate(R.layout.item_setting, parent, false)
 
             return CustomViewHolder(view)
@@ -116,7 +112,7 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(
 
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
-            var view = holder.itemView
+            val view = holder.itemView
             view.item_setting_textview_title.text = settingDTO[position].title
 
             view.item_setting_textview_title.setOnClickListener {
@@ -129,7 +125,7 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(
 
                     "로그아웃" -> {
                         if (FirebaseAuth.getInstance().currentUser == null) {
-                            Toast.makeText(context, "이미 로그아웃 되어있습니다.", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this@SettingActivity, "이미 로그아웃 되어있습니다.", Toast.LENGTH_LONG).show()
                         } else {
                             signOut()
 
@@ -348,8 +344,8 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(
                     Auth.GoogleSignInApi.signOut(gac).setResultCallback { status ->
                         if (status.isSuccess) {
                             Log.v("알림", "로그아웃 성공")
-                            if (SharedData.prefs.getString("userInfo", "no") != null) {
-                                SharedData.prefs.setString("userInfo", "no")
+                            if (MyApplication.prefs.getString("userInfo", "no") != null) {
+                                MyApplication.prefs.setString("userInfo", "no")
                             }
                             activity_setting_recycler?.adapter =
                                 SettingActivityRecyclerViewAdapter()

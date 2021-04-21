@@ -13,7 +13,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import com.uos.vcommcerce.R
-import com.uos.vcommcerce.SettingActivity
+import com.uos.vcommcerce.activity.SettingActivity
 import com.uos.vcommcerce.base.BaseActivity
 import com.uos.vcommcerce.databinding.ActivityVideoUpload2Binding
 import com.uos.vcommcerce.datamodel.ProductDTO

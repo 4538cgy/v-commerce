@@ -4,17 +4,11 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
 
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
-
-    /*
-    buildFeatures{
-        dataBinding = true
-    }
-
-     */
 
     kotlinOptions {
         jvmTarget = "1.8"
@@ -39,16 +33,19 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            buildConfigField "String", "SERVER_URL", "\"https://www.bogosa-dev.ml\""
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
     }
 
     compileOptions {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-
-
-    buildFeatures{
-        dataBinding = true;
+    buildFeatures {
+        dataBinding = true
     }
 
 }
@@ -62,15 +59,11 @@ dependencies {
     //프로필사진 원형뷰
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    def lifecycle_version = "2.2.0"
+
     //뷰 모델 - 라이프사이클 관련
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     //라이브 데이터 - 옵저버 패턴 관련(실시간 데이터의 변경 사항을 알 수 있다)
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
-    /*
-    ExoPlayer 2020-09-11 Version
-    https://github.com/google/ExoPlayer/blob/release-v2/RELEASENOTES.md
-     */
 
     //kakaoLogin
     implementation "com.kakao.sdk:v2-user:2.4.2"
@@ -137,16 +130,18 @@ dependencies {
     implementation 'com.google.android.material:material:1.3.0-alpha02'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     //image crop
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
 
+    //hilt
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
+    //timber
+    implementation 'com.jakewharton.timber:timber:4.7.1'
 
     //appcompat
-    def appcompat_version = "1.2.0"
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     // For loading and tinting drawables on older versions of the platform
     implementation "androidx.appcompat:appcompat-resources:$appcompat_version"
@@ -154,5 +149,10 @@ dependencies {
     kapt 'com.android.databinding:compiler:3.5.0'
 
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
-    implementation 'androidx.activity:activity-ktx:1.1.0'
+    implementation 'androidx.activity:activity-ktx:1.2.2'
+
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }
