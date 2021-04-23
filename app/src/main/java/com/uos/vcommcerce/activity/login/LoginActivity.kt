@@ -3,6 +3,7 @@ package com.uos.vcommcerce.activity.login
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import com.bumptech.glide.Glide
 import com.facebook.AccessToken
@@ -64,8 +65,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
         callbackManager = CallbackManager.Factory.create()
 
         viewModel.googleLogin.observe(this, EventObserver {
-            viewModel.createCustomToken("123")
-            //googleLogin()
+            googleLogin()
         })
 
         viewModel.faceBookLogin.observe(this, EventObserver {
@@ -83,7 +83,18 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
     }
 
     private fun googleLogin() {
-        startActivityForResult(googleSignInClient.signInIntent, GOOGLE_LOGIN_CODE)
+        val requestActivity = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) {
+            val result = Auth.GoogleSignInApi.getSignInResultFromIntent(it.data)
+            if (result != null) {
+                if (result.isSuccess) {
+                    val account = result.signInAccount
+                    firebaseAuthWithGoogle(account)
+                }
+            }
+        }
+        requestActivity.launch(googleSignInClient.signInIntent)
     }
 
     private fun facebookLogin() {
@@ -121,26 +132,24 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         callbackManager?.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == GOOGLE_LOGIN_CODE) {
-            val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
-            if (result != null) {
-                if (result.isSuccess) {
-                    val account = result.signInAccount
-                    firebaseAuthWithGoogle(account)
-                }
-            }
-        }
     }
 
     private fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {
         val credential = GoogleAuthProvider.getCredential(account?.idToken, null)
         auth.signInWithCredential(credential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                //login
-                moveMainPage(task.result?.user)
+                task.result?.user?.uid?.let { uid->
+                    viewModel.checkSNSAuth(uid)
+                } ?: run {
+                    //user UID를 가지고 오지 못한 경우
+                    Toast.makeText(
+                        this@LoginActivity,
+                        "Firebase UID를 가지고 올 수 없음.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                //moveMainPage(task.result?.user)
             } else {
-                //show the error message
                 Toast.makeText(this, task.exception?.message, Toast.LENGTH_LONG).show()
             }
         }
